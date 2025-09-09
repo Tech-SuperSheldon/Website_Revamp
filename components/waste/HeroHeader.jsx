@@ -156,7 +156,7 @@ export default function HeroHeader() {
               />
               <StatCard
                 iconSrc="/Users.png"
-                value="99.9%"
+                value="100%"
                 label="Success Rate"
               />
             </div>
