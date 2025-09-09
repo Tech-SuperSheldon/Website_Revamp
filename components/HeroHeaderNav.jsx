@@ -383,7 +383,8 @@ export default function Header() {
 
         {/* Desktop Right side buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link href="/login">
+          <Link href="https://web.wise.live/signup?loginRedirected=true"
+          onClick={() => alert('Redirecting to wise.live')}>
             <GlossyButton>Login</GlossyButton>
           </Link>
           {/* <Link
@@ -393,8 +394,11 @@ export default function Header() {
           >
             
           </Link> */}
-          <GlossyButton onClick={openDemoBooking}>Try a free Class</GlossyButton>
-        </div>
+          <a href="#course">
+              <GlossyButton>Try a free Class</GlossyButton>
+       
+          </a>
+         </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
@@ -428,7 +432,7 @@ export default function Header() {
               </a>
             )
           )}
-          <Link href="/login" onClick={() => setMenuOpen(false)}>
+          <Link href="https://web.wise.live/signup?loginRedirected=true" onClick={() => alert('Redirecting to wise.live')}>
             <GlossyButton>Login</GlossyButton>
           </Link>
           <Link

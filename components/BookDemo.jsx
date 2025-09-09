@@ -160,10 +160,9 @@ export default function BookDemo() {
     <div className="min-h-screen py-8 px-4">
       <div className="max-w-2xl mx-auto bg-white/95 rounded-xl shadow-lg overflow-hidden">
         <div className="bg-white/20 p-6 md:p-8 ">
-          <header className="text-center mb-6">
-            <h1 className="text-2xl md-text-3xl font-bold text-[#e66e37]">SuperSheldon Seasonal Sale – Unlock 30% Off</h1>
-            <p className="text-gray-600 mt-2">Promotion valid from Sep 1, 2025 - Sep 10, 2025</p>
-          </header>
+          <header className=" mb-2">
+            <img src='/Group 19.png'></img>
+         </header>
 
           <div className="h-px bg-gray-200 my-6"></div>
 

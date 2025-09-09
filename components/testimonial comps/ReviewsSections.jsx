@@ -168,12 +168,12 @@ export default function ReviewsSection() {
   initial={{ opacity: 0, y: -40 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.6 }}
-  className="w-full h-64 sm:h-80 md:h-[500px] lg:h-[600px] xl:h-[700px] overflow-hidden rounded-3xl"
+  className="relative w-full mx-auto mt-8 sm:mt-16 lg:mt-20 h-[240px] sm:h-[380px] md:h-[480px] lg:h-[680px] px-2 sm:px-4 md:px-6"
 >
   <img
     src="/reviewsbannerv1.png"
     alt="Reviews Banner"
-    className="w-full h-full object-cover object-center"
+    className="w-full h-full object-contain object-center rounded-2xl"
   />
 </motion.div>
 

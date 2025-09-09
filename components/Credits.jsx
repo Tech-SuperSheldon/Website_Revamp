@@ -321,7 +321,7 @@ export default function Credits() {
           {/* 1. Trusted Feedback */}
           <div className="flex flex-col items-center justify-center space-y-5">
             <p className="text-xl sm:text-2xl font-semibold">Trusted Feedback</p>
-            <div className="flex items-start justify-center gap-10 flex-wrap">
+            <div className="flex items-start justify-center gap-10 ">
               {/* Trustpilot */}
               <div className="flex flex-col items-center">
                 <Image

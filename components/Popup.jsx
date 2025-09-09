@@ -167,6 +167,7 @@ import { useOpenDemoBooking } from "./utils/navigation";
 
 export default function Popup() {
   const [visible, setVisible] = useState(true);
+   const openDemoBooking = useOpenDemoBooking();
 
   if (!visible) return null;
 
@@ -181,7 +182,7 @@ export default function Popup() {
 
         {/* Button */}
        
-          <GlossyButton onClick={useOpenDemoBooking} className="px-3 py-1 text-xs sm:text-sm">
+          <GlossyButton onClick={openDemoBooking} className="px-3 py-1 text-xs sm:text-sm">
             Book Now
           </GlossyButton>
         
