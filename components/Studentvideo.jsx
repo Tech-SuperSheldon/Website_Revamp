@@ -272,16 +272,16 @@ export default function ClassVideoBanner() {
 
       {/* Floating Icons */}
       <div className="absolute top-8 left-6 sm:top-12 sm:left-16 animate-float1 z-10">
-        <img src="/icons/book.png" alt="Book" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
+        <img src="/icons/notepad2.png" alt="Book" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
       </div>
       <div className="absolute top-20 right-12 sm:top-28 sm:right-24 animate-float1 z-10">
-        <img src="/icons/science.png" alt="Science" className="w-8 sm:w-10 md:w-12 lg:w-[50px]" />
+        <img src="/icons/30.png" alt="Science" className="w-8 sm:w-10 md:w-12 lg:w-[50px]" />
       </div>
       <div className="absolute bottom-20 left-10 sm:bottom-24 sm:left-24 animate-float1 z-10">
-        <img src="/icons/palette.png" alt="Palette" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
+        <img src="/icons/ribbon2.png" alt="Palette" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
       </div>
       <div className="absolute bottom-12 right-10 sm:bottom-16 sm:right-24 animate-float1 z-10">
-        <img src="/icons/abacus.png" alt="Abacus" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
+        <img src="/icons/scholarcap2.png" alt="Abacus" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
       </div>
 
       <style jsx>{`

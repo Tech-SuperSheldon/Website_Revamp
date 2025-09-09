@@ -435,19 +435,19 @@ export default function TeacherTestimonial() {
 
       {/* Floating Icons */}
       <div className="absolute bottom-[15%] left-[8%] animate-float1 z-10">
-        <img src="/icons/book.png" alt="book" className="w-[10vw] max-w-[60px]" />
+        <img src="/icons/notepad2.png" alt="book" className="w-[10vw] max-w-[60px]" />
       </div>
       <div className="absolute bottom-[15%] right-[8%] animate-float2 z-10">
-        <img src="/icons/science.png" alt="science" className="w-[9vw] max-w-[50px]" />
+        <img src="/icons/note2.png" alt="science" className="w-[9vw] max-w-[50px]" />
       </div>
-      <div className="absolute top-[55%] left-[5%] animate-float2 z-10">
-        <img src="/icons/palette.png" alt="palette" className="w-[10vw] max-w-[60px]" />
+      <div className="absolute top-[20%] left-[5%] animate-float2 z-10">
+        <img src="/icons/ribbon2.png" alt="palette" className="w-[10vw] max-w-[60px]" />
       </div>
       <div className="absolute top-1/2 right-[5%] animate-float1 z-10">
         <img src="/icons/Scholarcap.png" alt="cap" className="w-[10vw] max-w-[60px]" />
       </div>
-      <div className="absolute top-[10%] right-[25%] animate-float1 z-10">
-        <img src="/icons/homework.png" alt="homework" className="w-[9vw] max-w-[50px]" />
+      <div className="absolute top-[10%] right-[5%] animate-float1 z-10">
+        <img src="/icons/bag2.png" alt="homework" className="w-[9vw] max-w-[50px]" />
       </div>
 
       <style jsx>{`
