@@ -1,8 +1,6 @@
 import Footer from '@/components/Footer';
-
-import HeroHeader from '@/components/waste/HeroHeader';
+import HeroHeader from '@/components/HeroHeader';
 // import Hero from '@/components/Hero';
-
 import CreditsSection from '@/components/Credits';
 import StudentTestimonial from '@/components/StudentTestimonial';
 import HeaderNav from '@/components/HeroHeaderNav';
@@ -17,7 +15,7 @@ import SubscribeBanner from '@/components/SubscribeBanner';
 
 import FAQ from '@/components/FAQ';
 
-// import Features from '@/components/waste/Features';
+import Features from '@/components/Features';
 
 import Review from '@/components/Review';
 
@@ -28,8 +26,6 @@ import FloatingArrowWhatsApp from '@/components/ArrowAndWhatsapp';
 
 import ClassVideoSection from '@/components/Studentvideo';
 import Hero from '@/components/Hero';
-
-
 
 
 export const metadata = {
