@@ -22,7 +22,7 @@ const SubscribeSection = () => {
   return (
     <section
       id="try-a-free-class"
-      className="relative mx-auto w-[92%] mt-4 mb-4 rounded-2xl overflow-hidden text-white font-poppins flex items-center justify-center h-[370px] bg-[#4D2C5E]"
+      className="relative mx-auto w-[90%] mt-4 mb-4 rounded-2xl overflow-hidden text-white font-poppins flex items-center justify-center h-[370px] bg-[#4D2C5E]"
     >
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center max-w-xl">
