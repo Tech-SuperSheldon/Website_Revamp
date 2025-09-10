@@ -255,7 +255,7 @@ export default function ReviewsSection() {
             </div>
 
             {/* Card 3 - Sources */}
-            <div className="bg-white p-6 rounded-2xl shadow-md">
+            {/* <div className="bg-white p-6 rounded-2xl shadow-md">
               <h3 className="font-semibold mb-3">Sources</h3>
               <div className="flex flex-wrap gap-2">
                 {["Google", "Trustpilot", "Website"].map((src) => (
@@ -268,7 +268,31 @@ export default function ReviewsSection() {
                   </a>
                 ))}
               </div>
-            </div>
+            </div> */}
+
+            <div className="bg-white p-6 rounded-2xl shadow-md">
+  <h3 className="font-semibold mb-3">Sources</h3>
+  <div className="flex flex-wrap gap-2">
+    {[
+      { label: "Google", url: "https://www.google.com/" },
+      { label: "Trustpilot", url: "https://www.trustpilot.com/review/supersheldon.com" },
+      { label: "Website", url: "https://supersheldon.com" },
+    ].map((src) => (
+      <a
+        key={src.label}
+        href={src.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="px-3 py-1 rounded-full bg-teal-200 text-teal-900 text-sm font-medium hover:bg-teal-300"
+      >
+        {src.label}
+      </a>
+    ))}
+  </div>
+</div>
+
+
+
           </div>
         </div>
       </div>
@@ -441,23 +465,6 @@ export default function ReviewsSection() {
                 transition={{ duration: 0.5 }}
                 className="bg-white p-6 rounded-2xl shadow-md flex flex-col"
               >
-                {/* Name + Source Row */}
-                {/* <div className="flex justify-between items-center mb-1">
-                  <Link href={review.link || "#"}>
-                    <span className="font-semibold text-black hover:underline">
-                      {review.name}
-                    </span>
-                  </Link>
-                  <a
-                    href="#"
-                    className="px-3 py-1 text-xs font-medium rounded-full bg-teal-200 text-teal-900"
-                  >
-                    {review.source}
-                  </a>
-                </div> */}
-
-
-                {/* Name + Source Row */}
 <div className="flex justify-between items-center mb-1">
   <div className="flex items-center gap-3">
     <img

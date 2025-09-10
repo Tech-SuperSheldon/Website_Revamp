@@ -1,48 +1,53 @@
+
 "use client";
 
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckIcon } from "@heroicons/react/24/solid";
+import GlossyButton from "./GlossyButton";
 
-const scholarshipPlans = [
+const pricingPlans = [
   {
     id: 1,
-    price: "$80",
-    classes: "36 Class",
-    title: "Scholarship Builder Starter",
+    price: "$50",
+    classes: "24 Class",
+    title: "Scholarship Starter",
+    image: "/cards/1.png", // 👈 your portrait image
     features: [
-      "Full Scholarship Syllabus Coverage",
-      "Practice Exams with Analytics",
-      "1-on-1 Mentor Support",
-      "Exclusive Study Materials",
-      "24/7 Chat Support",
+      "Lifetime Video Access",
+      "Own analytics platform",
+      "Chat support",
+      "Optimize hashtags",
+      "Unlimited users",
     ],
   },
   {
     id: 2,
-    price: "$150",
-    classes: "72 Class",
-    title: "Scholarship Builder Champion",
+    price: "$100",
+    classes: "48 Class",
+    title: "Scholarship Champion",
+    image: "/cards/2.png",
     features: [
-      "All Starter Features",
-      "Advanced Test Strategies",
-      "Live Q&A Sessions",
-      "Personal Progress Tracking",
-      "Unlimited Mock Tests",
+      "Lifetime Video Access",
+      "Own analytics platform",
+      "Chat support",
+      "Optimize Teacher",
+      "Unlimited Homework",
     ],
     popular: true,
   },
   {
     id: 3,
-    price: "$250",
-    classes: "120 Class",
-    title: "Scholarship Builder Prodigy",
+    price: "$200",
+    classes: "96 Class",
+    title: "Scholarship Prodigy",
+    image: "/cards/3.png",
     features: [
-      "All Champion Features",
-      "Exclusive Workshops",
-      "Premium Mentor Access",
-      "Tailored Study Plan",
       "Lifetime Video Access",
+      "Own analytics platform",
+      "Chat support",
+      "Optimize Teacher",
+      "Unlimited Homework",
     ],
   },
 ];
@@ -55,15 +60,19 @@ export default function CardsScholarship() {
   };
 
   return (
-    <div className="flex flex-wrap justify-center items-start gap-10 p-12">
-      {scholarshipPlans.map((plan) => (
+    <div className="flex flex-wrap justify-center items-start gap-10 p-6 md:p-12">
+      {pricingPlans.map((plan) => (
         <motion.div
           key={plan.id}
-          className="relative w-72 md:w-80 h-[420px] perspective cursor-pointer"
+          className="relative w-64 sm:w-72 md:w-80 aspect-[2/3] perspective cursor-pointer"
           onMouseEnter={() => setFlipped((p) => ({ ...p, [plan.id]: true }))}
           onMouseLeave={() => setFlipped((p) => ({ ...p, [plan.id]: false }))}
-          onClick={() => toggleFlip(plan.id)}
-          animate={flipped[plan.id] ? { y: -30, scale: 1.05 } : { y: 0, scale: 1 }}
+          onClick={() => toggleFlip(plan.id)} // 👈 mobile toggle
+          animate={
+            flipped[plan.id]
+              ? { y: -30, scale: 1.05 }
+              : { y: 0, scale: 1 }
+          }
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
           <motion.div
@@ -73,12 +82,22 @@ export default function CardsScholarship() {
             style={{ transformStyle: "preserve-3d" }}
           >
             {/* Front side */}
-            <div className="absolute inset-0 bg-white shadow-2xl rounded-2xl flex flex-col justify-center items-center backface-hidden">
-              <div className="text-4xl font-bold mb-2">
+            <div className="absolute inset-0 shadow-2xl rounded-2xl flex flex-col justify-start items-center backface-hidden overflow-hidden">
+              <img
+                src={plan.image}
+                alt={plan.title}
+                className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+              />
+              {/* 👇 overlay for readability */}
+              <div className="absolute inset-0 rounded-2xl"></div>
+
+              <div className="relative z-10 text-3xl mt-24 font-bold mb-2">
                 {plan.price}{" "}
                 <span className="text-lg font-normal">/{plan.classes}</span>
               </div>
-              <h3 className="text-xl font-semibold">{plan.title}</h3>
+              <h3 className="relative z-10 text-xl font-semibold">
+                {plan.title}
+              </h3>
             </div>
 
             {/* Back side */}
@@ -106,12 +125,12 @@ export default function CardsScholarship() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <button className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
+                <GlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
                   Try a free Class
-                </button>
-                <button className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
+                </GlossyButton>
+                <GlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
                   Download Brochure PDF
-                </button>
+                </GlossyButton>
               </div>
             </div>
           </motion.div>
