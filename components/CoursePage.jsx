@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { coursesData } from "@/components/ExamCourses";
 import CardsRenderer from "./CardsRenderer";
+import GlossyButton from "./GlossyButton";
 
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -369,31 +370,41 @@ export default function CoursePage() {
         </div>
       </section>
 
-      {/* Join a Free Class Box */}
-      <section className="max-w-5xl mx-auto px-6 pb-20">
-        <div className="bg-blue-600 rounded-2xl px-10 py-12 flex flex-col md:flex-row items-center justify-between text-white shadow-lg">
-          {/* Left Side Text */}
-          <div>
-            <h2 className="text-3xl font-bold">Join and get amazing discount</h2>
-            <p className="mt-2 text-lg opacity-80">Great Discount Enroll Now</p>
-          </div>
+      
+<section className="max-w-6xl mx-auto px-6 pb-20">
+  <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl px-6 md:px-10 py-10 flex flex-col md:flex-row items-center justify-between text-white shadow-lg">
+    {/* Left Side Text */}
+    <div className="text-center md:text-left max-w-xl">
+      <h2 className="text-2xl md:text-3xl font-bold leading-tight">
+        Join now & unlock amazing discounts 🎉
+      </h2>
+      <p className="mt-2 text-base md:text-lg opacity-90">
+        Enroll today and save big on your NAPLAN journey.
+      </p>
+    </div>
 
-          {/* Right Side Form */}
-          <form className="mt-6 md:mt-0 flex w-full md:w-auto rounded-full overflow-hidden bg-white border border-gray-300">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="px-6 py-4 flex-1 text-gray-800 text-lg outline-none rounded-l-full"
-            />
-            <button
-              type="submit"
-              className="bg-orange-500 text-white px-8 py-4 font-semibold hover:bg-orange-600 transition-all rounded-full"
-            >
-              Try a Free Class
-            </button>
-          </form>
-        </div>
-      </section>
+    {/* Right Side Form */}
+    <form className="mt-6 md:mt-0 w-full md:w-auto flex flex-col sm:flex-row gap-3 sm:bg-white sm:border sm:border-gray-200 sm:rounded-full sm:p-2 sm:shadow-md">
+      <input
+        type="email"
+        placeholder="Enter your email"
+        className="px-4 py-2 flex-1 text-gray-800 text-sm md:text-base outline-none rounded-full border border-gray-200 sm:border-0 sm:rounded-full"
+      />
+      <GlossyButton
+        type="submit"
+        className="bg-orange-500 text-white px-4 sm:px-6 py-2 sm:py-3 font-medium hover:bg-orange-600 transition-all rounded-full shadow-sm text-sm sm:text-base"
+      >
+        Try a Free Class
+      </GlossyButton>
+    </form>
+  </div>
+</section>
+
+
+
+
+
+
       <CardsRenderer currentCourse={currentCourse} />
     </div>
   );
