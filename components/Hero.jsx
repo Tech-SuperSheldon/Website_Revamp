@@ -832,7 +832,7 @@ export default function Hero() {
               <GlossyButton
                 onClick={openBokingDemo}
                 type="submit"
-                className="h-10"
+                className="h-12"
               >
                 Try a Free Class
               </GlossyButton>
