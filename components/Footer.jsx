@@ -188,7 +188,7 @@ export default function Footer() {
 
       {/* Bottom Note */}
       <div className="mt-4 sm:mt-6 border-t border-gray-300 pt-3 text-center text-xs sm:text-sm text-gray-600">
-        © {new Date().getFullYear()} Supersheldon. All rights reserved.
+        © {new Date().getFullYear()} Supersheldon LLP. All rights reserved.
       </div>
     </footer>
   );
