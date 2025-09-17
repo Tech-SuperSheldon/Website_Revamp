@@ -8,7 +8,7 @@ import { Download, Clock, BookOpen, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import GlossyButton from "./GlossyButton";
-import { useOpenDemoBooking } from "./utils/navigation";
+// import { useOpenDemoBooking } from "./utils/navigation";
 
 const years = [
   "Year 2",
@@ -1019,11 +1019,11 @@ export default function ExamCourses() {
 
                 {/* Buttons */}
                 <div className="flex space-x-2 mt-auto">
-                  
-                    <GlossyButton onClick={openDemoBooking} className="w-[60%] bg-orange-500 text-white py-2 px-3 rounded-full hover:bg-orange-600 transition">
+                   <Link href={course.path || "#"}>
+                    <GlossyButton className="w-[60%] bg-orange-500 text-white py-2 px-3 rounded-full hover:bg-orange-600 transition">
                       Try a free Class
                     </GlossyButton>
-                  
+                  </Link>
 
                   <GlossyButton
                     as="a"
