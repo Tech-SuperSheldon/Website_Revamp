@@ -159,7 +159,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { coursesData } from "@/components/ExamCourses";
 import GlossyButton from "./GlossyButton";
-import { useOpenDemoBooking } from "./utils/navigation";
 
 export default function SelectiveCoursePage({ year, courseIndex }) {
   const currentCourse = coursesData[year]?.[courseIndex] || null;

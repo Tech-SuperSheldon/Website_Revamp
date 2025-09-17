@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { coursesData } from "@/components/ExamCourses";
 import CardsRenderer from "./CardsRenderer";
 import GlossyButton from "./GlossyButton";
-import { useOpenDemoBooking } from "./utils/navigation";
 
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -211,7 +210,6 @@ export default function CoursePage() {
       />
       <GlossyButton
         type="submit"
-        onClick={useOpenDemoBooking}
         className="bg-orange-500 text-white px-4 sm:px-6 py-2 sm:py-3 font-medium hover:bg-orange-600 transition-all rounded-full shadow-sm text-sm sm:text-base"
       >
         Try a Free Class
