@@ -8,7 +8,7 @@ import { Download, Clock, BookOpen, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import GlossyButton from "./GlossyButton";
-// import { useOpenDemoBooking } from "./utils/navigation";
+import { useOpenDemoBooking } from "./utils/navigation";
 
 const years = [
   "Year 2",
