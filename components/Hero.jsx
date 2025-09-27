@@ -804,41 +804,49 @@ export default function Hero() {
           </h1>
 
           {/* Phone Form */}
-          <form
-            className="bg-[#EDE8E1] p-6 rounded-xl shadow-md max-w-xl flex flex-col gap-3"
-            onSubmit={handleSubmit}
-          >
-            <label
-              className="text-xl text-[#494e5e] font-bold mb-1"
-              htmlFor="phone"
-            >
-              Experience Smarter Learning – <span className="text-md text-[#FF8C00]">First Class is Free!</span>
-            </label>
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-              <div className="flex items-center justify-center flex-grow rounded-lg overflow-hidden">
-                <div className="text-black text-center pt-2 w-16 h-12 bg-white border-e border-[#E0E0E0] flex items-center justify-center">
-                  {userCountryCode}
-                </div>
-                <input 
-                  id="phone" 
-                  type="tel" 
-                  placeholder="Phone number"
-                  value={phone} 
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="flex-grow px-4 py-2.5 text-sm outline-none h-12"
-                />
-              </div>
-              
-              <GlossyButton
-                onClick={openBokingDemo}
-                type="submit"
-                className="h-12"
-              >
-                Try a Free Class
-              </GlossyButton>
-            </div>
-            {error && <p className="text-red-500 text-xs">{error}</p>}
-          </form>
+    <form
+  className="bg-[#EDE8E1] p-6 rounded-xl shadow-md max-w-xl flex flex-col gap-3"
+  onSubmit={(e) => {
+    e.preventDefault(); // prevent auto-submit
+    if (/^\d{10}$/.test(phone)) {  // simple 10 digit validation
+      setError(""); 
+      openBokingDemo();
+    } else {
+      setError("Please enter a valid phone number");
+    }
+  }}
+>
+  <label
+    className="text-xl text-[#494e5e] font-bold mb-1"
+    htmlFor="phone"
+  >
+    Experience Smarter Learning –{" "}
+    <span className="text-md text-[#FF8C00]">First Class is Free!</span>
+  </label>
+
+  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+    <div className="flex items-center justify-center flex-grow rounded-lg overflow-hidden">
+      <div className="text-black text-center pt-2 w-16 h-12 bg-white border-e border-[#E0E0E0] flex items-center justify-center">
+        {userCountryCode}
+      </div>
+      <input
+        id="phone"
+        type="tel"
+        placeholder="Phone number"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        className="flex-grow px-4 py-2.5 text-sm outline-none h-12"
+      />
+    </div>
+
+    <GlossyButton type="submit" className="h-12">
+      Try a Free Class
+    </GlossyButton>
+  </div>
+
+  {error && <p className="text-red-500 text-xs">{error}</p>}
+</form>
+
 
           {/* Stats */}
           <div className="flex flex-wrap gap-6 md:gap-8 pt-0">

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { coursesData } from "@/components/ExamCourses";
 import CardsRenderer from "./CardsRenderer";
 import GlossyButton from "./GlossyButton";
+import { useOpenDemoBooking } from "./utils/navigation";
 
 export default function CoursePage() {
   const [activeTab, setActiveTab] = useState(0);
@@ -13,7 +14,8 @@ export default function CoursePage() {
   const [selectedCourse, setSelectedCourse] = useState(
     coursesData[Object.keys(coursesData)[0]][0].id
   );
-
+ const [error, setError] = useState("");
+  const openBokingDemo= useOpenDemoBooking();
   const [reviews, setReviews] = useState([]);
   const [currentCourseData, setCurrentCourseData] = useState(null);
 
@@ -202,21 +204,45 @@ export default function CoursePage() {
     </div>
 
     {/* Right Side Form */}
-    <form className="mt-6 md:mt-0 w-full md:w-auto flex flex-col sm:flex-row gap-3 sm:bg-white sm:border sm:border-gray-200 sm:rounded-full sm:p-2 sm:shadow-md">
-      <input
-        type="email"
-        placeholder="Enter your email"
-        className="px-4 py-2 flex-1 text-gray-800 text-sm md:text-base outline-none rounded-full border border-gray-200 sm:border-0 sm:rounded-full"
-      />
-      <GlossyButton
-        type="submit"
-        className="bg-orange-500 text-white px-4 sm:px-6 py-2 sm:py-3 font-medium hover:bg-orange-600 transition-all rounded-full shadow-sm text-sm sm:text-base"
+    <div className="w-full md:w-auto">
+      <form
+        className="mt-6 md:mt-0 flex flex-col sm:flex-row sm:items-center sm:gap-3 sm:bg-white sm:border sm:border-gray-200 sm:rounded-full sm:p-2 sm:shadow-md"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const emailInput = e.target.elements.email.value;
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (emailRegex.test(emailInput)) {
+            setError("");
+            openBokingDemo();
+          } else {
+            setError("Please enter a valid email address");
+          }
+        }}
       >
-        Try a Free Class
-      </GlossyButton>
-    </form>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Enter your email"
+          className="px-4 py-2 flex-1 text-gray-800 text-sm md:text-base outline-none rounded-full border border-gray-200 sm:border-0 sm:rounded-full"
+        />
+
+        <GlossyButton
+          type="submit"
+          className="bg-orange-500 text-white px-4 sm:px-6 py-2 sm:py-3 font-medium hover:bg-orange-600 transition-all rounded-full shadow-sm text-sm sm:text-base"
+        >
+          Try a Free Class
+        </GlossyButton>
+      </form>
+
+      {/* Error outside the white div */}
+      <div className="h-4 mt-2 px-2">
+        {error && <p className="text-red-200 text-xs">{error}</p>}
+      </div>
+    </div>
   </div>
 </section>
+
 
 
 

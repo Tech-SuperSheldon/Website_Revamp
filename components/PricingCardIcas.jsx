@@ -5,6 +5,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import GlossyButton from "./GlossyButton";
+import { useOpenDemoBooking } from "./utils/navigation";
 
 const pricingPlans = [
   {
@@ -12,7 +13,7 @@ const pricingPlans = [
     price: "$50",
     classes: "24 Class",
     title: "ICAS Starter",
-    image: "/cards/1.png", // 👈 your portrait image
+    image: "/cards/1.png", 
     features: [
       "Lifetime Video Access",
       "Own analytics platform",
@@ -54,6 +55,7 @@ const pricingPlans = [
 
 export default function CardsICAS() {
   const [flipped, setFlipped] = useState({});
+  const openBokingDemo= useOpenDemoBooking();
 
   const toggleFlip = (id) => {
     setFlipped((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -88,7 +90,7 @@ export default function CardsICAS() {
                 alt={plan.title}
                 className="absolute inset-0 w-full h-full object-cover rounded-2xl"
               />
-              {/* 👇 overlay for readability */}
+              {/*overlay for readability */}
               <div className="absolute inset-0 rounded-2xl"></div>
 
               <div className="relative z-10 text-3xl mt-24 font-bold mb-2">
@@ -125,7 +127,8 @@ export default function CardsICAS() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <GlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
+                <GlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg"
+                onClick={openBokingDemo}>
                   Try a free Class
                 </GlossyButton>
                 <GlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">

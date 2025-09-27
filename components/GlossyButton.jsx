@@ -196,7 +196,7 @@ export default function GlossyButton({
   return (
     <button
       onClick={handleClick}
-      className={`relative overflow-hidden bg-[#e66e37] hover:bg-[#e68355] text-white font-semibold px-5 py-1 rounded-full border-2 border-[#3A1F10] shadow-[1px_2px_0_0_rgba(0,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-[#D16F3B] transition-all duration-200 inline-block text-sm sm:text-base ${className}`}
+      className={`relative overflow-hidden bg-[#e66e37] hover:bg-[#e68355] text-white font-semibold px-5 py-1 rounded-full border-2 border-[#3A1F10] shadow-[1px_1px_0_0_rgba(0,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-[#D16F3B] transition-all duration-200 inline-block text-sm sm:text-base ${className}`}
     >
       {children}
 
