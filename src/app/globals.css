@@ -1,0 +1,80 @@
+/* Ensure your build process uses Tailwind CSS to process these directives */
+/* The following lines must be processed by Tailwind CLI or PostCSS with Tailwind plugin */
+@import 'react-phone-input-2/lib/style.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ✅ Apply Quicksand globally */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.perspective {
+  perspective: 1200px;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+
+@keyframes float-1 {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(-5px, -10px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes float-2 {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(5px, -8px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes float-3 {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(-3px, -12px); }
+  100% { transform: translate(0, 0); }
+}
+
+.float-icon {
+  will-change: transform;
+}
+
+.float-1 {
+  animation: float-1 4s ease-in-out infinite;
+}
+
+.float-2 {
+  animation: float-2 5s ease-in-out infinite;
+}
+
+.float-3 {
+  animation: float-3 6s ease-in-out infinite;
+}
+
+.float-icon:hover {
+  animation-play-state: paused;
+}
+.float-icon:active {
+  animation-play-state: running;
+}
+.float-icon:focus {
+  animation-play-state: running;
+}
+
+
+@keyframes shine-slow {
+  0% { transform: translateX(-150%); }
+  100% { transform: translateX(150%); }
+}
+
+.animate-shine-slow {
+  animation: shine-slow 4s linear infinite;
+}
+
