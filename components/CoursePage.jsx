@@ -55,9 +55,9 @@ export default function CoursePage() {
 
   return (
     <div className="">
-<section className="relative w-[92%] mx-auto mt-8 sm:mt-16 lg:mt-20 h-[240px] sm:h-[380px] md:h-[480px] lg:h-[680px] px-2 sm:px-4 md:px-6"> 
+<section className="relative w-[92%] rounded-4xl mx-auto mt-8 sm:mt-16 lg:mt-20 h-[240px] sm:h-[380px] md:h-[480px] lg:h-[680px] px-2 sm:px-4 md:px-6"> 
   <Image
-    src="/coursebannerv2.png"
+    src="/coursebannerv3.jpg"
     alt="Hero"
     fill
     className="w-full h-full object-contain object-center rounded-2xl"

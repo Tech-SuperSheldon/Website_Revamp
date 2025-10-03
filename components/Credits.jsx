@@ -376,11 +376,11 @@ export default function Credits() {
       </div>
 
       {/* CTA Button */}
-      <div className="text-center mx-auto mt-10 relative z-20 mb-2">
+      {/* <div className="text-center mx-auto mt-10 relative z-20 mb-2">
         
           <GlossyButton onClick={useOpenDemoBooking()}>Try a free Class</GlossyButton>
         
-      </div>
+      </div> */}
     </section>
   );
 }

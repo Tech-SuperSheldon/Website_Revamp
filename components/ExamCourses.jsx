@@ -33,8 +33,8 @@ const coursesData = {
       title: "ICAS Spark Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 12,
+      sales: 160,
       rating: 4,
       img: "/course/icas_prep_course.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -61,8 +61,8 @@ const coursesData = {
       title: "Naplan Champion Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 15,
+      sales: 233,
       rating: 4,
       img: "/course/y3naplanchampion.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -86,8 +86,8 @@ const coursesData = {
       title: "Naplan Exam Prep Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 9,
+      sales: 122,
       rating: 4,
       img: "/course/y3icassmartprep.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -113,8 +113,8 @@ const coursesData = {
       title: "ICAS Challenger Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 16,
+      sales: 302,
       rating: 4,
       img: "/course/y4icas.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -140,8 +140,8 @@ const coursesData = {
       title: "Naplan Progidy Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 15,
+      sales: 278,
       rating: 4,
       img: "/course/y5progidy.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -165,8 +165,8 @@ const coursesData = {
       title: "ICAS Challenger Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 20,
+      sales: 338,
       rating: 4,
       img: "/course/y5icas.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -190,8 +190,8 @@ const coursesData = {
       title: "Opportunity and Scholarship Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 12,
+      sales: 180,
       rating: 4,
       img: "/course/y5scholarship.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -217,8 +217,8 @@ const coursesData = {
       title: "ICAS Mastermind Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 16,
+      sales: 552,
       rating: 4,
       img: "/course/y6icas.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -242,8 +242,8 @@ const coursesData = {
       title: "Scholarship Builder Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 24,
+      sales: 322,
       rating: 4,
       img: "/course/y6scholarship.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -271,8 +271,8 @@ const coursesData = {
       title: "ICAS Genius Track Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 12,
+      sales: 258,
       rating: 4,
       img: "/course/y7icasgenius.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -296,8 +296,8 @@ const coursesData = {
       title: "NAPLAN Progidy Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 14,
+      sales: 264,
       rating: 4,
       img: "/course/y7naplanprogidy.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -326,8 +326,8 @@ chapters: [
       title: "ICAS Genius Track Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 12,
+      sales: 314,
       rating: 4,
       img: "/course/y8icasgeniustech.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -353,8 +353,8 @@ chapters: [
       title: "ICAS Olympian Prep Course",
       type: "SAT Exam",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 24,
+      sales: 160,
       rating: 4,
       img: "/course/y9icasolymp.jpg",
       brochure: "/brochures/sat.pdf",
@@ -378,8 +378,8 @@ chapters: [
       title: "NAPLAN Grand Master Course",
       type: "IGCSE",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 30,
+      sales: 365,
       rating: 5,
       img: "/course/y9naplangm.jpg",
       brochure: "/brochures/igcse.pdf",
@@ -404,8 +404,8 @@ chapters: [
       title: "Selective Accelerator Program Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 32,
+      sales: 156,
       rating: 4,
       img: "/course/y9selacc.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -431,8 +431,8 @@ chapters: [
       title: "ICAS Grand Master Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 24,
+      sales: 62,
       rating: 4,
       img: "/course/y10icasgmnew.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -458,8 +458,8 @@ chapters: [
       title: "ICAS Ultimate Scholar Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 24,
+      sales: 221,
       rating: 4,
       img: "/course/y11icasscholar.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -485,8 +485,8 @@ chapters: [
       title: "HSC Mastery Program Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
-      topics: 34,
-      sales: 250,
+      topics: 15,
+      sales: 126,
       rating: 4,
       img: "/course/y12hsc.jpg",
       brochure: "/brochures/naplan.pdf",
@@ -902,7 +902,7 @@ chapters: [
 
 
 export default function ExamCourses() {
-  const [activeYear, setActiveYear] = useState("Year 2");
+  const [activeYear, setActiveYear] = useState("Year 5");
   const router = useRouter();
   const openDemoBooking = useOpenDemoBooking();
 
@@ -916,7 +916,7 @@ export default function ExamCourses() {
     >
       {/* Title */}
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 text-quicksand">
-        Our Exam Preparation Courses
+        Focused Exam Mastery Courses
       </h2>
 
       {/* Year Navbar */}
@@ -1035,7 +1035,8 @@ export default function ExamCourses() {
                     rel="noopener noreferrer"
                     className="flex-1 flex items-center justify-center gap-1 bg-orange-500 hover:bg-orange-600 text-white py-2 px-3 rounded-full transition"
                   >
-                    <Download size={16} /> Download Brochure
+                    {/* <Download size={16} /> */}
+                     Download Brochure
                   </GlossyButton>
                 </div>
               </div>
@@ -1048,3 +1049,4 @@ export default function ExamCourses() {
 }
 
 export { coursesData };
+export {years};

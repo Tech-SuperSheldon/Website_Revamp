@@ -27,8 +27,15 @@ import FloatingArrowWhatsApp from '@/components/ArrowAndWhatsapp';
 import ClassVideoSection from '@/components/Studentvideo';
 import Hero from '@/components/Hero';
 
+import FeatureSlider from '@/components/NewScroller';
+
+import NewExamCourses from '@/components/NewExamCourses';
+
+
+import TryFreeClass from '@/components/freeclass/tryfreeclass';
 
 export const metadata = {
+
   title: "SuperSheldon | Interactive Online Learning for Kids & Students",
 
   }
@@ -45,9 +52,14 @@ export default function Home() {
       {/* <HeroWithCredits/> */}
       <Hero/>
       <CreditsSection/>
-
+      <TryFreeClass/>
       <StudentTestimonial />
+
+
       <ExamCourses />
+
+
+      {/* <NewExamCourses /> */}
 
       <ClassVideoSection />
 
@@ -60,10 +72,12 @@ export default function Home() {
       <TeacherCarousel />
 
       {/* <Features /> */}
-      <FullPageSlider/>
+      {/* <FullPageSlider/> */}
+
+      <FeatureSlider/>
       <FAQ />
 
-      <SubscribeBanner />
+      {/* <SubscribeBanner /> */}
       
 
       <Footer />
