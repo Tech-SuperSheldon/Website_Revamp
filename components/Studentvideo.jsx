@@ -244,31 +244,32 @@ export default function ClassVideoBanner() {
       </div>
 
       {/* Sections Below Video */}
-      <div className="flex flex-col md:flex-row gap-4 md:gap-6 justify-center items-center w-full max-w-4xl mt-16 px-2">
-        {/* Audio Classes */}
-        <div className="flex bg-white items-center gap-3 px-3 sm:px-4 py-2 sm:py-3 rounded-2xl shadow-lg cursor-pointer hover:shadow-2xl transition w-full md:w-auto">
-          <div className="p-2 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
-            <img src="/icons/science.png" alt="Audio Classes" className="w-6 h-6 object-contain" />
-          </div>
-          <span className="text-base sm:text-lg font-semibold">Audio Classes</span>
-        </div>
+<div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full max-w-5xl mt-16 px-4">
+  {/* 1:1 Sessions */}
+  <div className="flex bg-white items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 rounded-2xl shadow-lg cursor-pointer hover:shadow-2xl transition w-full md:w-auto">
+    <div className="p-3 rounded-full w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center">
+      <img src="/3column/1.gif" alt="Audio Classes" className="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
+    </div>
+    <span className="text-lg sm:text-xl font-semibold">1:1 Sessions</span>
+  </div>
 
-        {/* Live Classes */}
-        <div className="flex bg-white items-center gap-3 px-3 sm:px-4 py-2 sm:py-3 rounded-2xl shadow-lg cursor-pointer hover:shadow-2xl transition w-full md:w-auto">
-          <div className="p-2 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
-            <img src="/icons/Scholarcap.png" alt="Live Classes" className="w-6 h-6 object-contain" />
-          </div>
-          <span className="text-base sm:text-lg font-semibold">Live Classes</span>
-        </div>
+  {/* Live Recorded Classes */}
+  <div className="flex bg-white items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 rounded-2xl shadow-lg cursor-pointer hover:shadow-2xl transition w-full md:w-auto">
+    <div className="p-3 rounded-full w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center">
+      <img src="/3column/2.gif" alt="Live Classes" className="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
+    </div>
+    <span className="text-lg sm:text-xl font-semibold">Live Recorded Classes</span>
+  </div>
 
-        {/* Recorded Class */}
-        <div className="flex bg-white items-center gap-3 px-3 sm:px-4 py-2 sm:py-3 rounded-2xl shadow-lg cursor-pointer hover:shadow-2xl transition w-full md:w-auto">
-          <div className="p-2 rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
-            <img src="/icons/homework.png" alt="Recorded Class" className="w-6 h-6 object-contain" />
-          </div>
-          <span className="text-base sm:text-lg font-semibold">Recorded Class</span>
-        </div>
-      </div>
+  {/* Homework and Tests */}
+  <div className="flex bg-white items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 rounded-2xl shadow-lg cursor-pointer hover:shadow-2xl transition w-full md:w-auto">
+    <div className="p-3 rounded-full w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center">
+      <img src="/3column/3.gif" alt="Recorded Class" className="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
+    </div>
+    <span className="text-lg sm:text-xl font-semibold">Homework and tests</span>
+  </div>
+</div>
+
 
       {/* Floating Icons */}
       <div className="absolute top-8 left-6 sm:top-12 sm:left-16 animate-float1 z-10">

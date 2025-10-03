@@ -123,9 +123,9 @@ export default function Footer() {
             <span className="font-extrabold text-2xl sm:text-3xl">Supersheldon</span>
           </div>
 
-          <p className="text-gray-700 text-base sm:text-lg leading-snug">
+          {/* <p className="text-gray-700 text-base sm:text-lg leading-snug">
             Supersheldon is a trusted global learning platform offering expert-led exam preparation for UK, US, and Australian students.
-          </p>
+          </p> */}
 
           <div className="space-y-1 text-gray-800 text-sm sm:text-base">
             <p>📞 <span className="font-semibold">Phone:</span> +91 91370 53875</p>
@@ -188,7 +188,7 @@ export default function Footer() {
 
       {/* Bottom Note */}
       <div className="mt-4 sm:mt-6 border-t border-gray-300 pt-3 text-center text-xs sm:text-sm text-gray-600">
-        © {new Date().getFullYear()} Supersheldon LLP. All rights reserved.
+        © {new Date().getFullYear()} SuperSheldon LLP. All rights reserved.
       </div>
     </footer>
   );
