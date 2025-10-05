@@ -8,27 +8,72 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const faqSections = [
   {
-    title: "Class Experience",
+    title: "For Students & Parents",
     faqs: [
       {
-        question: "What age groups are SuperSheldon courses designed for?",
+        question: "What exams does SuperSheldon prepare students for?",
         answer:
-          "Our programs are tailored for students from Grade 3 to Grade 12, covering early foundation levels to advanced exam preparation for NAPLAN, SAT, and ICAS across the UK, Australia, and the US.",
+          "We cover all major UK exams: 7+, 8+, 9+, 11+, 13+, SATs, GCSE, iGCSE, A-Levels, IB, and specialist university entrance tests like UCAT, BMAT, LNAT, MAT, TSA, STEP.",
       },
       {
-        question: "Is there any homework or outside practice required?",
+        question: "How are the classes conducted?",
         answer:
-          "Yes. To maximize results, students are given structured practice tasks and mock papers. These help reinforce learning and simulate real exam conditions.",
+          "All classes are live, interactive, and conducted online through our secure learning platform. Students get real-time feedback, practice worksheets, and regular assessments.",
       },
       {
-        question: "How are SuperSheldon classes conducted?",
+        question: "Do you offer a demo class?",
         answer:
-          "Classes are 100% online, interactive, and one-on-one or small group sessions with real exam-style practice and interactive activities.",
+          "Yes! We provide a free demo session so students and parents can experience our teaching style before enrolling.",
       },
       {
-        question: "What devices or software are needed for classes?",
+        question: "What is the class size?",
         answer:
-          "A laptop or tablet with stable internet, Zoom (or our online classroom platform), and a headset is all that’s required.",
+          "We offer both 1:1 personalised tutoring and small group batches (max 4 students per batch).",
+      },
+      {
+        question: "How do you cover exam patterns?",
+        answer:
+          "Our modules are built around the official UK exam formats. We provide past papers, timed practice, and mock tests that mirror real exam conditions.",
+      },
+      {
+        question: "How experienced are the teachers?",
+        answer:
+          "Our teachers are highly qualified, with proven track records in UK exam prep. Many are ex-grammar, independent school, or A-Level/GCSE examiners.",
+      },
+      {
+        question: "Can parents track progress?",
+        answer:
+          "Yes. Parents get monthly progress reports, class summaries, and feedback after each session.",
+      },
+    ],
+  },
+  {
+    title: "For Teachers",
+    faqs: [
+      {
+        question: "How can teachers join SuperSheldon?",
+        answer:
+          "Teachers can apply via our careers page. We look for UK curriculum expertise and strong online teaching skills.",
+      },
+      {
+        question: "What training do teachers receive?",
+        answer:
+          "We provide onboarding, SuperSheldon teaching methodology training, and access to resources (past papers, mock tests, lesson plans).",
+      },
+      {
+        question: "How do teachers get paid?",
+        answer:
+          "Payments are processed monthly based on the number of classes conducted. Teacher payouts are transparent and trackable through the teacher dashboard.",
+      },
+      {
+        question: "Do teachers set the curriculum?",
+        answer:
+          "No, we provide a structured SuperSheldon exam-prep curriculum, but teachers can adapt delivery based on student needs.",
+      },
+      {
+        question: "How do teachers communicate with parents?",
+        answer:
+          "Teachers share reports through the platform. Direct parent-teacher meetings (PTMs) are scheduled quarterly.",
       },
     ],
   },
@@ -36,45 +81,36 @@ const faqSections = [
     title: "Customer Support",
     faqs: [
       {
-        question: "How is my child’s data and privacy protected?",
+        question: "How do I contact support?",
         answer:
-          "We strictly follow international privacy standards. All student data is securely stored, and class environments are fully protected.",
+          "You can reach us via email, live chat on the website, or WhatsApp support.",
       },
       {
-        question: "Can I get the recording of the classes for my child?",
+        question: "What if I miss a class?",
         answer:
-          "To maintain student privacy, we do not share class recordings. Instead, detailed notes and practice worksheets are provided after every class.",
+          "All classes are recorded. Students can access recordings anytime in their dashboard.",
       },
       {
-        question: "Can I reschedule or cancel classes if needed?",
+        question: "Can I reschedule classes?",
         answer:
-          "Yes. Parents can easily reschedule or cancel classes with advance notice to suit your child’s exam preparation timeline.",
-      },
-    ],
-  },
-  {
-    title: "Teacher Queries",
-    faqs: [
-      {
-        question: "How will expert teachers support my child’s exam preparation?",
-        answer:
-          "Our teachers are specialists with years of experience. They provide personalized feedback, strategies, and exam-focused practice.",
+          "Yes, students/parents can request rescheduling with 24-hour prior notice.",
       },
       {
-        question: "Does my child need prior experience or preparation before joining?",
+        question: "How does SuperSheldon ensure security and privacy?",
         answer:
-          "Not at all. Our courses adapt to each student’s current level—whether beginner or advanced.",
+          "All sessions are conducted on a secure platform, with encrypted data and child-safety guidelines strictly followed.",
       },
       {
-        question: "How do teachers handle difficult topics?",
+        question: "What is your refund/cancellation policy?",
         answer:
-          "Teachers break down complex topics into easy-to-understand concepts and provide additional practice for mastery.",
+          "We offer flexible plans. Refunds or cancellations are processed as per our terms (clearly outlined during enrollment).",
       },
     ],
   },
 ];
 
-export default function FAQ() {
+
+export default function UKFAQ() {
   const [activeSection, setActiveSection] = useState(0);
   const [activeIndex, setActiveIndex] = useState(null);
 

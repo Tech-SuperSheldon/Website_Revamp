@@ -77,7 +77,7 @@ const teachers = [
   },
 ];
 
-export default function TeacherCarousel() {
+export default function UKteachslider() {
   const [activeVideo, setActiveVideo] = useState(null);
   const videoRef = useRef(null);
 
