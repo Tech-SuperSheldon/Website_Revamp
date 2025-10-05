@@ -3,6 +3,7 @@
 // Shared Component (from root 'components' folder)
 import Header from '@/components/HeroHeaderNav';
 import Footer from '@/components/Footer';
+import Link from 'next/link';
 
 // Regional Component Imports (from 'components/Regional' subfolder)
 import UK_Hero from '@/components/Regional/UK_Hero';
@@ -37,7 +38,7 @@ export default function RegionPage({ params }) {
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
         <h1 className="text-5xl font-bold text-red-600">404</h1>
         <p className="text-xl mt-3">Region Not Supported: /{regionKey}</p>
-        <a href="/" className="mt-6 text-blue-600 hover:underline">Go to Home</a>
+        <Link href="/" className="mt-6 text-blue-600 hover:underline">Go to Home</Link>
       </div>
     );
   }
