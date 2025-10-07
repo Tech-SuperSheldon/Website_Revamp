@@ -31,7 +31,7 @@ const variants = {
   exit: (dir) => ({ x: dir > 0 ? -100 : 100, opacity: 0 }),
 };
 
-export default function StudentTestimonial() {
+export default function UKStudentTest() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [isPaused, setIsPaused] = useState(false);
@@ -82,7 +82,7 @@ export default function StudentTestimonial() {
   return (
     <div className="w-full h-full">
       <div
-        className="mt-8 relative flex flex-col items-center justify-center py-20 overflow-visible"
+        className=" relative mt-8 flex flex-col items-center justify-center py-20 overflow-visible"
         role="region"
         aria-roledescription="carousel"
         aria-label="Student testimonials carousel"
@@ -113,7 +113,7 @@ export default function StudentTestimonial() {
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 200 }}
-                className="relative flex-shrink-0 w-[94%] mx-auto bg-[#FB8740] px-6 md:px-12 py-10 md:py-12 shadow-xl rounded-2xl overflow-visible"
+                className="relative flex-shrink-0 w-[94%] mx-auto bg-[#4976F4] px-6 md:px-12 py-10 md:py-12 shadow-xl rounded-2xl overflow-visible"
               >
                 {/* Content row */}
                 <div className="relative flex flex-col md:flex-row items-center md:items-start">

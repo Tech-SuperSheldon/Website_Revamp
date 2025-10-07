@@ -3,12 +3,15 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { coursesData } from "@/components/ExamCourses";
-import CardsRenderer from "./CardsRenderer";
-import GlossyButton from "./GlossyButton";
-import { useOpenDemoBooking } from "./utils/navigation";
 
-export default function CoursePage() {
+// import CardsRenderer from "./CardsRenderer";
+import GlossyButton from "../GlossyButton";
+import { useOpenDemoBooking } from "../utils/navigation";
+
+import { coursesData } from "./UKExamData";
+
+
+export default function UKCourse() {
   const [activeTab, setActiveTab] = useState(0);
   const [selectedYear, setSelectedYear] = useState(Object.keys(coursesData)[0]);
   const [selectedCourse, setSelectedCourse] = useState(
@@ -59,7 +62,7 @@ export default function CoursePage() {
     <div className="">
 <section className="relative w-[92%] rounded-4xl mx-auto mt-8 sm:mt-16 lg:mt-20 h-[240px] sm:h-[380px] md:h-[480px] lg:h-[680px] px-2 sm:px-4 md:px-6"> 
   <Image
-    src="/coursebannerv3.jpg"
+    src="/UK/coursebannerv1.jpg"
     alt="Hero"
     fill
     className="w-full h-full object-contain object-center rounded-2xl"
@@ -190,10 +193,9 @@ export default function CoursePage() {
         </div>
       </section>
 
-{/*       
-<section className="max-w-6xl mx-auto px-6 pb-20">
+      
+{/* <section className="max-w-6xl mx-auto px-6 pb-20">
   <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl px-6 md:px-10 py-10 flex flex-col md:flex-row items-center justify-between text-white shadow-lg">
-
     <div className="text-center md:text-left max-w-xl">
       <h2 className="text-2xl md:text-3xl font-bold leading-tight">
         Join now & unlock amazing discounts 🎉
@@ -201,10 +203,11 @@ export default function CoursePage() {
       <p className="mt-2 text-base md:text-lg opacity-90">
         Enroll today and save big on your NAPLAN journey.
       </p>
-    </div>
+    </div> */}
 
-    <div className="w-full md:w-auto">
-      <form
+    {/* Right Side Form */}
+    {/* <div className="w-full md:w-auto"> */}
+      {/* <form
         className="mt-6 md:mt-0 flex flex-col sm:flex-row sm:items-center sm:gap-3 sm:bg-white sm:border sm:border-gray-200 sm:rounded-full sm:p-2 sm:shadow-md"
         onSubmit={(e) => {
           e.preventDefault();
@@ -232,22 +235,23 @@ export default function CoursePage() {
         >
           Try a Free Class
         </GlossyButton>
-      </form>
+      </form> */}
 
-      <div className="h-4 mt-2 px-2">
+      {/* Error outside the white div */}
+      {/* <div className="h-4 mt-2 px-2">
         {error && <p className="text-red-200 text-xs">{error}</p>}
-      </div>
-    </div>
-  </div>
-</section>
-
- */}
+      </div> */}
+    {/* </div> */}
+  {/* </div>
+</section> */}
 
 
 
 
 
-      <CardsRenderer currentCourse={currentCourse} />
+
+{/* 
+      <CardsRenderer currentCourse={currentCourse} /> */}
     </div>
   );
 }

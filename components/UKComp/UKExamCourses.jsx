@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { BookOpen, Users, Download } from "lucide-react";
-import GlossyButton from "@/components/GlossyButton";
+import GlossyButton from "../GlossyButton";
 import { useRouter } from "next/navigation";
 
-import { coursesData, years } from "@/components/ExamCourses";
+import { years, coursesData } from "./UKExamData";
 
-export default function NewExamCourses() {
+export default function UKExamCourses() {
   const [activeYear, setActiveYear] = useState("Year 5");
   const router = useRouter();
   const containerRef = useRef(null);
@@ -76,7 +76,7 @@ export default function NewExamCourses() {
   return (
     <div
       id="course"
-      className="px-4 sm:px-6 py-10 bg-[#FFEFE0] rounded-2xl mx-auto w-[95%] max-w-[1600px] min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] border border-gray-300"
+      className="px-4 sm:px-6 py-10 bg-[#4976F4] rounded-2xl mx-auto w-[95%] max-w-[1600px] min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] border border-gray-300"
     >
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 text-quicksand">
         Focused Exam Mastery Courses

@@ -150,7 +150,7 @@ export default function UKFAQ() {
       {activeSection === idx && (
         <motion.div
           layoutId="tabIndicator"
-          className="absolute inset-0 bg-orange-500 rounded-full shadow-md z-0"
+          className="absolute inset-0 bg-[#5243C2] rounded-full shadow-md z-0"
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         />
       )}
