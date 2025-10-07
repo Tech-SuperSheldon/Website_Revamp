@@ -7,21 +7,85 @@ import UKFAQ from "../UKComp/UKFAQ";
 import UKteachslider from "../UKComp/UKteachslider";
 import UKteachtest from "../UKComp/UKteachtest";
 
+import UKExamCourses from "../UKComp/UKExamCourses";
+
+import UKHeader from "../UKComp/UKHeader";
+
+import UKCredits from "../UKComp/UKCredits";
+
+import UKFooter from "../UKComp/UKFooter";
+
+import UKWhatsapp from "../UKComp/UKWhatsapp";
+
+import UKStudentVideo from "../UKComp/UKStudentVideo";
+
+import UKStudentTest from "../UKComp/UKStudentTest";
+
+import UKBoost from "../UKComp/UKBoost";
+
+
+import UKReview from "../UKComp/UKReview";
+
+import UK3 from "../UKComp/UK3";
+
+
+
+
 
 export default function UK_Hero() {
   return (
     <div>
+      <UKHeader/>
+
+
       <UKHero />
-      <HeroCarousel/>
-      <UKFPS/>
-      <UKGrid/>
-      <UKPromote/>
 
 
+
+
+      <UKCredits/>
+
+      <UKStudentTest/>
+
+      <UKStudentVideo/>
+
+
+      <UKExamCourses/>
+
+      <UKBoost/>
+
+      <UKReview/>
+      {/* <HeroCarousel/> */}
+
+
+
+    <UK3/>
+      
       <UKteachtest/>
       <UKteachslider/>
 
+
+
+      <UKFPS/>
+
+
+      <UKGrid/> 
+
+      
+      <UKPromote/>
+ 
+
       <UKFAQ/>
+
+
+
+
+
+
+
+      <UKWhatsapp/>
+
+      <UKFooter/>
 
     </div>
   );

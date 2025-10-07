@@ -47,7 +47,7 @@ export default function CardsRenderer({ currentCourse }) {
         <TeacherTestimonial/>
         <FullPageSlider/>
         <FAQ/>
-        <SubscribeSection/>
+        {/* <SubscribeSection/> */}
         <Footer/>
         <FloatingArrowWhatsApp/>
         </>

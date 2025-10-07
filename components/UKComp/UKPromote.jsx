@@ -178,7 +178,7 @@ const UKPromote = () => {
               {/* Top peek card */}
               <div className="absolute -top-6 left-10 w-64 h-80 hidden md:block transform -rotate-3 shadow-xl z-10">
                 <Image
-                  src="#"
+                  src="/"
                   alt="Top Peek Card"
                   fill
                   className="rounded-[30px] object-cover"
@@ -187,7 +187,7 @@ const UKPromote = () => {
               {/* Left peek card */}
               <div className="absolute top-10 -left-6 w-64 h-80 hidden md:block transform -rotate-6 shadow-2xl z-20">
                 <Image
-                  src="#"
+                  src="/"
                   alt="Left Peek Card"
                   fill
                   className="rounded-[30px] object-cover"
@@ -198,7 +198,7 @@ const UKPromote = () => {
             {/* Main Card */}
             <div className="relative z-30 w-80 h-[400px] rounded-[30px] shadow-2xl overflow-hidden border-4 border-white transform hover:scale-[1.02] transition duration-300 ease-in-out">
               <Image
-                src="#"
+                src="/"
                 alt="Main Card"
                 fill
                 className="object-cover"

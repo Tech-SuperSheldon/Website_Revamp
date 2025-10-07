@@ -4,7 +4,7 @@
 "use client";
 import React from "react";
 
-const Review = () => {
+const UKReview = () => {
   return (
     <section className="relative py-12 flex flex-col items-center text-center px-4 sm:px-6 lg:px-12">
       {/* Title */}
@@ -18,7 +18,7 @@ const Review = () => {
       >
         From Our <span className="text-red-400">Hearts</span> to
         <br /> Thousands of{" "}
-        <span className="text-orange-400">Australian</span>
+        <span className="text-orange-400">UK</span>
         <span className="text-orange-400"> Homes</span>
       </h2>
 
@@ -143,4 +143,4 @@ const Review = () => {
   );
 };
 
-export default Review;
+export default UKReview;
