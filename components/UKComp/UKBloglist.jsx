@@ -1,8 +1,5 @@
 
 
-
-
-
 "use client";
 import { useState } from "react";
 import Link from "next/link";
@@ -24,7 +21,7 @@ const posts = [
   // },
 ];
 
-export default function BlogList() {
+export default function UKBloglist() {
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 6;
 
