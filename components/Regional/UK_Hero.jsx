@@ -28,6 +28,8 @@ import UKReview from "../UKComp/UKReview";
 
 import UK3 from "../UKComp/UK3";
 
+import UKExamBanner from "../UKComp/UKExamBanner";
+
 
 
 
@@ -44,6 +46,8 @@ export default function UK_Hero() {
 
 
       <UKCredits/>
+
+      <UKExamBanner/>
 
       <UKStudentTest/>
 
@@ -72,7 +76,7 @@ export default function UK_Hero() {
       <UKGrid/> 
 
       
-      <UKPromote/>
+      {/* <UKPromote/> */}
  
 
       <UKFAQ/>

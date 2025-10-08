@@ -1,21 +1,27 @@
-
 "use client";
 
-export default function GlossyButton({
+export default function UKGlossyButton({
   children = "Book A Free Math Class",
   onClick,
   className = "",
 }) {
   const handleClick = (e) => {
     if (onClick) {
-      onClick(e); // Call the passed onClick function
+      onClick(e);
     }
   };
 
   return (
     <button
       onClick={handleClick}
-      className={`relative overflow-hidden bg-[#e66e37] hover:bg-[#e68355] text-white font-semibold px-5 py-1 rounded-full border-2 border-[#3A1F10] shadow-[1px_1px_0_0_rgba(0,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-[#D16F3B] transition-all duration-200 inline-block text-sm sm:text-base ${className}`}
+      className={`relative overflow-hidden 
+        bg-gradient-to-r from-[#8CD9FF] to-[#3442D9] 
+        hover:from-[#A1E0FF] hover:to-[#5060F0]
+        text-white font-semibold px-5 py-1 rounded-full 
+        border-2 border-[#2330A5] 
+        shadow-[1px_1px_0_0_rgba(0,0,0,0.8)] 
+        focus:outline-none focus:ring-2 focus:ring-[#5AAEFF] 
+        transition-all duration-200 inline-block text-sm sm:text-base ${className}`}
     >
       {children}
 

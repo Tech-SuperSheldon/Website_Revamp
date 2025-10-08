@@ -9,6 +9,8 @@ import { BookOpen, Users, Download } from "lucide-react";
 import GlossyButton from "../GlossyButton";
 import { useRouter } from "next/navigation";
 
+import UKGlossyButton from "./UKGlossybutton";
+
 import { years, coursesData } from "./UKExamData";
 
 export default function UKExamCourses() {
@@ -97,7 +99,7 @@ export default function UKExamCourses() {
           </select>
         </div>
 
-        <div className="hidden sm:flex justify-center gap-3 sm:gap-4 mb-8 sm:mb-10 p-3 sm:p-4 bg-orange-100 rounded-xl overflow-x-auto">
+        <div className="hidden sm:flex justify-center gap-3 sm:gap-4 mb-8 sm:mb-10 p-3 sm:p-4 bg-[#E1E9FE] rounded-xl overflow-x-auto">
           {years.map((year) => (
             <button
               key={year}
@@ -108,7 +110,7 @@ export default function UKExamCourses() {
               {activeYear === year && (
                 <motion.div
                   layoutId="underline"
-                  className="absolute left-0 right-0 -bottom-1 h-[3px] bg-orange-500 rounded-full"
+                  className="absolute left-0 right-0 -bottom-1 h-[3px] bg-blue-700 rounded-full"
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 />
               )}
@@ -176,12 +178,12 @@ export default function UKExamCourses() {
 
                 <div className="flex space-x-2 mt-auto">
                   <Link href={course.path}>
-                    <GlossyButton className="bg-orange-500 text-white py-2 px-3 rounded-full hover:bg-orange-600 transition">
+                    <UKGlossyButton className="bg-orange-500 text-white px-3 py-2 rounded-full hover:bg-orange-600 transition">
                       Try a free Class
-                    </GlossyButton>
+                    </UKGlossyButton>
                   </Link>
 
-                  <GlossyButton
+                  <UKGlossyButton
                     as="a"
                     href={`https://wa.me/917974695618?text=${encodeURIComponent(
                       `Hi, I am interested in the ${course.title} course. Can you share more details?`
@@ -191,7 +193,7 @@ export default function UKExamCourses() {
                     className="flex-1 flex items-center justify-center gap-1 bg-orange-500 hover:bg-orange-600 text-white py-2 px-3 rounded-full transition"
                   >
                     Download Brochure
-                  </GlossyButton>
+                  </UKGlossyButton>
                 </div>
               </div>
             </motion.div>
