@@ -181,7 +181,7 @@ export default function UKFPS() {
               className={`p-6 rounded-xl cursor-pointer transition-all relative overflow-hidden text-left`}
               style={{
                 borderLeft:
-                  i === activeIndex ? "6px solid orange" : "6px solid transparent",
+                  i === activeIndex ? "6px solid blue" : "6px solid transparent",
               }}
             >
               <div className="relative z-10">

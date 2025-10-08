@@ -5,6 +5,8 @@ import { Play, Pause } from "lucide-react";
 import GlossyButton from "../GlossyButton";
 import { useOpenDemoBooking } from "../utils/navigation";
 
+import UKGlossyButton from "./UKGlossybutton";
+
 const videos = [
   { id: 2, name: "Ms. Aditi", src: "/videos/video2.mp4" },
   { id: 1, name: "Ms. Abha", src: "/videos/video1.mp4" },
@@ -102,12 +104,12 @@ export default function UKteachtest() {
             <div className="mx-auto text-center">
               <h3 className="font-semibold text-lg sm:text-xl">2M+ Questions</h3>
               <p className="text-sm sm:text-base text-gray-600 pb-3">2M+ extra projects</p>
-              <GlossyButton
+              <UKGlossyButton
                 onClick={openDemoBooking}
                 className="bg-orange-500 text-white py-2 px-3 rounded-full hover:bg-orange-600 transition"
               >
                 Try a free Class
-              </GlossyButton>
+              </UKGlossyButton>
             </div>
           </div>
           <div className="bg-white shadow-lg shadow-gray-500 rounded-2xl p-4 sm:p-6 w-full max-w-[220px] flex flex-col justify-center items-center font-manrope">
@@ -156,12 +158,12 @@ export default function UKteachtest() {
             <div className="mx-auto text-center">
               <h3 className="font-semibold text-lg sm:text-xl">MIT Certified +</h3>
               <p className="text-sm sm:text-base text-gray-600 pb-3">All teachers MIT certified</p>
-              <GlossyButton
+              <UKGlossyButton
                 onClick={openDemoBooking}
                 className="bg-orange-500 text-white py-2 px-3 rounded-full hover:bg-orange-600 transition"
               >
                 Try a free Class
-              </GlossyButton>
+              </UKGlossyButton>
             </div>
           </div>
         </div>

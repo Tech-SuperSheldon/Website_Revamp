@@ -282,10 +282,12 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Popup from "../Popup";
+import UKPopup from "./UKPopup";
 import GlossyButton from "../GlossyButton";
 import { Menu, X } from "lucide-react";
 import { useOpenDemoBooking } from "../utils/navigation";
+
+import UKGlossyButton from "./UKGlossybutton";
 
 const navLinks = [
   { href: "/uk", label: "Home", type: "link" },
@@ -339,7 +341,7 @@ export default function UKHeader() {
 
   return (
     <header className="fixed top-0 w-full z-50 flex justify-center">
-      <Popup />
+      <UKPopup />
       <nav
         className={`flex items-center justify-between transition-all duration-300 ${
           scrolled
@@ -385,7 +387,7 @@ export default function UKHeader() {
         <div className="hidden md:flex items-center space-x-4">
           <Link href="https://web.wise.live/signup?loginRedirected=true"
           onClick={() => alert('Redirecting to wise.live')}>
-            <GlossyButton>Login</GlossyButton>
+            <UKGlossyButton>Login</UKGlossyButton>
           </Link>
           {/* <Link
             href="https://forms.gle/csc94GLG3tEDit6N6"
@@ -395,7 +397,7 @@ export default function UKHeader() {
             
           </Link> */}
           <a href="#course">
-              <GlossyButton>Try a free Class</GlossyButton>
+              <UKGlossyButton>Try a free Class</UKGlossyButton>
        
           </a>
          </div>
@@ -433,7 +435,7 @@ export default function UKHeader() {
             )
           )}
           <Link href="https://web.wise.live/signup?loginRedirected=true" onClick={() => alert('Redirecting to wise.live')}>
-            <GlossyButton>Login</GlossyButton>
+            <UKGlossyButton>Login</UKGlossyButton>
           </Link>
           <Link
             href="https://forms.gle/csc94GLG3tEDit6N6"
@@ -441,7 +443,7 @@ export default function UKHeader() {
             rel="noopener noreferrer"
             onClick={() => setMenuOpen(false)}
           >
-            <GlossyButton>Try a free Class</GlossyButton>
+            <UKGlossyButton>Try a free Class</UKGlossyButton>
           </Link>
         </div>
       )}

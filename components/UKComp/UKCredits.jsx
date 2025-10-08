@@ -10,7 +10,7 @@ import GlossyButton from "../GlossyButton";
 export default function UKCredits() {
   return (
 
-    <section className=" relative w-[95%] sm:w-[90%] mx-auto -mt-20 px-4 overflow-hidden">
+    <section className=" relative w-[95%] sm:w-[90%] mx-auto -mt-12 sm:-mt-12 px-4 overflow-hidden">
       {/* Pill background */}
       <div className="w-full bg-[#E1E9FE] rounded-[9999px] py-10 px-8 sm:px-12 mb-12 shadow-md relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 items-center text-center justify-center">

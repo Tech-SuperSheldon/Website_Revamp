@@ -72,6 +72,8 @@ import countries from "world-countries";
 import GlossyButton from "../GlossyButton";
 import { useOpenDemoBooking } from "../utils/navigation";
 
+import UKGlossyButton from "./UKGlossybutton";
+
 // Pre-process countries (flag + name + dialCode)
 const countryOptions = countries.map((c) => ({
   code: c.cca2,
@@ -222,9 +224,9 @@ export default function UKHero() {
       />
     </div>
 
-    <GlossyButton type="submit" className="h-12">
+    <UKGlossyButton type="submit" className="h-10">
       Try a Free Class
-    </GlossyButton>
+    </UKGlossyButton>
   </div>
 
   {error && <p className="text-red-500 text-xs">{error}</p>}
@@ -264,7 +266,7 @@ export default function UKHero() {
           />
 
           {/* Members Card */}
-          <div className="absolute bottom-32 -translate-y-2 right-24 bg-white p-3 rounded-full shadow-lg flex items-center space-x-2 border-2 border-white animate-float">
+          <div className="absolute bottom-16 -translate-y-12 right-24 bg-white p-3 rounded-full shadow-lg flex items-center space-x-2 border-2 border-white animate-float">
             <span className="font-bold text-[#1D2026] text-lg">500k+</span>
             <span className="text-[#4E5566] text-xs">Members</span>
             <div className="flex -space-x-3">
