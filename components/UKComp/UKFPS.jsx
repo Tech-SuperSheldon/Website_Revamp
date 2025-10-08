@@ -165,8 +165,8 @@ export default function UKFPS() {
       <h2 className="text-4xl md:text-6xl font-semibold text-center mb-8 leading-tight">
         The <span className="text-purple-600">Smart</span> Choice for
         <br />
-        <span className="text-red-500">Bright</span>{" "}
-        <span className="text-orange-400">Futures</span>
+        <span className="text-blue-500">Bright</span>{" "}
+        <span className="text-blue-400">Futures</span>
       </h2>
 
       <div className="flex flex-col md:flex-row items-center justify-center gap-6 w-full max-w-[1200px]">

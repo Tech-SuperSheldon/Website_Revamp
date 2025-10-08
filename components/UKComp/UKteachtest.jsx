@@ -92,7 +92,7 @@ export default function UKteachtest() {
       <h2 className="text-center font-quicksand font-semibold mb-10 text-[clamp(1.5rem,4vw,3rem)] leading-snug">
         Behind Every Success,
         <br />
-        <span className="text-red-400">A Teacher&apos;s Story</span>
+        <span className="text-blue-400">A Teacher&apos;s Story</span>
       </h2>
 
       {/* Main Wrapper */}

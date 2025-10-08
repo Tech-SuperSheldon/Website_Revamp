@@ -321,10 +321,10 @@ const UKReview = () => {
           letterSpacing: "-1px",
         }}
       >
-        From Our <span className="text-red-400">Hearts</span> to
+        From Our <span className="text-purple-400">Hearts</span> to
         <br /> Thousands of{" "}
-        <span className="text-orange-400">UK</span>
-        <span className="text-orange-400"> Homes</span>
+        <span className="text-blue-400">UK</span>
+        <span className="text-blue-400"> Homes</span>
       </h2>
 
       {/* Subtitle */}
