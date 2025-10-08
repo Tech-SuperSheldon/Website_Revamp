@@ -8,7 +8,7 @@ import UKWhatsapp from "@/components/UKComp/UKWhatsapp";
 
 export default function Terms() {
     return (
-        <div>
+        <div className="bg-[#D3F5FF]">
             <UKHeader />
 
             <RefundPolicy/>
