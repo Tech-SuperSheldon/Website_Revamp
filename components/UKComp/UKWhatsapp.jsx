@@ -26,7 +26,7 @@ export default function UKWhatsapp() {
       {/* Scroll to top button (orange) */}
       <button
         onClick={scrollToTop}
-        className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center rounded-full bg-orange-500 shadow-lg ring-1 ring-black/10 transition-transform hover:-translate-y-2 hover:scale-105"
+        className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center rounded-full bg-blue-500 shadow-lg ring-1 ring-black/10 transition-transform hover:-translate-y-2 hover:scale-105"
         title="Back to top"
       >
         <svg

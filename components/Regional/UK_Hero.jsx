@@ -31,6 +31,9 @@ import UK3 from "../UKComp/UK3";
 import UKExamBanner from "../UKComp/UKExamBanner";
 
 
+import UKExamSuccess from "../UKComp/UKSuccess";
+
+
 
 
 
@@ -56,7 +59,9 @@ export default function UK_Hero() {
 
       <UKExamCourses/>
 
-      <UKBoost/>
+      {/* <UKBoost/> */}
+
+      <UKExamSuccess/>
 
       <UKReview/>
       {/* <HeroCarousel/> */}
