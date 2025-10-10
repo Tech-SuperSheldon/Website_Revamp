@@ -187,16 +187,16 @@ export default function UKStudentTest() {
 
         {/* Floating Icons */}
         <div className="absolute bottom-6 left-8 -translate-x-1/3 animate-float1 z-10 rotate-[45]">
-          <img src="/icons/book.png" alt="globe" width={60} height={60} />
+          <img src="/icons/alarm.png" alt="globe" width={60} height={60} />
         </div>
         <div className="absolute bottom-8 right-6 animate-float2 z-10">
-          <img src="/icons/chalkboard.png" alt="" width={60} height={60} />
+          <img src="/icons/crayons.png" alt="" width={60} height={60} />
         </div>
         <div className="absolute top-4 left-12 animate-float2 z-10">
-          <img src="/icons/palette.png" alt="" width={60} height={60} />
+          <img src="/icons/globe.png" alt="" width={60} height={60} />
         </div>
         <div className="absolute top-4 right-12 animate-float1 z-10">
-          <img src="/icons/Scholarcap.png" alt="" width={60} height={60} />
+          <img src="/icons/Backpack.png" alt="" width={60} height={60} />
         </div>
 
         <style jsx>{`

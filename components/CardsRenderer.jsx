@@ -13,6 +13,9 @@ import Footer from "@/components/Footer";
 import FloatingArrowWhatsApp from "@/components/ArrowAndWhatsapp";
 import ClassVideoSection from '@/components/Studentvideo';
 
+
+import FeatureSlider from "./NewScroller";
+
 export default function CardsRenderer({ currentCourse }) {
     // If no course or no title, return null
     if (!currentCourse || !currentCourse.title) {
@@ -45,7 +48,9 @@ export default function CardsRenderer({ currentCourse }) {
 
         <ClassVideoSection/>
         <TeacherTestimonial/>
-        <FullPageSlider/>
+        {/* <FullPageSlider/> */}
+        <FeatureSlider/>
+        
         <FAQ/>
         {/* <SubscribeSection/> */}
         <Footer/>

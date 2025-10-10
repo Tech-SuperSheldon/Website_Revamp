@@ -881,7 +881,7 @@ export default function Hero() {
           />
 
           {/* Members Card */}
-          <div className="absolute bottom-32 -translate-y-2 right-24 bg-white p-3 rounded-full shadow-lg flex items-center space-x-2 border-2 border-white animate-float">
+          <div className="absolute sm:bottom-24 bottom-16 right-24 bg-white p-3 rounded-full shadow-lg flex items-center space-x-2 border-2 border-white animate-float">
             <span className="font-bold text-[#1D2026] text-lg">500k+</span>
             <span className="text-[#4E5566] text-xs">Members</span>
             <div className="flex -space-x-3">

@@ -110,17 +110,17 @@ export default function UKStudentVideo() {
 
 
 {/* Floating Icons */}
-<div className="absolute -top-12 sm:top-32 left-6 sm:left-16 animate-float1 z-10">
-  <img src="/icons/book.png" alt="Book" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
+<div className="absolute -top-12 sm:-top-16 left-6 sm:left-16 animate-float1 z-10">
+  <img src="/icons/pencil.png" alt="Book" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
 </div>
-<div className="absolute -top-12 sm:top-44 right-12 sm:right-24 animate-float1 z-10">
-  <img src="/icons/science.png" alt="Science" className="w-8 sm:w-10 md:w-12 lg:w-[50px]" />
+<div className="absolute -top-12 sm:-top-16 right-12 sm:right-24 animate-float1 z-10">
+  <img src="/icons/scissors.png" alt="Science" className="w-8 sm:w-10 md:w-12 lg:w-[50px]" />
 </div>
 <div className="absolute -bottom-12 sm:bottom-24 left-10 sm:left-24 animate-float1 z-10">
-  <img src="/icons/palette.png" alt="Palette" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
+  <img src="/icons/ruler.png" alt="Palette" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
 </div>
 <div className="absolute -bottom-14 sm:bottom-16 right-10 sm:right-24 animate-float1 z-10">
-  <img src="/icons/abacus.png" alt="Abacus" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
+  <img src="/icons/globe.png" alt="Abacus" className="w-10 sm:w-12 md:w-14 lg:w-[60px]" />
 </div>
 
 
