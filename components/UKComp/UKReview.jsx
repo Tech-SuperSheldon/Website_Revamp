@@ -411,14 +411,14 @@ const UKReview = () => {
       </div>
 
       {/* Floating Animations */}
-      <div className="absolute bottom-6 left-4 sm:left-8 -translate-x-1/3 animate-float1 z-10 rotate-[45]">
+      <div className="absolute -bottom-6 sm:bottom-6 left-4 sm:left-8 -translate-x-1/3 animate-float1 z-10 rotate-[45]">
         <img
           src="/icons/book.png"
           alt="book"
           className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
         />
       </div>
-      <div className="absolute bottom-8 right-4 sm:right-6 animate-float2 z-10">
+      <div className="absolute -bottom-4 sm:bottom-6 right-4 sm:right-6 animate-float2 z-10">
         <img
           src="/icons/backpack.png"
           alt="backpack"

@@ -187,7 +187,7 @@ export default function UKTestReviews() {
       <p className="text-sm uppercase tracking-wide text-gray-500">
         Overall Rating
       </p>
-      <p className="text-6xl md:text-7xl text-teal-500 font-bold">
+      <p className="text-6xl md:text-7xl text-blue-500 font-bold">
         4.8<span className="text-2xl">/5</span>
       </p>
       <p className="text-gray-600 mt-2">2,431 reviews</p>
@@ -245,7 +245,7 @@ export default function UKTestReviews() {
                     <a
                       key={mention}
                       href="#"
-                      className="px-3 py-1 rounded-full bg-teal-200 text-teal-900 text-sm font-medium hover:bg-teal-300"
+                      className="px-3 py-1 rounded-full bg-teal-200 text-blue-900 text-sm font-medium hover:bg-blue-300"
                     >
                       {mention}
                     </a>
@@ -283,7 +283,7 @@ export default function UKTestReviews() {
         href={src.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="px-3 py-1 rounded-full bg-teal-200 text-teal-900 text-sm font-medium hover:bg-teal-300"
+        className="px-3 py-1 rounded-full bg-blue-200 text-blue-900 text-sm font-medium hover:bg-blue-300"
       >
         {src.label}
       </a>
