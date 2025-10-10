@@ -161,10 +161,10 @@ export default function UKTestReviews() {
   };
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-12 mt-24 font-quicksand">
+    <div className="w-full px-4 sm:px-6 lg:px-12 pt-24 font-quicksand">
       {/* Banner */}
       
-<motion.div
+{/* <motion.div
   initial={{ opacity: 0, y: -40 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.6 }}
@@ -175,7 +175,22 @@ export default function UKTestReviews() {
     alt="Reviews Banner"
     className="w-full h-full object-contain object-center rounded-2xl"
   />
+</motion.div> */}
+
+
+<motion.div
+  initial={{ opacity: 0, y: -40 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+  className="relative w-full mx-auto pt-8 sm:pt-16 lg:pt-20 h-[240px] sm:h-[380px] md:h-[480px] lg:h-[680px] px-2 sm:px-4 md:px-6"
+>
+  <img
+    src="/reviewsbannerv1.png"
+    alt="Reviews Banner"
+    className="w-full h-full object-contain object-center rounded-2xl"
+  />
 </motion.div>
+
 
 
 
@@ -230,7 +245,7 @@ export default function UKTestReviews() {
               <p className="text-sm uppercase tracking-wide text-gray-500 mb-1">
                 Overall Rating
               </p>
-              <p className="text-5xl font-bold text-teal-500">
+              <p className="text-5xl font-bold text-blue-500">
                 4.8<span className="text-xl">/5</span>
               </p>
               <p className="text-gray-600 mt-2">Based on 2,431 reviews</p>
@@ -245,7 +260,7 @@ export default function UKTestReviews() {
                     <a
                       key={mention}
                       href="#"
-                      className="px-3 py-1 rounded-full bg-teal-200 text-blue-900 text-sm font-medium hover:bg-blue-300"
+                      className="px-3 py-1 rounded-full bg-blue-200 text-blue-900 text-sm font-medium hover:bg-blue-300"
                     >
                       {mention}
                     </a>
@@ -262,7 +277,7 @@ export default function UKTestReviews() {
                   <a
                     key={src}
                     href="#"
-                    className="px-3 py-1 rounded-full bg-teal-200 text-teal-900 text-sm font-medium hover:bg-teal-300"
+                    className="px-3 py-1 rounded-full bg-blue-200 text-blue-900 text-sm font-medium hover:bg-blue-300"
                   >
                     {src}
                   </a>
@@ -318,7 +333,7 @@ export default function UKTestReviews() {
     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
     className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-md"
   >
-    <ShieldCheck className="w-6 h-6 text-teal-600" />
+    <ShieldCheck className="w-6 h-6 text-blue-600" />
     <p className="text-sm font-medium text-gray-700">
       Verified Parents & Learners
     </p>
@@ -329,7 +344,7 @@ export default function UKTestReviews() {
     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
     className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-md"
   >
-    <PlayCircle className="w-6 h-6 text-teal-600" />
+    <PlayCircle className="w-6 h-6 text-blue-600" />
     <p className="text-sm font-medium text-gray-700">Video Testimonials</p>
   </motion.div>
 
@@ -338,7 +353,7 @@ export default function UKTestReviews() {
     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
     className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-md"
   >
-    <Globe className="w-6 h-6 text-teal-600" />
+    <Globe className="w-6 h-6 text-blue-600" />
     <p className="text-sm font-medium text-gray-700">Global Community</p>
   </motion.div>
 
@@ -347,7 +362,7 @@ export default function UKTestReviews() {
     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
     className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-md"
   >
-    <Medal className="w-6 h-6 text-teal-600" />
+    <Medal className="w-6 h-6 text-blue-600" />
     <p className="text-sm font-medium text-gray-700">Top Rated Curriculum</p>
   </motion.div>
 </motion.div>
@@ -479,7 +494,7 @@ export default function UKTestReviews() {
       {review.name}
     </a>
   </div>
-  <span className="px-3 py-1 text-xs font-medium rounded-full bg-teal-200 text-teal-900">
+  <span className="px-3 py-1 text-xs font-medium rounded-full bg-blue-200 text-blue-900">
     {review.source}
   </span>
 </div>
@@ -503,7 +518,7 @@ export default function UKTestReviews() {
                 </div>
 
                 {/* Role Tag */}
-                <span className="mb-2 px-3 py-1 text-xs font-medium rounded-full bg-teal-100 text-teal-800 w-fit">
+                <span className="mb-2 px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800 w-fit">
                   {review.role}
                 </span>
 

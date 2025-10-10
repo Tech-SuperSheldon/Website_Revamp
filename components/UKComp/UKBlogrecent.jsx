@@ -195,7 +195,7 @@ export default function UKBlogrecent() {
 
 
 
-    <section className="max-w-6xl mx-auto px-6 py-16 mt-20">
+    <section className="max-w-6xl mx-auto px-6 py-16 pt-24">
       {/* ✅ Banner Image */}
       <div className="w-full h-[220px] md:h-[320px] lg:h-[420px] mb-12 rounded-2xl overflow-hidden shadow-lg">
         <Image
