@@ -185,7 +185,7 @@ export default function FAQ() {
         <img src="/icons/crayons.png" alt="globe" className="w-10 sm:w-[60px]" />
       </div>
       <div className="absolute bottom-12 sm:bottom-32 right-6 sm:right-24 animate-float2 z-10">
-        <img src="/icons/backpack.png" alt="" className="w-8 sm:w-[50px]" />
+        <img src="/icons/Backpack.png" alt="" className="w-8 sm:w-[50px]" />
       </div>
       <div className="absolute top-40 sm:top-64 left-4 sm:left-12 animate-float1 z-10">
         <img src="/icons/scissors.png" alt="" className="w-10 sm:w-[60px]" />
