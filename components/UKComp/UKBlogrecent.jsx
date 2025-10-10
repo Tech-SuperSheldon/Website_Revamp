@@ -168,6 +168,33 @@ Remember, NAPLAN is not about perfection—it’s about showing your growth. Wit
 
 export default function UKBlogrecent() {
   return (
+    // <section className="max-w-6xl mx-auto px-6 py-16 mt-20">
+    //   {/* ✅ Banner Image */}
+    //   <div className="w-full h-[220px] md:h-[320px] lg:h-[420px] mb-12 rounded-2xl overflow-hidden shadow-lg">
+    //     <Image
+    //       src="/blog/blogbannerv1.jpg" // ⬅️ Your uploaded banner
+    //       alt="Blog Banner"
+    //       width={1600}
+    //       height={600}
+    //       className="w-full h-full object-cover rounded-2xl"
+    //       priority
+    //     />
+    //   </div>
+
+    //   {/* Header */}
+    //   <h2 className="text-lg font-bold text-gray-800 mb-8">
+    //     Recent Posts ({posts.length})
+    //   </h2>
+
+    //   <div className="space-y-16">
+    //     {posts.map((post) => (
+    //       <BlogCard key={post.id} post={post} />
+    //     ))}
+    //   </div>
+    // </section>
+
+
+
     <section className="max-w-6xl mx-auto px-6 py-16 mt-20">
       {/* ✅ Banner Image */}
       <div className="w-full h-[220px] md:h-[320px] lg:h-[420px] mb-12 rounded-2xl overflow-hidden shadow-lg">

@@ -59,16 +59,35 @@ export default function UKCourse() {
 
 
   return (
-    <div className="">
-<section className="relative w-[92%] rounded-4xl mx-auto mt-8 sm:mt-16 lg:mt-20 h-[240px] sm:h-[380px] md:h-[480px] lg:h-[680px] px-2 sm:px-4 md:px-6"> 
-  <Image
-    src="/UK/coursebannerv1.jpg"
-    alt="Hero"
-    fill
-    className="w-full h-full object-contain object-center rounded-2xl"
-  />
-  <div className="absolute inset-0" />
-</section>
+
+    <section className=" bg-[#D3F5FF]">
+
+
+{/* <div className="w-[92%] bg-[#D3F5FF] mx-auto mt-24 sm:mt-24 lg:mt-24 md:mt-24 mb-14 sm:mb-12 lg:mb-16">
+  <div className="relative aspect-[3/1] rounded-4xl overflow-hidden">
+    <Image
+      src="/UK/coursebannerv1.jpg"
+      alt="Hero"
+      fill
+      className="object-contain rounded-3xl"
+    />
+  </div>
+</div> */}
+
+
+
+<div className="w-[92%] bg-[#D3F5FF] mx-auto pt-24 sm:pt-24 lg:pt-24 md:pt-24 pb-14 sm:pb-12 lg:pb-16">
+  <div className="relative aspect-[3/1] rounded-4xl overflow-hidden">
+    <Image
+      src="/UK/coursebannerv1.jpg"
+      alt="Hero"
+      fill
+      className="object-contain rounded-3xl"
+    />
+  </div>
+</div>
+
+
 
 
 
@@ -193,65 +212,8 @@ export default function UKCourse() {
         </div>
       </section>
 
-      
-{/* <section className="max-w-6xl mx-auto px-6 pb-20">
-  <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl px-6 md:px-10 py-10 flex flex-col md:flex-row items-center justify-between text-white shadow-lg">
-    <div className="text-center md:text-left max-w-xl">
-      <h2 className="text-2xl md:text-3xl font-bold leading-tight">
-        Join now & unlock amazing discounts 🎉
-      </h2>
-      <p className="mt-2 text-base md:text-lg opacity-90">
-        Enroll today and save big on your NAPLAN journey.
-      </p>
-    </div> */}
 
-    {/* Right Side Form */}
-    {/* <div className="w-full md:w-auto"> */}
-      {/* <form
-        className="mt-6 md:mt-0 flex flex-col sm:flex-row sm:items-center sm:gap-3 sm:bg-white sm:border sm:border-gray-200 sm:rounded-full sm:p-2 sm:shadow-md"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const emailInput = e.target.elements.email.value;
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (emailRegex.test(emailInput)) {
-            setError("");
-            openBokingDemo();
-          } else {
-            setError("Please enter a valid email address");
-          }
-        }}
-      >
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="Enter your email"
-          className="px-4 py-2 flex-1 text-gray-800 text-sm md:text-base outline-none rounded-full border border-gray-200 sm:border-0 sm:rounded-full"
-        />
+    </section >
 
-        <GlossyButton
-          type="submit"
-          className="bg-orange-500 text-white px-4 sm:px-6 py-2 sm:py-3 font-medium hover:bg-orange-600 transition-all rounded-full shadow-sm text-sm sm:text-base"
-        >
-          Try a Free Class
-        </GlossyButton>
-      </form> */}
-
-      {/* Error outside the white div */}
-      {/* <div className="h-4 mt-2 px-2">
-        {error && <p className="text-red-200 text-xs">{error}</p>}
-      </div> */}
-    {/* </div> */}
-  {/* </div>
-</section> */}
-
-
-
-
-
-
-{/* 
-      <CardsRenderer currentCourse={currentCourse} /> */}
-    </div>
   );
 }

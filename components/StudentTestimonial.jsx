@@ -144,7 +144,7 @@ export default function StudentTestimonial() {
                 </div>
 
                 {/* Image */}
-                <div className="mt-6 md:mt-0 md:absolute md:bottom-0 md:right-0 flex justify-center md:block">
+                <div className="mt-6 translate-y-10 md:translate-y-0 md:mt-0 md:absolute md:bottom-0 md:right-0 flex justify-center md:block">
                   <div className="drop-shadow-2xl">
                     <Image
                       src={testimonials[currentIndex].image}

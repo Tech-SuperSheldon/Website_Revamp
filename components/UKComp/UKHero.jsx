@@ -1,68 +1,5 @@
 
 
-// "use client";
-// import Image from "next/image";
-
-// export default function UKHero() {
-//   return (
-//     <div className="w-full flex flex-col items-center relative">
-//       {/* Hero Section */}
-//       <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
-//         {/* Background Image */}
-//         <Image
-//           src="/UK/bg1.png"
-//           alt="Background"
-//           fill
-//           className="object-cover"
-//           priority
-//         />
-
-//         {/* Foreground Banner Image */}
-//         <div className="relative z-10 w-[92%] max-w-[1600px] mx-auto rounded-3xl overflow-hidden shadow-2xl">
-//           <div className="w-full aspect-[16/9] sm:aspect-[21/9]">
-//             <Image
-//               src="/UK/UKhero.png"
-//               alt="Banner"
-//               fill
-//               className="rounded-3xl object-cover"
-//               priority
-//             />
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Images Section */}
-//       <div className="w-full flex justify-center relative overflow-visible -translate-y-1/5">
-//         <div className="flex justify-between w-[85%] sm:w-[75%] md:w-[65%] max-w-[1100px] px-2 sm:px-6 overflow-visible">
-//           {/* Left Image */}
-//           <div className="relative w-[34%] sm:w-[28%] md:w-[22%] lg:w-[18%] aspect-[2/5] overflow-visible translate-y-[-20%]">
-//             <Image
-//               src="/UK/p2.png"
-//               alt="Left Image"
-//               fill
-//               className="rounded-full shadow-lg object-cover"
-//             />
-//           </div>
-//           {/* Right Image */}
-//           <div className="relative w-[34%] sm:w-[28%] md:w-[22%] lg:w-[18%] aspect-[2/5] overflow-visible translate-y-[-10%]">
-//             <Image
-//               src="/UK/p1.png"
-//               alt="Right Image"
-//               fill
-//               className="rounded-full shadow-lg object-cover"
-//             />
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
-
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -253,8 +190,10 @@ export default function UKHero() {
           </div>
         </div>
 
-        {/* Right Column */}
-        <div className="relative flex justify-center items-center mt-10 lg:mt-20">
+
+
+
+        {/* <div className="relative flex justify-center items-center mt-10 lg:mt-20">
           <Image
             src="/UK/herov1.png"
             alt="Happy students showing A+ grade"
@@ -265,7 +204,6 @@ export default function UKHero() {
             sizes="(max-width: 768px) 100vw, 50vw"
           />
 
-          {/* Members Card */}
           <div className="absolute bottom-16 -translate-y-12 right-24 bg-white p-3 rounded-full shadow-lg flex items-center space-x-2 border-2 border-white animate-float">
             <span className="font-bold text-[#1D2026] text-lg">500k+</span>
             <span className="text-[#4E5566] text-xs">Members</span>
@@ -290,7 +228,52 @@ export default function UKHero() {
                 />
               </div>
             </div>
-          </div>
+          </div> */}
+
+
+{/* Right Column */}
+<div className="relative flex justify-center items-center mt-10 lg:mt-20">
+  <Image
+  src="/UK/herov1.png"
+  alt="Happy students showing A+ grade"
+  width={1000}
+  height={1000}
+  className="max-w-full h-auto transform sm:scale-100 scale-[1.2]"
+  priority
+  sizes="(max-width: 768px) 100vw, 50vw"
+/>
+
+
+  {/* Members Card */}
+  <div className="absolute bottom-10 -translate-y-4 right-24 bg-white p-3 rounded-full shadow-lg flex items-center space-x-2 border-2 border-white animate-float">
+    <span className="font-bold text-[#1D2026] text-lg">500k+</span>
+    <span className="text-[#4E5566] text-xs">Members</span>
+    <div className="flex -space-x-3">
+      <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-[#FFD700] flex items-center justify-center">
+        <Image src="/Users.png" alt="User icon" width={20} height={20} />
+      </div>
+      <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-[#FF8D28] flex items-center justify-center">
+        <Image
+          src="/CircleWavyCheck.png"
+          alt="Verified icon"
+          width={20}
+          height={20}
+        />
+      </div>
+      <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-[#FF6636] flex items-center justify-center">
+        <Image
+          src="/GlobeHemisphereWest.png"
+          alt="Globe icon"
+          width={20}
+          height={20}
+        />
+      </div>
+    </div>
+  </div>
+
+
+
+
 
           {/* Floating Logos with Animations */}
           <div className="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 z-10 animate-float1">
@@ -330,7 +313,7 @@ export default function UKHero() {
             transform: translateY(0);
           }
           50% {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
           }
         }
         @keyframes float1 {
