@@ -245,7 +245,7 @@ export default function UKHero() {
 
 
   {/* Members Card */}
-  <div className="absolute bottom-10 -translate-y-4 right-24 bg-white p-3 rounded-full shadow-lg flex items-center space-x-2 border-2 border-white animate-float">
+  <div className="absolute -bottom-8 sm:bottom-10 sm:-translate-y-12 -translate-y-24 sm:right-16 right-26 translate-x-24 sm:translate-x-0 bg-white p-3 rounded-full shadow-lg flex items-center space-x-2 border-2 border-white animate-float">
     <span className="font-bold text-[#1D2026] text-lg">500k+</span>
     <span className="text-[#4E5566] text-xs">Members</span>
     <div className="flex -space-x-3">

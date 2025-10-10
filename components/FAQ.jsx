@@ -181,17 +181,17 @@ export default function FAQ() {
       </div>
 
       {/* Floating Icons (responsive sizing & positions) */}
-      <div className="absolute bottom-20 sm:bottom-32 left-4 sm:left-16 animate-float1 z-10 rotate-[45]">
-        <img src="/icons/book.png" alt="globe" className="w-10 sm:w-[60px]" />
+      <div className="absolute bottom-12 sm:bottom-32 left-4 sm:left-16 animate-float1 z-10 rotate-[45]">
+        <img src="/icons/crayons.png" alt="globe" className="w-10 sm:w-[60px]" />
       </div>
-      <div className="absolute bottom-20 sm:bottom-32 right-6 sm:right-24 animate-float2 z-10">
-        <img src="/icons/science.png" alt="" className="w-8 sm:w-[50px]" />
+      <div className="absolute bottom-12 sm:bottom-32 right-6 sm:right-24 animate-float2 z-10">
+        <img src="/icons/backpack.png" alt="" className="w-8 sm:w-[50px]" />
       </div>
       <div className="absolute top-40 sm:top-64 left-4 sm:left-12 animate-float1 z-10">
-        <img src="/icons/chalkboard.png" alt="" className="w-10 sm:w-[60px]" />
+        <img src="/icons/scissors.png" alt="" className="w-10 sm:w-[60px]" />
       </div>
       <div className="absolute top-40 sm:top-64 right-4 sm:right-12 animate-float1 z-10">
-        <img src="/icons/backpack.png" alt="" className="w-10 sm:w-[60px]" />
+        <img src="/icons/alarm.png" alt="" className="w-10 sm:w-[60px]" />
       </div>
 
       <style jsx>{`

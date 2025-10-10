@@ -9,7 +9,7 @@ import { useOpenDemoBooking } from "./utils/navigation";
 
 export default function Credits() {
   return (
-    <section className="relative w-[95%] sm:w-[90%] mx-auto -mt-20 px-4 overflow-hidden">
+    <section className="relative w-[95%] sm:w-[90%] mx-auto -mt-16 mb-12 px-4 overflow-hidden">
       {/* Pill background */}
       <div className="w-full bg-[#EDE8E1] rounded-[9999px] py-10 px-8 sm:px-12 shadow-md relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 items-center text-center justify-center">
@@ -63,7 +63,7 @@ export default function Credits() {
           {/* 3. 80% Confidence */}
           <div className="flex flex-col items-center justify-center space-y-3">
             <p className="text-[#1D2026] font-semibold text-lg sm:text-xl leading-snug text-center">
-              80% learners show increased 
+              80% learners show increased &nbsp; 
               <br className="hidden sm:block" />
                confidence in 2 weeks
             </p>

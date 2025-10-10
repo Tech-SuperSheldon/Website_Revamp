@@ -64,7 +64,7 @@ import Image from "next/image";
 export default function AnimatedImageGrid() {
   const images = [
     "/UK/grid/1.png",
-    "/UK/grid/2.png",
+    "/UK/grid/2.jpg",
     "/UK/grid/3.png",
     "/UK/grid/4.png",
   ];
