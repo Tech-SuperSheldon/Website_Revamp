@@ -56,8 +56,9 @@ export default function Home() {
       <StudentTestimonial />
 
 
-      <ExamCourses />
+      {/* <ExamCourses /> */}
 
+    <NewExamCourses/>
 
       {/* <NewExamCourses /> */}
 
