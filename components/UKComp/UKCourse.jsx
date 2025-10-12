@@ -4,8 +4,6 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 
-// import CardsRenderer from "./CardsRenderer";
-import GlossyButton from "../GlossyButton";
 import { useOpenDemoBooking } from "../utils/navigation";
 
 import { coursesData } from "./UKExamData";
@@ -61,20 +59,6 @@ export default function UKCourse() {
   return (
 
     <section className=" bg-[#D3F5FF]">
-
-
-{/* <div className="w-[92%] bg-[#D3F5FF] mx-auto mt-24 sm:mt-24 lg:mt-24 md:mt-24 mb-14 sm:mb-12 lg:mb-16">
-  <div className="relative aspect-[3/1] rounded-4xl overflow-hidden">
-    <Image
-      src="/UK/coursebannerv1.jpg"
-      alt="Hero"
-      fill
-      className="object-contain rounded-3xl"
-    />
-  </div>
-</div> */}
-
-
 
 <div className="w-[92%] bg-[#D3F5FF] mx-auto pt-24 sm:pt-24 lg:pt-24 md:pt-24 pb-14 sm:pb-12 lg:pb-16">
   <div className="relative aspect-[3/1] rounded-4xl overflow-hidden">

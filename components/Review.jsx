@@ -98,14 +98,14 @@ const Review = () => {
           className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
         />
       </div>
-      <div className="absolute top-4 left-12 sm:left-32 animate-float2 z-10">
+      <div className="absolute sm:top-4 top-32 left-12 sm:left-32 animate-float2 z-10">
         <img
           src="/icons/calc.png"
           alt="lamp"
           className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
         />
       </div>
-      <div className="absolute top-4 right-12 sm:right-32 animate-float1 z-10">
+      <div className="absolute sm:top-4 top-32 right-12 sm:right-32 animate-float1 z-10">
         <img
           src="/icons/ruler.png"
           alt="scholar cap"
