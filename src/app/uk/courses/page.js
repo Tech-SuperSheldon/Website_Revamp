@@ -14,6 +14,8 @@ import UKFPS from "@/components/UKComp/UKFPS";
 
 import UKFAQ from "@/components/UKComp/UKFAQ";
 
+import UKCourseSection from "@/components/UKComp/course/UKCourseSection";
+
 
 export default function Courses() {
     return (
@@ -21,6 +23,8 @@ export default function Courses() {
 
             <UKHeader />
             <UKCourse/>
+
+            {/* <UKCourseSection/> */}
 
             <UKStudentVideo/>
 
