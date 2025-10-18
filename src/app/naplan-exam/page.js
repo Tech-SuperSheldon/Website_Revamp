@@ -26,6 +26,19 @@ import ParentAssurance from "@/components/naplan/ParentAssurance";
 
 import NaplanPricing from "@/components/naplan/NaplanPricing";
 
+import NaplanReview from "@/components/naplan/NaplanReview";
+
+import CardsNaplan from "@/components/PricingCardNaplan";
+
+import NaplanAdvantage from "@/components/naplan/NaplanAdvantage";
+
+
+import TeacherTestimonial from "@/components/TeacherTestimonial";
+
+
+import Hero from "@/components/Hero";
+
+import NaplanExperience from "@/components/naplan/NaplanExperience";
 
 
 export default function Home() {
@@ -35,24 +48,21 @@ export default function Home() {
             <Header />
 
             <HeroSection />
-            <AboutSection />
-            <CourseSection />
-            {/* <TestimonialsPricing /> */}
 
-            <NaplanTestimonial/>
+            <NaplanAdvantage/>
 
-            <NaplanPricing/>
+            <NaplanReview />
 
 
-            {/* <TutorsFAQSection /> */}
+            <CardsNaplan/>
+
+            <NaplanExperience/>
 
 
-            <NaplanTutors />
+            <TeacherTestimonial/>
 
-            {/* <ParentAssurance/> */}
 
-            <NaplanFAQ />
-
+            <NaplanFAQ/>
 
             <Footer />
         </main>
