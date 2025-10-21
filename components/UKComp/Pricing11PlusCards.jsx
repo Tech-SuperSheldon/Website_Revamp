@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import UKGlossyButton from "./UKGlossybutton";
 
+import { useOpenDemoBooking } from "../utils/navigation";
+
 const pricingPlans = [
   {
     id: 1,
@@ -124,7 +126,7 @@ export default function Cards11Plus() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <UKGlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
+                <UKGlossyButton onClick={useOpenDemoBooking()}  className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
                   Try a free Class
                 </UKGlossyButton>
                 {/* <UKGlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">

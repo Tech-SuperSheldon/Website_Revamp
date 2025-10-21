@@ -6,6 +6,10 @@ import { motion } from "framer-motion";
 import { CheckIcon } from "@heroicons/react/24/solid";
 import GlossyButton from "./GlossyButton";
 
+
+import { useOpenDemoBooking } from "./utils/navigation";
+
+
 const pricingPlans = [
   {
     id: 1,
@@ -54,6 +58,8 @@ const pricingPlans = [
 
 export default function CardsNaplan() {
   const [flipped, setFlipped] = useState({});
+
+  const { openDemoBooking } = useOpenDemoBooking();
 
   const toggleFlip = (id) => {
     setFlipped((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -125,12 +131,12 @@ export default function CardsNaplan() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <GlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
+                <GlossyButton onClick={useOpenDemoBooking()} className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
                   Try a free Class
                 </GlossyButton>
-                <GlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
+                {/* <GlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
                   Download Brochure PDF
-                </GlossyButton>
+                </GlossyButton> */}
               </div>
             </div>
           </motion.div>
