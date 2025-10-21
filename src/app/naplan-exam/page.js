@@ -43,6 +43,9 @@ import NaplanExperience from "@/components/naplan/NaplanExperience";
 import SubscribeSection from "@/components/SubscribeBanner";
 
 
+import TeacherCarousel from "@/components/Teachers";
+
+
 export default function Home() {
     return (
         <main className="overflow-hidden">
@@ -62,6 +65,8 @@ export default function Home() {
 
 
             <TeacherTestimonial/>
+
+            <TeacherCarousel/>
 
 
             <NaplanFAQ/>

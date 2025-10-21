@@ -130,7 +130,7 @@ const features = [
         transition={{ duration: 0.6 }}
         className="flex-1"
       >
-        <h4 className="text-xl md:text-2xl font-bold text-[#0A0F2C] mb-3">
+        <h4 className="text-xl md:text-2xl  font-bold text-orange-600 mb-3">
           The Supersheldon Advantage
         </h4>
         <h2 className="text-4xl md:text-5xl font-bold text-[#10352B] leading-tight mb-6">

@@ -26,6 +26,9 @@ import Cards11Plus from "@/components/UKComp/Pricing11PlusCards";
 import UKSubscribeSection from "@/components/UKComp/UKSubscribeSection";
 
 
+import E11Experience from "@/components/ElevenPlus/E11Experience";
+
+
 export default function Home() {
     return (
         <div className="bg-[#D3F5FF]">
@@ -41,6 +44,8 @@ export default function Home() {
 
 
 <Cards11Plus/>
+
+<E11Experience/>
 
 <UKteachtest/>
 <UKteachslider/>

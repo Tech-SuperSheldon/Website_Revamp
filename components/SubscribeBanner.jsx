@@ -99,9 +99,9 @@ const SubscribeSection = () => {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center max-w-xl">
-        <h2 className="text-3xl md:text-4xl font-semibold mb-4">Subscribe to Supersheldon</h2>
+        <h2 className="text-3xl md:text-4xl font-semibold mb-4">Ready to See the Difference?</h2>
         <p className="mb-6 text-base md:text-lg">
-          Stay ahead with the latest courses, exam tips, and free learning resources.
+          Book a free diagnostic test and see how your child can excel with Super Sheldon.
         </p>
 
         {/* Email + Button with inline alert */}
@@ -117,7 +117,7 @@ const SubscribeSection = () => {
           />
           <div className="absolute top-1/2 right-2 -translate-y-1/2">
             <GlossyButton type="submit" className="px-4 py-2 rounded-full text-sm">
-              Try a free Class
+              Book Free Trial Now
             </GlossyButton>
           </div>
           {error && <p className="absolute left-4 -bottom-6 text-red-400 text-sm">{error}</p>}

@@ -99,7 +99,7 @@ import { motion } from "framer-motion";
 export default function NaplanReview() {
   const sections = [
     {
-      icon: "/naplan/review/1.png",
+      icon: "/naplan/review/1.gif",
       title: "01. Reading",
       points: [
         "Understanding Informative & Narrative Texts",
@@ -108,7 +108,7 @@ export default function NaplanReview() {
       ],
     },
     {
-      icon: "/naplan/review/2.png",
+      icon: "/naplan/review/2.gif",
       title: "02. Vocabulary, Grammar & Writing",
       points: [
         "Using Context to Work Out Meanings, Clauses, Conjunctions & Complex Sentences",
@@ -117,7 +117,7 @@ export default function NaplanReview() {
       ],
     },
     {
-      icon: "/naplan/review/3.png",
+      icon: "/naplan/review/3.gif",
       title: "03. Numeracy",
       points: [
         "Multiplication, Division & Large Numbers",
@@ -139,9 +139,10 @@ export default function NaplanReview() {
         <h2 className="text-3xl md:text-4xl font-semibold text-[#10352B] mb-2">
           What’s Included in the
         </h2>
-        <h3 className="text-4xl md:text-5xl font-bold text-[#10352B]">
+        <h3 className="text-4xl text-orange-600 md:text-5xl font-bold text-[#10352B]">
           NAPLAN Course
         </h3>
+
       </motion.div>
 
       {/* Content Box */}
