@@ -20,6 +20,12 @@ import E11FAQ from "@/components/ElevenPlus/E11FAQ";
 import SubscribeSection from "@/components/SubscribeBanner";
 
 
+import Cards11Plus from "@/components/UKComp/Pricing11PlusCards";
+
+
+import UKSubscribeSection from "@/components/UKComp/UKSubscribeSection";
+
+
 export default function Home() {
     return (
         <div className="bg-[#D3F5FF]">
@@ -33,12 +39,15 @@ export default function Home() {
 <E11Impact/>
 <E11Structure/>
 
+
+<Cards11Plus/>
+
 <UKteachtest/>
 <UKteachslider/>
 
 <E11FAQ/>
 
-<SubscribeSection/>
+<UKSubscribeSection/>
 
             <UKFooter />
             <UKWhatsapp />
