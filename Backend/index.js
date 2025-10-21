@@ -6,10 +6,23 @@ const main = require("./src/config/db") ;
 const cors = require("cors") ;
 const userRouter = require("./src/routes/userRouter") ;
 
-app.use(cors({
-    origin: "https://www.supersheldon.com",
-    credentials: true
-}))
+
+const allowlist = new Set([
+  "http://localhost:3000",
+  "https://www.supersheldon.com"
+]);
+
+const corsOptions = {
+  origin(origin, cb) {
+    if (!origin || allowlist.has(origin)) return cb(null, true);
+    return cb(null, false);
+  },
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json()) ;
 
