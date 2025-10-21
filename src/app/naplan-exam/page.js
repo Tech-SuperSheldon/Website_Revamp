@@ -40,6 +40,8 @@ import Hero from "@/components/Hero";
 
 import NaplanExperience from "@/components/naplan/NaplanExperience";
 
+import SubscribeSection from "@/components/SubscribeBanner";
+
 
 export default function Home() {
     return (
@@ -63,6 +65,8 @@ export default function Home() {
 
 
             <NaplanFAQ/>
+
+            <SubscribeSection/>
 
             <Footer />
         </main>
