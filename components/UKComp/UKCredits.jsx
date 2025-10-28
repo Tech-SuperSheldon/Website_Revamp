@@ -134,7 +134,7 @@ export default function UKCredits() {
                   />
                 </Link>
                 <p className="text-sm sm:text-base text-[#4E5566] mt-2 break-words w-full text-center">
-                  28 reviews
+                  30 reviews
                 </p>
               </div>
             </div>
