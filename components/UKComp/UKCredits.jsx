@@ -114,7 +114,7 @@ export default function UKCredits() {
                   />
                 </Link>
                 <p className="text-sm sm:text-base text-[#4E5566] mt-2 break-words w-full text-center">
-                  TrustScore 4.9 (395 reviews)
+                  TrustScore 4.9 (35 reviews)
                 </p>
               </div>
 
@@ -134,7 +134,7 @@ export default function UKCredits() {
                   />
                 </Link>
                 <p className="text-sm sm:text-base text-[#4E5566] mt-2 break-words w-full text-center">
-                  278 reviews
+                  28 reviews
                 </p>
               </div>
             </div>
