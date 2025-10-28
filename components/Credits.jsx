@@ -136,7 +136,7 @@ export default function Credits() {
                   />
                 </Link>
                 <p className="text-sm sm:text-base text-[#4E5566] mt-2">
-                  28 reviews
+                  30 reviews
                 </p>
               </div>
 
