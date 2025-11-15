@@ -37,6 +37,9 @@ import UKExamSuccess from "../UKComp/UKSuccess";
 import UKNewExamCourses from "../UKComp/UKNewExamCourses";
 
 
+import UKTestimonialVideoBoost from "../UKComp/UKTestimonialVideoBoost";
+
+
 
 
 
@@ -59,43 +62,29 @@ export default function UK_Hero() {
 
       <UKStudentVideo/>
 
-{/* 
-      <UKExamCourses/> */}
+
+            <UKTestimonialVideoBoost/>
+            
 
       <UKNewExamCourses/>
 
-      {/* <UKBoost/> */}
 
       <UKExamSuccess/>
 
       <UKReview/>
-      {/* <HeroCarousel/> */}
-
-
 
     <UK3/>
       
       <UKteachtest/>
-      <UKteachslider/>
 
+      <UKteachslider/>
 
 
       <UKFPS/>
 
-
       <UKGrid/> 
 
-      
-      {/* <UKPromote/> */}
- 
-
       <UKFAQ/>
-
-
-
-
-
-
 
       <UKWhatsapp/>
 

@@ -116,7 +116,7 @@ export default function Credits() {
                   />
                 </Link>
                 <p className="text-sm sm:text-base text-[#4E5566] mt-2">
-                  TrustScore 4.9 (35 reviews)
+                  TrustScore 4.5 (42 reviews)
                 </p>
               </div>
 

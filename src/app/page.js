@@ -34,9 +34,12 @@ import NewExamCourses from '@/components/NewExamCourses';
 
 import TryFreeClass from '@/components/freeclass/tryfreeclass';
 
+import UKTestimonialVideoBoost from '@/components/UKComp/UKTestimonialVideoBoost';
+
 export const metadata = {
 
   title: "SuperSheldon | Interactive Online Learning for Kids & Students",
+
 
   }
 
@@ -63,6 +66,8 @@ export default function Home() {
       {/* <NewExamCourses /> */}
 
       <ClassVideoSection />
+
+      <UKTestimonialVideoBoost/>
 
 
       <Review />
