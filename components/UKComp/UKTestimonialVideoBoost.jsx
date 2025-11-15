@@ -194,7 +194,7 @@ export default function UKTestimonialVideoBoost() {
   };
 
   return (
-    <section className="relative w-full bg-[#CFF2FF] overflow-hidden py-12 md:py-24 flex justify-center">
+    <section className="relative w-full overflow-hidden py-12 md:py-24 flex justify-center">
       {/* Outer Box */}
       <div className="relative w-full max-w-6xl bg-[#F5F5F5] rounded-3xl p-6 md:p-12 mx-4 md:mx-8 flex flex-col items-center justify-center">
 
