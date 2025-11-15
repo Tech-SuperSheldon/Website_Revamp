@@ -18,9 +18,9 @@ const testimonials = [
     image: "/k2g.png",
   },
   {
-    text: " SuperSheldon has really boosted my confidence in class. The teachers explain everything clearly. My grades have improved a lot this term.",
-    name: "— Liam Anderson, Year 10 Student, Australia ",
-    image: "/k3b.png",
+    text: " My name's Alex. I'm from Melbourne. I joined Super Sheldon around two months, and really happy with the teacher, kind and pensive, and explain me maths and English. I understand, and I am really happy now. Thank you.",
+    name: "— Alex, Year 4, Australian Student ",
+    image: "/k4b.png",
   },
 ];
 

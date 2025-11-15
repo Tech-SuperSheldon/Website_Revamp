@@ -18,7 +18,6 @@ export default function UKExamSuccess() {
             priority
           />
         </div>
-
         {/* Content Wrapper */}
         <div className="relative flex flex-col md:flex-row items-center justify-between w-full">
           {/* Left Text Content */}
@@ -49,8 +48,6 @@ export default function UKExamSuccess() {
               </div>
             </div>
           </div>
-
-
 <div className="relative md:w-1/2 flex justify-center mt-16 md:mt-0">
   <div className="relative w-full sm:w-2/3 md:w-full max-w-md -mt-12 md:-mt-16 z-10 flex justify-center">
     <Image
@@ -63,9 +60,6 @@ export default function UKExamSuccess() {
     />
   </div>
 </div>
-
-
-
         </div>
       </div>
     </section>

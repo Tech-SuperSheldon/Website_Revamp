@@ -83,7 +83,7 @@ const coursesData = {
     },
     {
       id: "naplan-3-2",
-      title: "Naplan Exam Prep Course",
+      title: "ICAS Smart Prep Course",
       type: "Exam Preparation",
       duration: "22hr 30min",
       topics: 9,

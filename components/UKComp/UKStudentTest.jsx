@@ -18,8 +18,8 @@ const testimonials = [
     image: "/k2g.png",
   },
   {
-    text: " SuperSheldon has really boosted my confidence in class. The teachers explain everything clearly. My grades have improved a lot this term.",
-    name: "— Liam Anderson, Year 10 Student, Australia ",
+    text: " East or West, Super Sheldon is the best. We love Super Sheldon. ",
+    name: "— Azeena and Adeena, Year 4, London, UK ",
     image: "/k3b.png",
   },
 ];
