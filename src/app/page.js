@@ -34,7 +34,7 @@ import NewExamCourses from '@/components/NewExamCourses';
 
 import TryFreeClass from '@/components/freeclass/tryfreeclass';
 
-import UKTestimonialVideoBoost from '@/components/UKComp/UKTestimonialVideoBoost';
+import TestimonialVideoBoost from '@/components/StudentTestimonialVideoBoost';
 
 export const metadata = {
 
@@ -46,28 +46,22 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-    {/* <HeroHeader /> */}
+
       <HeaderNav />
 
-      {/* <HeroContent /> */}
-      {/* <CreditsSection /> */}
 
-      {/* <HeroWithCredits/> */}
       <Hero/>
       <CreditsSection/>
       <TryFreeClass/>
       <StudentTestimonial />
 
 
-      {/* <ExamCourses /> */}
-
     <NewExamCourses/>
 
-      {/* <NewExamCourses /> */}
 
       <ClassVideoSection />
 
-      <UKTestimonialVideoBoost/>
+      <TestimonialVideoBoost/>
 
 
       <Review />
@@ -77,13 +71,10 @@ export default function Home() {
 
       <TeacherCarousel />
 
-      {/* <Features /> */}
-      {/* <FullPageSlider/> */}
 
       <FeatureSlider/>
       <FAQ />
 
-      {/* <SubscribeBanner /> */}
       
 
       <Footer />

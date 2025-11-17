@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Play, Pause } from "lucide-react";
 
-export default function UKTestimonialVideoBoost() {
+export default function TestimonialVideoBoost() {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -83,7 +83,7 @@ export default function UKTestimonialVideoBoost() {
             </p>
 
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
-              Super Sheldon Made the 11+ Easy: A Student’s Testimonial
+              Ace Your Exams with Super Sheldon: A Student's Story
             </h2>
           </div>
 
