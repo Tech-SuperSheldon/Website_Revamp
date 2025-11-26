@@ -9,7 +9,7 @@ import GlossyButton from "./GlossyButton";
 const pricingPlans = [
   {
     id: 1,
-    price: "$50",
+    price: "A$360",
     classes: "24 Class",
     title: "Scholarship Starter",
     image: "/cards/1.png", // 👈 your portrait image
@@ -23,7 +23,7 @@ const pricingPlans = [
   },
   {
     id: 2,
-    price: "$100",
+    price: "A$672",
     classes: "48 Class",
     title: "Scholarship Champion",
     image: "/cards/2.png",
@@ -38,7 +38,7 @@ const pricingPlans = [
   },
   {
     id: 3,
-    price: "$200",
+    price: "A$1152",
     classes: "96 Class",
     title: "Scholarship Prodigy",
     image: "/cards/3.png",
