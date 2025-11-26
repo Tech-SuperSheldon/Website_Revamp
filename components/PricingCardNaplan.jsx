@@ -13,7 +13,7 @@ import { useOpenDemoBooking } from "./utils/navigation";
 const pricingPlans = [
   {
     id: 1,
-    price: "$50",
+    price: "A$360",
     classes: "24 Class",
     title: "NAPLAN Starter",
     image: "/cards/1.png", // 👈 your portrait image
@@ -27,7 +27,7 @@ const pricingPlans = [
   },
   {
     id: 2,
-    price: "$100",
+    price: "A$672",
     classes: "48 Class",
     title: "NAPLAN Champion",
     image: "/cards/2.png",
@@ -42,7 +42,7 @@ const pricingPlans = [
   },
   {
     id: 3,
-    price: "$200",
+    price: "A$1152",
     classes: "96 Class",
     title: "NAPLAN Prodigy",
     image: "/cards/3.png",
