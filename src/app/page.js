@@ -36,6 +36,8 @@ import TryFreeClass from '@/components/freeclass/tryfreeclass';
 
 import TestimonialVideoBoost from '@/components/StudentTestimonialVideoBoost';
 
+import ChristmasPopup from '@/components/ChristmasPopup';
+
 export const metadata = {
 
   title: "SuperSheldon | Interactive Online Learning for Kids & Students",
@@ -46,7 +48,7 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-
+    <ChristmasPopup/>
       <HeaderNav />
 
 
