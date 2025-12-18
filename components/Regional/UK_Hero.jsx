@@ -40,7 +40,7 @@ import UKNewExamCourses from "../UKComp/UKNewExamCourses";
 import UKTestimonialVideoBoost from "../UKComp/UKTestimonialVideoBoost";
 
 
-
+import ChristmasPopup from "../ChristmasPopup";
 
 
 export default function UK_Hero() {
@@ -48,10 +48,11 @@ export default function UK_Hero() {
     <div>
       <UKHeader/>
 
+    
 
       <UKHero />
 
-
+<ChristmasPopup color="blue"/>
 
 
       <UKCredits/>
