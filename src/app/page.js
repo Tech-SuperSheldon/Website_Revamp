@@ -38,6 +38,10 @@ import TestimonialVideoBoost from '@/components/StudentTestimonialVideoBoost';
 
 import ChristmasPopup from '@/components/ChristmasPopup';
 
+import VideoChoose from '@/components/sharedcomps/VideoChoose';
+
+
+
 export const metadata = {
 
   title: "SuperSheldon | Interactive Online Learning for Kids & Students",
@@ -62,6 +66,8 @@ export default function Home() {
 
 
       <ClassVideoSection />
+
+      <VideoChoose/>
 
       <TestimonialVideoBoost/>
 
