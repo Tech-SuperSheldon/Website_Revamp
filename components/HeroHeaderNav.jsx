@@ -11,6 +11,8 @@ import GlossyButton from "./GlossyButton";
 import { Menu, X } from "lucide-react";
 import { useOpenDemoBooking } from "./utils/navigation";
 
+import ChristmasButton from "./sharedcomps/ChristmasButton";
+
 const navLinks = [
   { href: "/", label: "Home", type: "link" },
   { href: "/courses", label: "Courses", type: "link" },
@@ -157,7 +159,9 @@ export default function Header() {
             )
           )}
           <Link href="https://web.wise.live/signup?loginRedirected=true" onClick={() => alert('Redirecting to wise.live')}>
-            <GlossyButton>Login</GlossyButton>
+            {/* <GlossyButton>Login</GlossyButton> */}
+            <ChristmasButton>Login</ChristmasButton>
+            
           </Link>
           <Link
             href="https://forms.gle/csc94GLG3tEDit6N6"

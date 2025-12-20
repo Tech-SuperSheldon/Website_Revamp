@@ -42,6 +42,8 @@ import UKTestimonialVideoBoost from "../UKComp/UKTestimonialVideoBoost";
 
 import ChristmasPopup from "../ChristmasPopup";
 
+import VideoChoose from "../sharedcomps/VideoChoose";
+
 
 export default function UK_Hero() {
   return (
@@ -62,6 +64,8 @@ export default function UK_Hero() {
       <UKStudentTest/>
 
       <UKStudentVideo/>
+
+      <VideoChoose themeColor="blue"/>
 
 
             <UKTestimonialVideoBoost/>
