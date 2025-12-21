@@ -229,7 +229,7 @@ export default function TestimonialVideoBoost() {
               Why Super Sheldon
             </p>
             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
-              Ace Your Exams with Super Sheldon: A Student's Story
+              Ace Your Exams with Super Sheldon: A Student&apos;s Story
             </h2>
           </div>
 
