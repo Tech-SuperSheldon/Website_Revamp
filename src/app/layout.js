@@ -102,9 +102,11 @@ export default function RootLayout({ children }) {
 
         {/* Meta Pixel noscript fallback (UPDATED) */}
         <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             height="1"
             width="1"
+            alt=""
             style={{ display: "none" }}
             src="https://www.facebook.com/tr?id=2001958333960772&ev=PageView&noscript=1"
           />
@@ -119,7 +121,7 @@ export default function RootLayout({ children }) {
         {/* Page content */}
         <main className="relative z-10">
           <CursorTrail />
-          <FestiveOverlay/>
+          <FestiveOverlay />
           {children}</main>
       </body>
     </html>
