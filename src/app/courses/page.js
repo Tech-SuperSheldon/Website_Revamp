@@ -24,12 +24,7 @@ import FloatingArrowWhatsApp from "@/components/ArrowAndWhatsapp";
 import ClassVideoSection from '@/components/Studentvideo';
 import { useEffect , useState } from "react";
 
- const metadata = {
-  title: "Courses | SuperSheldon Online Learning",
-};
-
-
-export default  function  Courses({currentCourse}) {
+export default function Courses() {
 
     return (
         <div>
