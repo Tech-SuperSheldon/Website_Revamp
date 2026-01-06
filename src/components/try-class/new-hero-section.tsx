@@ -58,7 +58,7 @@ export function NewHeroSection() {
 
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-slate-700">Child's Age/Year</label>
+                            <label className="text-sm font-medium text-slate-700">Child&apos;s Age/Year</label>
                             <Input type="text" placeholder="e.g. Year 5" className="h-14 bg-slate-50 border-slate-200 focus-visible:ring-purple-500 text-base" />
                         </div>
                         <div className="space-y-2">

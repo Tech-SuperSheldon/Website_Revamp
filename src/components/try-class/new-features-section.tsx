@@ -83,7 +83,7 @@ export function NewFeaturesSection() {
                 </h2>
                 
                 <p className="text-slate-500 text-lg leading-relaxed mb-10 max-w-xl">
-                  Unlock the full potential of your child's academic journey with our top-rated features, 
+                  Unlock the full potential of your child&apos;s academic journey with our top-rated features, 
                   designed for seamless learning and proven success.
                 </p>
 
