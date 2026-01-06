@@ -7,10 +7,10 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const avatars = [
-  "/avatars/avatar-1.png",
-  "/avatars/avatar-2.png",
-  "/avatars/avatar-3.png",
-  "/avatars/avatar-4.png",
+  "/avatars/s1.png",
+  "/avatars/s2.png",
+  "/avatars/s3.png",
+  "/avatars/s4.png",
 ];
 
 export function NewHeroSection() {
@@ -22,7 +22,7 @@ export function NewHeroSection() {
           <div className="flex flex-col space-y-8">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 leading-[1.1]">
               Give Your Child the <br className="hidden lg:block"/>
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-orange-600 to-purple-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-purple-600">
                 Academic Edge
               </span>
             </h1>
@@ -79,7 +79,7 @@ export function NewHeroSection() {
                         </div>
                     </div>
 
-                    <Button className="w-full h-14 text-lg font-bold bg-linear-to-r from-orange-500 to-purple-600 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-2">
+                    <Button className="w-full h-14 text-lg font-bold bg-gradient-to-r from-orange-500 to-purple-600 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-2">
                         Get Your Free Assessment
                     </Button>
                 </form>

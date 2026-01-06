@@ -6,49 +6,57 @@ import Image from "next/image";
 const testimonials = [
   {
     name: "Sarah Johnson",
-    handle: "@sarah_j_mom",
+    grade: "Year 5 Maths",
+    country: "UK",
     avatar: "/avatars/testimonial-1.png",
     content: "My daughter went from struggling with fractions to top of her class. The confidence boost has been incredible to watch!",
   },
   {
     name: "Michael Patel",
-    handle: "@mike_patel",
+    grade: "GCSE English",
+    country: "UK",
     avatar: "/avatars/testimonial-2.png",
     content: "The English tutor understood exactly what my son needed for his GCSEs. He achieved a Grade 8 – we couldn't be happier!",
   },
   {
     name: "Emma Thompson",
-    handle: "@emma_t",
+    grade: "Year 3 Reading",
+    country: "AUS",
     avatar: "/avatars/testimonial-3.png",
     content: "Worth every penny. The personalised approach to teaching reading comprehension made all the difference.",
   },
   {
     name: "James Wilson",
-    handle: "@james_student",
+    grade: "Year 8 Maths",
+    country: "UK",
     avatar: "/avatars/testimonial-4.png",
     content: "I actually enjoy Maths now! My tutor makes everything so clear and easy to understand.",
   },
    {
     name: "Dr. Lisa Ray",
-    handle: "@lisa_ray",
+    grade: "11 Plus Prep",
+    country: "UK",
     avatar: "/avatars/testimonial-5.png",
     content: "As an academic myself, I appreciate the structured yet flexible curriculum. Highly effective.",
   },
   {
     name: "David Chen",
-    handle: "@dave_c",
+    grade: "11 Plus Prep",
+    country: "UK",
     avatar: "/avatars/testimonial-6.png",
     content: "SuperSheldon is a game changer. My son finally feels ready for his 11+ exams.",
   },
   {
     name: "Sophie Miller",
-    handle: "@sophie_m",
+    grade: "Year 4 English",
+    country: "AUS",
     avatar: "/avatars/testimonial-7.png",
     content: "I love the lessons! My tutor is so nice and helps me when I get stuck on tricky questions.",
   },
   {
     name: "Oliver Smith",
-    handle: "@ollie_s",
+    grade: "Year 9 Science",
+    country: "UK",
     avatar: "/avatars/testimonial-8.png",
     content: "The best tutoring I've ever had. I feel so much more confident in class now.",
   },
@@ -105,7 +113,11 @@ export function NewTestimonialsSection() {
                         </div>
                         <div>
                             <h4 className="font-bold text-slate-900 text-sm">{t.name}</h4>
-                            <p className="text-xs text-slate-500">{t.handle}</p>
+                            <p className="text-xs text-slate-500 font-medium">
+                                <span className="text-purple-600">{t.grade}</span> 
+                                <span className="mx-1 text-slate-300">•</span>
+                                {t.country}
+                            </p>
                         </div>
                     </div>
                     <p className="text-slate-700 text-sm leading-relaxed">
@@ -134,7 +146,11 @@ export function NewTestimonialsSection() {
                         </div>
                         <div>
                             <h4 className="font-bold text-slate-900 text-sm">{t.name}</h4>
-                            <p className="text-xs text-slate-500">{t.handle}</p>
+                            <p className="text-xs text-slate-500 font-medium">
+                                <span className="text-purple-600">{t.grade}</span> 
+                                <span className="mx-1 text-slate-300">•</span>
+                                {t.country}
+                            </p>
                         </div>
                     </div>
                     <p className="text-slate-700 text-sm leading-relaxed">
@@ -146,8 +162,8 @@ export function NewTestimonialsSection() {
             </div>
             
             {/* Blur Edges */}
-            <div className="absolute inset-y-0 left-0 w-32 bg-linear-to-r from-slate-50 to-transparent pointer-events-none z-20" />
-            <div className="absolute inset-y-0 right-0 w-32 bg-linear-to-l from-slate-50 to-transparent pointer-events-none z-20" />
+            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-50 to-transparent pointer-events-none z-20" />
+            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent pointer-events-none z-20" />
         </div>
       </motion.div>
 

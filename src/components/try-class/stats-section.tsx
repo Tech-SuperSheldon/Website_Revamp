@@ -116,7 +116,7 @@ export function StatsSection() {
                 <p className="text-slate-500 font-medium">{stat.label}</p>
                 
                 {/* Shine effect on hover */}
-                <div className="absolute inset-0 rounded-3xl bg-linear-to-tr from-white/0 via-white/40 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-white/0 via-white/40 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
               </motion.div>
             );
           })}

@@ -41,7 +41,7 @@ export function NewEbookSection() {
             >
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6 text-slate-900">
                 Start Building A <br />
-                <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-orange-500">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-orange-500">
                   Smarter Future!
                 </span>
               </h2>
@@ -113,7 +113,7 @@ export function NewEbookSection() {
             className="w-full lg:w-auto relative flex justify-center"
           >
              
-             <div className="relative w-[300px] md:w-[400px] lg:w-[450px] aspect-9/16">
+             <div className="relative w-[300px] md:w-[400px] lg:w-[450px] aspect-[9/16]">
                  <Image
                     src="/removedphoneinhand.png"
                     alt="Phone showing app"
@@ -121,9 +121,9 @@ export function NewEbookSection() {
                     className="object-contain z-10"
                  />
                  {/* Left Blur Overlay */}
-                 <div className="absolute inset-y-0 left-0 w-32 bg-linear-to-r from-white via-white/80 to-transparent z-20 pointer-events-none backdrop-blur-[2px]" />
+                 <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-20 pointer-events-none backdrop-blur-[2px]" />
                  {/* Bottom Blur Overlay */}
-                 <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-white via-white/80 to-transparent z-20 pointer-events-none backdrop-blur-[2px]" />
+                 <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent z-20 pointer-events-none backdrop-blur-[2px]" />
              </div>
           </motion.div>
         </div>
