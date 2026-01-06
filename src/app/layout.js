@@ -120,8 +120,8 @@ export default function RootLayout({ children }) {
 
         {/* Page content */}
         <main className="relative z-10">
-          <CursorTrail />
-          <FestiveOverlay />
+          {/* <CursorTrail /> */}
+          {/* <FestiveOverlay /> */}
           {children}</main>
       </body>
     </html>

@@ -79,7 +79,7 @@ export function NewHeroSection() {
                         </div>
                     </div>
 
-                    <Button className="w-full h-14 text-lg font-bold bg-gradient-to-r from-orange-500 to-purple-600 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-2">
+                    <Button className="w-full h-14 text-lg font-bold bg-gradient-to-r from-orange-500 to-purple-600 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-2 text-white rounded-full">
                         Get Your Free Assessment
                     </Button>
                 </form>
@@ -113,25 +113,52 @@ export function NewHeroSection() {
                 </div>
             </div>
 
-            {/* Two Big Equal Rectangles */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="aspect-2/1 bg-orange-50 rounded-3xl p-6 flex flex-col justify-between border border-orange-100 group hover:shadow-xl transition-all hover:-translate-y-1">
-                    <div className="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
-                        📚
+            {/* Image Slider */}
+            <div className="w-full">
+                 <div className="w-full overflow-hidden rounded-xl border border-slate-100 relative h-40 md:h-48 group">
+                     {/* Gradient Overlays */}
+                     <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent z-10"></div>
+                     <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent z-10"></div>
+                     
+                     <div className="flex absolute min-w-full h-full">
+                        <div className="animate-marquee flex items-center gap-4 px-2 h-full">
+                            {[...Array(3)].map((_, setIndex) => (
+                                <>
+                                    <div className="relative w-60 h-full rounded-lg overflow-hidden shrink-0">
+                                        <Image src="/hero1.jpeg" alt="Hero 1" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+                                    </div>
+                                    <div className="relative w-60 h-full rounded-lg overflow-hidden shrink-0">
+                                        <Image src="/hero2.jpeg" alt="Hero 2" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+                                    </div>
+                                    <div className="relative w-60 h-full rounded-lg overflow-hidden shrink-0">
+                                        <Image src="/hero3.jpeg" alt="Hero 3" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+                                    </div>
+                                </>
+                            ))}
+                        </div>
+                     </div>
+                 </div>
+            </div>
+
+            {/* Two Big Equal Rectangles - Compact Version */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-orange-50 rounded-2xl p-4 flex flex-col justify-center border border-orange-100 group hover:shadow-xl transition-all hover:-translate-y-1 h-32">
+                    <div className="flex items-center gap-3 mb-1">
+                         <div className="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center text-xl group-hover:scale-110 transition-transform shrink-0">
+                            📚
+                        </div>
+                        <h4 className="text-lg font-bold text-slate-900">English</h4>
                     </div>
-                    <div>
-                        <h4 className="text-2xl font-bold text-slate-900 mb-2">English</h4>
-                        <p className="text-slate-600 font-medium">Ofsted aligned curriculum for all ages.</p>
-                    </div>
+                    <p className="text-slate-600 text-sm font-medium leading-tight">Ofsted aligned curriculum for all ages.</p>
                 </div>
-                <div className="aspect-2/1 bg-purple-50 rounded-3xl p-6 flex flex-col justify-between border border-purple-100 group hover:shadow-xl transition-all hover:-translate-y-1">
-                    <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform">
-                        🔢
+                <div className="bg-purple-50 rounded-2xl p-4 flex flex-col justify-center border border-purple-100 group hover:shadow-xl transition-all hover:-translate-y-1 h-32">
+                     <div className="flex items-center gap-3 mb-1">
+                        <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center text-xl group-hover:scale-110 transition-transform shrink-0">
+                            🔢
+                        </div>
+                        <h4 className="text-lg font-bold text-slate-900">Maths</h4>
                     </div>
-                    <div>
-                        <h4 className="text-2xl font-bold text-slate-900 mb-2">Maths</h4>
-                        <p className="text-slate-600 font-medium">Mastery based learning approach.</p>
-                    </div>
+                    <p className="text-slate-600 text-sm font-medium leading-tight">Mastery based learning approach.</p>
                 </div>
             </div>
 
@@ -164,7 +191,7 @@ export function NewHeroSection() {
       <style jsx global>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
-          100% { transform: translateX(-33.33%); }
+          100% { transform: translateX(-50%); }
         }
         .animate-marquee {
           animation: marquee 30s linear infinite;
