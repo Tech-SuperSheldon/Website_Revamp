@@ -54,7 +54,7 @@ export default function UK_Hero() {
 
       <UKHero />
 
-<ChristmasPopup color="blue"/>
+{/* <ChristmasPopup color="blue"/> */}
 
 
       <UKCredits/>
