@@ -2,40 +2,44 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { TrendingUp, Medal, Users, Star } from "lucide-react";
+import { FaArrowTrendUp, FaTrophy, FaUserGraduate, FaStar } from "react-icons/fa6";
 
 const stats = [
   {
-    icon: TrendingUp,
+    icon: FaArrowTrendUp,
     value: "2.5 Grades",
     label: "Average Improvement",
-    color: "text-blue-500",
-    bg: "bg-blue-50",
-    shadow: "shadow-blue-200",
+    color: "text-blue-600",
+    bg: "bg-gradient-to-br from-blue-100 to-blue-200",
+    shadow: "shadow-blue-200/50",
+    border: "border-blue-200",
   },
   {
-    icon: Medal,
+    icon: FaTrophy,
     value: "94%",
     label: "Pass Rate for 11+ & SATs",
-    color: "text-emerald-500",
-    bg: "bg-emerald-50",
-    shadow: "shadow-emerald-200",
+    color: "text-emerald-600",
+    bg: "bg-gradient-to-br from-emerald-100 to-emerald-200",
+    shadow: "shadow-emerald-200/50",
+    border: "border-emerald-200",
   },
   {
-    icon: Users,
+    icon: FaUserGraduate,
     value: "10,000+",
     label: "Students Tutored",
-    color: "text-purple-500",
-    bg: "bg-purple-50",
-    shadow: "shadow-purple-200",
+    color: "text-purple-600",
+    bg: "bg-gradient-to-br from-purple-100 to-purple-200",
+    shadow: "shadow-purple-200/50",
+    border: "border-purple-200",
   },
   {
-    icon: Star,
+    icon: FaStar,
     value: "4.9/5",
     label: "Parent Satisfaction",
-    color: "text-orange-500",
-    bg: "bg-orange-50",
-    shadow: "shadow-orange-200",
+    color: "text-orange-600",
+    bg: "bg-gradient-to-br from-orange-100 to-orange-200",
+    shadow: "shadow-orange-200/50",
+    border: "border-orange-200",
   },
 ];
 
@@ -68,7 +72,7 @@ export function StatsSection() {
             transition={{ delay: 0.2 }}
             className="text-lg text-slate-600"
           >
-            We don&apos;t just tutor—we transform academic journeys. Here&apos;s what makes SuperSheldon different.
+            We don&apos;t just tutor- we transform academic journeys. Here&apos;s what makes SuperSheldon different.
           </motion.p>
         </div>
 
@@ -97,13 +101,14 @@ export function StatsSection() {
               >
                 <div
                   className={cn(
-                    "w-16 h-16 rounded-2xl flex items-center justify-center mb-6 text-3xl transition-transform duration-300 group-hover:scale-110",
+                    "w-20 h-20 rounded-2xl flex items-center justify-center mb-6 text-4xl transition-all duration-300 group-hover:scale-110 shadow-lg border",
                     stat.bg,
                     stat.color,
+                    stat.border,
                     stat.shadow
                   )}
                 >
-                <stat.icon className="w-8 h-8" />
+                <stat.icon className="w-10 h-10 drop-shadow-sm" />
                 </div>
                 <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2 tracking-tight">
                   {stat.value}

@@ -64,7 +64,7 @@ export function NewHeroSection() {
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-slate-700">Subject of Interest</label>
                              <div className="relative">
-                                <select className="w-full h-14 px-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-base shadow-sm placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-purple-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none">
+                                <select className="w-full h-14 px-6 py-2 bg-slate-50 border border-slate-200 rounded-full text-base shadow-sm placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-purple-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none">
                                     <option value="" disabled selected>Select subject</option>
                                     <option value="english">English</option>
                                     <option value="maths">Maths</option>
@@ -143,16 +143,16 @@ export function NewHeroSection() {
                         <div className="animate-marquee whitespace-nowrap flex items-center gap-16 px-6">
                             <span className="text-xl font-bold text-slate-400 flex items-center gap-2">Google <span className="text-slate-300 font-normal">Reviews</span></span>
                             <span className="text-xl font-bold text-slate-400">Trustpilot</span>
-                            <span className="text-xl font-bold text-slate-400">Ofsted</span>
-                            <span className="text-xl font-bold text-slate-400">Gov.uk</span>
+                            {/* <span className="text-xl font-bold text-slate-400">Ofsted</span>
+                            <span className="text-xl font-bold text-slate-400">Gov.uk</span> */}
                              <span className="text-xl font-bold text-slate-400 flex items-center gap-2">Google <span className="text-slate-300 font-normal">Reviews</span></span>
                             <span className="text-xl font-bold text-slate-400">Trustpilot</span>
-                            <span className="text-xl font-bold text-slate-400">Ofsted</span>
-                            <span className="text-xl font-bold text-slate-400">Gov.uk</span>
+                            {/* <span className="text-xl font-bold text-slate-400">Ofsted</span>
+                            <span className="text-xl font-bold text-slate-400">Gov.uk</span> */}
                              <span className="text-xl font-bold text-slate-400 flex items-center gap-2">Google <span className="text-slate-300 font-normal">Reviews</span></span>
                             <span className="text-xl font-bold text-slate-400">Trustpilot</span>
-                            <span className="text-xl font-bold text-slate-400">Ofsted</span>
-                            <span className="text-xl font-bold text-slate-400">Gov.uk</span>
+                            {/* <span className="text-xl font-bold text-slate-400">Ofsted</span>
+                            <span className="text-xl font-bold text-slate-400">Gov.uk</span> */}
                         </div>
                      </div>
                  </div>
