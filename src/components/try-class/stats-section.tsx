@@ -45,9 +45,9 @@ const stats = [
 
 export function StatsSection() {
   return (
-    <section className="py-20 bg-transparent relative overflow-visible perspective-1000">
+    <section className="py-10 md:py-20 bg-transparent relative overflow-visible perspective-1000">
       <div className="container px-4 mx-auto relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-8 md:mb-16 space-y-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -76,7 +76,7 @@ export function StatsSection() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 perspective-[2000px]">
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-x-auto md:overflow-visible pb-8 md:pb-0 px-4 md:px-0 -mx-4 md:mx-0 snap-x snap-mandatory perspective-[2000px] scrollbar-hide">
           {stats.map((stat, index) => {
              // Calculate 3D Rotation for curved effect
              const rotateY = index === 0 ? 15 : index === 3 ? -15 : index === 1 ? 5 : -5;
@@ -96,7 +96,7 @@ export function StatsSection() {
                   zIndex: 20,
                   boxShadow: "0 20px 40px -10px rgba(0,0,0,0.12)"
                 }}
-                className="bg-white rounded-3xl p-8 flex flex-col items-center text-center shadow-lg border border-slate-100 transition-all duration-300 transform-style-3d group"
+                className="bg-white rounded-3xl p-8 flex flex-col items-center text-center shadow-lg border border-slate-100 transition-all duration-300 transform-style-3d group min-w-[85vw] md:min-w-0 snap-center"
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 <div
