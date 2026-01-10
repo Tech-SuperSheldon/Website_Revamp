@@ -5,6 +5,7 @@ import { NewFeaturesSection } from "@/components/try-class/new-features-section"
 import { NewHeroSection } from "@/components/try-class/new-hero-section";
 import { NewTestimonialsSection } from "@/components/try-class/new-testimonials-section";
 import { StatsSection } from "@/components/try-class/stats-section";
+import { FooterSignature } from "@/components/try-class/footer-signature";
 
 export default function TryClassPage() {
   return (
@@ -17,6 +18,7 @@ export default function TryClassPage() {
       <NewTestimonialsSection />
       {/* <EbookSection /> */}
       <NewEbookSection/>
+      <FooterSignature />
     </main>
   );
 }
