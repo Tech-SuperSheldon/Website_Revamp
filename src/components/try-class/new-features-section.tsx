@@ -77,7 +77,7 @@ export function NewFeaturesSection() {
                 
                 <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
                   Unleashing Potential Through <br/>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-purple-600">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-300">
                     Trusted Expertise
                   </span>
                 </h2>

@@ -23,8 +23,8 @@ export function NewHeroSection() {
           {/* Left Column: Title and Form */}
           <div className="flex flex-col space-y-8">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-slate-900 leading-[1.1]">
-              <span className="whitespace-nowrap">Give Your Child the</span> <br className="hidden lg:block"/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-purple-600">
+              <span className="whitespace-nowrap block">Give Your Child the</span> 
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-300">
                 Academic Edge
               </span>
             </h1>
@@ -81,7 +81,7 @@ export function NewHeroSection() {
                         </div>
                     </div>
 
-                    <Button type="button" onClick={openDemoBooking} className="w-full h-12 text-base font-bold bg-gradient-to-r from-orange-500 to-purple-600 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-2 text-white rounded-xl">
+                    <Button type="button" onClick={openDemoBooking} className="w-full h-12 text-base font-bold bg-gradient-to-r from-orange-500 to-orange-300 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-2 text-white rounded-xl">
                         Get Your Free Assessment
                     </Button>
                 </form>

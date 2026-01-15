@@ -14,7 +14,7 @@ export function FooterSignature() {
       
       <button 
         onClick={openDemoBooking}
-        className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-full text-xl font-bold transition-transform hover:scale-105 hover:shadow-xl hover:opacity-90 active:scale-95 mb-12 animate-bounce-slow shadow-lg shadow-orange-500/20"
+        className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-300 text-white rounded-full text-xl font-bold transition-transform hover:scale-105 hover:shadow-xl hover:opacity-90 active:scale-95 mb-12 animate-bounce-slow shadow-lg shadow-orange-500/20"
       >
         <span>Try a free class now</span>
         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
