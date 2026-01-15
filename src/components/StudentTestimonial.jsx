@@ -37,9 +37,9 @@ export default function StudentTestimonial() {
   const [isPaused, setIsPaused] = useState(false);
   const timeoutRef = useRef(null);
 
-  // Image dimensions + spacer
+  // Image dimensions
   const IMG_W = 280;
-  const IMG_SPACER = IMG_W + 16;
+
 
   // Auto-slide
   useEffect(() => {
@@ -82,13 +82,13 @@ export default function StudentTestimonial() {
   return (
     <div className="w-full h-full">
       <div
-        className="mt-8 relative flex flex-col items-center justify-center py-20 overflow-visible"
+        className="mt-4 relative flex flex-col items-center justify-center py-10 overflow-visible"
         role="region"
         aria-roledescription="carousel"
         aria-label="Student testimonials carousel"
       >
         <div
-          className="relative w-11/12 max-w-6xl rounded-2xl z-10 overflow-visible"
+          className="relative w-11/12 max-w-5xl rounded-2xl z-10 overflow-visible"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={() => setIsPaused(true)}
@@ -109,53 +109,46 @@ export default function StudentTestimonial() {
               exit="exit"
               transition={{ duration: 0.6, ease: "easeInOut" }}
             >
-              {/* Orange Card */}
+              {/* Clean minimal card */}
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 200 }}
-                className="relative flex-shrink-0 w-[94%] mx-auto bg-[#FB8740] px-6 md:px-12 py-10 md:py-12 shadow-xl rounded-2xl overflow-visible"
+                className="relative flex-shrink-0 w-full mx-auto px-4 md:px-8 py-6 md:py-8 overflow-visible"
               >
                 {/* Content row */}
-                <div className="relative flex flex-col md:flex-row items-center md:items-start">
-                  {/* Text column */}
-                  <div className="flex-1 text-center md:text-left relative z-10">
-                    <h2 className="text-2xl md:text-5xl font-bold text-white mb-4 leading-tight drop-shadow">
+                <div className="relative flex flex-col md:flex-row items-center md:items-center justify-between gap-8 md:gap-12">
+                  {/* Text column - Less bulky */}
+                  <div className="flex-1 text-center md:text-left relative z-10 max-w-2xl">
+                    <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
                       What Our Students Say
                     </h2>
 
                     <blockquote
-                      className="text-base md:text-lg text-white leading-relaxed italic"
+                      className="text-base md:text-lg text-gray-700 leading-relaxed italic font-medium"
                       aria-live="polite"
                     >
                       "{testimonials[currentIndex].text}"
                     </blockquote>
 
-                    <cite className="mt-3 block font-semibold text-white/90 not-italic">
+                    <cite className="mt-4 block font-semibold text-gray-900 not-italic">
                       {testimonials[currentIndex].name}
                     </cite>
                   </div>
 
-                  {/* Spacer for desktop only */}
-                  <div
-                    aria-hidden="true"
-                    className="hidden md:block shrink-0"
-                    style={{ width: IMG_SPACER, height: 1 }}
-                  />
-                </div>
+                 
 
-                {/* Image */}
-                <div className="mt-6 translate-y-10 md:translate-y-0 md:mt-0 md:absolute md:bottom-0 md:right-0 flex justify-center md:block">
-                  <div className="drop-shadow-2xl">
-                    <Image
-                      src={testimonials[currentIndex].image}
-                      alt={`Photo of ${testimonials[
-                        currentIndex
-                      ].name.replace("— ", "")}`}
-                      width={IMG_W}
-                      height={240}
-                      className="object-contain rounded-2xl relative z-20"
-                      priority
-                    />
+                  {/* Image */}
+                  <div className="flex-shrink-0">
+                    <div className="">
+                      <Image
+                        src={testimonials[currentIndex].image}
+                        alt={`Photo of ${testimonials[
+                          currentIndex
+                        ].name.replace("— ", "")}`}
+                        width={IMG_W}
+                        height={240}
+                        className="object-contain rounded-2xl relative z-20"
+                        priority
+                      />
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -165,7 +158,7 @@ export default function StudentTestimonial() {
 
         {/* Dots */}
         <div
-          className="flex mt-6 p-2 bg-gray-200 rounded-full shadow-md opacity-90 space-x-3 cursor-pointer z-10"
+          className="flex mt-2 p-2 space-x-3 cursor-pointer z-10"
           role="tablist"
           aria-label="Testimonial navigation"
         >
@@ -176,10 +169,10 @@ export default function StudentTestimonial() {
               aria-selected={currentIndex === index}
               aria-label={`Go to testimonial ${index + 1}`}
               role="tab"
-              className={`h-2 rounded-full transition-all duration-500 shadow-md border-2 ${
+              className={`h-2 rounded-full transition-all duration-500 ${
                 currentIndex === index
-                  ? "w-6 bg-white shadow-lg border-white"
-                  : "w-4 bg-white/50 shadow-sm border-white/50"
+                  ? "w-6 bg-orange-500"
+                  : "w-4 bg-gray-300"
               }`}
             />
           ))}

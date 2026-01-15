@@ -133,9 +133,9 @@ export function Hero() {
                  <AnimatePresence mode="popLayout">
                   <motion.div
                     key={currentImageIndex}
-                    initial={{ x: "100%", zIndex: 20 }}
-                    animate={{ x: 0, zIndex: 20 }}
-                    exit={{ zIndex: 10 }}
+                    initial={{ opacity: 0, x: 100 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -100 }}
                     transition={{ duration: 0.5, ease: "easeInOut" }}
                     className="absolute inset-0 rounded-[2.5rem] overflow-hidden"
                   >

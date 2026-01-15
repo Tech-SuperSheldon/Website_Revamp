@@ -33,7 +33,6 @@ export default function RootLayout({
       >
         <LoadingScreen>
           <BackgroundGrid />
-          <Header />
           <main className="min-h-screen pt-20"> {/* Add padding for fixed header */}
               {children}
           </main>
