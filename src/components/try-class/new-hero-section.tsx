@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useOpenDemoBooking } from "../utils/navigation";
 
 const avatars = [
   "/avatars/s1.png",
@@ -14,6 +15,7 @@ const avatars = [
 ];
 
 export function NewHeroSection() {
+  const openDemoBooking = useOpenDemoBooking();
   return (
     <section className="w-full py-12 md:py-20 lg:py-24 relative overflow-hidden">
       <div className="container px-4 md:px-6 mx-auto">
@@ -21,7 +23,7 @@ export function NewHeroSection() {
           {/* Left Column: Title and Form */}
           <div className="flex flex-col space-y-8">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-slate-900 leading-[1.1]">
-              Give Your Child the <br className="hidden lg:block"/>
+              <span className="whitespace-nowrap">Give Your Child the</span> <br className="hidden lg:block"/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-purple-600">
                 Academic Edge
               </span>
@@ -39,7 +41,7 @@ export function NewHeroSection() {
                     <p className="text-slate-500 text-sm mt-1">Get a personalised learning plan today.</p>
                 </div>
 
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); openDemoBooking(); }}>
                     <div className="space-y-1.5">
                         <label className="text-xs uppercase tracking-wide font-bold text-slate-500">Your Name</label>
                         <Input type="text" placeholder="Enter your full name" className="h-11 bg-slate-50 border-slate-200 focus-visible:ring-purple-500 text-sm" />
@@ -79,7 +81,7 @@ export function NewHeroSection() {
                         </div>
                     </div>
 
-                    <Button className="w-full h-12 text-base font-bold bg-gradient-to-r from-orange-500 to-purple-600 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-2 text-white rounded-xl">
+                    <Button type="button" onClick={openDemoBooking} className="w-full h-12 text-base font-bold bg-gradient-to-r from-orange-500 to-purple-600 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-2 text-white rounded-xl">
                         Get Your Free Assessment
                     </Button>
                 </form>

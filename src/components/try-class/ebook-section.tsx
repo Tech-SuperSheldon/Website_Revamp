@@ -2,8 +2,10 @@
 
 import { CheckCircle, Download } from "lucide-react";
 import { motion } from "framer-motion";
+import { useOpenDemoBooking } from "../utils/navigation";
 
 export function EbookSection() {
+  const openDemoBooking = useOpenDemoBooking();
   const benefits = [
     "Age-appropriate learning strategies for English and Maths",
     "How to spot if your child needs extra support",
@@ -77,7 +79,7 @@ export function EbookSection() {
               placeholder="Enter your email to download"
               className="flex-1 px-4 py-3 rounded-lg text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-transparent"
             />
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 whitespace-nowrap">
+            <button onClick={openDemoBooking} className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 whitespace-nowrap">
               <Download className="w-4 h-4" />
               Download
             </button>

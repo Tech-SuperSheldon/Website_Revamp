@@ -3,21 +3,23 @@ import React from "react";
 import { Anton } from "next/font/google";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useOpenDemoBooking } from "../utils/navigation";
 
 const anton = Anton({ subsets: ["latin"], weight: ["400"] });
 
 export function FooterSignature() {
+  const openDemoBooking = useOpenDemoBooking();
   return (
     <div className="w-full flex flex-col items-center pt-20 pb-4 overflow-hidden">
       
-      <Link 
-        href="https://supersheldon.com"
+      <button 
+        onClick={openDemoBooking}
         className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 to-purple-600 text-white rounded-full text-xl font-bold transition-transform hover:scale-105 hover:shadow-xl hover:opacity-90 active:scale-95 mb-12 animate-bounce-slow shadow-lg shadow-orange-500/20"
       >
         <span>Try a free class now</span>
         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
         <div className="absolute inset-0 rounded-full ring-2 ring-black/20 animate-ping opacity-20" />
-      </Link>
+      </button>
 
       {/* Thick Separating Line */}
       <div className="w-full h-1 bg-gray-900 mb-12" />
