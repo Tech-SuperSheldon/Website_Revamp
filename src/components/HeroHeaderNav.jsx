@@ -42,10 +42,13 @@ export const Button = ({
   );
 };
 
+import { usePathname } from "next/navigation";
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const openDemoBooking = useOpenDemoBooking();
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 30);
@@ -63,9 +66,12 @@ export default function Header() {
     }
   }, [menuOpen]);
 
+  // Don't show popup on utm-market page
+  const showPopup = !pathname?.includes("/utm-market");
+
   return (
     <header className="fixed top-0 w-full z-50 flex justify-center">
-      <Popup />
+      {showPopup && <Popup />}
       <nav
         className={`flex items-center justify-between transition-all duration-300 ${
           scrolled

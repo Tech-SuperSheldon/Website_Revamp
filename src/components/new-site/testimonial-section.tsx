@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -147,7 +148,7 @@ export function TestimonialSection() {
                                 className="space-y-6"
                              >
                                 <blockquote className="text-xl md:text-2xl font-semibold text-gray-900 leading-relaxed font-serif">
-                                    "{testimonials[currentIndex].text}"
+                                    &ldquo;{testimonials[currentIndex].text}&rdquo;
                                 </blockquote>
                                 
                                 <div>
@@ -191,12 +192,14 @@ export function TestimonialSection() {
                  {/* Navigation Buttons */}
                  <div className="absolute bottom-8 right-8 flex gap-3 z-20">
                      <button 
+                        type="button"
                         onClick={prevTestimonial}
                         className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-gray-200/20 hover:bg-black/5 flex items-center justify-center transition-all shadow-sm hover:scale-110 active:scale-95 text-gray-700"
                     >
                          <ChevronLeft className="w-5 h-5" />
                      </button>
                      <button 
+                        type="button"
                         onClick={nextTestimonial}
                         className="w-12 h-12 rounded-full bg-black/90 text-white backdrop-blur-md border border-black/10 hover:bg-black flex items-center justify-center transition-all shadow-lg hover:shadow-xl hover:scale-110 active:scale-95"
                     >

@@ -41,7 +41,7 @@ export function NewEbookSection() {
             >
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6 text-slate-900">
                 Start Building A <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-orange-500">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-300">
                   Smarter Future!
                 </span>
               </h2>
@@ -83,13 +83,13 @@ export function NewEbookSection() {
                                 placeholder="Enter your email address"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full h-14 pl-6 pr-4 rounded-full bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
+                                className="w-full h-14 pl-6 pr-4 rounded-full bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
                                 required
                             />
                         </div>
                         <button 
                             type="submit"
-                            className="h-14 px-8 rounded-full bg-gradient-to-r from-purple-600 to-orange-500 hover:opacity-90 text-white font-bold text-lg transition-all shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2 whitespace-nowrap"
+                            className="h-14 px-8 rounded-full bg-gradient-to-r from-orange-500 to-orange-300 hover:opacity-90 text-white font-bold text-lg transition-all shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 whitespace-nowrap"
                         >
                             Get Guide 
                             <ArrowRight className="w-5 h-5 transform -rotate-45" />
