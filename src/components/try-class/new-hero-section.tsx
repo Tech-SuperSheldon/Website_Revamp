@@ -57,9 +57,18 @@ export function NewHeroSection() {
 
       console.log("Submitting form data:", submitData);
 
-      const response = await axiosClient.post("/api/super-sheldon-form/submit", submitData);
+      // const response = await axiosClient.post("/api/super-sheldon-form/submit", submitData);
+     const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+        const response = await fetch(`${API_URL}/api/super-sheldon-form/submit`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submitData),  // ✅ Remove the wrapper
+        });
       
-      console.log("Form submitted successfully:", response.data);
+      console.log("Form submitted successfully:", response);
       
       setShowSuccess(true);
       setFormData({

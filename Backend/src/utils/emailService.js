@@ -1,21 +1,42 @@
 const nodemailer = require("nodemailer");
 
-// Create reusable transporter
+// Create reusable transporter with multiple fallback options
 const createTransporter = () => {
+  const port = parseInt(process.env.EMAIL_PORT || '587');
+  
   const config = {
+    host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+    port: port,
+    secure: port === 465,
     auth: {
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS || process.env.EMAIL_PASSWORD, // Support both variable names
+      pass: process.env.EMAIL_PASS || process.env.EMAIL_PASSWORD,
     },
+    connectionTimeout: 60000, // 60 seconds
+    greetingTimeout: 30000,
+    socketTimeout: 60000,
+    logger: false, // Disable verbose logging
+    debug: false,
   };
 
-  // If custom SMTP settings are provided, use them
-  if (process.env.EMAIL_HOST && process.env.EMAIL_PORT) {
-    config.host = process.env.EMAIL_HOST;
-    config.port = parseInt(process.env.EMAIL_PORT);
-    config.secure = parseInt(process.env.EMAIL_PORT) === 465; // true for 465, false for other ports
-  } else if (process.env.EMAIL_SERVICE) {
-    config.service = process.env.EMAIL_SERVICE;
+  // Port-specific configuration
+  if (port === 587) {
+    config.secure = false;
+    config.requireTLS = true;
+    config.tls = {
+      ciphers: 'SSLv3',
+      rejectUnauthorized: false,
+    };
+  } else if (port === 465) {
+    config.secure = true;
+    config.tls = {
+      rejectUnauthorized: false,
+      minVersion: 'TLSv1',
+    };
+  } else if (port === 25) {
+    config.secure = false;
+    config.ignoreTLS = false;
+    config.requireTLS = false;
   }
 
   return nodemailer.createTransport(config);
