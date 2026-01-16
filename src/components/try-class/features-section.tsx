@@ -23,7 +23,7 @@ const features = [
     color: "bg-purple-100 text-purple-600",
     title: "Curriculum-Aligned Learning",
     description:
-      "Fully aligned with the UK National Curriculum. We cover KS1, KS2, KS3, GCSEs, and 11+ preparation for English and Maths.",
+      "Aligned with leading international curricula across English, Mathematics, and Science. We support UK pathways (KS1–GCSE & 11+), Australia’s NAPLAN, and key US curriculum standards, ensuring students stay on track wherever they study.",
   },
   {
     icon: Calendar,

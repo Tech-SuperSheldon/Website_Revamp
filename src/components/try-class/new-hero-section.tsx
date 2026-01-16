@@ -225,7 +225,7 @@ export function NewHeroSection() {
                         disabled={isSubmitting}
                         className="w-full h-11 md:h-12 text-sm md:text-base font-bold bg-gradient-to-r from-orange-500 to-orange-300 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-0.5 text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {isSubmitting ? "Submitting..." : "Get Your Free Assessment"}
+                        {isSubmitting ? "Submitting..." : "Book A Free 1:1 Session"}
                     </Button>
                 </form>
              </motion.div>
@@ -305,7 +305,7 @@ export function NewHeroSection() {
 
             {/* Scroller */}
             <div className="w-full">
-                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Reviewed By</p>
+                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Reviewed On</p>
                  <div className="w-full overflow-hidden bg-white/50 rounded-xl py-3 md:py-4 border border-slate-100">
                      <div className="relative flex overflow-x-hidden group">
                         <div className="animate-marquee whitespace-nowrap flex items-center gap-16 px-6">

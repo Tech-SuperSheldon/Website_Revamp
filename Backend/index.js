@@ -148,7 +148,7 @@ app.post("/api/super-sheldon-form/submit", async (req, res) => {
     }
 
     // Save submission
-    await sendEmail.create(normalized);
+    await SendEmailModel.create(normalized);
 
     // Send confirmation email with the guide link
     const html = `
