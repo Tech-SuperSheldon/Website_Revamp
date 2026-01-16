@@ -70,7 +70,7 @@ export function NewHeroSection() {
       
       console.log("Form submitted successfully:", response);
       
-      setShowSuccess(true);
+      // setShowSuccess(true);
       setFormData({
         fullName: "",
         email: "",
@@ -93,7 +93,7 @@ export function NewHeroSection() {
     }
   };
   return (
-    <section className="w-full pt-2 md:pt-3 lg:pt-4 pb-8 md:pb-10 lg:pb-12 relative overflow-hidden">
+    <section className="w-full pt-2 md:pt-3 lg:pt-4 pb-6 md:pb-10 lg:pb-12 relative overflow-hidden">
       <div className="container px-4 md:px-6 mx-auto">
         {/* Logo Section - Centered on desktop, middle on mobile */}
         <div className="flex justify-center mb-6 md:mb-8">
@@ -108,7 +108,7 @@ export function NewHeroSection() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-start">
           {/* Left Column: Title and Form */}
           <div className="flex flex-col space-y-4 md:space-y-6">
             {/* Centered Title */}
@@ -131,163 +131,130 @@ export function NewHeroSection() {
                     <p className="text-slate-500 text-xs md:text-sm mt-0.5">Get a personalised learning plan today.</p>
                 </div>
 
-                <AnimatePresence>
-                  {showSuccess ? (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="bg-green-50 border-2 border-green-200 rounded-2xl p-8 text-center"
-                    >
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                        className="flex justify-center mb-4"
-                      >
-                        <CheckCircle className="w-16 h-16 text-green-500" />
-                      </motion.div>
-                      <motion.h3
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        className="text-2xl font-bold text-green-800 mb-2"
-                      >
-                        Thank You!
-                      </motion.h3>
-                      <motion.p
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                        className="text-green-700"
-                      >
-                        Thanks for demo booking! Redirecting you now...
-                      </motion.p>
-                    </motion.div>
-                  ) : (
-                    <form className="space-y-2.5" onSubmit={handleSubmit}>
+                <form className="space-y-2.5" onSubmit={handleSubmit}>
+                    <div className="space-y-1">
+                        <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Your Name</label>
+                        <Input 
+                            type="text" 
+                            placeholder="Please share your name" 
+                            className="h-10 md:h-11 bg-slate-50 border-slate-200 focus-visible:ring-purple-500 text-sm rounded-md pl-3" 
+                            style={{ textAlign: 'left', direction: 'ltr' }}
+                            value={formData.fullName}
+                            onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                            required
+                        />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                         <div className="space-y-1">
-                            <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Your Name</label>
+                            <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Email</label>
                             <Input 
-                                type="text" 
-                                placeholder="Please share your name" 
+                                type="email" 
+                                placeholder="Please share your email id" 
                                 className="h-10 md:h-11 bg-slate-50 border-slate-200 focus-visible:ring-purple-500 text-sm rounded-md pl-3" 
                                 style={{ textAlign: 'left', direction: 'ltr' }}
-                                value={formData.fullName}
-                                onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                                value={formData.email}
+                                onChange={(e) => setFormData({...formData, email: e.target.value})}
                                 required
                             />
                         </div>
+                        <div className="space-y-1">
+                            <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Phone Number</label>
+                            <PhoneInput
+                                country={'gb'}
+                                placeholder="Please share your phone number"
+                                value={phoneValue}
+                                onChange={(value) => setPhoneValue(value)}
+                                inputProps={{
+                                    required: true,
+                                    name: 'phone',
+                                }}
+                            />
+                        </div>
+                    </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-                            <div className="space-y-1">
-                                <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Email</label>
-                                <Input 
-                                    type="email" 
-                                    placeholder="Please share your email id" 
-                                    className="h-10 md:h-11 bg-slate-50 border-slate-200 focus-visible:ring-purple-500 text-sm rounded-md pl-3" 
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                        <div className="space-y-1">
+                            <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Child Age</label>
+                            <div className="relative">
+                                <select 
+                                    className="w-full h-10 md:h-11 px-3 md:px-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none" 
                                     style={{ textAlign: 'left', direction: 'ltr' }}
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                    value={formData.childAgeYear}
+                                    onChange={(e) => setFormData({...formData, childAgeYear: e.target.value})}
                                     required
-                                />
-                            </div>
-                            <div className="space-y-1">
-                                <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Phone Number</label>
-                                <PhoneInput
-                                    country={'gb'}
-                                    placeholder="Please share your phone number"
-                                    value={phoneValue}
-                                    onChange={(value) => setPhoneValue(value)}
-                                    inputProps={{
-                                        required: true,
-                                        name: 'phone',
-                                    }}
-                                />
-                            </div>
-                        </div>
-
-                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
-                            <div className="space-y-1">
-                                <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Child Age</label>
-                                <div className="relative">
-                                    <select 
-                                        className="w-full h-10 md:h-11 px-3 md:px-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none" 
-                                        style={{ textAlign: 'left', direction: 'ltr' }}
-                                        value={formData.childAgeYear}
-                                        onChange={(e) => setFormData({...formData, childAgeYear: e.target.value})}
-                                        required
-                                    >
-                                        <option value="" disabled>Please select age</option>
-                                        {Array.from({ length: 11 }, (_, i) => i + 6).map((age) => (
-                                            <option key={age} value={age.toString()}>{age}</option>
-                                        ))}
-                                    </select>
-                                    <div className="absolute inset-y-0 right-0 flex items-center px-3 md:px-4 pointer-events-none text-slate-500">
-                                        <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd" />
-                                        </svg>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="space-y-1">
-                                <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Subject of Interest</label>
-                                 <div className="relative">
-                                    <select 
-                                        className="w-full h-10 md:h-11 px-3 md:px-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none" 
-                                        style={{ textAlign: 'left', direction: 'ltr' }}
-                                        value={formData.subject}
-                                        onChange={(e) => setFormData({...formData, subject: e.target.value})}
-                                        required
-                                    >
-                                        <option value="" disabled>Please share your subject</option>
-                                        <option value="english">English</option>
-                                        <option value="maths">Maths</option>
-                                        <option value="both">Both</option>
-                                    </select>
-                                    <div className="absolute inset-y-0 right-0 flex items-center px-3 md:px-4 pointer-events-none text-slate-500">
-                                        <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd" />
-                                        </svg>
-                                    </div>
+                                >
+                                    <option value="" disabled>Please select age</option>
+                                    {Array.from({ length: 11 }, (_, i) => i + 6).map((age) => (
+                                        <option key={age} value={age.toString()}>{age}</option>
+                                    ))}
+                                </select>
+                                <div className="absolute inset-y-0 right-0 flex items-center px-3 md:px-4 pointer-events-none text-slate-500">
+                                    <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                                        <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd" />
+                                    </svg>
                                 </div>
                             </div>
                         </div>
+                        <div className="space-y-1">
+                            <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Subject of Interest</label>
+                             <div className="relative">
+                                <select 
+                                    className="w-full h-10 md:h-11 px-3 md:px-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none" 
+                                    style={{ textAlign: 'left', direction: 'ltr' }}
+                                    value={formData.subject}
+                                    onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                                    required
+                                >
+                                    <option value="" disabled>Please share your subject</option>
+                                    <option value="english">English</option>
+                                    <option value="maths">Maths</option>
+                                    <option value="both">Both</option>
+                                </select>
+                                <div className="absolute inset-y-0 right-0 flex items-center px-3 md:px-4 pointer-events-none text-slate-500">
+                                    <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                                        <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                        <Button 
-                            type="submit" 
-                            disabled={isSubmitting}
-                            className="w-full h-11 md:h-12 text-sm md:text-base font-bold bg-gradient-to-r from-orange-500 to-orange-300 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-0.5 text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            {isSubmitting ? "Submitting..." : "Get Your Free Assessment"}
-                        </Button>
-                    </form>
-                  )}
-                </AnimatePresence>
+                    <Button 
+                        type="submit" 
+                        disabled={isSubmitting}
+                        className="w-full h-11 md:h-12 text-sm md:text-base font-bold bg-gradient-to-r from-orange-500 to-orange-300 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-0.5 text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        {isSubmitting ? "Submitting..." : "Get Your Free Assessment"}
+                    </Button>
+                </form>
              </motion.div>
           </div>
 
           {/* Right Column: Details, Boxes, Scroller */}
-          <div className="flex flex-col space-y-8 lg:pt-0">
+          <div className="flex flex-col space-y-6 md:space-y-8 lg:pt-0">
              {/* Small Chips for Subjects */}
-            <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-                 <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-orange-50 border border-orange-100 text-orange-700 text-lg font-bold shadow-sm hover:scale-105 transition-transform">
-                    <span className="text-2xl">📚</span> English
+            <div className="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
+                 <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 md:py-2.5 rounded-2xl bg-orange-50 border border-orange-100 text-orange-700 text-base md:text-lg font-bold shadow-sm hover:scale-105 transition-transform">
+                    <span className="text-xl md:text-2xl">📚</span> English
                  </div>
-                 <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-purple-50 border border-purple-100 text-purple-700 text-lg font-bold shadow-sm hover:scale-105 transition-transform">
-                    <span className="text-2xl">🔢</span> Maths
+                 <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 md:py-2.5 rounded-2xl bg-purple-50 border border-purple-100 text-purple-700 text-base md:text-lg font-bold shadow-sm hover:scale-105 transition-transform">
+                    <span className="text-xl md:text-2xl">🔢</span> Maths
+                 </div>
+                 <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 md:py-2.5 rounded-2xl bg-teal-50 border border-teal-100 text-teal-700 text-base md:text-lg font-bold shadow-sm hover:scale-105 transition-transform">
+                    <span className="text-xl md:text-2xl">🧬</span> Science
                  </div>
             </div>
 
             <div className="space-y-4">
-                <p className="text-lg text-slate-600 leading-relaxed font-medium text-center md:text-left text-justify">
-                  SuperSheldon provides expert 1-to-1 tutoring in English and Maths. 
+                <p className="text-base md:text-lg text-slate-600 leading-relaxed font-medium text-center md:text-left">
+                  SuperSheldon provides expert 1-to-1 tutoring in English, Maths and Science. 
                   Our personalised approach builds confidence and helps students achieve their full potential.
                 </p>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 py-2">
                     <div className="flex -space-x-3">
                         {avatars.map((src, i) => (
-                            <div key={i} className="w-12 h-12 rounded-full border-2 border-white overflow-hidden relative">
+                            <div key={i} className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white overflow-hidden relative">
                                 <Image 
                                     src={src} 
                                     alt={`User ${i+1}`}
@@ -314,7 +281,7 @@ export function NewHeroSection() {
                      <div className="flex absolute min-w-full h-full">
                         <div className="animate-marquee flex items-center gap-4 px-2 h-full">
                             {[...Array(3)].map((_, setIndex) => (
-                                <>
+                                <div key={setIndex} className="flex gap-4 h-full">
                                     <div className="relative w-60 h-full rounded-lg overflow-hidden shrink-0">
                                         <Image src="/hero1.jpeg" alt="Hero 1" fill className="object-cover hover:scale-105 transition-transform duration-500" />
                                     </div>
@@ -324,7 +291,10 @@ export function NewHeroSection() {
                                     <div className="relative w-60 h-full rounded-lg overflow-hidden shrink-0">
                                         <Image src="/hero3.jpeg" alt="Hero 3" fill className="object-cover hover:scale-105 transition-transform duration-500" />
                                     </div>
-                                </>
+                                    <div className="relative w-60 h-full rounded-lg overflow-hidden shrink-0">
+                                        <Image src="/hero4.jpeg" alt="Hero 4" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+                                    </div>
+                                </div>
                             ))}
                         </div>
                      </div>
@@ -335,20 +305,20 @@ export function NewHeroSection() {
 
             {/* Scroller */}
             <div className="w-full">
-                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Accredited By</p>
-                 <div className="w-full overflow-hidden bg-white/50 rounded-xl py-4 border border-slate-100">
+                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Reviewed By</p>
+                 <div className="w-full overflow-hidden bg-white/50 rounded-xl py-3 md:py-4 border border-slate-100">
                      <div className="relative flex overflow-x-hidden group">
                         <div className="animate-marquee whitespace-nowrap flex items-center gap-16 px-6">
-                            <span className="text-xl font-bold text-slate-400 flex items-center gap-2">Google <span className="text-slate-300 font-normal">Reviews</span></span>
-                            <span className="text-xl font-bold text-slate-400">Trustpilot</span>
+                            <span className="text-lg md:text-xl font-bold text-slate-400 flex items-center gap-2">Google <span className="text-slate-300 font-normal">Reviews</span></span>
+                            <span className="text-lg md:text-xl font-bold text-slate-400">Trustpilot</span>
                             {/* <span className="text-xl font-bold text-slate-400">Ofsted</span>
                             <span className="text-xl font-bold text-slate-400">Gov.uk</span> */}
-                             <span className="text-xl font-bold text-slate-400 flex items-center gap-2">Google <span className="text-slate-300 font-normal">Reviews</span></span>
-                            <span className="text-xl font-bold text-slate-400">Trustpilot</span>
+                             <span className="text-lg md:text-xl font-bold text-slate-400 flex items-center gap-2">Google <span className="text-slate-300 font-normal">Reviews</span></span>
+                            <span className="text-lg md:text-xl font-bold text-slate-400">Trustpilot</span>
                             {/* <span className="text-xl font-bold text-slate-400">Ofsted</span>
                             <span className="text-xl font-bold text-slate-400">Gov.uk</span> */}
-                             <span className="text-xl font-bold text-slate-400 flex items-center gap-2">Google <span className="text-slate-300 font-normal">Reviews</span></span>
-                            <span className="text-xl font-bold text-slate-400">Trustpilot</span>
+                             <span className="text-lg md:text-xl font-bold text-slate-400 flex items-center gap-2">Google <span className="text-slate-300 font-normal">Reviews</span></span>
+                            <span className="text-lg md:text-xl font-bold text-slate-400">Trustpilot</span>
                             {/* <span className="text-xl font-bold text-slate-400">Ofsted</span>
                             <span className="text-xl font-bold text-slate-400">Gov.uk</span> */}
                         </div>

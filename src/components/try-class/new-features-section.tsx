@@ -59,9 +59,9 @@ const features = [
 
 export function NewFeaturesSection() {
   return (
-    <section className="w-full pt-8 md:pt-12 pb-8 md:pb-12 relative">
+    <section className="w-full pt-6 md:pt-12 pb-6 md:pb-12 relative">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-24">
           
           {/* Left Column - Sticky Content */}
           <div className="lg:w-1/2 lg:sticky lg:top-32 lg:self-start h-fit mb-6 md:mb-8 lg:mb-0">
@@ -83,7 +83,7 @@ export function NewFeaturesSection() {
                   </span>
                 </h2>
                 
-                <p className="text-slate-500 text-lg leading-relaxed mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 text-center lg:text-left text-justify">
+                <p className="text-slate-500 text-lg leading-relaxed mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 text-center lg:text-left">
                   Unlock the full potential of your child&apos;s academic journey with our top-rated features, 
                   designed for seamless learning and proven success.
                 </p>
@@ -131,7 +131,7 @@ function FeatureCard({ feature, index }: { feature: typeof features[0], index: n
       whileInView={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
       viewport={{ once: false, margin: "-100px" }}
-      className="p-8 rounded-[2rem] border border-slate-100 bg-white shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all hover:-translate-y-1 group"
+      className="p-6 md:p-8 rounded-[2rem] border border-slate-100 bg-white shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all hover:-translate-y-1 group"
     >
       <div className={`w-14 h-14 ${feature.color} rounded-2xl flex items-center justify-center mb-6 text-xl group-hover:scale-110 transition-transform duration-300`}>
         <feature.icon className="w-7 h-7" />
