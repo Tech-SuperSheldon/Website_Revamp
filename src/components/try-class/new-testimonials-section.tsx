@@ -64,9 +64,9 @@ const testimonials = [
 
 export function NewTestimonialsSection() {
   return (
-    <section className="relative w-full py-20 overflow-hidden bg-transparent">
+    <section className="relative w-full pt-8 md:pt-12 pb-2 md:pb-4 overflow-hidden bg-transparent">
         {/* 3D Spinning Globe Background */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] pointer-events-none opacity-20">
+        <div className="absolute top-[60%] md:top-[70%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[600px] h-[400px] md:h-[600px] pointer-events-none opacity-10 md:opacity-12">
              <div className="w-full h-full rounded-full relative overflow-hidden shadow-[inset_-20px_-20px_50px_rgba(0,0,0,0.1)]">
                 {/* Rolling Map Texture */}
                 <div 
@@ -85,11 +85,11 @@ export function NewTestimonialsSection() {
         viewport={{ once: false, margin: "-100px" }}
         transition={{ duration: 0.8 }}
       >
-        <div className="container px-4 mx-auto mb-16">
+        <div className="container px-4 mx-auto mb-12 md:mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-center text-slate-900 mb-4">
             What our students say
             </h2>
-            <p className="text-center text-slate-500 max-w-xl mx-auto">
+            <p className="text-center text-slate-500 max-w-xl mx-auto relative z-10">
                 Join thousands of happy families who have transformed their grades and confidence with SuperSheldon.
             </p>
         </div>
