@@ -225,15 +225,15 @@ export function NewHeroSection() {
           {/* Right Column: Details, Boxes, Scroller */}
           <div className="flex flex-col space-y-6 md:space-y-8 lg:pt-0">
              {/* Small Chips for Subjects */}
-            <div className="flex flex-wrap gap-3 md:gap-4 justify-center md:justify-start">
-                 <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 md:py-2.5 rounded-2xl bg-orange-50 border border-orange-100 text-orange-700 text-base md:text-lg font-bold shadow-sm hover:scale-105 transition-transform">
-                    <span className="text-xl md:text-2xl">📚</span> English
+            <div className="flex flex-nowrap gap-2 md:gap-4 justify-center md:justify-start overflow-x-auto no-scrollbar w-full md:w-auto px-1">
+                 <div className="inline-flex items-center gap-1.5 md:gap-3 px-3 md:px-5 py-2 md:py-2.5 rounded-2xl bg-orange-50 border border-orange-100 text-orange-700 text-sm md:text-lg font-bold shadow-sm shrink-0 hover:scale-105 transition-transform">
+                    <span className="text-lg md:text-2xl">📚</span> English
                  </div>
-                 <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 md:py-2.5 rounded-2xl bg-purple-50 border border-purple-100 text-purple-700 text-base md:text-lg font-bold shadow-sm hover:scale-105 transition-transform">
-                    <span className="text-xl md:text-2xl">🔢</span> Maths
+                 <div className="inline-flex items-center gap-1.5 md:gap-3 px-3 md:px-5 py-2 md:py-2.5 rounded-2xl bg-purple-50 border border-purple-100 text-purple-700 text-sm md:text-lg font-bold shadow-sm shrink-0 hover:scale-105 transition-transform">
+                    <span className="text-lg md:text-2xl">🔢</span> Maths
                  </div>
-                 <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 md:py-2.5 rounded-2xl bg-teal-50 border border-teal-100 text-teal-700 text-base md:text-lg font-bold shadow-sm hover:scale-105 transition-transform">
-                    <span className="text-xl md:text-2xl">🧬</span> Science
+                 <div className="inline-flex items-center gap-1.5 md:gap-3 px-3 md:px-5 py-2 md:py-2.5 rounded-2xl bg-teal-50 border border-teal-100 text-teal-700 text-sm md:text-lg font-bold shadow-sm shrink-0 hover:scale-105 transition-transform">
+                    <span className="text-lg md:text-2xl">🧬</span> Science
                  </div>
             </div>
 
