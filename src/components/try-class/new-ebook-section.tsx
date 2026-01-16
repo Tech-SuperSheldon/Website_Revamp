@@ -8,6 +8,8 @@ import { useState } from "react";
 export function NewEbookSection() {
   const [email, setEmail] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const benefits = [
     "Age-appropriate learning strategies",
@@ -17,12 +19,41 @@ export function NewEbookSection() {
     "Exam preparation techniques that work",
   ];
 
-  const handleDownload = (e: React.FormEvent) => {
+  const handleDownload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      // Simulate download
-      setIsSuccess(true);
-      setTimeout(() => setIsSuccess(false), 3000);
+    if (!email) return;
+
+    setIsLoading(true);
+    setErrorMessage("");
+
+    try {
+      // Update this URL to match your backend URL
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      
+      const response = await fetch(`${API_URL}/api/download-guide`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.ok) {
+        setIsSuccess(true);
+        setTimeout(() => {
+          setIsSuccess(false);
+          setEmail("");
+        }, 5000);
+      } else {
+        setErrorMessage(data.message || "Failed to send guide. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setErrorMessage("Network error. Please check your connection and try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -73,28 +104,38 @@ export function NewEbookSection() {
                whileInView={{ opacity: 1, y: 0 }}
                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                viewport={{ once: false, margin: "-100px" }}
-               className="flex flex-col sm:flex-row gap-4 w-full max-w-lg mt-8"
+               className="flex flex-col gap-4 w-full max-w-lg mt-8"
             >
                 {!isSuccess ? (
-                    <form onSubmit={handleDownload} className="flex flex-col sm:flex-row gap-4 w-full">
-                         <div className="relative flex-1">
-                            <input 
-                                type="email" 
-                                placeholder="Enter your email address"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full h-14 pl-6 pr-4 rounded-full bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
-                                required
-                            />
-                        </div>
-                        <button 
-                            type="submit"
-                            className="h-14 px-8 rounded-full bg-gradient-to-r from-orange-500 to-orange-300 hover:opacity-90 text-white font-bold text-lg transition-all shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 whitespace-nowrap"
-                        >
-                            Get Guide 
-                            <ArrowRight className="w-5 h-5 transform -rotate-45" />
-                        </button>
-                    </form>
+                    <>
+                        <form onSubmit={handleDownload} className="flex flex-col sm:flex-row gap-4 w-full">
+                             <div className="relative flex-1">
+                                <input 
+                                    type="email" 
+                                    placeholder="Enter your email address"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="w-full h-14 pl-6 pr-4 rounded-full bg-slate-100 border border-slate-200 text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                    required
+                                    disabled={isLoading}
+                                />
+                            </div>
+                            <button 
+                                type="submit"
+                                disabled={isLoading}
+                                className="h-14 px-8 rounded-full bg-gradient-to-r from-orange-500 to-orange-300 hover:opacity-90 text-white font-bold text-lg transition-all shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {isLoading ? "Sending..." : "Get Guide"}
+                                {!isLoading && <ArrowRight className="w-5 h-5 transform -rotate-45" />}
+                            </button>
+                        </form>
+                        {errorMessage && (
+                            <div className="w-full p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 flex items-start gap-2 text-sm">
+                                <span className="font-medium">⚠️</span>
+                                <span>{errorMessage}</span>
+                            </div>
+                        )}
+                    </>
                 ) : (
                     <div className="w-full p-4 rounded-xl bg-green-50 border border-green-200 text-green-700 flex items-center justify-center gap-2 font-medium">
                         <CheckCircle className="w-5 h-5" />

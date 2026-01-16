@@ -1,9 +1,10 @@
-const mongoose = require("mongoose") ;
+const mongoose = require("mongoose");
+const { DB_CONNECT_STRING } = process.env;
 
-async function main()
-{
-    
-    await mongoose.connect(process.env.DB_CONNECT_STRING) ;   
-} 
+async function connect() {
+  if (!DB_CONNECT_STRING) throw new Error("MONGODB_URI not set in .env");
+  await mongoose.connect(DB_CONNECT_STRING, { dbName: "super_sheldon_form" });
+  console.log("MongoDB connected");
+}
 
-module.exports =  main ; 
+module.exports = { connect, mongoose };
