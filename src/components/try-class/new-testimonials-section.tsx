@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const testimonials = [
   {
@@ -9,60 +10,104 @@ const testimonials = [
     grade: "Year 5 Maths",
     country: "UK",
     avatar: "/avatars/testimonial-1.png",
-    content: "My daughter went from struggling with fractions to top of her class. The confidence boost has been incredible to watch!",
+    content: (
+      <>
+        My daughter went from <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">struggling with fractions</span> to top of her class. The <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">confidence boost</span> has been incredible to watch!
+      </>
+    ),
   },
   {
     name: "Michael Patel",
     grade: "GCSE English",
     country: "UK",
     avatar: "/avatars/testimonial-2.png",
-    content: "The English tutor understood exactly what my son needed for his GCSEs. He achieved a Grade 8 – we couldn't be happier!",
+    content: (
+      <>
+        The English tutor understood exactly what my son needed for his GCSEs. He achieved a <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">Grade 8</span> – we couldn&apos;t be happier!
+      </>
+    ),
   },
   {
     name: "Emma Thompson",
     grade: "Year 3 Reading",
     country: "AUS",
     avatar: "/avatars/testimonial-3.png",
-    content: "Worth every penny. The personalised approach to teaching reading comprehension made all the difference.",
+    content: (
+      <>
+        Worth every penny. The <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">personalised approach</span> to teaching reading comprehension made all the difference.
+      </>
+    ),
   },
   {
     name: "James Wilson",
     grade: "Year 8 Maths",
     country: "UK",
     avatar: "/avatars/testimonial-4.png",
-    content: "I actually enjoy Maths now! My tutor makes everything so clear and easy to understand.",
+    content: (
+      <>
+        I actually <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">enjoy Maths</span> now! My tutor makes everything so clear and easy to understand.
+      </>
+    ),
   },
    {
     name: "Dr. Lisa Ray",
     grade: "11 Plus Prep",
     country: "UK",
     avatar: "/avatars/testimonial-5.png",
-    content: "As an academic myself, I appreciate the structured yet flexible curriculum. Highly effective.",
+    content: (
+      <>
+        As an academic myself, I appreciate the <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">structured yet flexible</span> curriculum. Highly effective.
+      </>
+    ),
   },
   {
     name: "David Chen",
     grade: "11 Plus Prep",
     country: "UK",
     avatar: "/avatars/testimonial-6.png",
-    content: "SuperSheldon is a game changer. My son finally feels ready for his 11+ exams.",
+    content: (
+      <>
+        SuperSheldon is a <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">game changer</span>. My son finally feels <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">ready for his 11+ exams</span>.
+      </>
+    ),
   },
   {
     name: "Sophie Miller",
     grade: "Year 4 English",
     country: "AUS",
     avatar: "/avatars/testimonial-7.png",
-    content: "I love the lessons! My tutor is so nice and helps me when I get stuck on tricky questions.",
+    content: (
+      <>
+        I <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">love the lessons</span>! My tutor is so nice and helps me when I get stuck on tricky questions.
+      </>
+    ),
   },
   {
     name: "Oliver Smith",
     grade: "Year 9 Science",
     country: "UK",
     avatar: "/avatars/testimonial-8.png",
-    content: "The best tutoring I've ever had. I feel so much more confident in class now.",
+    content: (
+      <>
+        The <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">best tutoring</span> I&apos;ve ever had. I feel so much more <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">confident</span> in class now.
+      </>
+    ),
   },
 ];
 
 export function NewTestimonialsSection() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const durationRow1 = isMobile ? 120 : 80;
+  const durationRow2 = isMobile ? 140 : 90;
+
   return (
     <section className="relative w-full pt-8 md:pt-12 pb-2 md:pb-4 overflow-hidden bg-transparent">
         {/* 3D Spinning Globe Background */}
@@ -85,7 +130,7 @@ export function NewTestimonialsSection() {
         viewport={{ once: false, margin: "-100px" }}
         transition={{ duration: 0.8 }}
       >
-        <div className="container px-4 mx-auto mb-12 md:mb-16">
+        <div className="container px-4 mx-auto mb-8 md:mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-center text-slate-900 mb-4">
             What our students say
             </h2>
@@ -100,13 +145,14 @@ export function NewTestimonialsSection() {
             <motion.div
                 className="flex gap-6 pl-6"
                 animate={{ x: ["0%", "-50%"] }}
-                transition={{ duration: 80, ease: "linear", repeat: Infinity }}
+                transition={{ duration: durationRow1, ease: "linear", repeat: Infinity }}
             >
                 {[...testimonials, ...testimonials].map((t, i) => (
                 <div
                     key={i}
                     className="w-[300px] md:w-[350px] shrink-0 bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col gap-4"
                 >
+
                     <div className="flex items-center gap-3">
                         <div className="relative w-12 h-12 rounded-full overflow-hidden">
                             <Image src={t.avatar} alt={t.name} fill className="object-cover" />
@@ -120,9 +166,9 @@ export function NewTestimonialsSection() {
                             </p>
                         </div>
                     </div>
-                    <p className="text-slate-700 text-sm leading-relaxed">
+                    <div className="text-slate-700 text-sm leading-relaxed">
                         &quot;{t.content}&quot;
-                    </p>
+                    </div>
                 </div>
                 ))}
             </motion.div>
@@ -133,13 +179,14 @@ export function NewTestimonialsSection() {
             <motion.div
                 className="flex gap-6 pl-6"
                 animate={{ x: ["-50%", "0%"] }}
-                transition={{ duration: 90, ease: "linear", repeat: Infinity }}
+                transition={{ duration: durationRow2, ease: "linear", repeat: Infinity }}
             >
                 {[...testimonials, ...testimonials].reverse().map((t, i) => (
                 <div
                     key={i}
                     className="w-[300px] md:w-[350px] shrink-0 bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col gap-4"
                 >
+
                     <div className="flex items-center gap-3">
                         <div className="relative w-12 h-12 rounded-full overflow-hidden">
                             <Image src={t.avatar} alt={t.name} fill className="object-cover" />
@@ -153,17 +200,18 @@ export function NewTestimonialsSection() {
                             </p>
                         </div>
                     </div>
-                    <p className="text-slate-700 text-sm leading-relaxed">
+                    <div className="text-slate-700 text-sm leading-relaxed">
                         &quot;{t.content}&quot;
-                    </p>
+                    </div>
                 </div>
                 ))}
             </motion.div>
             </div>
             
             {/* Blur Edges */}
-            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-50 to-transparent pointer-events-none z-20" />
-            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent pointer-events-none z-20" />
+            {/* Blur Edges - Hidden on Mobile */}
+            <div className="hidden md:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-50 to-transparent pointer-events-none z-20" />
+            <div className="hidden md:block absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-50 to-transparent pointer-events-none z-20" />
         </div>
       </motion.div>
 

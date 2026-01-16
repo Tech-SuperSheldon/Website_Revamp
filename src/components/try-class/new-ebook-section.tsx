@@ -27,9 +27,9 @@ export function NewEbookSection() {
   };
 
   return (
-    <section className="w-full py-20 relative overflow-hidden">
+    <section className="w-full py-10 md:py-20 relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-12">
+        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-2 md:gap-12 lg:gap-12">
           
           {/* Left Content */}
           <div className="w-full lg:w-auto max-w-xl space-y-8 flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -57,10 +57,10 @@ export function NewEbookSection() {
                whileInView={{ opacity: 1, y: 0 }}
                transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
                viewport={{ once: false, margin: "-100px" }}
-               className="flex flex-wrap justify-center lg:justify-start gap-x-8 gap-y-4"
+               className="flex flex-wrap justify-start gap-x-8 gap-y-4 w-full"
             >
                 {benefits.map((benefit, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm md:text-base text-slate-700">
+                    <div key={i} className="flex items-center gap-2 text-sm md:text-base text-slate-700 text-left">
                         <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
                         <span>{benefit}</span>
                     </div>
@@ -121,9 +121,9 @@ export function NewEbookSection() {
                     className="object-contain z-10"
                  />
                  {/* Left Blur Overlay */}
-                 <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-20 pointer-events-none backdrop-blur-[2px]" />
+                 <div className="hidden md:block absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-20 pointer-events-none backdrop-blur-[2px]" />
                  {/* Bottom Blur Overlay */}
-                 <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent z-20 pointer-events-none backdrop-blur-[2px]" />
+                 <div className="hidden md:block absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white via-white/80 to-transparent z-20 pointer-events-none backdrop-blur-[2px]" />
              </div>
           </motion.div>
         </div>
