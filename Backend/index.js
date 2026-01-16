@@ -5,11 +5,14 @@ require("dotenv").config() ;
 const main = require("./src/config/db") ;
 const cors = require("cors") ;
 const userRouter = require("./src/routes/userRouter") ;
+const superSheldonFormRouter = require("./src/routes/superSheldonFormRouter") ;
 
 
 const allowlist = new Set([
   "http://localhost:3000",
-  "https://www.supersheldon.com"
+  "http://localhost:3003",
+  "https://www.supersheldon.com",
+  "https://supersheldon.com"
 ]);
 
 const corsOptions = {
@@ -26,8 +29,16 @@ app.use(cors(corsOptions));
 
 app.use(express.json()) ;
 
+// Health check endpoint
+app.get("/health", (req, res) => {
+    res.status(200).json({ status: "OK", message: "Server is running" });
+});
+
 // Book Demo 
 app.use("/user" , userRouter) ;
+
+// Super Sheldon Form
+app.use("/api/super-sheldon-form", superSheldonFormRouter) ;
 
 // parallely calling two function to connent DB and redis both at the same time
 const initializeConnection = async ()=>{

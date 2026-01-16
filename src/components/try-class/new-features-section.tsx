@@ -59,17 +59,18 @@ const features = [
 
 export function NewFeaturesSection() {
   return (
-    <section className="w-full py-24 relative">
+    <section className="w-full pt-8 md:pt-12 pb-8 md:pb-12 relative">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
           
           {/* Left Column - Sticky Content */}
-          <div className="lg:w-1/2 lg:sticky lg:top-32 lg:self-start h-fit mb-12 lg:mb-0">
+          <div className="lg:w-1/2 lg:sticky lg:top-32 lg:self-start h-fit mb-6 md:mb-8 lg:mb-0">
              <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: false }}
+                className="text-center lg:text-left"
              >
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 text-slate-600 text-sm font-medium mb-6">
                    <span className="text-yellow-500">★</span> Top Features
@@ -82,12 +83,12 @@ export function NewFeaturesSection() {
                   </span>
                 </h2>
                 
-                <p className="text-slate-500 text-lg leading-relaxed mb-10 max-w-xl">
+                <p className="text-slate-500 text-lg leading-relaxed mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 text-center lg:text-left text-justify">
                   Unlock the full potential of your child&apos;s academic journey with our top-rated features, 
                   designed for seamless learning and proven success.
                 </p>
 
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   {features.slice(0, 4).map((f, i) => (
                     <motion.div 
                       key={i}

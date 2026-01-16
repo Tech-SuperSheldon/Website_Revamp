@@ -3,9 +3,13 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useOpenDemoBooking } from "../utils/navigation";
+import { useState } from "react";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import axiosClient from "../utils/axios";
+import { CheckCircle } from "lucide-react";
 
 const avatars = [
   "/avatars/s1.png",
@@ -15,14 +19,91 @@ const avatars = [
 ];
 
 export function NewHeroSection() {
-  const openDemoBooking = useOpenDemoBooking();
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    mobile: "",
+    childAgeYear: "",
+    subject: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [phoneValue, setPhoneValue] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate all fields
+    if (!formData.fullName || !formData.email || !formData.childAgeYear || !formData.subject) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    if (!phoneValue) {
+      alert("Please enter a valid phone number.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const submitData = {
+        fullName: formData.fullName.trim(),
+        email: formData.email.trim().toLowerCase(),
+        mobile: phoneValue,
+        childAgeYear: formData.childAgeYear.trim(),
+        subject: formData.subject
+      };
+
+      console.log("Submitting form data:", submitData);
+
+      const response = await axiosClient.post("/api/super-sheldon-form/submit", submitData);
+      
+      console.log("Form submitted successfully:", response.data);
+      
+      setShowSuccess(true);
+      setFormData({
+        fullName: "",
+        email: "",
+        mobile: "",
+        childAgeYear: "",
+        subject: ""
+      });
+      setPhoneValue("");
+
+      // Redirect after 2 seconds
+      setTimeout(() => {
+        window.location.href = "https://supersheldon.com/demo";
+      }, 2000);
+    } catch (error: any) {
+      console.error("Error submitting form:", error);
+      const errorMessage = error?.response?.data?.message || error?.message || "There was an error submitting your form. Please try again.";
+      alert(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
-    <section className="w-full py-12 md:py-20 lg:py-24 relative overflow-hidden">
+    <section className="w-full pt-2 md:pt-3 lg:pt-4 pb-8 md:pb-10 lg:pb-12 relative overflow-hidden">
       <div className="container px-4 md:px-6 mx-auto">
+        {/* Logo Section - Centered on desktop, middle on mobile */}
+        <div className="flex justify-center mb-6 md:mb-8">
+          <div className="relative w-48 h-16 md:w-64 md:h-20">
+            <Image 
+              src="/logo.png" 
+              alt="Super Sheldon Logo"
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left Column: Title and Form */}
-          <div className="flex flex-col space-y-8">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-slate-900 leading-[1.1]">
+          <div className="flex flex-col space-y-4 md:space-y-6">
+            {/* Centered Title */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-slate-900 leading-[1.1] text-center">
               <span className="whitespace-nowrap block">Give Your Child the</span> 
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-300">
                 Academic Edge
@@ -34,64 +115,153 @@ export function NewHeroSection() {
                whileInView={{ opacity: 1, y: 0 }}
                viewport={{ once: false, margin: "-50px" }}
                transition={{ delay: 0.2 }}
-               className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200 p-6 md:p-8"
+               className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200 p-4 md:p-5"
              >
-                <div className="mb-6">
-                    <h3 className="text-xl font-bold text-slate-900">Book Your Free Assessment</h3>
-                    <p className="text-slate-500 text-sm mt-1">Get a personalised learning plan today.</p>
+                <div className="mb-3 md:mb-4">
+                    <h3 className="text-lg md:text-xl font-bold text-slate-900">Book Your Free Demo Session</h3>
+                    <p className="text-slate-500 text-xs md:text-sm mt-0.5">Get a personalised learning plan today.</p>
                 </div>
 
-                <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); openDemoBooking(); }}>
-                    <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide font-bold text-slate-500">Your Name</label>
-                        <Input type="text" placeholder="Enter your full name" className="h-11 bg-slate-50 border-slate-200 focus-visible:ring-purple-500 text-sm" />
-                    </div>
+                <AnimatePresence>
+                  {showSuccess ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      className="bg-green-50 border-2 border-green-200 rounded-2xl p-8 text-center"
+                    >
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                        className="flex justify-center mb-4"
+                      >
+                        <CheckCircle className="w-16 h-16 text-green-500" />
+                      </motion.div>
+                      <motion.h3
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                        className="text-2xl font-bold text-green-800 mb-2"
+                      >
+                        Thank You!
+                      </motion.h3>
+                      <motion.p
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        className="text-green-700"
+                      >
+                        Thanks for demo booking! Redirecting you now...
+                      </motion.p>
+                    </motion.div>
+                  ) : (
+                    <form className="space-y-2.5" onSubmit={handleSubmit}>
+                        <div className="space-y-1">
+                            <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Your Name</label>
+                            <Input 
+                                type="text" 
+                                placeholder="Please share your name" 
+                                className="h-10 md:h-11 bg-slate-50 border-slate-200 focus-visible:ring-purple-500 text-sm rounded-md pl-3" 
+                                style={{ textAlign: 'left', direction: 'ltr' }}
+                                value={formData.fullName}
+                                onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                                required
+                            />
+                        </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-1.5">
-                            <label className="text-xs uppercase tracking-wide font-bold text-slate-500">Email</label>
-                            <Input type="email" placeholder="john@example.com" className="h-11 bg-slate-50 border-slate-200 focus-visible:ring-purple-500 text-sm" />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                            <div className="space-y-1">
+                                <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Email</label>
+                                <Input 
+                                    type="email" 
+                                    placeholder="Please share your email id" 
+                                    className="h-10 md:h-11 bg-slate-50 border-slate-200 focus-visible:ring-purple-500 text-sm rounded-md pl-3" 
+                                    style={{ textAlign: 'left', direction: 'ltr' }}
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                    required
+                                />
+                            </div>
+                            <div className="space-y-1">
+                                <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Phone Number</label>
+                                <PhoneInput
+                                    country={'gb'}
+                                    placeholder="Please share your phone number"
+                                    value={phoneValue}
+                                    onChange={(value) => setPhoneValue(value)}
+                                    inputProps={{
+                                        required: true,
+                                        name: 'phone',
+                                    }}
+                                />
+                            </div>
                         </div>
-                        <div className="space-y-1.5">
-                            <label className="text-xs uppercase tracking-wide font-bold text-slate-500">Phone Number</label>
-                            <Input type="tel" placeholder="+44 7700 900000" className="h-11 bg-slate-50 border-slate-200 focus-visible:ring-purple-500 text-sm" />
-                        </div>
-                    </div>
 
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-1.5">
-                            <label className="text-xs uppercase tracking-wide font-bold text-slate-500">Child&apos;s Age/Year</label>
-                            <Input type="text" placeholder="e.g. Year 5" className="h-11 bg-slate-50 border-slate-200 focus-visible:ring-purple-500 text-sm" />
-                        </div>
-                        <div className="space-y-1.5">
-                            <label className="text-xs uppercase tracking-wide font-bold text-slate-500">Subject of Interest</label>
-                             <div className="relative">
-                                <select className="w-full h-11 px-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-sm shadow-sm placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-purple-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none">
-                                    <option value="" disabled selected>Select subject</option>
-                                    <option value="english">English</option>
-                                    <option value="maths">Maths</option>
-                                    <option value="both">Both</option>
-                                </select>
-                                <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
-                                    <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                                        <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd" />
-                                    </svg>
+                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                            <div className="space-y-1">
+                                <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Child Age</label>
+                                <div className="relative">
+                                    <select 
+                                        className="w-full h-10 md:h-11 px-3 md:px-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none" 
+                                        style={{ textAlign: 'left', direction: 'ltr' }}
+                                        value={formData.childAgeYear}
+                                        onChange={(e) => setFormData({...formData, childAgeYear: e.target.value})}
+                                        required
+                                    >
+                                        <option value="" disabled>Please select age</option>
+                                        {Array.from({ length: 11 }, (_, i) => i + 6).map((age) => (
+                                            <option key={age} value={age.toString()}>{age}</option>
+                                        ))}
+                                    </select>
+                                    <div className="absolute inset-y-0 right-0 flex items-center px-3 md:px-4 pointer-events-none text-slate-500">
+                                        <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="space-y-1">
+                                <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Subject of Interest</label>
+                                 <div className="relative">
+                                    <select 
+                                        className="w-full h-10 md:h-11 px-3 md:px-4 py-2 bg-slate-50 border border-slate-200 rounded-md text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-purple-500 disabled:cursor-not-allowed disabled:opacity-50 appearance-none" 
+                                        style={{ textAlign: 'left', direction: 'ltr' }}
+                                        value={formData.subject}
+                                        onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                                        required
+                                    >
+                                        <option value="" disabled>Please share your subject</option>
+                                        <option value="english">English</option>
+                                        <option value="maths">Maths</option>
+                                        <option value="both">Both</option>
+                                    </select>
+                                    <div className="absolute inset-y-0 right-0 flex items-center px-3 md:px-4 pointer-events-none text-slate-500">
+                                        <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                                            <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd" />
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <Button type="button" onClick={openDemoBooking} className="w-full h-12 text-base font-bold bg-gradient-to-r from-orange-500 to-orange-300 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-2 text-white rounded-xl">
-                        Get Your Free Assessment
-                    </Button>
-                </form>
+                        <Button 
+                            type="submit" 
+                            disabled={isSubmitting}
+                            className="w-full h-11 md:h-12 text-sm md:text-base font-bold bg-gradient-to-r from-orange-500 to-orange-300 hover:opacity-90 transition-all shadow-lg shadow-orange-500/20 mt-0.5 text-white rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {isSubmitting ? "Submitting..." : "Get Your Free Assessment"}
+                        </Button>
+                    </form>
+                  )}
+                </AnimatePresence>
              </motion.div>
           </div>
 
           {/* Right Column: Details, Boxes, Scroller */}
           <div className="flex flex-col space-y-8 lg:pt-0">
              {/* Small Chips for Subjects */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 justify-center md:justify-start">
                  <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-orange-50 border border-orange-100 text-orange-700 text-lg font-bold shadow-sm hover:scale-105 transition-transform">
                     <span className="text-2xl">📚</span> English
                  </div>
@@ -101,7 +271,7 @@ export function NewHeroSection() {
             </div>
 
             <div className="space-y-4">
-                <p className="text-lg text-slate-600 leading-relaxed font-medium">
+                <p className="text-lg text-slate-600 leading-relaxed font-medium text-center md:text-left text-justify">
                   SuperSheldon provides expert 1-to-1 tutoring in English and Maths. 
                   Our personalised approach builds confidence and helps students achieve their full potential.
                 </p>
@@ -190,6 +360,69 @@ export function NewHeroSection() {
         }
         .animate-marquee:hover {
           animation-play-state: paused;
+        }
+        .react-tel-input {
+          width: 100% !important;
+        }
+        .react-tel-input .flag-dropdown {
+          background-color: rgb(248 250 252) !important;
+          border: 1px solid rgb(226 232 240) !important;
+          border-radius: 0.375rem 0 0 0.375rem !important;
+          border-right: none !important;
+        }
+        .react-tel-input .form-control {
+          width: 100% !important;
+          height: 2.5rem !important;
+          background-color: rgb(248 250 252) !important;
+          border: 1px solid rgb(226 232 240) !important;
+          border-radius: 0 0.375rem 0.375rem 0 !important;
+          padding-left: 58px !important;
+          text-align: left !important;
+        }
+        @media (min-width: 768px) {
+          .react-tel-input .form-control {
+            height: 2.75rem !important;
+          }
+        }
+        .react-tel-input .form-control::placeholder {
+          text-align: left !important;
+          color: rgb(148 163 184) !important;
+        }
+        .react-tel-input .form-control:focus {
+          border-color: rgb(168 85 247) !important;
+          box-shadow: 0 0 0 1px rgb(168 85 247) !important;
+        }
+        .react-tel-input .flag-dropdown.open {
+          border-color: rgb(168 85 247) !important;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input,
+        input[type="text"]::placeholder,
+        input[type="email"]::placeholder,
+        input[type="tel"]::placeholder,
+        input::placeholder {
+          text-align: left !important;
+          text-align-last: left !important;
+        }
+        select,
+        select option {
+          text-align: left !important;
+          text-align-last: left !important;
+        }
+        .react-tel-input .form-control,
+        .react-tel-input .form-control::placeholder {
+          text-align: left !important;
+          text-align-last: left !important;
+        }
+        /* Force left alignment for all form inputs */
+        form input,
+        form input::placeholder,
+        form select,
+        form select option {
+          text-align: left !important;
+          direction: ltr !important;
         }
       `}</style>
     </section>
