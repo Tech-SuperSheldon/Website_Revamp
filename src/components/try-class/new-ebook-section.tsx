@@ -27,7 +27,7 @@ export function NewEbookSection() {
   };
 
   return (
-    <section className="w-full py-10 md:py-20 relative overflow-hidden">
+    <section className="w-full pt-10 md:pt-20 pb-8 md:pb-12 relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-2 md:gap-12 lg:gap-12">
           
@@ -127,7 +127,31 @@ export function NewEbookSection() {
              </div>
           </motion.div>
         </div>
+
+        {/* Book Free Session Button */}
+        <div className="w-full flex justify-center mt-6 md:mt-8">
+             <a 
+                href="https://supersheldon.com/demo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-300 text-white rounded-full text-xl font-bold transition-transform hover:scale-105 hover:shadow-xl hover:opacity-90 active:scale-95 animate-bounce-slow shadow-lg shadow-orange-500/20"
+            >
+                <span>Book a free session</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <div className="absolute inset-0 rounded-full ring-2 ring-black/20 animate-ping opacity-20" />
+            </a>
+        </div>
       </div>
+      
+       <style jsx global>{`
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .animate-bounce-slow {
+            animation: bounce-slow 2s infinite ease-in-out;
+        }
+      `}</style>
     </section>
   );
 }
