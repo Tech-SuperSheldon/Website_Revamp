@@ -17,7 +17,7 @@ const stats = [
   {
     icon: FaTrophy,
     value: "94%",
-    label: "Pass Rate for 11+ ,SATs & SAT/ACT",
+    label: "Pass Rate for 11+ ,SATs & PSATs",
     color: "text-emerald-600",
     bg: "bg-gradient-to-br from-emerald-100 to-emerald-200",
     shadow: "shadow-emerald-200/50",
