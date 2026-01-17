@@ -16,16 +16,16 @@ const features = [
   {
     icon: GraduationCap,
     color: "bg-blue-100 text-blue-600",
-    title: "DBS-Checked Expert Tutors",
+    title: "STEM-Verified Expert Tutors",
     description:
-      "All our tutors are qualified teachers or subject specialists with enhanced DBS checks. We match the right tutor to your child's learning style.",
+      "All Super Sheldon tutors are STEM-verified subject specialists, carefully vetted for subject mastery, teaching quality, and learner impact. We match each child with the right tutor based on learning style, pace, and academic goals.",
   },
   {
     icon: Target,
     color: "bg-purple-100 text-purple-600",
-    title: "Curriculum-Aligned Learning",
+    title: "Globally Aligned Curriculum Support",
     description:
-      "Fully aligned with the UK National Curriculum. We cover KS1, KS2, KS3, GCSEs, and 11+ preparation for English and Maths.",
+      "Our learning programs align with recognised UK, US, and Australian curriculum, covering English, Maths, and Science with targeted preparation for 11+, GCSE, PSAT, SAT, ACT, AP, and NAPLAN.",
   },
   {
     icon: Calendar,
