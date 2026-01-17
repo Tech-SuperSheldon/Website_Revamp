@@ -17,7 +17,7 @@ const stats = [
   {
     icon: FaTrophy,
     value: "94%",
-    label: "Pass Rate for 11+ & SATs",
+    label: "Pass Rate for 11+ ,SATs & SAT/ACT",
     color: "text-emerald-600",
     bg: "bg-gradient-to-br from-emerald-100 to-emerald-200",
     shadow: "shadow-emerald-200/50",
@@ -72,7 +72,7 @@ export function StatsSection() {
             transition={{ delay: 0.2 }}
             className="text-lg text-slate-600"
           >
-            We don&apos;t just tutor- we transform academic journeys. Here&apos;s what makes SuperSheldon different.
+            We don&apos;t just tutor- we transform academic journeys. Here&apos;s what makes Super Sheldon different.
           </motion.p>
         </div>
 
