@@ -135,7 +135,7 @@ export function NewTestimonialsSection() {
             What our students say
             </h2>
             <p className="text-center text-slate-500 max-w-xl mx-auto relative z-10">
-                Join thousands of happy families who have transformed their grades and confidence with SuperSheldon.
+                Join thousands of happy families who have transformed their grades and confidence with Super Sheldon.
             </p>
         </div>
 
