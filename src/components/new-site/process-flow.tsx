@@ -297,9 +297,9 @@ const avatars = [
 
 export default function ProcessFlow() {
   return (
-    <section className="relative overflow-hidden py-24 bg-gradient-to-b from-white to-orange-50">
+    <section className="relative overflow-hidden py-12 md:py-16 bg-white">
       <div className="max-w-6xl mx-auto px-4 text-center relative z-10">
-        <h2 className="text-4xl md:text-5xl font-serif text-slate-900">
+        <h2 className="text-4xl md:text-5xl font-bold text-slate-900">
           Process We Follow
         </h2>
         <p className="mt-4 text-slate-500 max-w-xl mx-auto">

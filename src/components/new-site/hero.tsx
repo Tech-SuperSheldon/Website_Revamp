@@ -45,7 +45,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full pt-32 pb-16 md:pt-40 md:pb-24 lg:pt-48 lg:pb-32 overflow-hidden">
+    <section className="relative w-full pt-24 pb-8 md:pt-32 md:pb-12 lg:pt-40 lg:pb-16 overflow-hidden">
       {/* Background Decor Elements - Light Theme */}
       <div className="absolute top-0 right-0 -z-10 h-[500px] w-[500px] rounded-full bg-purple-50/80 blur-3xl filter opacity-60 pointer-events-none" />
       <div className="absolute bottom-0 left-0 -z-10 h-[300px] w-[300px] rounded-full bg-orange-50/80 blur-3xl filter opacity-60 pointer-events-none" />
@@ -122,6 +122,22 @@ export function Hero() {
             </div>
           </form>
            <p className="text-xs text-gray-400 mt-3 text-center font-medium">Join 10,000+ happy learners today!</p>
+           
+           {/* Accreditation / Trusted By Section */}
+           <div className="mt-8 flex flex-col items-center gap-4">
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Trusted by Parents & Schools</p>
+              <div className="flex items-center gap-8 opacity-90 grayscale hover:grayscale-0 transition-all duration-300">
+                <div className="relative h-10 w-28">
+                  <Image src="/trustpilot.png" alt="Trustpilot" fill className="object-contain" />
+                </div>
+                <div className="relative h-10 w-28">
+                  <Image src="/googlev2.png" alt="Google Reviews" fill className="object-contain" />
+                </div>
+                <div className="relative h-12 w-28">
+                  <Image src="/Stem.png" alt="STEM Accredited" fill className="object-contain" />
+                </div>
+              </div>
+           </div>
         </motion.div>
 
         {/* Level 3: Split Visuals (Slider Left, Video Right) */}
