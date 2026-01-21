@@ -5,6 +5,7 @@ import Header from "../../components/HeroHeaderNav";
 
 import { LoadingScreen } from "../../components/loading-screen";
 import { BackgroundGrid } from "@/components/ui/background-grid";
+import Popup from "../../components/Popup";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +37,7 @@ export default function RootLayout({
           <main className="min-h-screen pt-0"> {/* Minimal top padding */}
               {children}
           </main>
-
+          <Popup />
         </LoadingScreen>
       </body>
     </html>
