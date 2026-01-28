@@ -11,7 +11,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import axiosClient from "../utils/axios";
 import { CheckCircle } from "lucide-react";
-import successAnimation from "./lottie/success.json";
+import successAnimation from "./success.json";
 
 const avatars = [
   "/avatars/s1.png",
