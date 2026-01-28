@@ -59,7 +59,7 @@ export function NewHeroSection() {
       console.log("Submitting form data:", submitData);
 
       // const response = await axiosClient.post("/api/super-sheldon-form/submit", submitData);
-     const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+     const API_URL ="https://webapi.supersheldon.com" ;
 
         const response = await fetch(`${API_URL}/api/super-sheldon-form/submit`, {
           method: "POST",
