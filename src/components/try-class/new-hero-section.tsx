@@ -9,8 +9,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import axiosClient from "../utils/axios";
-import { CheckCircle } from "lucide-react";
 
 const avatars = [
   "/avatars/s1.png",
@@ -18,6 +16,31 @@ const avatars = [
   "/avatars/s3.png",
   "/avatars/s4.png",
 ];
+
+const QUESTIONS = [
+  {
+    prompt: "What would you like your child to improve the most right now?",
+    options: [
+      "🗣️ Confidence in expressing ideas",
+      "🎯 Stronger understanding of basics",
+      "🚀 Overall learning and clarity",
+    ],
+  },
+  {
+    prompt:
+      "To better understand your child, how would you describe their personality?",
+    options: ["😄 Outgoing", "😟 Shy", "🙂 Somewhere in between"],
+  },
+  {
+    prompt: "What is the biggest challenge your child is facing right now?",
+    options: [
+      "😟 Lacks confidence or hesitates to speak",
+      "😕 Understands slowly or needs repeated support",
+      "🏫 School methods are not working for my child",
+      "🤷 Not sure yet, I just want better guidance",
+    ],
+  },
+] as const;
 
 export function NewHeroSection() {
   const [formData, setFormData] = useState({
@@ -29,7 +52,85 @@ export function NewHeroSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [phoneValue, setPhoneValue] = useState("");
+  const [isQuestionFlowOpen, setIsQuestionFlowOpen] = useState(false);
+  const [questionStep, setQuestionStep] = useState(0);
+  const [answers, setAnswers] = useState<string[]>(
+    Array.from({ length: QUESTIONS.length }, () => "")
+  );
+  const [pendingSubmitData, setPendingSubmitData] = useState<null | {
+    fullName: string;
+    email: string;
+    mobile: string;
+    childAgeYear: string;
+    subject: string;
+  }>(null);
   const router = useRouter();
+
+  const resetQuestionFlow = () => {
+    setIsQuestionFlowOpen(false);
+    setQuestionStep(0);
+    setAnswers(Array.from({ length: QUESTIONS.length }, () => ""));
+    setPendingSubmitData(null);
+  };
+
+  const submitToBackend = async (baseData: {
+    fullName: string;
+    email: string;
+    mobile: string;
+    childAgeYear: string;
+    subject: string;
+  }, finalAnswers: string[]) => {
+    setIsSubmitting(true);
+    try {
+      const submitFormData = QUESTIONS.map((q, i) => ({
+        question: q.prompt,
+        answer: finalAnswers[i],
+      }));
+
+      const submitData = {
+        ...baseData,
+        submitFormData,
+      };
+
+      console.log("Submitting form data:", submitData);
+
+      const API_URL = "https://webapi.supersheldon.com";
+
+      const response = await fetch(`${API_URL}/api/super-sheldon-form/submit`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(submitData), // keep same submit logic; add answers array
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      console.log("Form submitted successfully:", response);
+
+      setFormData({
+        fullName: "",
+        email: "",
+        mobile: "",
+        childAgeYear: "",
+        subject: "",
+      });
+      setPhoneValue("");
+      resetQuestionFlow();
+      router.push("/utm-market/thank-you");
+    } catch (error: any) {
+      console.error("Error submitting form:", error);
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "There was an error submitting your form. Please try again.";
+      alert(errorMessage);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,8 +146,6 @@ export function NewHeroSection() {
       return;
     }
 
-    setIsSubmitting(true);
-
     try {
       const submitData = {
         fullName: formData.fullName.trim(),
@@ -56,41 +155,48 @@ export function NewHeroSection() {
         subject: formData.subject
       };
 
-      console.log("Submitting form data:", submitData);
-
-      // const response = await axiosClient.post("/api/super-sheldon-form/submit", submitData);
-     const API_URL ="https://webapi.supersheldon.com" ;
-
-        const response = await fetch(`${API_URL}/api/super-sheldon-form/submit`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(submitData),  // ✅ Remove the wrapper
-        });
-      if (!response.ok) {
-        throw new Error("Failed to submit form");
-      }
-
-      console.log("Form submitted successfully:", response);
-      
-      setFormData({
-        fullName: "",
-        email: "",
-        mobile: "",
-        childAgeYear: "",
-        subject: ""
-      });
-      setPhoneValue("");
-      router.push("/utm-market/thank-you");
+      // Open the questions flow first; submit happens after final answer.
+      setPendingSubmitData(submitData);
+      setIsQuestionFlowOpen(true);
     } catch (error: any) {
       console.error("Error submitting form:", error);
       const errorMessage = error?.response?.data?.message || error?.message || "There was an error submitting your form. Please try again.";
       alert(errorMessage);
-    } finally {
-      setIsSubmitting(false);
     }
   };
+
+  const currentQuestion = QUESTIONS[questionStep];
+
+  const handleSelectAnswer = (option: string) => {
+    if (isSubmitting) return;
+
+    const next = [...answers];
+    next[questionStep] = option;
+    setAnswers(next);
+
+    if (questionStep < QUESTIONS.length - 1) {
+      setQuestionStep(questionStep + 1);
+      return;
+    }
+
+    if (!pendingSubmitData) {
+      // fallback: should never happen; return user to form
+      resetQuestionFlow();
+      return;
+    }
+
+    void submitToBackend(pendingSubmitData, next);
+  };
+
+  const handleBackQuestion = () => {
+    if (isSubmitting) return;
+    if (questionStep === 0) {
+      setIsQuestionFlowOpen(false);
+      return;
+    }
+    setQuestionStep(questionStep - 1);
+  };
+
   return (
     <section className="w-full pt-2 md:pt-3 lg:pt-4 pb-6 md:pb-10 lg:pb-12 relative overflow-hidden">
       <div className="container px-4 md:px-6 mx-auto">
@@ -131,7 +237,77 @@ export function NewHeroSection() {
                     <p className="text-slate-500 text-xs md:text-sm mt-0.5">Get a personalised learning plan today.</p>
                 </div>
 
-                <form className="space-y-2.5" onSubmit={handleSubmit}>
+                {isQuestionFlowOpen ? (
+                  <div className="space-y-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="space-y-1">
+                        <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+                          Question {questionStep + 1} of {QUESTIONS.length}
+                        </p>
+                        <h4 className="text-base md:text-lg font-bold text-slate-900 leading-snug">
+                          {currentQuestion.prompt}
+                        </h4>
+                      </div>
+                      <div className="shrink-0 text-xs font-bold text-slate-500 tabular-nums">
+                        {questionStep + 1}/{QUESTIONS.length}
+                      </div>
+                    </div>
+
+                    <div className="h-2 w-full rounded-full bg-slate-100 overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-orange-500 to-orange-300"
+                        style={{
+                          width: `${Math.round(
+                            ((questionStep + 1) / QUESTIONS.length) * 100
+                          )}%`,
+                        }}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-2.5">
+                      {currentQuestion.options.map((opt) => {
+                        const selected = answers[questionStep] === opt;
+                        return (
+                          <button
+                            key={opt}
+                            type="button"
+                            onClick={() => handleSelectAnswer(opt)}
+                            disabled={isSubmitting}
+                            className={cn(
+                              "w-full rounded-2xl border px-4 py-3 md:px-5 md:py-4 text-left transition-all",
+                              selected
+                                ? "border-orange-300 bg-orange-50 shadow-sm"
+                                : "border-slate-200 bg-white hover:border-orange-200 hover:bg-orange-50/40",
+                              isSubmitting && "opacity-60 cursor-not-allowed"
+                            )}
+                            aria-pressed={selected}
+                          >
+                            <div className="text-sm md:text-base font-bold text-slate-900">
+                              {opt}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="flex items-center justify-between gap-2">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={handleBackQuestion}
+                        disabled={isSubmitting}
+                        className="h-10 md:h-11 font-semibold"
+                      >
+                        Back
+                      </Button>
+
+                      <div className="text-xs md:text-sm font-semibold text-slate-500">
+                        {isSubmitting ? "Submitting..." : "Tap an option to continue"}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <form className="space-y-2.5" onSubmit={handleSubmit}>
                     <div className="space-y-1">
                         <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Your Name</label>
                         <Input 
@@ -227,7 +403,8 @@ export function NewHeroSection() {
                     >
                         {isSubmitting ? "Submitting..." : "Book A Free 1:1 Session"}
                     </Button>
-                </form>
+                  </form>
+                )}
              </motion.div>
           </div>
 
