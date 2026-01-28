@@ -3,15 +3,14 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { motion, AnimatePresence } from "framer-motion";
-import Lottie from "lottie-react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import axiosClient from "../utils/axios";
 import { CheckCircle } from "lucide-react";
-import successAnimation from "./success.json";
 
 const avatars = [
   "/avatars/s1.png",
@@ -29,8 +28,8 @@ export function NewHeroSection() {
     subject: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
   const [phoneValue, setPhoneValue] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,7 +45,6 @@ export function NewHeroSection() {
       return;
     }
 
-    setShowSuccess(false);
     setIsSubmitting(true);
 
     try {
@@ -70,10 +68,12 @@ export function NewHeroSection() {
           },
           body: JSON.stringify(submitData),  // ✅ Remove the wrapper
         });
-      
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
       console.log("Form submitted successfully:", response);
       
-      setShowSuccess(true);
       setFormData({
         fullName: "",
         email: "",
@@ -82,6 +82,7 @@ export function NewHeroSection() {
         subject: ""
       });
       setPhoneValue("");
+      router.push("/utm-market/thank-you");
     } catch (error: any) {
       console.error("Error submitting form:", error);
       const errorMessage = error?.response?.data?.message || error?.message || "There was an error submitting your form. Please try again.";
@@ -118,6 +119,7 @@ export function NewHeroSection() {
             </h1>
 
             <motion.div
+               id="booking-form"
                initial={{ opacity: 0, y: 20 }}
                whileInView={{ opacity: 1, y: 0 }}
                viewport={{ once: false, margin: "-50px" }}
@@ -128,28 +130,6 @@ export function NewHeroSection() {
                     <h3 className="text-lg md:text-xl font-bold text-slate-900">Book Your Free Demo Session</h3>
                     <p className="text-slate-500 text-xs md:text-sm mt-0.5">Get a personalised learning plan today.</p>
                 </div>
-
-                <AnimatePresence>
-                  {showSuccess && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.25 }}
-                      className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4 p-3 md:p-4 rounded-2xl bg-green-50 border border-green-200 text-green-800 shadow-sm"
-                    >
-                      <div className="w-16 h-16 shrink-0">
-                        <Lottie animationData={successAnimation} loop={false} autoplay />
-                      </div>
-                      <div className="text-sm md:text-base leading-snug">
-                        <div className="font-bold">Thanks for submitting the form.</div>
-                        <div className="text-xs md:text-sm text-green-700">
-                          Our support team will get back to you within 5 minutes to book the demo at your preferred time.
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
 
                 <form className="space-y-2.5" onSubmit={handleSubmit}>
                     <div className="space-y-1">
