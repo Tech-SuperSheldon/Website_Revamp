@@ -39,14 +39,14 @@ export default function ThankYouPage() {
                 Back to homepage
               </Button>
             </Link>
-            <Link href="/utm-market#booking-form" className="w-full sm:w-auto">
+            {/* <Link href="/utm-market#booking-form" className="w-full sm:w-auto">
               <Button
                 variant="outline"
                 className="w-full sm:w-auto h-11 md:h-12 font-semibold"
               >
                 Book another session
               </Button>
-            </Link>
+            </Link> */}
           </div>
         </motion.div>
       </main>
