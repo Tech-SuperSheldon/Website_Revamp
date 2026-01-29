@@ -73,13 +73,17 @@ export function NewHeroSection() {
 
   const router = useRouter();
 
-  const submitToBackend = async (baseData: {
-    fullName: string;
-    email: string;
-    mobile: string;
-    childAgeYear: string;
-    subject: string;
-  }, finalAnswers: string[]) => {
+  const submitToBackend = async (
+    baseData: {
+      fullName: string;
+      email: string;
+      mobile: string;
+      childAgeYear: string;
+      subject: string;
+    }, 
+    finalAnswers: string[],
+    rawBookingData: any
+  ) => {
     setIsSubmitting(true);
     try {
       const submitFormData = QUESTIONS.map((q, i) => ({
@@ -87,12 +91,34 @@ export function NewHeroSection() {
         answer: finalAnswers[i],
       }));
 
+      const booking = rawBookingData.booking;
+
+      const toIST = (isoString: string) => {
+        return new Date(isoString).toLocaleString("en-IN", {
+          timeZone: "Asia/Kolkata",
+          dateStyle: "full",
+          timeStyle: "short",
+        });
+      };
+
+      const meetingRef = booking.references?.find((ref: any) => ref.meetingUrl);
+      const meetingUrl = meetingRef ? meetingRef.meetingUrl : booking.videoCallUrl;
+
+      const bookingSummary = {
+        meetingDate: booking.startTime.split("T")[0],
+        startTimeUTC: booking.startTime,
+        endTimeUTC: booking.endTime,
+        timeZone: booking.attendees?.[0]?.timeZone || booking.user?.timeZone,
+        startTimeIST: toIST(booking.startTime),
+        endTimeIST: toIST(booking.endTime),
+        meetingUrl: meetingUrl || "No meeting URL generated",
+      };
+
       const submitData = {
         ...baseData,
         submitFormData,
+        bookingSummary,
       };
-
-      console.log("Submitting form data:", submitData);
 
       const API_URL = "https://webapi.supersheldon.com";
 
@@ -108,8 +134,6 @@ export function NewHeroSection() {
         throw new Error("Failed to submit form");
       }
 
-      console.log("Form submitted successfully:", response);
-
       setFormData({
         fullName: "",
         email: "",
@@ -120,7 +144,6 @@ export function NewHeroSection() {
       setPhoneValue("");
       router.push("/utm-market/thank-you");
     } catch (error: any) {
-      console.error("Error submitting form:", error);
       const errorMessage = error?.message || "There was an error submitting your form. Please try again.";
       alert(errorMessage);
     } finally {
@@ -135,9 +158,11 @@ export function NewHeroSection() {
 
       cal("on", {
         action: "bookingSuccessful",
-        callback: async (e) => {
+        callback: async (e: any) => {
+          const bookingData = e.detail.data;
+
           if (submitDataRef.current && answersRef.current) {
-             await submitToBackend(submitDataRef.current, answersRef.current);
+             await submitToBackend(submitDataRef.current, answersRef.current, bookingData);
           }
         }
       });
