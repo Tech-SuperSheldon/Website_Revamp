@@ -45,7 +45,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full pt-24 pb-8 md:pt-32 md:pb-12 lg:pt-40 lg:pb-16 overflow-hidden">
+    <section className="relative w-full pt-32 pb-6 md:pt-40 md:pb-10 lg:pt-48 lg:pb-12 overflow-hidden">
       {/* Background Decor Elements - Light Theme */}
       <div className="absolute top-0 right-0 -z-10 h-[500px] w-[500px] rounded-full bg-purple-50/80 blur-3xl filter opacity-60 pointer-events-none" />
       <div className="absolute bottom-0 left-0 -z-10 h-[300px] w-[300px] rounded-full bg-orange-50/80 blur-3xl filter opacity-60 pointer-events-none" />
