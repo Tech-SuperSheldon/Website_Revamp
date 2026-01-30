@@ -122,7 +122,7 @@ export function NewHeroSection() {
 
       const API_URL = "https://webapi.supersheldon.com";
 
-      const response = await fetch(`${API_URL}/api/super-sheldon-form/submit`, {
+      const response = await fetch(`https://n8n.supersheldon.com/webhook/new-leads`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
