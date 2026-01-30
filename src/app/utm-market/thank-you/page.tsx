@@ -29,7 +29,7 @@ export default function ThankYouPage() {
               Thanks for submitting the form!
             </h1>
             <p className="text-base md:text-lg text-slate-600 leading-relaxed max-w-xl mx-auto">
-              Our support team will get back to you within 5 minutes to book the demo at your preferred time.
+              Our Sales team will get back to you within 5 minutes to book the demo at your preferred time.
             </p>
           </div>
 
