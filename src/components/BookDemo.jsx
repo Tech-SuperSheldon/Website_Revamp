@@ -158,10 +158,10 @@ export default function BookDemo() {
 
   return (
     <div className="min-h-screen py-8 px-4">
-      <div className="max-w-2xl mx-auto bg-white/95 rounded-xl shadow-lg overflow-hidden">
-        <div className="bg-white/20 p-6 md:p-8 ">
-          <header className=" mb-2">
-            <img src='/Group 19.png'></img>
+      <div className="max-w-2xl mx-auto bg-white/95 rounded-xl shadow-xl overflow-hidden">
+        <div className="bg-white/20 p-6 md:p-8 rounded-2xl">
+          <header className=" mb-2 rounded-xl">
+            <img src='/demoheaderv2.jpeg'></img>
          </header>
 
           <div className="h-px bg-gray-200 my-6"></div>

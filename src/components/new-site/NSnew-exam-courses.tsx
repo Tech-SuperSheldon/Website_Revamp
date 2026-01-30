@@ -14,9 +14,9 @@ export default function NewExamCourses() {
   const items = coursesData[activeYear] || [];
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-12 bg-white">
       <div className="container mx-auto px-4 max-w-7xl">
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Focused Exam <span className="text-orange-500">Mastery Courses</span>
           </h2>
@@ -26,7 +26,7 @@ export default function NewExamCourses() {
         </div>
 
         {/* --- Aesthetic Tabs --- */}
-        <div className="flex flex-wrap justify-center gap-2 mb-16">
+        <div className="flex flex-wrap justify-center gap-2 mb-10">
           {years.map((year) => (
             <button
               key={year}

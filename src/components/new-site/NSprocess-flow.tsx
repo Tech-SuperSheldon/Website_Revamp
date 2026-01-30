@@ -338,7 +338,7 @@ export default function ProcessFlow() {
                    key={avatar.id}
                    className="absolute"
                    style={{
-                     transform: `rotate(${avatar.angle}deg) translate(180px)`,
+                     transform: `rotate(${avatar.angle}deg) translate(clamp(130px, 40vw, 180px))`,
                    }}
                  >
                    {/* Counter-rotate to keep avatar upright */}

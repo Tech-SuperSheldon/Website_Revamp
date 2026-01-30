@@ -112,7 +112,7 @@ export function ParentsTestimonialSection() {
   }, []);
 
   return (
-    <section className="w-full py-12 overflow-hidden bg-transparent">
+    <section className="w-full py-8 overflow-hidden bg-transparent">
       <div className="container mx-auto px-4 mb-12 flex flex-col md:flex-row items-center justify-between gap-8">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
           Hear it from <br />
@@ -140,7 +140,7 @@ export function ParentsTestimonialSection() {
         {[...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS].map((item, index) => (
           <div 
             key={`${item.id}-${index}`}
-            className="group relative min-w-[350px] md:min-w-[400px] h-[450px]"
+            className="group relative min-w-[300px] md:min-w-[400px] h-[450px]"
           >
             <div className={`
                 relative w-full h-full transition-all duration-700 transform-style-3d 
