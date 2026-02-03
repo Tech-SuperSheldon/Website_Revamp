@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -73,7 +73,7 @@ export function NewHeroSection() {
 
   const router = useRouter();
 
-  const submitToBackend = async (
+  const submitToBackend = useCallback(async (
     baseData: {
       fullName: string;
       email: string;
@@ -149,7 +149,7 @@ export function NewHeroSection() {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [router]);
 
   useEffect(() => {
     (async function () {
@@ -167,7 +167,7 @@ export function NewHeroSection() {
         }
       });
     })();
-  }, []);
+  }, [submitToBackend]);
 
   const resetQuestionFlow = () => {
     setIsQuestionFlowOpen(false);
@@ -284,7 +284,14 @@ export function NewHeroSection() {
                    <Cal namespace="book-demo"
                     calLink="super-sheldon-ah5ywi/book-demo"
                     style={{width:"100%",height:"100%",overflow:"scroll"}}
-                    config={{"layout":"month_view","useSlotsViewOnSmallScreen":"true","theme":"light"}}
+                    config={{
+                      "layout":"month_view",
+                      "useSlotsViewOnSmallScreen":"true",
+                      "theme":"light",
+                      // Prefill Cal.com attendee details from the form
+                      name: (pendingSubmitData?.fullName || formData.fullName || "").trim(),
+                      email: (pendingSubmitData?.email || formData.email || "").trim().toLowerCase(),
+                    }}
                   />
                 </div>
               ) : isQuestionFlowOpen ? (
