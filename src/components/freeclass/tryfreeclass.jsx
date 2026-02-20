@@ -115,10 +115,10 @@ export default function TryFreeClass() {
         {/* 🧾 Text & Button */}
         <div className="flex flex-col items-center justify-center sm:w-1/2 w-full py-2 sm:py-0">
           <h2 className="text-white text-base text-lg sm:text-xl md:text-2xl font-semibold leading-snug">
-            LearnQuest Demo Gateway
+            Book your demo now
           </h2>
           <p className="text-white text-sm sm:text-lg mt-1">
-            Start your adventure toward knowledge and success.
+            Book a free demo right now and join our SuperSheldon family.
           </p>
           <div className="mt-3">
             <GlossyButton onClick={openDemoBooking}>Try a Free Class</GlossyButton>
