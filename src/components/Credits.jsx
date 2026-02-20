@@ -101,7 +101,7 @@ export default function Credits() {
             <div className="flex items-start justify-center gap-10">
               
               {/* Trustpilot */}
-              <div className="flex flex-col items-center">
+              {/* <div className="flex flex-col items-center">
                 <Link
                   href="https://www.trustpilot.com/review/supersheldon.com"
                   target="_blank"
@@ -118,7 +118,7 @@ export default function Credits() {
                 <p className="text-sm sm:text-base text-[#4E5566] mt-2">
                   TrustScore 4.5 (42 reviews)
                 </p>
-              </div>
+              </div> */}
 
               {/* Google */}
               <div className="flex flex-col items-center">
