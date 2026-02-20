@@ -99,7 +99,7 @@ export default function UKCredits() {
             <div className="flex flex-wrap items-start justify-center gap-6 sm:gap-10 w-full">
               
               {/* Trustpilot */}
-              <div className="flex flex-col items-center max-w-[120px] w-full">
+              {/* <div className="flex flex-col items-center max-w-[120px] w-full">
                 <Link
                   href="https://www.trustpilot.com/review/supersheldon.com"
                   target="_blank"
@@ -116,7 +116,7 @@ export default function UKCredits() {
                 <p className="text-sm sm:text-base text-[#4E5566] mt-2 break-words w-full text-center">
                   TrustScore 4.5 (42 reviews)
                 </p>
-              </div>
+              </div> */}
 
               {/* Google */}
               <div className="flex flex-col items-center max-w-[120px] w-full">
