@@ -393,7 +393,7 @@ export function NewHeroSection() {
                     <div className="space-y-1">
                       <label className="text-xs uppercase tracking-wide font-bold text-slate-500 text-left block">Phone Number</label>
                       <PhoneInput
-                        country={'gb'}
+                        country={'us'}
                         placeholder="Please share your phone number"
                         value={phoneValue}
                         onChange={(value) => setPhoneValue(value)}
@@ -539,7 +539,7 @@ export function NewHeroSection() {
         </div>
       </div>
 
-      <style jsx global>{`
+      <style>{`
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
