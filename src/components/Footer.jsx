@@ -31,7 +31,8 @@ export default function Footer() {
           </p> */}
 
           <div className="space-y-1 text-gray-800 text-sm sm:text-base">
-            <p>📞 <span className="font-semibold">Phone:</span> +91 79746 95618</p>
+            <p>📞 <span className="font-semibold">Phone:</span> +91 7974695618</p>
+            <p>📞 <span className="font-semibold">Phone:</span> +61 485860132</p>
             <p>✉️ <span className="font-semibold">Email:</span> support@supersheldon.com</p>
             <p>📍 <span className="font-semibold">Address:</span> Om Chambers 648/A 4th Flr, Binnamangala 1st Stage, Bangalore- 560038, Karnataka, India</p>
           </div>
