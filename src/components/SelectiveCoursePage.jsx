@@ -325,7 +325,6 @@ export default function SelectiveCoursePage({ year, courseIndex }) {
               Try a Free Class
             </GlossyButton>
           </form>
-          </form>
         </div>
       </section>
     </div>
