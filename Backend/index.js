@@ -36,9 +36,16 @@ const allowlist = new Set([
   "https://supersheldon.com"
 ]);
 
+const isAllowedOrigin = (origin) => {
+  if (!origin) return true;
+  if (allowlist.has(origin)) return true;
+  if (origin.endsWith(".app.github.dev")) return true;
+  return false;
+};
+
 const corsOptions = {
   origin(origin, cb) {
-    if (!origin || allowlist.has(origin)) return cb(null, true);
+    if (isAllowedOrigin(origin)) return cb(null, true);
     return cb(null, false);
   },
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],

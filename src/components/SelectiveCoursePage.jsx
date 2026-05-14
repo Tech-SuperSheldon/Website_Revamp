@@ -156,11 +156,12 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { coursesData } from "@/components/ExamCourses";
 import GlossyButton from "./GlossyButton";
 
 export default function SelectiveCoursePage({ year, courseIndex }) {
+  const router = useRouter();
   const currentCourse = coursesData[year]?.[courseIndex] || null;
 
   const allReviews = [
@@ -302,7 +303,7 @@ export default function SelectiveCoursePage({ year, courseIndex }) {
       {/* CTA Section - From CoursePage */}
       <section className="max-w-6xl mx-auto px-6 pb-20">
         <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl px-6 md:px-10 py-10 flex flex-col md:flex-row items-center justify-between text-white shadow-lg">
-          <div className="text-center md:text-left max-w-xl">
+<div className="text-center md:text-left max-w-xl">
             <h2 className="text-2xl md:text-3xl font-bold leading-tight">
               Join now & unlock amazing discounts 🎉
             </h2>
@@ -317,11 +318,13 @@ export default function SelectiveCoursePage({ year, courseIndex }) {
               className="px-4 py-2 flex-1 text-gray-800 text-sm md:text-base outline-none rounded-full border border-gray-200 sm:border-0 sm:rounded-full"
             />
             <GlossyButton
-              type="submit"
+              type="button"
               className="bg-orange-500 text-white px-4 sm:px-6 py-2 sm:py-3 font-medium hover:bg-orange-600 transition-all rounded-full shadow-sm text-sm sm:text-base"
+              onClick={() => router.push("/demo")}
             >
               Try a Free Class
             </GlossyButton>
+          </form>
           </form>
         </div>
       </section>

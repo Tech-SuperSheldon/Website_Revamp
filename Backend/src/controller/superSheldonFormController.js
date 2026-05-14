@@ -1,4 +1,5 @@
 const SuperSheldonForm = require("../model/superSheldonForm");
+const { sendSlackMessage } = require("../utils/slackService");
 
 const submitForm = async (req, res) => {
     try {
@@ -24,6 +25,11 @@ const submitForm = async (req, res) => {
         });
         
         console.log("Form saved successfully to MongoDB:", formData);
+        
+        // Send Slack notification (async, don't block response)
+        sendSlackMessage(formData).catch(err => {
+            console.error("Failed to send Slack notification:", err);
+        });
         
         res.status(200).json({
             data: formData,

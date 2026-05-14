@@ -1,5 +1,6 @@
 const validate = require("../utils/validator") ;
 const User = require("../model/user") ;
+const { sendSlackMessage } = require("../utils/slackService");
 
 const bookDemo = async(req,res)=>{
 
@@ -11,9 +12,12 @@ const bookDemo = async(req,res)=>{
         // creating new document in DB
         let user = await User.create(req.body) ;
 
-        
         console.log("Ok") ;
-        
+
+        sendSlackMessage(user).catch(err => {
+          console.error("Failed to send Slack notification:", err);
+        });
+
         res.status(200).json({
             user: user ,
             status: 200 ,
