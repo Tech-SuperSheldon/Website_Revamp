@@ -55,6 +55,7 @@ const pricingPlans = [
 
 export default function Cards11Plus() {
   const [flipped, setFlipped] = useState({});
+  const openDemoBooking = useOpenDemoBooking();
 
   const toggleFlip = (id) => {
     setFlipped((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -126,7 +127,7 @@ export default function Cards11Plus() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <UKGlossyButton onClick={useOpenDemoBooking()}  className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
+                <UKGlossyButton onClick={openDemoBooking}  className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
                   Try a free Class
                 </UKGlossyButton>
                 {/* <UKGlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">

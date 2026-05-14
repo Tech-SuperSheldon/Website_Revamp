@@ -8,11 +8,13 @@ import Image from "next/image";
 import { BookOpen, Users } from "lucide-react";
 import UKGlossyButton from "./UKGlossybutton";
 import { years, coursesData } from "./UKExamData";
+import { useOpenDemoBooking } from "../utils/navigation";
 
 export default function UKNewExamCourses() {
   const [activeYear, setActiveYear] = useState("Year 5");
   const containerRef = useRef(null);
   const yearBarRef = useRef(null);
+  const openDemoBooking = useOpenDemoBooking();
 
   const items = coursesData[activeYear] || [];
 
@@ -130,11 +132,9 @@ export default function UKNewExamCourses() {
                 </div>
 
                 <div className="flex space-x-2 mt-auto">
-                  <Link href={course.path}>
-                    <UKGlossyButton className="bg-orange-500 text-white px-3 py-2 rounded-full hover:bg-orange-600 transition">
-                      Try a free Class
-                    </UKGlossyButton>
-                  </Link>
+                  <UKGlossyButton onClick={openDemoBooking} className="bg-orange-500 text-white px-3 py-2 rounded-full hover:bg-orange-600 transition">
+                    Try a free Class
+                  </UKGlossyButton>
 
                   <UKGlossyButton
                     as="a"

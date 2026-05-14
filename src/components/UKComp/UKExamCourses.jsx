@@ -8,6 +8,7 @@ import Image from "next/image";
 import { BookOpen, Users, Download } from "lucide-react";
 import GlossyButton from "../GlossyButton";
 import { useRouter } from "next/navigation";
+import { useOpenDemoBooking } from "../utils/navigation";
 
 import UKGlossyButton from "./UKGlossybutton";
 
@@ -17,6 +18,7 @@ export default function UKExamCourses() {
   const [activeYear, setActiveYear] = useState("Year 5");
   const router = useRouter();
   const containerRef = useRef(null);
+  const openDemoBooking = useOpenDemoBooking();
 
   const items = coursesData[activeYear] || [];
   const isScrollable = items.length > 1;
@@ -171,11 +173,9 @@ export default function UKExamCourses() {
                 </div>
 
                 <div className="flex space-x-2 mt-auto">
-                  <Link href={course.path}>
-                    <UKGlossyButton className="bg-orange-500 text-white px-3 py-2 rounded-full hover:bg-orange-600 transition">
-                      Try a free Class
-                    </UKGlossyButton>
-                  </Link>
+                  <UKGlossyButton onClick={openDemoBooking} className="bg-orange-500 text-white px-3 py-2 rounded-full hover:bg-orange-600 transition">
+                    Try a free Class
+                  </UKGlossyButton>
 
                   <UKGlossyButton
                     as="a"

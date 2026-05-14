@@ -385,21 +385,7 @@ export default function UKHeader() {
 
         {/* Desktop Right side buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link href="https://web.wise.live/signup?loginRedirected=true"
-          onClick={() => alert('Redirecting to wise.live')}>
-            <UKGlossyButton>Login</UKGlossyButton>
-          </Link>
-          {/* <Link
-            href="https://forms.gle/csc94GLG3tEDit6N6"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            
-          </Link> */}
-          <a href="#course">
-              <UKGlossyButton>Try a free Class</UKGlossyButton>
-       
-          </a>
+          <UKGlossyButton onClick={openDemoBooking}>Try a free Class</UKGlossyButton>
          </div>
 
         {/* Mobile Menu Button */}
@@ -437,14 +423,7 @@ export default function UKHeader() {
           <Link href="https://web.wise.live/signup?loginRedirected=true" onClick={() => alert('Redirecting to wise.live')}>
             <UKGlossyButton>Login</UKGlossyButton>
           </Link>
-          <Link
-            href="https://forms.gle/csc94GLG3tEDit6N6"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setMenuOpen(false)}
-          >
-            <UKGlossyButton>Try a free Class</UKGlossyButton>
-          </Link>
+          <UKGlossyButton onClick={openDemoBooking}>Try a free Class</UKGlossyButton>
         </div>
       )}
     </header>
