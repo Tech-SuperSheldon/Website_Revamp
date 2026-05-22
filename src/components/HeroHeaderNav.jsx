@@ -115,7 +115,7 @@ export default function Header() {
 
         {/* Desktop Right side buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link href="https://web.wise.live/signup?loginRedirected=true"
+          <Link href="https://supersheldon.wise.live/login?loginRedirected=true"
           onClick={() => alert('Redirecting to wise.live')}>
             <GlossyButton>Login</GlossyButton>
           </Link>
