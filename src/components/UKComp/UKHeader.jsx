@@ -420,7 +420,7 @@ export default function UKHeader() {
               </a>
             )
           )}
-          <Link href="https://web.wise.live/signup?loginRedirected=true" onClick={() => alert('Redirecting to wise.live')}>
+          <Link href="https://supersheldon.wise.live/login?loginRedirected=true" onClick={() => alert('Redirecting to wise.live')}>
             <UKGlossyButton>Login</UKGlossyButton>
           </Link>
           <UKGlossyButton onClick={openDemoBooking}>Try a free Class</UKGlossyButton>
