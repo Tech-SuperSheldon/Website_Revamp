@@ -2248,7 +2248,7 @@ function RecruitmentFraudSection() {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
-const APPLY_URL = "https://hiring-157987296673.us-east1.run.app/register";
+const APPLY_URL = "https://hiring.supersheldon.com/register";
 
 export default function BecomeATeacherPage() {
   const openApply = useCallback(() => window.open(APPLY_URL, "_blank", "noopener,noreferrer"), []);
