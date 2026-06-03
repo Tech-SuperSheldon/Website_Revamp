@@ -128,10 +128,19 @@ export default function Header() {
           >
             
           </Link> */}
-          <a href="#course">
+          {pathname === "/become-a-teacher" ? (
+            <a
+              href="https://hiring.supersheldon.com/register"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <GlossyButton>Apply to Teach</GlossyButton>
+            </a>
+          ) : (
+            <a href="#course">
               <GlossyButton>Try a free Class</GlossyButton>
-       
-          </a>
+            </a>
+          )}
          </div>
 
         {/* Mobile Menu Button */}
@@ -171,14 +180,25 @@ export default function Header() {
             <ChristmasButton>Login</ChristmasButton>
             
           </Link>
-          <Link
-            href="https://forms.gle/csc94GLG3tEDit6N6"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setMenuOpen(false)}
-          >
-            <GlossyButton>Try a free Class</GlossyButton>
-          </Link>
+          {pathname === "/become-a-teacher" ? (
+            <a
+              href="https://hiring.supersheldon.com/register"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+            >
+              <GlossyButton>Apply to Teach</GlossyButton>
+            </a>
+          ) : (
+            <Link
+              href="https://forms.gle/csc94GLG3tEDit6N6"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+            >
+              <GlossyButton>Try a free Class</GlossyButton>
+            </Link>
+          )}
         </div>
       )}
     </header>

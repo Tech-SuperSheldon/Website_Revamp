@@ -56,8 +56,8 @@ const GOOGLE_FORM_URL = "https://forms.gle/csc94GLG3tEDit6N6";
 const CALENDLY_URL = "https://calendly.com/supersheldon/educator-intro";
 
 const STATS = [
-  { value: 500, suffix: "+", label: "Active Educators", icon: Users },
-  { value: 10000, suffix: "+", label: "Students Helped", icon: GraduationCap },
+  { value: 100, suffix: "+", label: "Active Educators", icon: Users },
+  { value: 5000, suffix: "+", label: "Students Helped", icon: GraduationCap },
   { value: 4.9, suffix: "★", label: "Teacher Satisfaction", icon: Star, decimal: true },
   { value: 95, suffix: "%", label: "Lesson Completion", icon: Clock },
 ];
@@ -632,7 +632,7 @@ function HeroSection({ onApply }) {
           <div className="flex items-center gap-3">
             <div className="text-[#E66E37]"><Users size={28} fill="currentColor" /></div>
             <div>
-              <div className="text-lg font-black text-[#E66E37]">500+</div>
+              <div className="text-lg font-black text-[#E66E37]">100+</div>
               <div className="text-xs font-bold text-gray-800">Expert Educators</div>
             </div>
           </div>
@@ -640,15 +640,15 @@ function HeroSection({ onApply }) {
           <div className="flex items-center gap-3">
             <div className="text-blue-600"><Globe size={28} /></div>
             <div>
-              <div className="text-lg font-black text-blue-600">2 Countries</div>
-              <div className="text-xs font-bold text-gray-800">Australia & UK</div>
+              <div className="text-lg font-black text-blue-600">3+</div>
+              <div className="text-xs font-bold text-gray-800">AU · UK · US</div>
             </div>
           </div>
           <div className="w-px h-10 bg-gray-200" />
           <div className="flex items-center gap-3">
             <div className="text-emerald-500"><Star size={28} fill="currentColor" /></div>
             <div>
-              <div className="text-lg font-black text-emerald-500">10K+</div>
+              <div className="text-lg font-black text-emerald-500">5K+</div>
               <div className="text-xs font-bold text-gray-800">Students Helped</div>
             </div>
           </div>
@@ -680,7 +680,7 @@ function HeroSection({ onApply }) {
             <span className="mt-2 block">of Learning</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-gray-600 text-lg sm:text-xl max-w-lg mb-10 leading-relaxed font-medium mx-auto sm:mx-0">
-            <span className="hidden sm:inline">Join 500+ educators transforming exam prep for students across Australia and the UK.<br />
+            <span className="hidden sm:inline">Join 100+ expert educators reaching 5K+ students across Australia, the UK and the US.<br />
             Flexible hours, competitive pay, world-class tools.</span>
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex flex-wrap items-center justify-center sm:justify-start gap-4 mb-10">
@@ -878,7 +878,7 @@ function WhyTeachSection({ onApply }) {
   const slide = WHY_SLIDES[active];
 
   return (
-    <section ref={ref} className="py-10 sm:py-20 bg-white faint-grid relative overflow-hidden">
+    <section ref={ref} className="pt-20 pb-10 sm:pt-32 sm:pb-20 bg-white faint-grid relative overflow-hidden">
       {/* Geometric shapes — why teach */}
       <div className="absolute top-8 right-10 z-0 pointer-events-none select-none" style={{ animation: "geo-spin 26s linear infinite" }}>
         <GeoHexagon size={52} color="#8B5CF6" opacity={0.16} />
@@ -990,26 +990,6 @@ function WhyTeachSection({ onApply }) {
             </motion.div>
           </AnimatePresence>
 
-          <div className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10">
-            <CircleWipeButton
-              variant="icon"
-              onClick={() => goTo((active - 1 + WHY_SLIDES.length) % WHY_SLIDES.length)}
-              aria-label="Previous slide"
-              className="w-10 h-10 shadow-lg"
-            >
-              <ChevronLeft size={20} aria-hidden="true" />
-            </CircleWipeButton>
-          </div>
-          <div className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10">
-            <CircleWipeButton
-              variant="icon"
-              onClick={() => goTo((active + 1) % WHY_SLIDES.length)}
-              aria-label="Next slide"
-              className="w-10 h-10 shadow-lg"
-            >
-              <ChevronRight size={20} aria-hidden="true" />
-            </CircleWipeButton>
-          </div>
         </div>
 
         <div className="flex justify-center gap-2 mt-10" role="tablist" aria-label="Slide navigation">
@@ -1440,10 +1420,6 @@ function HowItWorksSection({ onApply }) {
 function TestimonialCard({ t }) {
   return (
     <div className="flex-shrink-0 w-72 bg-white rounded-2xl border border-orange-100 shadow-sm p-5">
-      <div className="flex items-center gap-2 mb-3">
-        <Stars count={t.rating} />
-        <span className="text-sm font-bold text-[#1D2026]">{t.rating}.0</span>
-      </div>
       <p className="text-[#4E5566] text-sm leading-relaxed mb-4 line-clamp-3 sm:line-clamp-4">
         &ldquo;{t.quote}&rdquo;
       </p>
