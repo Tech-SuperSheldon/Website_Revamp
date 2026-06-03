@@ -18,6 +18,7 @@ const navLinks = [
   { href: "/courses", label: "Courses", type: "link" },
   { href: "/testimonial", label: "Testimonial", type: "anchor" },
   { href: "/blogs", label: "Blogs", type: "anchor" },
+  { href: "/become-a-teacher", label: "Become a Teacher", type: "link" },
 ];
 
 export const Button = ({
@@ -75,8 +76,8 @@ export default function Header() {
       <nav
         className={`flex items-center justify-between transition-all duration-300 ${
           scrolled
-            ? "mt-3 w-[94%] rounded-full bg-white/80 backdrop-blur-lg shadow-md px-6 py-2"
-            : "w-full px-6 py-5"
+            ? "mt-1 sm:mt-3 w-[94%] rounded-full bg-white/80 backdrop-blur-lg shadow-md px-3 sm:px-6 py-1 sm:py-2"
+            : "w-full px-3 sm:px-6 py-1 sm:py-5"
         }`}
       >
         {/* Logo */}
@@ -87,6 +88,7 @@ export default function Header() {
             width={160}
             height={40}
             priority
+            className="w-[90px] sm:w-[160px] h-auto"
           />
         </Link>
 
@@ -135,7 +137,7 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
           <button onClick={() => setMenuOpen(!menuOpen)}>
-            {menuOpen ? <X size={28} /> : <Menu size={28} />}
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </nav>

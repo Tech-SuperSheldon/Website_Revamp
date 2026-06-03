@@ -69,26 +69,64 @@ const teachers = [
 
 const doubledTeachers = [...teachers, ...teachers, ...teachers, ...teachers];
 
-const CARD_WIDTH = 260;
-const CARD_GAP = 30;
-const TOTAL_WIDTH = teachers.length * (CARD_WIDTH + CARD_GAP);
+const CARD_WIDTH_DEFAULT = 288;
+const CARD_GAP = 24;
 
 export default function NSTeacherCarousel() {
   const [activeVideo, setActiveVideo] = useState(null);
+  const [cardWidth, setCardWidth] = useState(CARD_WIDTH_DEFAULT);
+  const [isDragging, setIsDragging] = useState(false);
   const videoRef = useRef(null);
   const containerRef = useRef(null);
+  const dragging = useRef(false);
+  const lastPointerX = useRef(0);
+  const dragStartX = useRef(0);
+
+  useEffect(() => {
+    const update = () => {
+      setCardWidth(Math.min(CARD_WIDTH_DEFAULT, window.innerWidth - 48));
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const totalWidth = teachers.length * (cardWidth + CARD_GAP);
 
   const x = useMotionValue(0);
   const baseVelocity = -0.5;
 
   useAnimationFrame((t, delta) => {
+    if (dragging.current) return;
     let moveBy = baseVelocity * (delta / 16);
     let newX = x.get() + moveBy;
-    if (newX <= -TOTAL_WIDTH) {
-      newX = 0;
-    }
+    if (newX <= -totalWidth) newX = 0;
+    if (newX > 0) newX = -totalWidth;
     x.set(newX);
   });
+
+  const handlePointerDown = (e: React.PointerEvent) => {
+    dragging.current = true;
+    setIsDragging(true);
+    lastPointerX.current = e.clientX;
+    dragStartX.current = e.clientX;
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!dragging.current) return;
+    const delta = e.clientX - lastPointerX.current;
+    lastPointerX.current = e.clientX;
+    let newX = x.get() + delta;
+    if (newX <= -totalWidth) newX = newX + totalWidth;
+    if (newX > 0) newX = newX - totalWidth;
+    x.set(newX);
+  };
+
+  const handlePointerUp = (e: React.PointerEvent) => {
+    dragging.current = false;
+    setIsDragging(false);
+  };
 
   useEffect(() => {
     if (videoRef.current) {
@@ -103,17 +141,19 @@ export default function NSTeacherCarousel() {
   return (
     <section className="relative w-full py-20 overflow-hidden bg-white">
       <div className="mb-8 text-center relative z-10">
-        <h2 className="text-3xl font-bold text-gray-900 font-quicksand">
-          Meet Our <span className="text-orange-500">Teachers</span>
+        <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900">
+          Meet Our <span className="bg-[#E66E37] text-white px-3 py-1 rounded-[14px]">Teachers</span>
         </h2>
       </div>
 
-      <div ref={containerRef} className="relative flex justify-center w-full h-[450px] items-center overflow-hidden">
-        
-        {/* Top Ellipse Overlay */}
-        <div className="absolute top-[-50px] left-0 w-full h-[100px] bg-white z-20" 
-             style={{ borderRadius: "0 0 50% 50%" }}></div>
-
+      <div
+        ref={containerRef}
+        className={`relative flex justify-center w-full h-[280px] sm:h-[360px] md:h-[400px] items-center overflow-hidden select-none ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerUp}
+      >
         {/* Carousel Content */}
         <div className="relative w-full max-w-7xl h-full flex items-center">
           {doubledTeachers.map((teacher, index) => {
@@ -123,15 +163,13 @@ export default function NSTeacherCarousel() {
                 item={teacher}
                 index={index}
                 x={x}
+                cardWidth={cardWidth}
+                dragStartX={dragStartX}
                 onClick={() => teacher.video && setActiveVideo(teacher.video)}
               />
             );
           })}
         </div>
-
-        {/* Bottom Ellipse Overlay */}
-        <div className="absolute bottom-[-50px] left-0 w-full h-[100px] bg-white z-20" 
-             style={{ borderRadius: "50% 50% 0 0" }}></div>
 
       </div>
 
@@ -168,13 +206,19 @@ export default function NSTeacherCarousel() {
   );
 }
 
-function Card({ item, index, x, onClick }: { item: any, index: number, x: any, onClick: () => void }) {
-  const cardWidth = CARD_WIDTH + CARD_GAP;
-  const initialOffset = index * cardWidth;
+function Card({ item, index, x, cardWidth, dragStartX, onClick }: { item: any, index: number, x: any, cardWidth: number, dragStartX: React.MutableRefObject<number>, onClick: () => void }) {
+  const stride = cardWidth + CARD_GAP;
+  const initialOffset = index * stride;
 
   const xPos = useTransform(x, (latestX: number) => {
     return initialOffset + latestX;
   });
+
+  const handleClick = (e: React.MouseEvent) => {
+    // Suppress click if the pointer moved more than 6px (it was a drag, not a tap)
+    if (Math.abs(e.clientX - dragStartX.current) > 6) return;
+    onClick();
+  };
 
   return (
     <motion.div
@@ -182,27 +226,33 @@ function Card({ item, index, x, onClick }: { item: any, index: number, x: any, o
         position: "absolute",
         left: 0,
         height: "100%",
-        width: CARD_WIDTH,
+        width: cardWidth,
         x: xPos,
       }}
-      className="flex flex-col items-center justify-center cursor-pointer will-change-transform"
-      onClick={onClick}
+      className="flex flex-col items-center justify-center will-change-transform"
+      onClick={handleClick}
     >
-      <div className="relative w-full h-[360px] rounded-2xl overflow-hidden shadow-xl border-4 border-white bg-gray-100 group">
+      <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white bg-gray-100 group">
         <img
           src={item.image}
           alt={item.name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
+            item.name
+              ? "object-cover object-top"
+              : "object-contain object-center sm:object-cover sm:object-top"
+          }`}
         />
 
-        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4 text-white">
-          {item.name && (
-            <h3 className="font-bold text-lg leading-tight">{item.name}</h3>
-          )}
-          {item.subject && (
-            <p className="text-xs text-gray-300">{item.subject}</p>
-          )}
-        </div>
+        {(item.name || item.subject) && (
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-4">
+            {item.name && (
+              <h3 className="font-bold text-lg sm:text-2xl leading-tight text-white">{item.name}</h3>
+            )}
+            {item.subject && (
+              <p className="text-sm sm:text-base text-gray-200">{item.subject}</p>
+            )}
+          </div>
+        )}
 
         {item.video && (
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
