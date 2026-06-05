@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import Fuse from "fuse.js";
 import {
   motion,
@@ -166,86 +166,7 @@ const TESTIMONIALS = [
   },
 ];
 
-const ROLES = [
-  {
-    id: 1,
-    title: "Maths Educator",
-    dept: "Academics",
-    location: "Australia",
-    type: "Full Time",
-    exp: "2",
-    closeDate: "30 Jun 2026",
-    impact: "Help students master core numeracy and conquer NAPLAN and ICAS Maths.",
-    skills: "Patient, analytical, strong numeracy, engaging communicator.",
-    responsibilities: "Deliver 1:1 and small-group sessions, track progress, liaise with the curriculum team.",
-    desc: "We are looking for a passionate Maths Educator to guide Australian students through curriculum maths, NAPLAN, and ICAS preparation. You will deliver engaging online lessons using our interactive whiteboard tools and track student progress through our analytics dashboard.",
-  },
-  {
-    id: 2,
-    title: "English & Writing Coach",
-    dept: "Academics",
-    location: "UK",
-    type: "Part Time",
-    exp: "1",
-    closeDate: "15 Jun 2026",
-    impact: "Improve literacy and creative writing skills for 11+ and GCSE students.",
-    skills: "Strong written communication, creativity, grammar expertise.",
-    responsibilities: "Coach 11+ comprehension, essay writing, and verbal reasoning skills.",
-    desc: "Join our UK team as an English & Writing Coach, helping students prepare for competitive 11+ exams and build lifelong literacy skills through engaging online sessions.",
-  },
-  {
-    id: 3,
-    title: "NAPLAN Specialist",
-    dept: "Test Prep",
-    location: "Australia",
-    type: "Casual",
-    exp: "1",
-    closeDate: "20 Jun 2026",
-    impact: "Boost NAPLAN band scores through targeted test-prep strategies.",
-    skills: "NAPLAN expertise, data-driven, motivational coaching style.",
-    responsibilities: "Run targeted NAPLAN practice sessions, analyse mock results, adapt lesson plans.",
-    desc: "As a NAPLAN Specialist at Super Sheldon, you will lead students through intensive test preparation including numeracy, literacy, and writing tasks, helping them achieve meaningful band improvements.",
-  },
-  {
-    id: 4,
-    title: "11+ Tutor",
-    dept: "Test Prep",
-    location: "UK",
-    type: "Full Time",
-    exp: "2",
-    closeDate: "30 Jun 2026",
-    impact: "Prepare students for grammar and independent school entry exams.",
-    skills: "11+ exam expertise, verbal & non-verbal reasoning, calm under pressure.",
-    responsibilities: "Deliver structured 11+ prep covering VR, NVR, Maths, and English.",
-    desc: "We are expanding our UK team with dedicated 11+ Tutors to support students targeting grammar schools and independent schools. Comprehensive training and curriculum resources are provided.",
-  },
-  {
-    id: 5,
-    title: "Science Educator",
-    dept: "Academics",
-    location: "Australia",
-    type: "Full Time",
-    exp: "2",
-    closeDate: "30 Jun 2026",
-    impact: "Ignite curiosity in young scientists and prepare them for ICAS Science.",
-    skills: "Strong science fundamentals, hands-on teaching approach, ICAS familiarity.",
-    responsibilities: "Teach primary and secondary science concepts with real-world applications.",
-    desc: "Join our science team and help Australian students explore biology, chemistry, physics, and earth sciences through engaging, experiment-inspired online sessions designed for ICAS excellence.",
-  },
-  {
-    id: 6,
-    title: "ICAS Preparation Coach",
-    dept: "Test Prep",
-    location: "Australia",
-    type: "Part Time",
-    exp: "1",
-    closeDate: "15 Jun 2026",
-    impact: "Build critical thinking and academic skills for ICAS across all subjects.",
-    skills: "Cross-subject knowledge, analytical thinking, student engagement skills.",
-    responsibilities: "Deliver multi-subject ICAS prep with a focus on higher-order thinking skills.",
-    desc: "As an ICAS Preparation Coach, you will work with students across Maths, English, Science, Writing, and Digital Technologies, building the critical thinking skills that drive ICAS distinction results.",
-  },
-];
+const HIRING_API = "https://hiring.supersheldon.com/api/hiring-roles";
 
 const FAQ_ITEMS = [
   {
@@ -1609,17 +1530,17 @@ function RoleDetail({ role, onApply }) {
       <p className="text-[#4E5566] leading-relaxed mb-8 text-[15px]">{role.desc}</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        <div className="bg-gray-50 rounded-xl p-4">
-          <div className="font-bold text-[#1D2026] text-sm mb-1.5">Role Impact</div>
-          <div className="text-[#4E5566] text-sm leading-relaxed">{role.impact}</div>
+        <div className="bg-gray-50 rounded-xl p-4 h-28 flex flex-col">
+          <div className="font-bold text-[#1D2026] text-sm mb-1.5 flex-shrink-0">Role Impact</div>
+          <div className="text-[#4E5566] text-sm leading-relaxed overflow-y-auto flex-1 pr-1">{role.impact}</div>
         </div>
-        <div className="bg-gray-50 rounded-xl p-4">
-          <div className="font-bold text-[#1D2026] text-sm mb-1.5">Skills & Mindset</div>
-          <div className="text-[#4E5566] text-sm leading-relaxed">{role.skills}</div>
+        <div className="bg-gray-50 rounded-xl p-4 h-28 flex flex-col">
+          <div className="font-bold text-[#1D2026] text-sm mb-1.5 flex-shrink-0">Skills & Mindset</div>
+          <div className="text-[#4E5566] text-sm leading-relaxed overflow-y-auto flex-1 pr-1">{role.skills}</div>
         </div>
-        <div className="bg-gray-50 rounded-xl p-4">
-          <div className="font-bold text-[#1D2026] text-sm mb-1.5">Responsibilities</div>
-          <div className="text-[#4E5566] text-sm leading-relaxed">{role.responsibilities}</div>
+        <div className="bg-gray-50 rounded-xl p-4 h-28 flex flex-col">
+          <div className="font-bold text-[#1D2026] text-sm mb-1.5 flex-shrink-0">Responsibilities</div>
+          <div className="text-[#4E5566] text-sm leading-relaxed overflow-y-auto flex-1 pr-1">{role.responsibilities}</div>
         </div>
       </div>
 
@@ -1638,19 +1559,57 @@ function OpenRolesSection({ onApply }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
+  const [roles, setRoles] = useState([]);
+  const [rolesLoading, setRolesLoading] = useState(true);
+  const [rolesError, setRolesError] = useState(false);
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState({ exp: "Any", subject: "Any", location: "Any", type: "Any" });
-  const [selected, setSelected] = useState(ROLES[0]);
+  const [selected, setSelected] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const fuse = new Fuse(ROLES, {
+  useEffect(() => {
+    fetch(HIRING_API)
+      .then((res) => {
+        if (!res.ok) throw new Error("fetch failed");
+        return res.json();
+      })
+      .then((data) => {
+        const raw = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
+        const list = raw.map((r) => ({
+          id: r.id,
+          title: r.title || "Untitled Role",
+          dept: r.department || r.dept || "",
+          location: r.location || "",
+          type: r.employment_type
+            ? r.employment_type.toLowerCase().replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+            : (r.type || ""),
+          exp: r.experience_years != null ? String(r.experience_years) : (r.exp || "0"),
+          closeDate: r.close_date
+            ? new Date(r.close_date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })
+            : (r.closeDate || "Open"),
+          impact: r.impact || "",
+          skills: r.skills || "",
+          responsibilities: r.responsibilities || "",
+          desc: r.description || r.desc || "",
+        }));
+        setRoles(list);
+        setSelected(list[0] || null);
+        setRolesLoading(false);
+      })
+      .catch(() => {
+        setRolesError(true);
+        setRolesLoading(false);
+      });
+  }, []);
+
+  const fuse = useMemo(() => new Fuse(roles, {
     keys: ["title", "dept", "skills", "desc"],
     threshold: 0.35,
-  });
+  }), [roles]);
 
   const baseRoles = search.trim()
     ? fuse.search(search.trim()).map((r) => r.item)
-    : ROLES;
+    : roles;
 
   const filtered = baseRoles.filter((r) => {
     if (filters.exp !== "Any" && parseInt(r.exp) < parseInt(filters.exp)) return false;
@@ -1684,7 +1643,7 @@ function OpenRolesSection({ onApply }) {
           <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-3 mb-6">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1D2026]">Now Hiring</h2>
             <span className="bg-orange-500 text-white text-sm font-bold px-3 py-1 rounded-full">
-              ({filtered.length})
+              {rolesLoading ? "…" : `(${filtered.length})`}
             </span>
           </motion.div>
 
@@ -1766,86 +1725,157 @@ function OpenRolesSection({ onApply }) {
 
         {/* Desktop master-detail */}
         <div className="hidden lg:grid grid-cols-5 gap-6">
-          <div className="col-span-2 space-y-2 max-h-[520px] overflow-y-auto pr-1 roles-scrollbar">
-            <AnimatePresence mode="popLayout">
-              {filtered.length === 0 ? (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-14 text-[#4E5566]"
-                >
-                  No roles match your filters.
-                </motion.div>
-              ) : (
-                filtered.map((r) => (
-                  <motion.button
-                    key={r.id}
-                    layout
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -16 }}
-                    transition={{ duration: 0.25 }}
-                    onClick={() => setSelected(r)}
-                    className={`w-full text-left p-4 rounded-xl transition-all duration-200 ${
-                      selected?.id === r.id
-                        ? "border-l-4 border-orange-500 bg-white shadow-sm border border-orange-500"
-                        : "border border-gray-200 bg-white hover:border-orange-200"
-                    }`}
-                  >
-                    <div className="font-bold text-[#1D2026] mb-1">{r.title}</div>
-                    <span className="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded-full">
-                      {r.dept}
-                    </span>
-                    <div className="flex items-center gap-1 mt-2 text-[#4E5566] text-xs">
-                      <MapPin size={11} />
-                      <span>{r.location} · {r.type}</span>
-                    </div>
-                  </motion.button>
-                ))
-              )}
-            </AnimatePresence>
-          </div>
+          {rolesLoading ? (
+            <>
+              <div className="col-span-2 space-y-2">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="w-full p-4 rounded-xl border border-gray-200 bg-white animate-pulse">
+                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                    <div className="h-3 bg-gray-100 rounded-full w-16 mb-3" />
+                    <div className="h-3 bg-gray-100 rounded w-1/2" />
+                  </div>
+                ))}
+              </div>
+              <div className="col-span-3 bg-white rounded-2xl border border-gray-200 p-8 shadow-sm animate-pulse space-y-4">
+                <div className="h-6 bg-gray-200 rounded w-1/2" />
+                <div className="h-3 bg-gray-100 rounded w-1/3" />
+                <div className="space-y-2 mt-6">
+                  <div className="h-3 bg-gray-100 rounded" />
+                  <div className="h-3 bg-gray-100 rounded" />
+                  <div className="h-3 bg-gray-100 rounded w-3/4" />
+                </div>
+              </div>
+            </>
+          ) : rolesError ? (
+            <div className="col-span-5 py-16 flex flex-col items-center text-center gap-3">
+              <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center">
+                <AlertTriangle size={24} className="text-red-400" />
+              </div>
+              <p className="text-[#4E5566] font-medium">Unable to load roles. Please try again later.</p>
+            </div>
+          ) : roles.length === 0 ? (
+            <div className="col-span-5 py-16 flex flex-col items-center text-center gap-5">
+              <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center">
+                <CalendarCheck size={28} className="text-orange-500" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-[#1D2026] mb-2">No Open Positions Right Now</h3>
+                <p className="text-[#4E5566] text-sm max-w-sm leading-relaxed">
+                  We're not actively hiring at the moment, but new educator roles open regularly. Check back soon.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="col-span-2 space-y-2 max-h-[520px] overflow-y-auto pr-1 roles-scrollbar">
+                <AnimatePresence mode="popLayout">
+                  {filtered.length === 0 ? (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-center py-14 text-[#4E5566]"
+                    >
+                      No roles match your filters.
+                    </motion.div>
+                  ) : (
+                    filtered.map((r) => (
+                      <motion.button
+                        key={r.id}
+                        layout
+                        initial={{ opacity: 0, x: -16 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -16 }}
+                        transition={{ duration: 0.25 }}
+                        onClick={() => setSelected(r)}
+                        className={`w-full text-left p-4 rounded-xl transition-all duration-200 ${
+                          selected?.id === r.id
+                            ? "border-l-4 border-orange-500 bg-white shadow-sm border border-orange-500"
+                            : "border border-gray-200 bg-white hover:border-orange-200"
+                        }`}
+                      >
+                        <div className="font-bold text-[#1D2026] mb-1">{r.title}</div>
+                        <span className="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+                          {r.dept}
+                        </span>
+                        <div className="flex items-center gap-1 mt-2 text-[#4E5566] text-xs">
+                          <MapPin size={11} />
+                          <span>{r.location} · {r.type}</span>
+                        </div>
+                      </motion.button>
+                    ))
+                  )}
+                </AnimatePresence>
+              </div>
 
-          <AnimatePresence mode="wait">
-            {selected && (
-              <motion.div
-                key={selected.id}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.3 }}
-                className="col-span-3 bg-white rounded-2xl border border-gray-200 p-8 shadow-sm"
-              >
-                <RoleDetail role={selected} onApply={onApply} />
-              </motion.div>
-            )}
-          </AnimatePresence>
+              <AnimatePresence mode="wait">
+                {selected && (
+                  <motion.div
+                    key={selected.id}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.3 }}
+                    className="col-span-3 bg-white rounded-2xl border border-gray-200 p-8 shadow-sm"
+                  >
+                    <RoleDetail role={selected} onApply={onApply} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </>
+          )}
         </div>
 
         {/* Mobile list */}
         <div className="lg:hidden space-y-3">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((r) => (
-              <motion.button
-                key={r.id}
-                layout
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                onClick={() => { setSelected(r); setMobileOpen(true); }}
-                className="w-full text-left p-4 rounded-xl border border-gray-200 bg-white hover:border-orange-200 transition-colors"
-              >
-                <div className="font-bold text-[#1D2026] mb-1">{r.title}</div>
-                <span className="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded-full">
-                  {r.dept}
-                </span>
-                <div className="flex items-center gap-1 mt-2 text-[#4E5566] text-xs">
-                  <MapPin size={11} />
-                  <span>{r.location} · {r.type}</span>
-                </div>
-              </motion.button>
-            ))}
-          </AnimatePresence>
+          {rolesLoading ? (
+            Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="w-full p-4 rounded-xl border border-gray-200 bg-white animate-pulse">
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                <div className="h-3 bg-gray-100 rounded-full w-16 mb-3" />
+                <div className="h-3 bg-gray-100 rounded w-1/2" />
+              </div>
+            ))
+          ) : rolesError ? (
+            <div className="py-12 flex flex-col items-center text-center gap-3">
+              <AlertTriangle size={28} className="text-red-400" />
+              <p className="text-[#4E5566] text-sm font-medium">Unable to load roles. Please try again later.</p>
+            </div>
+          ) : roles.length === 0 ? (
+            <div className="py-12 flex flex-col items-center text-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-orange-100 flex items-center justify-center">
+                <CalendarCheck size={24} className="text-orange-500" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-[#1D2026] mb-1">No Open Positions Right Now</h3>
+                <p className="text-[#4E5566] text-sm max-w-xs leading-relaxed">
+                  New educator roles open regularly — check back soon.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <AnimatePresence mode="popLayout">
+              {filtered.map((r) => (
+                <motion.button
+                  key={r.id}
+                  layout
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  onClick={() => { setSelected(r); setMobileOpen(true); }}
+                  className="w-full text-left p-4 rounded-xl border border-gray-200 bg-white hover:border-orange-200 transition-colors"
+                >
+                  <div className="font-bold text-[#1D2026] mb-1">{r.title}</div>
+                  <span className="inline-block bg-emerald-100 text-emerald-700 text-xs font-semibold px-2 py-0.5 rounded-full">
+                    {r.dept}
+                  </span>
+                  <div className="flex items-center gap-1 mt-2 text-[#4E5566] text-xs">
+                    <MapPin size={11} />
+                    <span>{r.location} · {r.type}</span>
+                  </div>
+                </motion.button>
+              ))}
+            </AnimatePresence>
+          )}
         </div>
 
         {/* Mobile bottom sheet */}
