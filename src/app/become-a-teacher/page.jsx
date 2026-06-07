@@ -71,12 +71,12 @@ const WHY_SLIDES = [
   {
     title: "Earn on Your Schedule",
     body: "Flexible hours designed entirely around your life. Whether you teach 5 hours or 50, Super Sheldon's platform works seamlessly with your availability.",
-    video: "/become-teacher/video/Firefly Create a smooth 6-second photorealistic animation from the provided image. A professional on.mp4",
+    video: "/become-teacher/video/earn-your-schedule.mp4",
   },
   {
     title: "Access World-Class Tools",
     body: "Interactive whiteboards, automated scheduling, progress analytics and a dedicated support team — everything you need to deliver outstanding lessons.",
-    video: "/become-teacher/video/Firefly Create a smooth 3-second looping animation from this image. The teacher remains mostly stati.mp4",
+    video: "/become-teacher/video/access-world-class-tools.mp4",
   },
 ];
 
