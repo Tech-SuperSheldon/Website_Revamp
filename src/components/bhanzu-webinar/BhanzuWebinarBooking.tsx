@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 const C = {
   orange: "#F15D22",
@@ -250,9 +251,9 @@ export default function BhanzuWebinarBooking() {
 
         {/* ── HEADER ── */}
         <header className="wbr-header">
-          <a href="/">
+          <Link href="/">
             <img src="/Final-Logo-bg-removed.png" alt="SuperSheldon" style={{ height: "100px", width: "auto" }} />
-          </a>
+          </Link>
         </header>
 
         {/* ── MAIN TWO-COLUMN ── */}

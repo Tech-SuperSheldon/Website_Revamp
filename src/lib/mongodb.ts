@@ -7,8 +7,7 @@ let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
 
 declare global {
-  // eslint-disable-next-line no-var
-  var _mongoClientPromise: Promise<MongoClient> | undefined;
+  var _mongoClientPromise: Promise<MongoClient> | undefined; // needed for dev hot-reload singleton
 }
 
 if (process.env.NODE_ENV === "development") {
