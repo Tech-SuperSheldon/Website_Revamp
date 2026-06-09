@@ -30,6 +30,7 @@ const fieldBase: React.CSSProperties = {
   boxSizing: "border-box",
   appearance: "none",
   WebkitAppearance: "none",
+  transition: "border-color 0.2s, box-shadow 0.2s",
 };
 
 export default function BhanzuWebinarBooking() {
@@ -42,6 +43,7 @@ export default function BhanzuWebinarBooking() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [visible, setVisible] = useState(false);
 
   const [schoolSuggestions, setSchoolSuggestions] = useState<string[]>([]);
   const [schoolOpen, setSchoolOpen] = useState(false);
@@ -60,6 +62,11 @@ export default function BhanzuWebinarBooking() {
   }, []);
 
   useEffect(() => { fetchSchools(); }, [fetchSchools]);
+
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 60);
+    return () => clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -126,6 +133,37 @@ export default function BhanzuWebinarBooking() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
         select option { color: #0D1B2A; }
         input::placeholder, textarea::placeholder { color: #9CA3AF; }
+
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(28px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+        @keyframes slideRight {
+          from { opacity: 0; transform: translateX(-22px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+          from { opacity: 0; transform: scale(0.94); }
+          to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes shimmer {
+          0%   { background-position: -400px 0; }
+          100% { background-position: 400px 0; }
+        }
+        @keyframes pulse-ring {
+          0%   { box-shadow: 0 0 0 0 rgba(241,93,34,0.35); }
+          70%  { box-shadow: 0 0 0 10px rgba(241,93,34,0); }
+          100% { box-shadow: 0 0 0 0 rgba(241,93,34,0); }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0); }
+          50%       { transform: translateY(-6px); }
+        }
+
         .wbr-page {
           min-height: 100vh;
           background-color: #ffffff;
@@ -135,32 +173,89 @@ export default function BhanzuWebinarBooking() {
           display: flex;
           flex-direction: column;
         }
+
+        /* ── HEADER ── */
         .wbr-header {
           padding: 6px 40px;
           display: flex;
           justify-content: center;
           align-items: center;
           background: rgba(255,255,255,0.95);
+          backdrop-filter: blur(8px);
           border-bottom: 1px solid rgba(0,0,0,0.06);
+          position: sticky;
+          top: 0;
+          z-index: 50;
+          animation: fadeIn 0.5s ease both;
         }
+
+        /* ── MAIN ── */
         .wbr-main {
           flex: 1;
           max-width: 1200px;
           margin: 0 auto;
           width: 100%;
-          padding: 16px 40px 80px;
+          padding: 16px 40px 32px;
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 56px;
           align-items: start;
         }
+
+        /* ── LEFT COLUMN ── */
+        .wbr-left {
+          opacity: 0;
+          animation: fadeUp 0.65s ease 0.15s both;
+        }
+        .wbr-left.visible { animation-play-state: running; }
+
+        /* ── RIGHT COLUMN ── */
+        .wbr-right {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+          opacity: 0;
+          animation: fadeUp 0.65s ease 0.35s both;
+        }
+        .wbr-right.visible { animation-play-state: running; }
+
+        /* ── PILL BADGE ── */
+        .wbr-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: #FFF4F0;
+          border: 1.5px solid #FDDDD3;
+          border-radius: 999px;
+          padding: 5px 14px;
+          font-size: 11px;
+          font-weight: 700;
+          color: #F15D22;
+          text-transform: uppercase;
+          letter-spacing: 1.2px;
+          margin-bottom: 16px;
+        }
+        .wbr-pill-dot {
+          width: 6px; height: 6px;
+          background: #F15D22;
+          border-radius: 50%;
+          animation: pulse-ring 1.8s ease infinite;
+        }
+
+        /* ── FORM CARD ── */
         .wbr-form-card {
           background: #ffffff;
           border-radius: 20px;
           padding: 32px;
           box-shadow: 0 4px 32px rgba(0,0,0,0.10);
           border: 1px solid #F0F0F0;
+          transition: box-shadow 0.3s;
         }
+        .wbr-form-card:hover {
+          box-shadow: 0 8px 48px rgba(0,0,0,0.14);
+        }
+
+        /* ── FIELD ── */
         .wbr-field-label {
           display: block;
           font-size: 11px;
@@ -174,11 +269,13 @@ export default function BhanzuWebinarBooking() {
           border-color: #F15D22 !important;
           box-shadow: 0 0 0 3px rgba(241,93,34,0.12);
         }
+
+        /* ── BUTTON ── */
         .wbr-btn {
           width: 100%;
           padding: 14px;
           border-radius: 10px;
-          background: #F15D22;
+          background: linear-gradient(135deg, #F15D22 0%, #e04e15 100%);
           color: #fff;
           font-size: 15px;
           font-weight: 700;
@@ -186,13 +283,29 @@ export default function BhanzuWebinarBooking() {
           border: none;
           cursor: pointer;
           letter-spacing: 0.5px;
-          transition: background 0.2s, transform 0.1s;
+          transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+          position: relative;
+          overflow: hidden;
         }
+        .wbr-btn::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+          background-size: 400px 100%;
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+        .wbr-btn:hover:not(:disabled)::after { opacity: 1; animation: shimmer 0.7s linear; }
         .wbr-btn:hover:not(:disabled) {
-          background: #C04A1B;
-          transform: translateY(-1px);
+          background: linear-gradient(135deg, #C04A1B 0%, #a33e14 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(241,93,34,0.35);
         }
+        .wbr-btn:active:not(:disabled) { transform: translateY(0); }
         .wbr-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        /* ── STATS ── */
         .wbr-stats {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -205,8 +318,172 @@ export default function BhanzuWebinarBooking() {
           padding: 18px 14px;
           text-align: center;
           border-left: 1.5px solid #E5E7EB;
+          transition: background 0.2s;
         }
         .wbr-stat-item:first-child { border-left: none; }
+        .wbr-stat-item:hover { background: #FFF4F0; }
+
+        @keyframes floatA {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          33%       { transform: translateY(-10px) rotate(6deg); }
+          66%       { transform: translateY(-5px) rotate(-4deg); }
+        }
+        @keyframes floatB {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          40%       { transform: translateY(-14px) rotate(-8deg); }
+          70%       { transform: translateY(-6px) rotate(5deg); }
+        }
+        @keyframes floatC {
+          0%, 100% { transform: translateY(0) scale(1); }
+          50%       { transform: translateY(-8px) scale(1.08); }
+        }
+        @keyframes floatD {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          45%       { transform: translateY(-12px) rotate(12deg); }
+        }
+        @keyframes spinSlow {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+        @keyframes orbitDot {
+          0%   { transform: translate(0, 0); }
+          25%  { transform: translate(6px, -8px); }
+          50%  { transform: translate(0px, -14px); }
+          75%  { transform: translate(-6px, -8px); }
+          100% { transform: translate(0, 0); }
+        }
+
+        /* ── HERO IMAGE ── */
+        .wbr-hero-img {
+          border-radius: 20px;
+          overflow: visible;
+          box-shadow: 0 8px 40px rgba(0,0,0,0.14);
+          animation: float 5s ease-in-out infinite;
+          transition: box-shadow 0.3s;
+          position: relative;
+        }
+        .wbr-hero-img > img {
+          border-radius: 20px;
+          overflow: hidden;
+          display: block;
+        }
+        .wbr-hero-img:hover {
+          box-shadow: 0 16px 56px rgba(0,0,0,0.20);
+          animation-play-state: paused;
+        }
+        /* shapes */
+        .wbr-shape {
+          position: absolute;
+          pointer-events: none;
+          z-index: 2;
+        }
+        .wbr-shape-circle-orange {
+          width: 52px; height: 52px;
+          border-radius: 50%;
+          background: #F15D22;
+          opacity: 0.88;
+          top: -18px; right: -18px;
+          animation: floatA 4.2s ease-in-out infinite;
+          box-shadow: 0 4px 18px rgba(241,93,34,0.45);
+        }
+        .wbr-shape-ring {
+          width: 44px; height: 44px;
+          border-radius: 50%;
+          border: 4px solid #F15D22;
+          background: transparent;
+          opacity: 0.75;
+          top: 44px; right: -28px;
+          animation: floatB 5.5s ease-in-out infinite;
+        }
+        .wbr-shape-square {
+          width: 32px; height: 32px;
+          background: #0D1B2A;
+          border-radius: 6px;
+          opacity: 0.80;
+          bottom: 30px; right: -20px;
+          animation: floatD 4.8s ease-in-out infinite;
+          box-shadow: 0 4px 14px rgba(13,27,42,0.35);
+        }
+        .wbr-shape-triangle {
+          width: 0; height: 0;
+          border-left: 20px solid transparent;
+          border-right: 20px solid transparent;
+          border-bottom: 36px solid #F15D22;
+          opacity: 0.70;
+          bottom: -16px; left: 28px;
+          animation: floatA 6s ease-in-out infinite 0.8s;
+        }
+        .wbr-shape-dot-group {
+          bottom: -10px; right: 40px;
+          display: grid;
+          grid-template-columns: repeat(3,1fr);
+          gap: 6px;
+          animation: floatC 5s ease-in-out infinite 1s;
+        }
+        .wbr-shape-dot-group span {
+          display: block;
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: #0D1B2A;
+          opacity: 0.55;
+        }
+        .wbr-shape-plus {
+          top: -14px; left: 32px;
+          font-size: 28px;
+          font-weight: 900;
+          color: #0D1B2A;
+          opacity: 0.18;
+          line-height: 1;
+          animation: floatB 7s ease-in-out infinite 0.5s;
+          user-select: none;
+        }
+        .wbr-shape-star {
+          top: 28px; left: -22px;
+          font-size: 26px;
+          animation: floatA 5.2s ease-in-out infinite 1.2s;
+          filter: drop-shadow(0 2px 6px rgba(241,93,34,0.4));
+          user-select: none;
+        }
+        .wbr-shape-hex {
+          width: 36px; height: 36px;
+          background: #FFF4F0;
+          border: 2.5px solid #F15D22;
+          border-radius: 8px;
+          transform: rotate(20deg);
+          opacity: 0.85;
+          bottom: 60px; left: -20px;
+          animation: floatD 6.5s ease-in-out infinite 0.3s;
+          box-shadow: 0 3px 10px rgba(241,93,34,0.2);
+        }
+
+        /* ── BADGE ── */
+        .wbr-badge {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          background: #FFF4F0;
+          border: 1.5px solid #FDDDD3;
+          border-radius: 12px;
+          padding: 16px 20px;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .wbr-badge:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(241,93,34,0.15);
+        }
+        .wbr-badge-icon {
+          width: 44px; height: 44px;
+          border-radius: 50%;
+          background: #F15D22;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          font-size: 20px;
+          animation: pulse-ring 2.5s ease infinite;
+        }
+
+        /* ── DROPDOWN ── */
         .wbr-dropdown {
           position: absolute;
           top: calc(100% + 4px);
@@ -218,6 +495,7 @@ export default function BhanzuWebinarBooking() {
           z-index: 100;
           max-height: 200px;
           overflow-y: auto;
+          animation: fadeUp 0.18s ease both;
         }
         .wbr-dropdown-item {
           padding: 10px 14px;
@@ -225,25 +503,165 @@ export default function BhanzuWebinarBooking() {
           cursor: pointer;
           color: #0D1B2A;
           border-bottom: 1px solid #F3F4F6;
+          transition: background 0.15s;
         }
         .wbr-dropdown-item:last-child { border-bottom: none; }
         .wbr-dropdown-item:hover { background: #FFF4F0; }
-        .wbr-footer {
-          background: #0D1B2A;
-          color: #fff;
-          padding: 48px 24px;
+
+        /* ── SUCCESS STATE ── */
+        .wbr-success {
           text-align: center;
+          padding: 24px 0;
+          animation: scaleIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
         }
+        .wbr-success-icon {
+          font-size: 52px;
+          margin-bottom: 16px;
+          display: block;
+          animation: float 3s ease-in-out infinite;
+        }
+
+        /* ── FOOTER ── */
+        .wbr-footer {
+          background: linear-gradient(160deg, #0D1B2A 0%, #162840 100%);
+          color: #fff;
+          padding: 64px 24px 0;
+          position: relative;
+          overflow: hidden;
+        }
+        .wbr-footer::before {
+          content: '';
+          position: absolute;
+          top: -60px; left: 50%;
+          transform: translateX(-50%);
+          width: 500px; height: 120px;
+          background: radial-gradient(ellipse, rgba(241,93,34,0.15) 0%, transparent 70%);
+          pointer-events: none;
+        }
+        .wbr-footer-grid {
+          max-width: 1000px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1.6fr 1fr 1fr;
+          gap: 40px;
+          padding-bottom: 48px;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .wbr-footer-brand img {
+          height: 72px;
+          width: auto;
+          margin-bottom: 12px;
+          display: block;
+        }
+        .wbr-footer-brand p {
+          font-size: 13px;
+          color: rgba(255,255,255,0.6);
+          line-height: 1.65;
+          margin-bottom: 20px;
+          max-width: 260px;
+        }
+        .wbr-footer-social {
+          display: flex;
+          gap: 10px;
+        }
+        .wbr-footer-social a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 36px; height: 36px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.07);
+          border: 1px solid rgba(255,255,255,0.12);
+          transition: background 0.2s, transform 0.2s, border-color 0.2s;
+        }
+        .wbr-footer-social a:hover {
+          background: rgba(241,93,34,0.25);
+          border-color: rgba(241,93,34,0.5);
+          transform: translateY(-2px);
+        }
+        .wbr-footer-col h4 {
+          font-size: 11px;
+          font-weight: 700;
+          color: rgba(255,255,255,0.45);
+          text-transform: uppercase;
+          letter-spacing: 1.2px;
+          margin-bottom: 18px;
+        }
+        .wbr-footer-col ul {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+        .wbr-footer-col ul li a {
+          font-size: 14px;
+          color: rgba(255,255,255,0.65);
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        .wbr-footer-col ul li a:hover { color: #F15D22; }
+        .wbr-footer-col .wbr-contact-row {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          margin-bottom: 14px;
+        }
+        .wbr-footer-col .wbr-contact-row span:first-child {
+          font-size: 15px;
+          flex-shrink: 0;
+          margin-top: 1px;
+        }
+        .wbr-footer-col .wbr-contact-row a,
+        .wbr-footer-col .wbr-contact-row p {
+          font-size: 13px;
+          color: rgba(255,255,255,0.65);
+          text-decoration: none;
+          line-height: 1.55;
+          transition: color 0.2s;
+        }
+        .wbr-footer-col .wbr-contact-row a:hover { color: #F15D22; }
+        .wbr-footer-bottom {
+          max-width: 1000px;
+          margin: 0 auto;
+          padding: 24px 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+        }
+        .wbr-footer-bottom p {
+          font-size: 12px;
+          color: rgba(255,255,255,0.35);
+        }
+        .wbr-footer-tagline {
+          font-size: 13px;
+          color: rgba(255,255,255,0.5);
+          font-weight: 600;
+          letter-spacing: 0.3px;
+        }
+        .wbr-footer-tagline strong {
+          color: #F15D22;
+        }
+
+        /* ── RESPONSIVE ── */
         @media (max-width: 820px) {
           .wbr-main {
             grid-template-columns: 1fr;
             gap: 36px;
-            padding: 16px 20px 60px;
+            padding: 16px 20px 28px;
           }
           .wbr-header { padding: 10px 20px; }
           .wbr-stats { grid-template-columns: 1fr; }
           .wbr-stat-item { border-left: none; border-top: 1.5px solid #E5E7EB; }
           .wbr-stat-item:first-child { border-top: none; }
+          .wbr-footer-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+          .wbr-footer-bottom {
+            flex-direction: column;
+            text-align: center;
+          }
         }
       `}</style>
 
@@ -260,10 +678,13 @@ export default function BhanzuWebinarBooking() {
         <div className="wbr-main">
 
           {/* LEFT — headline + form */}
-          <div>
-            <p style={{ fontSize: "12px", fontWeight: 700, color: C.orange, textTransform: "uppercase", letterSpacing: "1.2px", marginBottom: "14px" }}>
+          <div className={`wbr-left${visible ? " visible" : ""}`}>
+
+            <div className="wbr-pill">
+              <span className="wbr-pill-dot" />
               Free Online Webinar
-            </p>
+            </div>
+
             <h1 style={{ fontSize: "clamp(30px, 3.2vw, 46px)", fontWeight: 800, color: C.dark, lineHeight: 1.15, marginBottom: "10px" }}>
               How to unlock the<br />magic of{" "}
               <span style={{ color: C.orange, fontStyle: "italic" }}>geometry</span>
@@ -275,8 +696,8 @@ export default function BhanzuWebinarBooking() {
             {/* FORM CARD */}
             <div className="wbr-form-card">
               {submitted ? (
-                <div style={{ textAlign: "center", padding: "24px 0" }}>
-                  <div style={{ fontSize: "52px", marginBottom: "16px" }}>🎉</div>
+                <div className="wbr-success">
+                  <span className="wbr-success-icon">🎉</span>
                   <p style={{ fontSize: "20px", fontWeight: 700, color: C.dark, marginBottom: "10px" }}>You&apos;re registered!</p>
                   <p style={{ fontSize: "14px", color: C.text2, lineHeight: 1.7 }}>
                     Thank you, <strong>{parentName}</strong>. Your spot is confirmed.<br />
@@ -355,7 +776,7 @@ export default function BhanzuWebinarBooking() {
                         />
                       </div>
 
-                      {/* School – smart combobox */}
+                      {/* School — smart combobox */}
                       <div ref={schoolRef} style={{ position: "relative" }}>
                         <label className="wbr-field-label">School / Association</label>
                         <input
@@ -423,15 +844,27 @@ export default function BhanzuWebinarBooking() {
           </div>
 
           {/* RIGHT — image + stats */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          <div className={`wbr-right${visible ? " visible" : ""}`}>
 
             {/* Hero image */}
-            <div style={{ borderRadius: "20px", overflow: "hidden", boxShadow: "0 8px 40px rgba(0,0,0,0.14)" }}>
+            <div className="wbr-hero-img">
               <img
                 src="/webinar-hero.png"
                 alt="Webinar — students learning"
                 style={{ width: "100%", display: "block", objectFit: "cover" }}
               />
+
+              {/* floating shapes */}
+              <span className="wbr-shape wbr-shape-circle-orange" />
+              <span className="wbr-shape wbr-shape-ring" />
+              <span className="wbr-shape wbr-shape-square" />
+              <span className="wbr-shape wbr-shape-triangle" />
+              <span className="wbr-shape wbr-shape-hex" />
+              <span className="wbr-shape wbr-shape-star">✦</span>
+              <span className="wbr-shape wbr-shape-plus">+</span>
+              <span className="wbr-shape wbr-shape-dot-group">
+                {Array.from({ length: 9 }).map((_, i) => <span key={i} />)}
+              </span>
             </div>
 
             {/* Webinar stats */}
@@ -440,8 +873,8 @@ export default function BhanzuWebinarBooking() {
                 { label: "Topic", value: "How to crack the secret language of Math — for Years 1–3" },
                 { label: "Year", value: "1 · 2 · 3" },
                 { label: "Date & Time", value: "18 April 2026, 10:00 AM +04" },
-              ].map((item, i) => (
-                <div key={item.label} className="wbr-stat-item" style={i > 0 ? {} : {}}>
+              ].map(item => (
+                <div key={item.label} className="wbr-stat-item">
                   <p style={{ fontSize: "10px", fontWeight: 700, color: C.textMid, textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: "6px" }}>
                     {item.label}
                   </p>
@@ -450,67 +883,59 @@ export default function BhanzuWebinarBooking() {
               ))}
             </div>
 
-            {/* Designed by badge */}
-            <div style={{
-              display: "flex", alignItems: "center", gap: "14px",
-              background: "#FFF4F0", border: "1.5px solid #FDDDD3",
-              borderRadius: "12px", padding: "16px 20px",
-            }}>
-              <div style={{
-                width: "44px", height: "44px", borderRadius: "50%",
-                background: C.orange, display: "flex", alignItems: "center", justifyContent: "center",
-                flexShrink: 0, fontSize: "20px",
-              }}>
-                🧮
-              </div>
-              <div>
-                <p style={{ fontSize: "12px", fontWeight: 600, color: C.textMid, marginBottom: "2px" }}>Webinar designed by</p>
-                <p style={{ fontSize: "15px", fontWeight: 700, color: C.dark }}>Neelakantha Bhanu</p>
-                <p style={{ fontSize: "12px", color: C.orange, fontWeight: 600 }}>World&apos;s Fastest Human Calculator</p>
-              </div>
-            </div>
           </div>
 
         </div>
 
         {/* ── FOOTER ── */}
         <footer className="wbr-footer">
-          <div style={{ maxWidth: "700px", margin: "0 auto" }}>
-            <img src="/Final-Logo-bg-removed.png" alt="SuperSheldon" style={{ height: "72px", width: "auto", marginBottom: "16px" }} />
-            <p style={{ fontSize: "15px", fontWeight: 700, color: "#fff", marginBottom: "20px", letterSpacing: "0.3px" }}>Supersheldon</p>
+          <div className="wbr-footer-grid">
 
-            <div style={{ display: "flex", justifyContent: "center", gap: "16px", marginBottom: "24px" }}>
-              {[
-                { src: "/bhanzu-webinar/facebook.svg",  alt: "Facebook",  href: "https://www.facebook.com/SuperSheldonmath/" },
-                { src: "/bhanzu-webinar/instagram.svg", alt: "Instagram", href: "https://www.instagram.com/supersheldon_math/" },
-                { src: "/bhanzu-webinar/linkedin.svg",  alt: "LinkedIn",  href: "https://www.linkedin.com/company/supersheldon/" },
-              ].map(s => (
-                <a key={s.alt} href={s.href} target="_blank" rel="noopener noreferrer">
-                  <img src={s.src} alt={s.alt} width={24} height={24} style={{ width: "24px", height: "24px", opacity: 0.85 }} />
-                </a>
-              ))}
+            {/* Brand column */}
+            <div className="wbr-footer-brand">
+              <img src="/Final-Logo-bg-removed.png" alt="SuperSheldon" />
+              <p>Empowering students worldwide with the joy of mathematics — one concept at a time.</p>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginBottom: "36px" }}>
-              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>
-                📞 <a href="tel:+917974695618" style={{ color: "inherit", textDecoration: "none" }}>+91 7974695618</a>
-                &nbsp;&nbsp;·&nbsp;&nbsp;
-                <a href="tel:+61485860132" style={{ color: "inherit", textDecoration: "none" }}>+61 485860132</a>
-              </p>
-              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.7)" }}>
-                ✉️ <a href="mailto:support@supersheldon.com" style={{ color: "inherit", textDecoration: "none" }}>support@supersheldon.com</a>
-              </p>
-              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.7)", lineHeight: 1.6 }}>
-                📍 Om Chambers 648/A 4th Flr, Binnamangala 1st Stage, Bangalore 560038, India
-              </p>
+            {/* Quick links */}
+            <div className="wbr-footer-col">
+              <h4>Explore</h4>
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/become-a-teacher">Become a Teacher</a></li>
+                <li><a href="/webinar/book-webinar">Free Webinar</a></li>
+                <li><a href="mailto:support@supersheldon.com">Contact Us</a></li>
+              </ul>
             </div>
 
-            <h2 style={{ fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 700, color: "rgba(255,255,255,0.75)", marginBottom: "4px" }}>
-              Learn Math the
-            </h2>
-            <h1 style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, color: "#fff", letterSpacing: "-0.5px" }}>
-              #SuperSheldonWay
-            </h1>
+            {/* Contact */}
+            <div className="wbr-footer-col">
+              <h4>Contact</h4>
+              <div className="wbr-contact-row">
+                <span>📞</span>
+                <div>
+                  <a href="tel:+917974695618">+91 7974695618</a><br />
+                  <a href="tel:+61485860132">+61 485860132</a>
+                </div>
+              </div>
+              <div className="wbr-contact-row">
+                <span>✉️</span>
+                <a href="mailto:support@supersheldon.com">support@supersheldon.com</a>
+              </div>
+              <div className="wbr-contact-row">
+                <span>📍</span>
+                <p>Om Chambers 648/A 4th Flr, Binnamangala 1st Stage, Bangalore 560038, India</p>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Footer bottom bar */}
+          <div className="wbr-footer-bottom">
+            <p>© {new Date().getFullYear()} SuperSheldon. All rights reserved.</p>
+            <p className="wbr-footer-tagline">
+              Learn Math the <strong>#SuperSheldonWay</strong>
+            </p>
           </div>
         </footer>
 
