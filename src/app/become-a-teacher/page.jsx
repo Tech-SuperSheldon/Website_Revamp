@@ -70,7 +70,7 @@ const WHY_SLIDES = [
   },
   {
     title: "Earn on Your Schedule",
-    body: "Flexible hours designed entirely around your life. Whether you teach 5 hours or 50, Super Sheldon's platform works seamlessly with your availability.",
+    body: "Flexible hours designed entirely around your life. Whether you teach 1 hour or 50, Super Sheldon's platform works seamlessly with your availability.",
     video: "/become-teacher/video/earn-your-schedule.mp4",
   },
   {
