@@ -184,9 +184,7 @@ export default function BhanzuWebinarBooking() {
           background: rgba(255,255,255,0.95);
           backdrop-filter: blur(8px);
           border-bottom: 1px solid rgba(0,0,0,0.06);
-          position: sticky;
-          top: 0;
-          z-index: 50;
+          position: static;
           animation: fadeIn 0.5s ease both;
         }
 
