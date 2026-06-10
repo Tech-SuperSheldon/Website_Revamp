@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Footer from "@/components/Footer";
 
 const C = {
   orange: "#F15D22",
@@ -195,7 +196,7 @@ export default function BhanzuWebinarBooking() {
           max-width: 1200px;
           margin: 0 auto;
           width: 100%;
-          padding: 16px 40px 32px;
+          padding: 16px 40px 0;
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 56px;
@@ -521,147 +522,18 @@ export default function BhanzuWebinarBooking() {
           animation: float 3s ease-in-out infinite;
         }
 
-        /* ── FOOTER ── */
-        .wbr-footer {
-          background: linear-gradient(160deg, #0D1B2A 0%, #162840 100%);
-          color: #fff;
-          padding: 64px 24px 0;
-          position: relative;
-          overflow: hidden;
-        }
-        .wbr-footer::before {
-          content: '';
-          position: absolute;
-          top: -60px; left: 50%;
-          transform: translateX(-50%);
-          width: 500px; height: 120px;
-          background: radial-gradient(ellipse, rgba(241,93,34,0.15) 0%, transparent 70%);
-          pointer-events: none;
-        }
-        .wbr-footer-grid {
-          max-width: 1000px;
-          margin: 0 auto;
-          display: grid;
-          grid-template-columns: 1.6fr 1fr 1fr;
-          gap: 40px;
-          padding-bottom: 48px;
-          border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-        .wbr-footer-brand img {
-          height: 72px;
-          width: auto;
-          margin-bottom: 12px;
-          display: block;
-        }
-        .wbr-footer-brand p {
-          font-size: 13px;
-          color: rgba(255,255,255,0.6);
-          line-height: 1.65;
-          margin-bottom: 20px;
-          max-width: 260px;
-        }
-        .wbr-footer-social {
-          display: flex;
-          gap: 10px;
-        }
-        .wbr-footer-social a {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 36px; height: 36px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.07);
-          border: 1px solid rgba(255,255,255,0.12);
-          transition: background 0.2s, transform 0.2s, border-color 0.2s;
-        }
-        .wbr-footer-social a:hover {
-          background: rgba(241,93,34,0.25);
-          border-color: rgba(241,93,34,0.5);
-          transform: translateY(-2px);
-        }
-        .wbr-footer-col h4 {
-          font-size: 11px;
-          font-weight: 700;
-          color: rgba(255,255,255,0.45);
-          text-transform: uppercase;
-          letter-spacing: 1.2px;
-          margin-bottom: 18px;
-        }
-        .wbr-footer-col ul {
-          list-style: none;
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-        .wbr-footer-col ul li a {
-          font-size: 14px;
-          color: rgba(255,255,255,0.65);
-          text-decoration: none;
-          transition: color 0.2s;
-        }
-        .wbr-footer-col ul li a:hover { color: #F15D22; }
-        .wbr-footer-col .wbr-contact-row {
-          display: flex;
-          align-items: flex-start;
-          gap: 10px;
-          margin-bottom: 14px;
-        }
-        .wbr-footer-col .wbr-contact-row span:first-child {
-          font-size: 15px;
-          flex-shrink: 0;
-          margin-top: 1px;
-        }
-        .wbr-footer-col .wbr-contact-row a,
-        .wbr-footer-col .wbr-contact-row p {
-          font-size: 13px;
-          color: rgba(255,255,255,0.65);
-          text-decoration: none;
-          line-height: 1.55;
-          transition: color 0.2s;
-        }
-        .wbr-footer-col .wbr-contact-row a:hover { color: #F15D22; }
-        .wbr-footer-bottom {
-          max-width: 1000px;
-          margin: 0 auto;
-          padding: 24px 0;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 16px;
-        }
-        .wbr-footer-bottom p {
-          font-size: 12px;
-          color: rgba(255,255,255,0.35);
-        }
-        .wbr-footer-tagline {
-          font-size: 13px;
-          color: rgba(255,255,255,0.5);
-          font-weight: 600;
-          letter-spacing: 0.3px;
-        }
-        .wbr-footer-tagline strong {
-          color: #F15D22;
-        }
-
         /* ── RESPONSIVE ── */
         @media (max-width: 820px) {
           .wbr-main {
             grid-template-columns: 1fr;
             gap: 36px;
-            padding: 16px 20px 28px;
+            padding: 16px 20px 0;
           }
           .wbr-header { padding: 10px 20px; }
           .wbr-stats { grid-template-columns: 1fr; }
           .wbr-stat-item { border-left: none; border-top: 1.5px solid #E5E7EB; }
           .wbr-stat-item:first-child { border-top: none; }
-          .wbr-footer-grid {
-            grid-template-columns: 1fr;
-            gap: 32px;
-          }
-          .wbr-footer-bottom {
-            flex-direction: column;
-            text-align: center;
-          }
+
         }
       `}</style>
 
@@ -867,77 +739,12 @@ export default function BhanzuWebinarBooking() {
               </span>
             </div>
 
-            {/* Webinar stats */}
-            <div className="wbr-stats">
-              {[
-                { label: "Topic", value: "How to crack the secret language of Math — for Years 1–3" },
-                { label: "Year", value: "1 · 2 · 3" },
-                { label: "Date & Time", value: "18 April 2026, 10:00 AM +04" },
-              ].map(item => (
-                <div key={item.label} className="wbr-stat-item">
-                  <p style={{ fontSize: "10px", fontWeight: 700, color: C.textMid, textTransform: "uppercase", letterSpacing: "0.8px", marginBottom: "6px" }}>
-                    {item.label}
-                  </p>
-                  <p style={{ fontSize: "13px", fontWeight: 600, color: C.dark, lineHeight: 1.4 }}>{item.value}</p>
-                </div>
-              ))}
-            </div>
-
           </div>
 
         </div>
 
         {/* ── FOOTER ── */}
-        <footer className="wbr-footer">
-          <div className="wbr-footer-grid">
-
-            {/* Brand column */}
-            <div className="wbr-footer-brand">
-              <img src="/Final-Logo-bg-removed.png" alt="SuperSheldon" />
-              <p>Empowering students worldwide with the joy of mathematics — one concept at a time.</p>
-            </div>
-
-            {/* Quick links */}
-            <div className="wbr-footer-col">
-              <h4>Explore</h4>
-              <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/become-a-teacher">Become a Teacher</a></li>
-                <li><a href="/webinar/book-webinar">Free Webinar</a></li>
-                <li><a href="mailto:support@supersheldon.com">Contact Us</a></li>
-              </ul>
-            </div>
-
-            {/* Contact */}
-            <div className="wbr-footer-col">
-              <h4>Contact</h4>
-              <div className="wbr-contact-row">
-                <span>📞</span>
-                <div>
-                  <a href="tel:+917974695618">+91 7974695618</a><br />
-                  <a href="tel:+61485860132">+61 485860132</a>
-                </div>
-              </div>
-              <div className="wbr-contact-row">
-                <span>✉️</span>
-                <a href="mailto:support@supersheldon.com">support@supersheldon.com</a>
-              </div>
-              <div className="wbr-contact-row">
-                <span>📍</span>
-                <p>Om Chambers 648/A 4th Flr, Binnamangala 1st Stage, Bangalore 560038, India</p>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Footer bottom bar */}
-          <div className="wbr-footer-bottom">
-            <p>© {new Date().getFullYear()} SuperSheldon. All rights reserved.</p>
-            <p className="wbr-footer-tagline">
-              Learn Math the <strong>#SuperSheldonWay</strong>
-            </p>
-          </div>
-        </footer>
+        <Footer />
 
       </div>
     </>
