@@ -166,7 +166,7 @@ const TESTIMONIALS = [
   },
 ];
 
-const HIRING_API = "https://hiring.supersheldon.com/api/hiring-roles";
+const HIRING_API = "https://api.hiring.supersheldon.com/api/hiring-roles";
 
 const FAQ_ITEMS = [
   {
