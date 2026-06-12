@@ -34,6 +34,17 @@ const fieldBase: React.CSSProperties = {
   transition: "border-color 0.2s, box-shadow 0.2s",
 };
 
+const COUNTRY_CODES = [
+  { flag: "🇦🇺", code: "+61",  label: "Australia" },
+  { flag: "🇮🇳", code: "+91",  label: "India" },
+  { flag: "🇬🇧", code: "+44",  label: "UK" },
+];
+
+const HERO_IMAGES = [
+  "/bhanzu-webinar/webinar-hero-1.png",
+  "/bhanzu-webinar/webinar-hero-2.png",
+];
+
 export default function BhanzuWebinarBooking() {
   const [school, setSchool] = useState("");
   const [year, setYear] = useState("");
@@ -45,6 +56,8 @@ export default function BhanzuWebinarBooking() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
   const [visible, setVisible] = useState(false);
+  const [heroIndex, setHeroIndex] = useState(0);
+  const [countryCode, setCountryCode] = useState(COUNTRY_CODES[0]);
 
   const [schoolSuggestions, setSchoolSuggestions] = useState<string[]>([]);
   const [schoolOpen, setSchoolOpen] = useState(false);
@@ -67,6 +80,13 @@ export default function BhanzuWebinarBooking() {
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 60);
     return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroIndex(i => (i + 1) % HERO_IMAGES.length);
+    }, 4000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -103,7 +123,7 @@ export default function BhanzuWebinarBooking() {
         body: JSON.stringify({
           student_name: studentName.trim(),
           parent_name: parentName.trim(),
-          phone: phone.trim(),
+          phone: `${countryCode.code}${phone.trim()}`,
           email: email.trim(),
           school: school.trim(),
           grade: year,
@@ -340,6 +360,32 @@ export default function BhanzuWebinarBooking() {
           0%, 100% { transform: translateY(0) rotate(0deg); }
           45%       { transform: translateY(-12px) rotate(12deg); }
         }
+        @keyframes heroFadeIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+        @keyframes heroFadeOut {
+          from { opacity: 1; }
+          to   { opacity: 0; }
+        }
+        .wbr-hero-slides-container {
+          display: grid;
+          width: 100%;
+          border-radius: 20px;
+          overflow: hidden;
+        }
+        .wbr-hero-slide {
+          grid-area: 1 / 1;
+          border-radius: 20px;
+          overflow: hidden;
+          transition: opacity 0.8s ease-in-out;
+        }
+        .wbr-hero-slide img {
+          width: 100%;
+          height: auto;
+          display: block;
+          border-radius: 20px;
+        }
         @keyframes spinSlow {
           from { transform: rotate(0deg); }
           to   { transform: rotate(360deg); }
@@ -520,6 +566,38 @@ export default function BhanzuWebinarBooking() {
           animation: float 3s ease-in-out infinite;
         }
 
+        /* ── INFO BOXES ── */
+        .wbr-info-section {
+          max-width: 1200px;
+          margin: 48px auto 0;
+          width: 100%;
+          padding: 0 40px 48px;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
+        .wbr-info-box {
+          border-radius: 20px;
+          padding: 28px 24px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .wbr-info-box-title {
+          font-size: 17px;
+          font-weight: 700;
+          color: #0D1B2A;
+          font-family: ${FONT};
+        }
+        .wbr-info-box-value {
+          font-size: 14px;
+          font-weight: 500;
+          color: #374151;
+          font-family: ${FONT};
+          line-height: 1.6;
+        }
+
         /* ── RESPONSIVE ── */
         @media (max-width: 820px) {
           .wbr-main {
@@ -531,7 +609,10 @@ export default function BhanzuWebinarBooking() {
           .wbr-stats { grid-template-columns: 1fr; }
           .wbr-stat-item { border-left: none; border-top: 1.5px solid #E5E7EB; }
           .wbr-stat-item:first-child { border-top: none; }
-
+          .wbr-info-section {
+            grid-template-columns: 1fr;
+            padding: 0 20px 40px;
+          }
         }
       `}</style>
 
@@ -616,9 +697,34 @@ export default function BhanzuWebinarBooking() {
                       <div>
                         <label className="wbr-field-label">Mobile Number</label>
                         <div style={{ display: "flex", border: "1.5px solid #E5E7EB", borderRadius: "8px", overflow: "hidden", backgroundColor: C.white }}>
-                          <div style={{ display: "flex", alignItems: "center", padding: "0 10px", borderRight: "1.5px solid #E5E7EB", gap: "4px", flexShrink: 0, backgroundColor: "#F9FAFB" }}>
-                            <span style={{ fontSize: "16px", lineHeight: 1 }}>🇮🇳</span>
-                            <span style={{ fontSize: "13px", color: C.text2, fontWeight: 600 }}>+91</span>
+                          <div style={{ position: "relative", flexShrink: 0, borderRight: "1.5px solid #E5E7EB", backgroundColor: "#F9FAFB" }}>
+                            <select
+                              value={countryCode.code}
+                              onChange={e => setCountryCode(COUNTRY_CODES.find(c => c.code === e.target.value)!)}
+                              style={{
+                                appearance: "none",
+                                WebkitAppearance: "none",
+                                border: "none",
+                                background: "transparent",
+                                padding: "0 28px 0 10px",
+                                height: "100%",
+                                fontSize: "13px",
+                                fontWeight: 600,
+                                color: C.text2,
+                                fontFamily: FONT,
+                                cursor: "pointer",
+                                outline: "none",
+                              }}
+                            >
+                              {COUNTRY_CODES.map(c => (
+                                <option key={c.code} value={c.code}>
+                                  {c.flag} {c.code}
+                                </option>
+                              ))}
+                            </select>
+                            <svg style={{ position: "absolute", right: "6px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }} width="12" height="12" viewBox="0 0 16 16" fill="none">
+                              <path d="M4 6L8 10L12 6" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
                           </div>
                           <input
                             className="wbr-input-focus"
@@ -705,7 +811,7 @@ export default function BhanzuWebinarBooking() {
                     </button>
 
                     <div style={{ marginTop: "16px", display: "flex", justifyContent: "center" }}>
-                      <img src="/bhanzu-webinar/powered_by_zoom.svg" alt="Powered By Zoom" style={{ height: "22px", width: "auto", opacity: 0.7 }} />
+                      <img src="/Final-Logo-bg-removed.png" alt="SuperSheldon" style={{ height: "36px", width: "auto", opacity: 0.85 }} />
                     </div>
                   </form>
                 </>
@@ -716,13 +822,19 @@ export default function BhanzuWebinarBooking() {
           {/* RIGHT — image + stats */}
           <div className={`wbr-right${visible ? " visible" : ""}`}>
 
-            {/* Hero image */}
+            {/* Hero image slideshow */}
             <div className="wbr-hero-img">
-              <img
-                src="/webinar-hero.png"
-                alt="Webinar — students learning"
-                style={{ width: "100%", display: "block", objectFit: "cover" }}
-              />
+              <div className="wbr-hero-slides-container">
+                {HERO_IMAGES.map((src, i) => (
+                  <div
+                    key={src}
+                    className="wbr-hero-slide"
+                    style={{ opacity: i === heroIndex ? 1 : 0 }}
+                  >
+                    <img src={src} alt={`Webinar hero ${i + 1}`} />
+                  </div>
+                ))}
+              </div>
 
               {/* floating shapes */}
               <span className="wbr-shape wbr-shape-circle-orange" />
@@ -739,6 +851,22 @@ export default function BhanzuWebinarBooking() {
 
           </div>
 
+        </div>
+
+        {/* ── INFO BOXES ── */}
+        <div className="wbr-info-section">
+          <div className="wbr-info-box" style={{ backgroundColor: "#C8DFF0" }}>
+            <p className="wbr-info-box-title">Topic</p>
+            <p className="wbr-info-box-value">&ldquo;How to crack the secret language of Math&rdquo; for grades 1-3</p>
+          </div>
+          <div className="wbr-info-box" style={{ backgroundColor: "#F5EDA8" }}>
+            <p className="wbr-info-box-title">Year</p>
+            <p className="wbr-info-box-value">1 - 2 - 3</p>
+          </div>
+          <div className="wbr-info-box" style={{ backgroundColor: "#E0C8F0" }}>
+            <p className="wbr-info-box-title">Date &amp; Time</p>
+            <p className="wbr-info-box-value">26 June 2026, 10:00 AM +04</p>
+          </div>
         </div>
 
         {/* ── FOOTER ── */}
