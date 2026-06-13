@@ -857,15 +857,17 @@ export default function BhanzuWebinarBooking() {
         <div className="wbr-info-section">
           <div className="wbr-info-box" style={{ backgroundColor: "#C8DFF0" }}>
             <p className="wbr-info-box-title">Topic</p>
-            <p className="wbr-info-box-value">&ldquo;How to crack the secret language of Math&rdquo; for grades 1-3</p>
+            <p className="wbr-info-box-value">&ldquo;Top 11+ Strategies Every Parent Should Know&rdquo; for grades 1-3</p>
           </div>
           <div className="wbr-info-box" style={{ backgroundColor: "#F5EDA8" }}>
             <p className="wbr-info-box-title">Year</p>
-            <p className="wbr-info-box-value">1 - 2 - 3</p>
+            <p className="wbr-info-box-value">3-4-5-6</p>
           </div>
           <div className="wbr-info-box" style={{ backgroundColor: "#E0C8F0" }}>
             <p className="wbr-info-box-title">Date &amp; Time</p>
-            <p className="wbr-info-box-value">26 June 2026, 10:00 AM +04</p>
+            <p className="wbr-info-box-value">Date: 26/06/2026
+Time: 10 AM BST
+Platform: Zoom</p>
           </div>
         </div>
 
