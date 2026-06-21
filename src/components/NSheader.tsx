@@ -23,10 +23,11 @@ export function Header() {
   const { scrollY } = useScroll();
 
   // Transform values for pill effect
-  const headerWidth = useTransform(scrollY, [0, 100], ["100%", "97%"]);
+  const headerWidth = useTransform(scrollY, [0, 100], ["100%", "82%"]);
   const headerTop = useTransform(scrollY, [0, 100], ["0px", "16px"]);
   const headerRadius = useTransform(scrollY, [0, 100], ["0px", "50px"]);
-  const headerPadding = useTransform(scrollY, [0, 100], ["1.5rem", "0.3rem"]); // py-6 to almost py-1
+  const headerPadding = useTransform(scrollY, [0, 100], ["1rem", "0.1rem"]); // shrinks tighter on scroll
+  const logoScale = useTransform(scrollY, [0, 100], [1, 0.6]); // logo shrinks as the bar compacts
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,8 +46,8 @@ export function Header() {
           borderRadius: headerRadius,
         }}
         className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ease-in-out
-          ${isScrolled 
-            ? "bg-white/70 backdrop-blur-md shadow-lg border border-white/20" 
+          ${isScrolled
+            ? "bg-white/70 backdrop-blur-md shadow-lg border border-white/20 max-w-4xl"
             : "bg-white/0 w-full border-b border-transparent"
           }
         `}
@@ -56,22 +57,25 @@ export function Header() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="container mx-auto px-6 flex items-center justify-between transition-all"
+          className="container mx-auto px-4 flex items-center justify-between gap-2 transition-all"
         >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <div className="relative h-24 w-24 shrink-0 sm:h-28 sm:w-28 md:h-32 md:w-32">
-                 <Image 
-                    src="/logo.png" 
-                    alt="SuperSheldon Logo" 
-                    fill 
+            <motion.div
+              style={{ scale: logoScale }}
+              className="relative h-16 w-16 shrink-0 origin-left sm:h-20 sm:w-20 md:h-24 md:w-24"
+            >
+                 <Image
+                    src="/logo.png"
+                    alt="SuperSheldon Logo"
+                    fill
                     className="object-contain"
                  />
-            </div>
+            </motion.div>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-5 lg:gap-6">
             {navLinks.map((link) => (
               <RollingLink key={link.name} href={link.href}>
                 {link.name}
@@ -80,12 +84,12 @@ export function Header() {
           </nav>
 
           {/* Desktop Actions */}
-          <div className="hidden md:flex items-center gap-4">
-            <Link href="https://supersheldon.wise.live/login?loginRedirected=true" target="_blank" rel="noopener noreferrer" className="text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors">
+          <div className="hidden md:flex items-center gap-3">
+            <Link href="https://supersheldon.wise.live/login?loginRedirected=true" target="_blank" rel="noopener noreferrer" className="text-base font-medium text-gray-700 hover:text-gray-900 transition-colors">
               Login
             </Link>
             <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="gradient" className="rounded-full px-8 py-6 text-lg shadow-md transition-all hover:shadow-lg hover:shadow-orange-500/20">
+                <Button variant="gradient" className="rounded-full px-6 py-5 text-base shadow-md transition-all hover:shadow-lg hover:shadow-orange-500/20 whitespace-nowrap">
                     Try a free Class
                 </Button>
             </Link>
