@@ -45,7 +45,7 @@ const stats = [
 
 export function StatsSection() {
   return (
-    <section className="py-6 md:pt-8 md:pb-20 bg-transparent relative overflow-visible perspective-1000">
+    <section className="py-6 md:pt-8 md:pb-20 bg-transparent relative overflow-visible [perspective:1000px]">
       <div className="container px-4 mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-6 md:mb-16 space-y-4">
           <motion.div

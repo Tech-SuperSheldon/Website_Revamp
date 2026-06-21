@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ args:['--disable-dev-shm-usage','--no-sandbox','--disable-gpu','--single-process'] });
+const ctx = await b.newContext({ viewport:{width:1440,height:900} });
+await ctx.route('**/*', r => /\.(mp4|webm|mov|m4v)(\?|$)/i.test(r.request().url()) ? r.abort() : r.continue());
+const p = await ctx.newPage();
+const errs=[];
+p.on('console', m=>{ if(m.type()==='error') errs.push(m.text().slice(0,200)); });
+p.on('pageerror', e=>errs.push('PAGEERROR: '+e.message.slice(0,200)));
+await p.goto('http://localhost:3000/new-home',{waitUntil:'domcontentloaded'}).catch(()=>{});
+await p.waitForTimeout(5000);
+console.log('=== UNIQUE CONSOLE ERRORS ===');
+console.log([...new Set(errs)].join('\n---\n') || 'none');
+await b.close();

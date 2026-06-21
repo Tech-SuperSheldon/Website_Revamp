@@ -133,7 +133,7 @@ export function ParentsTestimonialSection() {
       {/* Scrolling Container */}
       <div 
         ref={scrollRef}
-        className="flex gap-6 overflow-x-hidden w-full pb-10 select-none cursor-grab active:cursor-grabbing perspective-1000"
+        className="flex gap-6 overflow-x-hidden w-full pb-10 select-none cursor-grab active:cursor-grabbing [perspective:1000px]"
         style={{ width: '100%', perspective: '1000px' }}
       >
         {/* Render list twice for infinite loop */}

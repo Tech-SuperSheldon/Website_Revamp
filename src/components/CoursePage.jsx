@@ -57,19 +57,19 @@ export default function CoursePage() {
 
   return (
     <div className="">
-{/* <section className="relative w-[92%] rounded-4xl mx-auto mt-8 sm:mt-16 lg:mt-20 h-[240px] sm:h-[380px] md:h-[480px] lg:h-[680px] px-2 sm:px-4 md:px-6"> 
+{/* <section className="relative w-[92%] rounded-[2rem] mx-auto mt-8 sm:mt-16 lg:mt-20 h-[240px] sm:h-[380px] md:h-[480px] lg:h-[680px] px-2 sm:px-4 md:px-6"> 
   <Image
     src="/coursebannerv3.jpg"
     alt="Hero"
     fill
-    className="w-full h-full object-contain object-center rounded-4xl"
+    className="w-full h-full object-contain object-center rounded-[2rem]"
   />
   <div className="absolute inset-0" />
 </section> */}
 
 
-<section className="w-[92%] mx-auto pt-24 sm:pt-24 lg:pt-24 md:pt-24 pb-14 sm:pb-12 lg:pb-16 rounded-4xl">
-  <div className="relative aspect-[3/1] rounded-4xl overflow-hidden mx-auto">
+<section className="w-[92%] mx-auto pt-24 sm:pt-24 lg:pt-24 md:pt-24 pb-14 sm:pb-12 lg:pb-16 rounded-[2rem]">
+  <div className="relative aspect-[3/1] rounded-[2rem] overflow-hidden mx-auto">
     <Image
       src="/coursebannerv3.jpg"
       alt="Hero"

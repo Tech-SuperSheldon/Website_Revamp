@@ -61,7 +61,7 @@ export default function UKCourse() {
     <section className=" bg-[#D3F5FF]">
 
 <div className="w-[92%] bg-[#D3F5FF] mx-auto pt-24 sm:pt-24 lg:pt-24 md:pt-24 pb-14 sm:pb-12 lg:pb-16">
-  <div className="relative aspect-[3/1] rounded-4xl overflow-hidden">
+  <div className="relative aspect-[3/1] rounded-[2rem] overflow-hidden">
     <Image
       src="/UK/coursebannerv1.jpg"
       alt="Hero"
