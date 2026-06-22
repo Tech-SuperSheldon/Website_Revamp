@@ -25,13 +25,14 @@ const features = [
     title: "1:1 Experience",
     desc: "Personalized attention and guidance tailored to your child's unique learning style.",
     video: assetUrl("/newsite/5points/2.mp4"),
-    layout: "vertical", // Wide Landscape in Wide Card -> Vertical stack OK
+    layout: "vertical",
+    fillMedia: true,
     className: "md:col-span-2 bg-white text-black border border-gray-200", // Large White card
   },
   {
     title: "24x7 Support",
     desc: "Support from our help desk 24x7.",
-    video: assetUrl("/newsite/5points/4.mp4"),
+    video: assetUrl("/newsite/5points/6.mp4"),
     image: assetUrl("/247.png"),
     layout: "horizontal", // 9:16 Portrait in Wide Card -> Side-by-side effectively uses space
     className: "md:col-span-2 bg-white text-black border border-gray-200", // Bottom White/Gray card
@@ -71,7 +72,7 @@ export default function FeatureSlider() {
         for Bright <span className="text-[#e87f1e]">Futures</span>
       </motion.h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-fr">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-fr">
         {orderedFeatures.slice(0, 5).map((f, i) => (
           <motion.div
             key={i}
@@ -79,33 +80,33 @@ export default function FeatureSlider() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.2 }}
-            className={`relative rounded-[2.5rem] overflow-hidden flex shadow-sm transform transition-transform hover:scale-[1.01] ${f.className} ${f.layout === 'horizontal' ? 'flex-row items-stretch' : 'flex-col justify-between'}`}
-            style={{ minHeight: '400px' }}
+            className={`relative rounded-[2rem] overflow-hidden flex shadow-sm transform transition-transform hover:scale-[1.01] ${f.className} ${f.layout === 'horizontal' ? 'flex-row items-stretch' : f.fillMedia ? 'flex-col' : 'flex-col justify-between'}`}
+            style={{ minHeight: '260px' }}
           >
             {/* Globe decoration for Worldwide card */}
             {f.title === "Worldwide best tutor experience" && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-                <NSGlobe size={420} opacity="opacity-50" />
+                <NSGlobe size={300} opacity="opacity-50" />
               </div>
             )}
 
             {/* Text Container */}
-            <div className={`relative z-10 p-8 text-left ${f.layout === 'horizontal' ? 'w-1/2 flex flex-col justify-start h-full' : 'w-full mb-6'}`}>
-              <h3 className="text-2xl md:text-3xl font-bold mb-3 tracking-tight leading-tight">
+            <div className={`relative z-10 p-5 text-left ${f.layout === 'horizontal' ? 'w-1/2 flex flex-col justify-start h-full' : 'w-full mb-3'}`}>
+              <h3 className="text-xl md:text-2xl font-bold mb-2 tracking-tight leading-tight">
                 {f.title}
               </h3>
-              <p className={`text-lg md:text-xl leading-relaxed opacity-90`}>
+              <p className={`text-sm md:text-base leading-relaxed opacity-90`}>
                 {f.desc}
               </p>
               {f.image && (
-                <div className="mt-auto flex justify-center -mb-8">
-                  <img src={f.image} alt="feature illustration" className="w-[160%] max-w-[400px] object-contain drop-shadow-md" />
+                <div className="mt-auto flex justify-center -mb-5">
+                  <img src={f.image} alt="feature illustration" className="w-[140%] max-w-[300px] object-contain drop-shadow-md" />
                 </div>
               )}
             </div>
 
             {/* Media Container */}
-            <div className={`relative overflow-hidden flex flex-col items-center justify-end ${f.layout === 'horizontal' ? 'w-1/2 h-full' : 'w-full mt-auto h-[250px] md:h-[300px]'}`}>
+            <div className={`relative overflow-hidden flex flex-col items-center justify-end ${f.layout === 'horizontal' ? 'w-1/2 h-full' : f.fillMedia ? 'w-full flex-1 min-h-0' : 'w-full mt-auto h-[160px] md:h-[190px]'}`}>
                {f.video && (
                  <AutoplayMutedVideo
                    src={f.video}

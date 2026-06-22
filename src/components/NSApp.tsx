@@ -68,11 +68,11 @@ const NSLevelUp = () => {
     <section ref={containerRef} className="relative h-[300vh] ">
       {/* No overflow-y-auto here — it traps scroll and blocks the outer h-[300vh] scroll-driven section */}
       <div
-        className="sticky top-0 flex h-dvh min-h-0 flex-col items-center justify-start overflow-x-clip overflow-y-visible pt-[calc(env(safe-area-inset-top,0px)+3.5rem)] sm:pt-[calc(env(safe-area-inset-top,0px)+3.85rem)] md:justify-center md:pt-[calc(env(safe-area-inset-top,0px)+5.25rem)] lg:pt-10"
+        className="sticky top-0 flex h-dvh min-h-0 flex-col items-center justify-start overflow-x-clip overflow-y-visible pt-[calc(env(safe-area-inset-top,0px)+5rem)] sm:pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] md:justify-center md:pt-[calc(env(safe-area-inset-top,0px)+6rem)] lg:pt-24"
       >
 
         {/* Section Header — pulled well up on phones; mb keeps clearance above mockup */}
-        <div className="relative z-30 mb-6 flex w-full shrink-0 justify-center px-4 pt-0 pointer-events-none max-md:-mt-6 max-md:mb-11 md:mb-5 md:mt-0 md:pt-0">
+        <div className="relative z-30 mb-6 flex w-full shrink-0 justify-center px-4 pt-0 pointer-events-none max-md:mb-4 md:mb-5 md:mt-0 md:pt-0">
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -84,10 +84,10 @@ const NSLevelUp = () => {
           </motion.h2>
         </div>
 
-        <div className="container mx-auto flex min-h-0 w-full flex-1 flex-col items-center justify-start gap-6 px-4 py-2 max-md:pt-1 md:flex-row md:justify-center md:gap-16 md:py-4 lg:gap-24">
+        <div className="container mx-auto flex min-h-0 w-full flex-1 flex-col items-center justify-start gap-6 px-4 py-2 max-md:pt-1 md:flex-row md:justify-center md:gap-6 md:py-4 lg:gap-8 mt-[180px] md:mt-[60px]">
           
           {/* Left Text Box */}
-          <div className="flex-1 text-center md:text-right space-y-4 max-w-sm hidden md:block">
+          <div className="w-[200px] shrink-0 text-center md:text-right space-y-4 hidden md:block">
             <AnimatePresence mode='wait'>
                 <motion.div
                     key={`left-${activeIndex}`}
@@ -130,8 +130,8 @@ const NSLevelUp = () => {
           </div>
 
           {/* Central Phone Mockup & Buttons */}
-          <div className="z-20 flex shrink-0 flex-col items-center gap-3 md:gap-6">
-            <div className="relative origin-top scale-[0.82] sm:scale-90 md:scale-100">
+          <div className="z-20 flex shrink-0 flex-col items-center gap-0">
+            <div className="relative origin-top scale-[0.65] sm:scale-75 md:scale-[0.82]">
                {/* Phone Body */}
               <div className="h-[480px] w-[240px] border-[10px] border-gray-900 bg-gray-900 relative overflow-hidden rounded-[2.5rem] shadow-2xl sm:h-[520px] sm:w-[260px] sm:border-[12px] sm:rounded-[3rem] md:h-[640px] md:w-[320px] md:border-[16px]">
                  {/* Dynamic Island / Notch */}
@@ -210,7 +210,7 @@ const NSLevelUp = () => {
           </div>
 
           {/* Right Text Box */}
-          <div className="flex-1 text-center md:text-left space-y-4 max-w-sm hidden md:block">
+          <div className="w-[200px] shrink-0 text-center md:text-left space-y-4 hidden md:block">
             <AnimatePresence mode='wait'>
                 <motion.div
                     key={`right-${activeIndex}`}

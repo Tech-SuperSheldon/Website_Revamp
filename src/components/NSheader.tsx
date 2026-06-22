@@ -26,8 +26,8 @@ export function Header() {
   const headerWidth = useTransform(scrollY, [0, 100], ["100%", "82%"]);
   const headerTop = useTransform(scrollY, [0, 100], ["0px", "16px"]);
   const headerRadius = useTransform(scrollY, [0, 100], ["0px", "50px"]);
-  const headerPadding = useTransform(scrollY, [0, 100], ["1rem", "0.1rem"]); // shrinks tighter on scroll
-  const logoScale = useTransform(scrollY, [0, 100], [1, 0.6]); // logo shrinks as the bar compacts
+  const headerPadding = useTransform(scrollY, [0, 100], ["1rem", "0rem"]);
+  const logoScale = useTransform(scrollY, [0, 100], [1, 1.1]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,7 +63,7 @@ export function Header() {
           <Link href="/" className="flex items-center gap-2">
             <motion.div
               style={{ scale: logoScale }}
-              className="relative h-16 w-16 shrink-0 origin-left sm:h-20 sm:w-20 md:h-24 md:w-24"
+              className="relative h-16 w-16 shrink-0 origin-left sm:h-20 sm:w-20 md:h-20 md:w-20"
             >
                  <Image
                     src="/logo.png"
