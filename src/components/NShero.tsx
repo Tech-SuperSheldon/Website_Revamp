@@ -107,7 +107,7 @@ export function Hero() {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.9, ease: "easeOut" }}
-        className="pointer-events-none absolute right-2 top-20 z-[2] w-[40%] max-w-[300px] sm:right-6 md:top-24 lg:w-[26%]"
+        className="pointer-events-none absolute right-2 top-16 z-[2] w-[30%] max-w-[200px] sm:right-6 md:top-20 lg:w-[18%]"
       >
         <Image
           src="/hero/flag.png"
@@ -118,7 +118,11 @@ export function Hero() {
         />
       </motion.div>
 
-      {/* ── Layer 3: Foreground — students cut-out, bottom-anchored (fast) ── */}
+      {/* ── Layer 3: Foreground group — students + laptop, locked together (fast) ──
+           Sized by HEIGHT so it occupies a consistent lower band regardless of the
+           viewport's aspect ratio (prevents the students from getting too tall on
+           short/wide screens). The laptop is positioned as a % of this group so its
+           size relative to the students always matches the reference composite. */}
       <motion.div
         style={{ y: studentsY }}
         initial={{ opacity: 0, y: 40 }}
@@ -126,45 +130,40 @@ export function Hero() {
         transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] flex justify-center"
       >
-        <Image
-          src="/hero/students.png"
-          alt="Students learning online"
-          width={1460}
-          height={586}
-          priority
-          sizes="100vw"
-          className="h-auto w-[140%] max-w-none origin-bottom drop-shadow-2xl sm:w-[115%] md:w-full md:max-w-6xl"
-        />
-      </motion.div>
-
-      {/* ── Layer 3b: Class video laptop — centered on the desk, moves with foreground ── */}
-      <motion.div
-        style={{ y: studentsY }}
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut", delay: 0.35 }}
-        className="pointer-events-none absolute bottom-28 left-1/2 z-[4] w-[46%] max-w-[170px] -translate-x-1/2 sm:bottom-32 sm:max-w-[220px] md:bottom-36 md:max-w-[280px] lg:bottom-40 lg:max-w-[330px]"
-      >
-        <div className="overflow-hidden rounded-xl drop-shadow-2xl">
-          <video
-            ref={videoRef}
-            src="/hero/class-video.webm"
-            className="block h-auto w-full"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
+        <div className="relative aspect-[1460/586] w-[150%] max-w-none sm:w-[120%] md:w-auto md:h-[52vh] md:max-h-[540px] md:min-h-[320px]">
+          <Image
+            src="/hero/students.png"
+            alt="Students learning online"
+            fill
+            priority
+            sizes="100vw"
+            className="object-contain object-bottom drop-shadow-2xl"
           />
+
+          {/* Class video laptop — sits on the desk, centered between the students */}
+          <div className="absolute bottom-[5%] left-1/2 w-[23%] -translate-x-1/2">
+            <div className="relative overflow-hidden rounded-md drop-shadow-2xl">
+              <video
+                ref={videoRef}
+                src="/hero/class-video.webm"
+                className="block h-auto w-full"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+              />
+              {/* Live badge */}
+              <span className="absolute left-1.5 top-1.5 inline-flex items-center gap-1 rounded bg-white/90 px-1.5 py-0.5 text-[7px] font-bold uppercase tracking-wide text-gray-900 shadow-sm backdrop-blur md:text-[9px]">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
+                </span>
+                Live
+              </span>
+            </div>
+          </div>
         </div>
-        {/* Live badge */}
-        <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-md bg-white/90 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-gray-900 shadow-sm backdrop-blur sm:text-[10px]">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
-          </span>
-          Live
-        </span>
       </motion.div>
 
       {/* ── Layer 4: Content (normal) ── */}
@@ -177,7 +176,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
-          className="mx-auto flex max-w-3xl flex-col items-center text-center"
+          className="mx-auto flex max-w-4xl flex-col items-center text-center"
         >
           {/* Pill */}
           <span className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-700 shadow-sm backdrop-blur-md sm:text-xs">
@@ -187,7 +186,7 @@ export function Hero() {
           </span>
 
           {/* Headline */}
-          <h1 className="mt-5 font-extrabold leading-[1.05] tracking-tight text-gray-900 drop-shadow-sm text-4xl sm:text-5xl lg:text-6xl xl:text-7xl">
+          <h1 className="mt-5 font-extrabold leading-[1.1] tracking-tight text-gray-900 drop-shadow-sm text-3xl sm:text-4xl md:text-5xl md:whitespace-nowrap lg:text-6xl">
             <span className="block">Dream Big. Learn Smart.</span>
             <span className="mt-1 block">
               Crack{" "}
