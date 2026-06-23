@@ -26,7 +26,7 @@ export function Header() {
   const headerWidth = useTransform(scrollY, [0, 100], ["100%", "82%"]);
   const headerTop = useTransform(scrollY, [0, 100], ["0px", "16px"]);
   const headerRadius = useTransform(scrollY, [0, 100], ["0px", "50px"]);
-  const headerPadding = useTransform(scrollY, [0, 100], ["1rem", "0rem"]);
+  const headerPadding = useTransform(scrollY, [0, 100], ["0.35rem", "0rem"]);
   const logoScale = useTransform(scrollY, [0, 100], [1, 1.1]);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export function Header() {
         className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ease-in-out
           ${isScrolled
             ? "bg-white/70 backdrop-blur-md shadow-lg border border-white/20 max-w-4xl"
-            : "bg-white/0 w-full border-b border-transparent"
+            : "bg-white w-full border-b border-gray-100 shadow-sm"
           }
         `}
       >
@@ -63,7 +63,7 @@ export function Header() {
           <Link href="/" className="flex items-center gap-2">
             <motion.div
               style={{ scale: logoScale }}
-              className="relative h-16 w-16 shrink-0 origin-left sm:h-20 sm:w-20 md:h-20 md:w-20"
+              className="relative h-8 w-8 shrink-0 origin-left sm:h-10 sm:w-10 md:h-10 md:w-10"
             >
                  <Image
                     src="/logo.png"

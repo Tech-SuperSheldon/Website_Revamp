@@ -84,7 +84,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative min-h-[100svh] w-full overflow-hidden bg-gradient-to-b from-sky-100 to-white"
+      className="relative min-h-[calc(100svh+100px)] w-full overflow-x-clip overflow-y-clip bg-gradient-to-b from-sky-100 to-white"
     >
       {/* ── Layer 1: Background — Sydney (slow) ── */}
       <motion.div style={{ y: bgY }} className="absolute -inset-x-0 -top-[8%] z-0 h-[116%] w-full">
@@ -130,7 +130,7 @@ export function Hero() {
         transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] flex justify-center"
       >
-        <div className="relative aspect-[1460/586] w-[150%] max-w-none sm:w-[120%] md:w-auto md:h-[52vh] md:max-h-[540px] md:min-h-[320px]">
+        <div className="relative aspect-[1460/586] w-[115%] max-w-none sm:w-[90%] md:w-auto md:h-[40vh] md:max-h-[420px] md:min-h-[260px]">
           <Image
             src="/hero/students.png"
             alt="Students learning online"
@@ -169,7 +169,7 @@ export function Hero() {
       {/* ── Layer 4: Content (normal) ── */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col px-4 pt-28 sm:px-6 md:pt-32"
+        className="relative z-10 mx-auto flex min-h-[calc(100svh+100px)] w-full max-w-7xl flex-col justify-end px-4 pt-16 pb-[200px] sm:px-6 md:pt-20 md:pb-[calc(40vh+20px)]"
       >
         {/* Centered headline block */}
         <motion.div
@@ -186,7 +186,7 @@ export function Hero() {
           </span>
 
           {/* Headline */}
-          <h1 className="mt-5 font-extrabold leading-[1.1] tracking-tight text-gray-900 drop-shadow-sm text-3xl sm:text-4xl md:text-5xl md:whitespace-nowrap lg:text-6xl">
+          <h1 className="mt-5 font-extrabold leading-[1.1] tracking-tight text-gray-900 drop-shadow-sm text-2xl sm:text-3xl md:text-4xl md:whitespace-nowrap lg:text-5xl">
             <span className="block">Dream Big. Learn Smart.</span>
             <span className="mt-1 block">
               Crack{" "}
@@ -265,7 +265,7 @@ export function Hero() {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.5 }}
-        className="absolute inset-x-0 bottom-10 z-20 px-4 sm:bottom-12"
+        className="absolute inset-x-0 bottom-0 z-20 px-4"
       >
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-x-4 gap-y-4 rounded-3xl border border-white/70 bg-white/90 px-6 py-4 shadow-xl backdrop-blur-md md:grid-cols-4 md:gap-x-2">
           {STATS.map(({ icon: Icon, title, sub, color }) => (
