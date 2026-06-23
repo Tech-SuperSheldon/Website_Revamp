@@ -1,7 +1,7 @@
 // Preview route: us-website home DESIGN with revamp CONTENT.
 // Section order mirrors website1/us-website page.tsx, with revamp extras folded in.
 import { Header } from '@/components/NSheader';
-import { HeroCoding } from '@/components/HeroCoding';
+import { Hero } from '@/components/NShero';
 import { TestimonialSection } from '@/components/NSstudent-testimonial';
 import USCourseTree from '@/components/USCourseTree';
 import NSClassVideoSection from '@/components/NSClassVideosection';
@@ -19,7 +19,6 @@ import FloatingArrowWhatsApp from '@/components/ArrowAndWhatsapp';
 
 // revamp extras (kept per request, restyled to match us-website design)
 import CreditsSection from '@/components/Credits';
-import TryFreeClass from '@/components/freeclass/tryfreeclass';
 import Review from '@/components/Review';
 
 export const metadata = {
@@ -28,11 +27,10 @@ export const metadata = {
 
 export default function NewHome() {
   return (
-    <main>
+    <main className="new-home-bg">
       <Header />
-      <HeroCoding />
+      <Hero />
       <CreditsSection />
-      <TryFreeClass />
       <TestimonialSection />
       <USCourseTree />
       <NSClassVideoSection />

@@ -68,11 +68,11 @@ const NSLevelUp = () => {
     <section ref={containerRef} className="relative h-[300vh] ">
       {/* No overflow-y-auto here — it traps scroll and blocks the outer h-[300vh] scroll-driven section */}
       <div
-        className="sticky top-0 flex h-dvh min-h-0 flex-col items-center justify-start overflow-x-clip overflow-y-visible pt-[calc(env(safe-area-inset-top,0px)+5rem)] sm:pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] md:justify-center md:pt-[calc(env(safe-area-inset-top,0px)+6rem)] lg:pt-24"
+        className="sticky top-0 flex h-dvh min-h-0 flex-col items-center justify-start overflow-clip pt-[calc(env(safe-area-inset-top,0px)+5rem)] sm:pt-[calc(env(safe-area-inset-top,0px)+5.5rem)] md:pt-[calc(env(safe-area-inset-top,0px)+4rem)] lg:pt-16"
       >
 
         {/* Section Header — pulled well up on phones; mb keeps clearance above mockup */}
-        <div className="relative z-30 mb-6 flex w-full shrink-0 justify-center px-4 pt-0 pointer-events-none max-md:mb-4 md:mb-5 md:mt-0 md:pt-0">
+        <div className="relative z-30 mb-2 flex w-full shrink-0 justify-center px-4 pt-0 pointer-events-none max-md:mb-1 md:mb-2 md:mt-0 md:pt-0">
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -84,7 +84,7 @@ const NSLevelUp = () => {
           </motion.h2>
         </div>
 
-        <div className="container mx-auto flex min-h-0 w-full flex-1 flex-col items-center justify-start gap-6 px-4 py-2 max-md:pt-1 md:flex-row md:justify-center md:gap-6 md:py-4 lg:gap-8 mt-[180px] md:mt-[60px]">
+        <div className="container mx-auto flex min-h-0 w-full shrink-0 flex-col items-center justify-start gap-6 px-4 py-2 max-md:pt-1 md:flex-row md:justify-center md:gap-2 md:py-4 lg:gap-3 mt-0 md:mt-1">
           
           {/* Left Text Box */}
           <div className="w-[200px] shrink-0 text-center md:text-right space-y-4 hidden md:block">
@@ -131,7 +131,7 @@ const NSLevelUp = () => {
 
           {/* Central Phone Mockup & Buttons */}
           <div className="z-20 flex shrink-0 flex-col items-center gap-0">
-            <div className="relative origin-top scale-[0.65] sm:scale-75 md:scale-[0.82]">
+            <div className="relative origin-top scale-[0.65] sm:scale-75 md:scale-[0.76] -mb-[170px] sm:-mb-[140px] md:-mb-[150px]">
                {/* Phone Body */}
               <div className="h-[480px] w-[240px] border-[10px] border-gray-900 bg-gray-900 relative overflow-hidden rounded-[2.5rem] shadow-2xl sm:h-[520px] sm:w-[260px] sm:border-[12px] sm:rounded-[3rem] md:h-[640px] md:w-[320px] md:border-[16px]">
                  {/* Dynamic Island / Notch */}
@@ -186,24 +186,24 @@ const NSLevelUp = () => {
             </div>
 
             {/* App Store / Play Store Buttons */}
-            <div className="grid w-full max-w-[560px] grid-cols-2 gap-3 sm:gap-4 md:max-w-[680px] md:gap-6">
-              <Link href="/demo" className="flex min-h-[3.5rem] md:min-h-[4.75rem] items-center justify-center gap-2 rounded-2xl bg-black px-3 py-2 sm:py-4 md:py-5 text-white shadow-lg transition-transform hover:scale-[1.02] hover:bg-gray-800 active:scale-95 sm:gap-3 sm:px-4 md:gap-4">
-                <svg className="w-10 h-10 md:w-12 md:h-12 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+            <div className="grid w-full max-w-[300px] grid-cols-2 gap-3 sm:gap-4 md:max-w-[330px] md:gap-3">
+              <Link href="/demo" className="flex min-h-[3.5rem] md:min-h-[4rem] items-center justify-center gap-2 rounded-2xl bg-black px-3 py-2 sm:py-4 md:py-3 text-white shadow-lg transition-transform hover:scale-[1.02] hover:bg-gray-800 active:scale-95 sm:gap-3 sm:px-4 md:gap-2">
+                <svg className="w-9 h-9 md:w-10 md:h-10 shrink-0" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.26-.79 3.59-.76 1.54.04 2.87.82 3.59 2.05-3.09 1.83-2.6 5.86.35 7.14-.65 1.76-1.52 3.6-2.61 3.74zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
                 </svg>
                 <div className="flex flex-col items-start justify-center">
-                  <span className="text-[14px] md:text-[16px] uppercase tracking-wider leading-none mb-1 opacity-80">Download on the</span>
-                  <span className="text-[22px] md:text-[26px] font-semibold leading-none">App Store</span>
+                  <span className="text-[12px] md:text-[13px] uppercase tracking-wider leading-none mb-1 opacity-80">Download on the</span>
+                  <span className="text-[18px] md:text-[20px] font-semibold leading-none">App Store</span>
                 </div>
               </Link>
               
-              <Link href="/demo" className="flex min-h-[3.5rem] md:min-h-[4.75rem] items-center justify-center gap-2 rounded-2xl bg-black px-3 py-2 sm:py-4 md:py-5 text-white shadow-lg transition-transform hover:scale-[1.02] hover:bg-gray-800 active:scale-95 sm:gap-3 sm:px-4 md:gap-4">
-                <svg className="w-10 h-10 md:w-12 md:h-12 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+              <Link href="/demo" className="flex min-h-[3.5rem] md:min-h-[4rem] items-center justify-center gap-2 rounded-2xl bg-black px-3 py-2 sm:py-4 md:py-3 text-white shadow-lg transition-transform hover:scale-[1.02] hover:bg-gray-800 active:scale-95 sm:gap-3 sm:px-4 md:gap-2">
+                <svg className="w-9 h-9 md:w-10 md:h-10 shrink-0" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M3.522 3.013a1.996 1.996 0 0 0-.25 1.054v15.86c0 .416.096.793.25 1.06l10.421-10.463L3.522 3.013zm11.025 9.47L4.722 2.65a2.016 2.016 0 0 1 1.258-.291c.219.01.44.053.647.16l11.66 6.643-3.74 3.32zm.542.484l3.96 3.522c1.23.699 1.23 1.833 0 2.529l-2.049 1.168-3.66-3.266 1.749-3.953zM5.385 21.053c-.347.114-.725.132-1.096-.06l10.33-10.372 3.66 3.264-11.66 6.645a2.022 2.022 0 0 1-1.234.523z"/>
                 </svg>
                 <div className="flex flex-col items-start justify-center">
-                  <span className="text-[14px] md:text-[16px] uppercase tracking-wider leading-none mb-1 opacity-80">GET IT ON</span>
-                  <span className="text-[22px] md:text-[26px] font-semibold leading-none">Google Play</span>
+                  <span className="text-[12px] md:text-[13px] uppercase tracking-wider leading-none mb-1 opacity-80">GET IT ON</span>
+                  <span className="text-[18px] md:text-[20px] font-semibold leading-none">Google Play</span>
                 </div>
               </Link>
             </div>

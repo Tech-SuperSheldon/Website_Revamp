@@ -12,19 +12,8 @@ const students = [
   "/p2.png",
 ];
 
-const countries = [
-  { code: "+91", flag: "🇮🇳", name: "India" },
-  { code: "+1",  flag: "🇺🇸", name: "USA" },
-  { code: "+44", flag: "🇬🇧", name: "UK" },
-  { code: "+1",  flag: "🇨🇦", name: "Canada" },
-  { code: "+61", flag: "🇦🇺", name: "Australia" },
-];
-
-const defaultCountry =
-  countries.find((c) => c.name === "USA") ?? countries[0];
-
 /** Hero headline — cycles: ACT → SAT → Math → English (separate lines in rotation) */
-const HERO_EXAM_LABELS = ["SATs", "ICAS", "NAPLAN"] as const;
+const HERO_EXAM_LABELS = ["ACT Prep", "SAT Prep", "Math Prep", "English Prep"] as const;
 const HERO_EXAM_ROTATE_MS = 3200;
 
 function LiveClassesPill() {
@@ -49,8 +38,6 @@ function LiveClassesPill() {
 export function Hero() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [examHeadlineIndex, setExamHeadlineIndex] = useState(0);
-  const [country, setCountry] = useState(countries[1]); // Default to +1 (USA)
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -66,18 +53,8 @@ export function Hero() {
     return () => clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    fetch("https://ipapi.co/json/")
-      .then((res) => res.json())
-      .then((data) => {
-        const detected = countries.find((c) => c.code === data.country_calling_code);
-        if (detected) setCountry(detected);
-      })
-      .catch((err) => console.error("Failed to detect location", err));
-  }, []);
-
   return (
-    <section className="relative w-full mt-10 md:mt-20 pt-20 pb-10 md:pt-44 lg:pt-32 xl:pb-0 xl:pt-16 overflow-hidden -mb-12 lg:-mb-0" id="hero">
+    <section className="relative w-full pt-24 pb-10 md:pt-28 lg:pt-24 xl:pb-0 overflow-hidden -mb-12 lg:-mb-0" id="hero">
       {/* Background Decor */}
       <div className="absolute top-0 right-0 -z-10 h-[500px] w-[500px] md:h-[800px] md:w-[800px] rounded-full bg-purple-50/40 blur-3xl filter opacity-60 pointer-events-none" />
       <div className="absolute top-0 right-0 -z-10 h-full w-full lg:w-[55%] bg-gradient-to-bl from-purple-50 via-white to-transparent transform skew-x-[-10deg] translate-x-32" />
@@ -96,10 +73,10 @@ export function Hero() {
             <div className="space-y-4 w-full">
               <h1 className="max-w-xl font-extrabold tracking-tight text-gray-900 sm:max-w-2xl md:text-3xl lg:text-4xl xl:text-[2.5rem] xl:leading-tight leading-snug">
                 <span className="block text-balance text-gray-900 text-center lg:text-left text-2xl sm:text-3xl">
-                  Smart Learning, Smarter Results –
+                  Live Learning for US Students –
                 </span>
                 <span className="mt-1 block sm:mt-1.5 text-center lg:text-left">
-                  <span className="text-gray-900">From School to </span>
+                  <span className="text-gray-900">Succeed in </span>
                   <span className="relative inline-block min-h-[1.2em] align-baseline">
                     <AnimatePresence mode="wait">
                       <motion.span
@@ -117,43 +94,15 @@ export function Hero() {
                 </span>
               </h1>
               <p className="text-base md:text-lg text-gray-600 font-medium max-w-lg leading-relaxed">
-                Experience Smarter Learning – your First Class is Free!
+                Unlock their potential with personalized 1:1 expert mentorship in Logic, Math & AI.
               </p>
             </div>
 
             {/* Form Section */}
             <div className="w-full max-w-md">
               <form className="relative flex items-center shadow-xl rounded-full bg-white ring-1 ring-gray-100 p-1.5 md:p-2 transition-all hover:shadow-orange-100/50">
-                {/* Country Selector */}
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center gap-1.5 pl-3 pr-2 md:pl-4 md:pr-3 h-10 md:h-12 border-r border-gray-100 hover:bg-gray-50 rounded-l-full transition-colors"
-                  >
-                    <span className="text-xl md:text-2xl">{country.flag}</span>
-                    <span className="text-xs md:text-sm font-semibold text-gray-700">{country.code}</span>
-                  </button>
-
-                  {isDropdownOpen && (
-                    <div className="absolute top-12 md:top-14 left-0 w-52 md:w-60 bg-white shadow-xl rounded-2xl border border-gray-100 overflow-hidden z-50 py-1">
-                      {countries.map((c) => (
-                        <button
-                          key={c.name}
-                          type="button"
-                          onClick={() => { setCountry(c); setIsDropdownOpen(false); }}
-                          className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors text-left"
-                        >
-                          <span className="text-xl">{c.flag}</span>
-                          <span className="text-sm font-medium text-gray-700">{c.name} ({c.code})</span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
                 <Input
-                  className="pl-3 md:pl-4 h-10 md:h-12 text-base md:text-lg border-transparent focus:border-transparent focus:ring-0 shadow-none font-medium text-gray-800 bg-transparent flex-1 min-w-0"
+                  className="pl-4 md:pl-6 h-10 md:h-12 text-base md:text-lg border-transparent focus:border-transparent focus:ring-0 shadow-none font-medium text-gray-800 bg-transparent flex-1 min-w-0"
                   placeholder="Phone number"
                   type="tel"
                 />
@@ -163,8 +112,8 @@ export function Hero() {
                     size="lg"
                     className="h-10 md:h-12 rounded-full px-4 md:px-8 text-sm md:text-base font-bold shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 whitespace-nowrap bg-gradient-to-r from-orange-500 to-orange-600 hover:to-orange-500"
                   >
-                    <span className="hidden sm:inline">Try a Free Class</span>
-                    <span className="sm:hidden">Try</span>
+                    <span className="hidden sm:inline">Book Free Class</span>
+                    <span className="sm:hidden">Book</span>
                   </Button>
                 </Link>
               </form>
@@ -270,7 +219,7 @@ export function Hero() {
                   <div className="flex flex-col min-w-0 flex-1 gap-0.5">
                     <span className="text-[10px] sm:text-sm font-bold text-gray-900 leading-tight">Expert Teachers</span>
                     <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-orange-600">
-                      Certified Experts
+                      Stanford Alumni
                     </span>
                   </div>
                   <div className="hidden sm:flex flex-col items-center shrink-0 w-[52px] sm:w-[56px]">
