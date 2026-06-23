@@ -18,7 +18,6 @@ import { Footer } from '@/components/NSfooter';
 import FloatingArrowWhatsApp from '@/components/ArrowAndWhatsapp';
 
 // revamp extras (kept per request, restyled to match us-website design)
-import CreditsSection from '@/components/Credits';
 import Review from '@/components/Review';
 
 export const metadata = {
@@ -30,7 +29,6 @@ export default function NewHome() {
     <main className="new-home-bg">
       <Header />
       <Hero />
-      <CreditsSection />
       <TestimonialSection />
       <USCourseTree />
       <NSClassVideoSection />

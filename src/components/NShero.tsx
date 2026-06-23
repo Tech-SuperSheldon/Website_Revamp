@@ -1,299 +1,290 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useReducedMotion,
+} from "framer-motion";
+import {
+  Check,
+  GraduationCap,
+  TrendingUp,
+  Radio,
+  ShieldCheck,
+  ChevronDown,
+  ArrowRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { HeroTestimonialPhoneVideo } from "@/components/HeroTestimonialPhoneVideo";
 
-const students = [
-  "/p2.png",
-];
+const EXAMS = [
+  "Selective Schools",
+  "NAPLAN",
+  "OC / Selective Entry",
+  "Scholarship Exams",
+] as const;
 
-/** Hero headline — cycles: ACT → SAT → Math → English (separate lines in rotation) */
-const HERO_EXAM_LABELS = ["ACT Prep", "SAT Prep", "Math Prep", "English Prep"] as const;
-const HERO_EXAM_ROTATE_MS = 3200;
-
-function LiveClassesPill() {
-  return (
-    <div className="animate-hero-live-float inline-flex">
-      <div
-        className="flex items-center justify-center gap-2 sm:gap-2.5 rounded-full border border-gray-100/80 bg-white px-3 py-2 shadow-xl sm:px-4 sm:py-2.5"
-        style={{ transform: "none" }}
-      >
-        <div className="relative flex h-2.5 w-2.5 shrink-0 sm:h-3 sm:w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
-          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-500 sm:h-3 sm:w-3" />
-        </div>
-        <span className="text-xs font-bold leading-none text-gray-800 whitespace-nowrap sm:text-sm">
-          Live Classes
-        </span>
-      </div>
-    </div>
-  );
-}
+const STATS = [
+  { icon: GraduationCap, title: "Australia's Top", sub: "Educators", color: "text-orange-500" },
+  { icon: TrendingUp, title: "Proven Success", sub: "Record", color: "text-blue-500" },
+  { icon: Radio, title: "Live Interactive", sub: "Classes", color: "text-red-500" },
+  { icon: ShieldCheck, title: "Trusted by 500K+", sub: "Students", color: "text-emerald-500" },
+] as const;
 
 export function Hero() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [examHeadlineIndex, setExamHeadlineIndex] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const prefersReduced = useReducedMotion();
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % students.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
   }, []);
 
+  // Ensure the class video autoplays inline/muted across browsers.
   useEffect(() => {
-    const id = setInterval(() => {
-      setExamHeadlineIndex((i) => (i + 1) % HERO_EXAM_LABELS.length);
-    }, HERO_EXAM_ROTATE_MS);
-    return () => clearInterval(id);
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.defaultMuted = true;
+    v.playsInline = true;
+    void v.play().catch(() => {});
   }, []);
+
+  // Rich parallax on desktop, near-static on mobile / reduced-motion.
+  const f = prefersReduced ? 0 : isDesktop ? 1 : 0.18;
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const ease = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  // Background slow, flag medium, students fast.
+  const bgY = useTransform(ease, [0, 1], ["0%", `${-6 * f}%`]);
+  const flagY = useTransform(ease, [0, 1], ["0%", `${-16 * f}%`]);
+  const studentsY = useTransform(ease, [0, 1], ["0%", `${-26 * f}%`]);
+  const contentY = useTransform(ease, [0, 1], ["0%", `${-8 * f}%`]);
+  // Subtle fade of foreground/content as you scroll past.
+  const contentOpacity = useTransform(ease, [0, 0.7, 1], [1, 1, 0.35]);
 
   return (
-    <section className="relative w-full pt-24 pb-10 md:pt-28 lg:pt-24 xl:pb-0 overflow-hidden -mb-12 lg:-mb-0" id="hero">
-      {/* Background Decor */}
-      <div className="absolute top-0 right-0 -z-10 h-[500px] w-[500px] md:h-[800px] md:w-[800px] rounded-full bg-purple-50/40 blur-3xl filter opacity-60 pointer-events-none" />
-      <div className="absolute top-0 right-0 -z-10 h-full w-full lg:w-[55%] bg-gradient-to-bl from-purple-50 via-white to-transparent transform skew-x-[-10deg] translate-x-32" />
+    <section
+      ref={sectionRef}
+      id="hero"
+      className="relative min-h-[100svh] w-full overflow-hidden bg-gradient-to-b from-sky-100 to-white"
+    >
+      {/* ── Layer 1: Background — Sydney (slow) ── */}
+      <motion.div style={{ y: bgY }} className="absolute -inset-x-0 -top-[8%] z-0 h-[116%] w-full">
+        <Image
+          src="/hero/sydney.jpg"
+          alt="Sydney harbour at sunset"
+          fill
+          priority
+          sizes="100vw"
+          className="scale-105 object-cover object-center"
+        />
+        {/* Readability + bottom blend into page */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/5 to-white/85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/40 via-transparent to-transparent" />
+      </motion.div>
 
-      <div className="container mx-auto px-4 md:px-6">
-        {/* On desktop: stretch rows so right column fills to viewport bottom */}
-        <div className="grid grid-cols-1 gap-8 items-center lg:grid-cols-[45%_55%] lg:gap-4 lg:items-stretch lg:min-h-[calc(100vh-5rem)]">
+      {/* ── Layer 2: Midground — Australian flag, top-right (medium) ── */}
+      <motion.div
+        style={{ y: flagY }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
+        className="pointer-events-none absolute right-2 top-20 z-[2] w-[40%] max-w-[300px] sm:right-6 md:top-24 lg:w-[26%]"
+      >
+        <Image
+          src="/hero/flag.png"
+          alt="Australian flag"
+          width={598}
+          height={552}
+          className="h-auto w-full drop-shadow-xl"
+        />
+      </motion.div>
 
-          {/* --- Left Column: Content --- */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative z-10 order-2 mx-auto flex max-w-2xl flex-col items-start space-y-7 pt-2 text-left md:pt-10 lg:order-1 lg:mx-0 lg:justify-start lg:pt-14"
-          >
-            <div className="space-y-4 w-full">
-              <h1 className="max-w-xl font-extrabold tracking-tight text-gray-900 sm:max-w-2xl md:text-3xl lg:text-4xl xl:text-[2.5rem] xl:leading-tight leading-snug">
-                <span className="block text-balance text-gray-900 text-center lg:text-left text-2xl sm:text-3xl">
-                  Live Learning for US Students –
-                </span>
-                <span className="mt-1 block sm:mt-1.5 text-center lg:text-left">
-                  <span className="text-gray-900">Succeed in </span>
-                  <span className="relative inline-block min-h-[1.2em] align-baseline">
-                    <AnimatePresence mode="wait">
-                      <motion.span
-                        key={HERO_EXAM_LABELS[examHeadlineIndex]}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        transition={{ duration: 0.35, ease: "easeOut" }}
-                        className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-purple-600"
-                      >
-                        {HERO_EXAM_LABELS[examHeadlineIndex]}
-                      </motion.span>
-                    </AnimatePresence>
-                  </span>
-                </span>
-              </h1>
-              <p className="text-base md:text-lg text-gray-600 font-medium max-w-lg leading-relaxed">
-                Unlock their potential with personalized 1:1 expert mentorship in Logic, Math & AI.
-              </p>
-            </div>
+      {/* ── Layer 3: Foreground — students cut-out, bottom-anchored (fast) ── */}
+      <motion.div
+        style={{ y: studentsY }}
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] flex justify-center"
+      >
+        <Image
+          src="/hero/students.png"
+          alt="Students learning online"
+          width={1460}
+          height={586}
+          priority
+          sizes="100vw"
+          className="h-auto w-[140%] max-w-none origin-bottom drop-shadow-2xl sm:w-[115%] md:w-full md:max-w-6xl"
+        />
+      </motion.div>
 
-            {/* Form Section */}
-            <div className="w-full max-w-md">
-              <form className="relative flex items-center shadow-xl rounded-full bg-white ring-1 ring-gray-100 p-1.5 md:p-2 transition-all hover:shadow-orange-100/50">
-                <Input
-                  className="pl-4 md:pl-6 h-10 md:h-12 text-base md:text-lg border-transparent focus:border-transparent focus:ring-0 shadow-none font-medium text-gray-800 bg-transparent flex-1 min-w-0"
-                  placeholder="Phone number"
-                  type="tel"
-                />
-                <Link href="/demo" className="shrink-0">
-                  <Button
-                    variant="gradient"
-                    size="lg"
-                    className="h-10 md:h-12 rounded-full px-4 md:px-8 text-sm md:text-base font-bold shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 whitespace-nowrap bg-gradient-to-r from-orange-500 to-orange-600 hover:to-orange-500"
-                  >
-                    <span className="hidden sm:inline">Book Free Class</span>
-                    <span className="sm:hidden">Book</span>
-                  </Button>
-                </Link>
-              </form>
-              {/* <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.2 }}
-                className="text-xs md:text-sm text-gray-500 mt-3 ml-4 font-medium flex items-center gap-2"
+      {/* ── Layer 3b: Class video laptop — centered on the desk, moves with foreground ── */}
+      <motion.div
+        style={{ y: studentsY }}
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut", delay: 0.35 }}
+        className="pointer-events-none absolute bottom-28 left-1/2 z-[4] w-[46%] max-w-[170px] -translate-x-1/2 sm:bottom-32 sm:max-w-[220px] md:bottom-36 md:max-w-[280px] lg:bottom-40 lg:max-w-[330px]"
+      >
+        <div className="overflow-hidden rounded-xl drop-shadow-2xl">
+          <video
+            ref={videoRef}
+            src="/hero/class-video.webm"
+            className="block h-auto w-full"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+          />
+        </div>
+        {/* Live badge */}
+        <span className="absolute left-2 top-2 inline-flex items-center gap-1 rounded-md bg-white/90 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wide text-gray-900 shadow-sm backdrop-blur sm:text-[10px]">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
+          </span>
+          Live
+        </span>
+      </motion.div>
+
+      {/* ── Layer 4: Content (normal) ── */}
+      <motion.div
+        style={{ y: contentY, opacity: contentOpacity }}
+        className="relative z-10 mx-auto flex min-h-[100svh] w-full max-w-7xl flex-col px-4 pt-28 sm:px-6 md:pt-32"
+      >
+        {/* Centered headline block */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="mx-auto flex max-w-3xl flex-col items-center text-center"
+        >
+          {/* Pill */}
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-700 shadow-sm backdrop-blur-md sm:text-xs">
+            <span className="text-base leading-none">🪙</span>
+            Australia&apos;s Best Online Learning Platform
+            <span className="text-base leading-none">🇦🇺</span>
+          </span>
+
+          {/* Headline */}
+          <h1 className="mt-5 font-extrabold leading-[1.05] tracking-tight text-gray-900 drop-shadow-sm text-4xl sm:text-5xl lg:text-6xl xl:text-7xl">
+            <span className="block">Dream Big. Learn Smart.</span>
+            <span className="mt-1 block">
+              Crack{" "}
+              <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
+                Australia&apos;s Best.
+              </span>
+            </span>
+          </h1>
+
+          {/* Subtext */}
+          <p className="mt-5 max-w-xl text-base font-medium leading-relaxed text-gray-700 sm:text-lg">
+            Live interactive classes, expert mentors, and a proven path to top
+            scores in Australian Exams.
+          </p>
+
+          {/* CTAs */}
+          <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row">
+            <Link href="/demo">
+              <Button
+                variant="gradient"
+                size="lg"
+                className="h-12 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-8 text-base font-bold shadow-lg shadow-orange-500/30 hover:to-orange-500"
               >
-                <span className="inline-block w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                Join 10,000+ happy learners today!
-              </motion.p> */}
-            </div>
-
-
-            {/* Trust Logos */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="flex flex-col items-center lg:items-start gap-3 w-full"
-            >
-              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Trusted by Parents & Schools</p>
-              <div className="flex items-center justify-center lg:justify-start gap-5 md:gap-8">
-                {/* <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.2 }}
-                  className="relative h-8 w-24 md:h-10 md:w-28 hover:scale-105 transition-transform duration-300"
-                >
-                  <Image src="/trustpilot.png" alt="Trustpilot" fill className="object-contain object-left" />
-                </motion.div> */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.3 }}
-                  className="relative h-8 w-24 md:h-10 md:w-28 hover:scale-105 transition-transform duration-300"
-                >
-                  <Image src="/googlev2.png" alt="Google Reviews" fill className="object-contain" />
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.4 }}
-                  className="relative h-9 w-24 md:h-12 md:w-28 hover:scale-105 transition-transform duration-300"
-                >
-                  <Image src="/Stem.png" alt="STEM Accredited" fill className="object-contain" />
-                </motion.div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* --- Right Column: Image fills from top to bottom of viewport --- */}
-          <div className="relative order-1 mt-4 flex h-[360px] items-center justify-center sm:-mt-10 lg:order-2 lg:mt-0 lg:h-full lg:items-start lg:justify-center text-center">
-
-            {/*
-              On desktop: column stretches to min-h; flex row uses items-start so the hero
-              image + overlays align with the headline at the top of the row.
-            */}
-            <div className="relative z-10 aspect-[3/2] w-full max-w-[1536px] rounded-3xl lg:mt-16 -mb-12 lg:-mb-0">
-
-              {/* Slide images — overflow-hidden only on the image layer */}
-              <AnimatePresence mode="popLayout">
-                <motion.div
-                  key={currentImageIndex}
-                  initial={{ opacity: 0, scale: 1 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1 }}
-                  transition={{ duration: 0.8, ease: "easeInOut" }}
-                  className="absolute inset-0 overflow-hidden rounded-3xl"
-                >
-                  <Image
-                    src={students[currentImageIndex]}
-                    alt=" student"
-                    fill
-                    className="object-cover object-top transition-transform duration-700"
-                    priority
-                  />
-                  {/* White fade at the bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1/5 bg-gradient-to-t from-white to-transparent pointer-events-none z-10" />
-                </motion.div>
-              </AnimatePresence>
-
-              {/* ── Expert Teachers — lifted + nudged right (clears heads on desktop) ── */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="absolute top-[-30px] left-2 sm:top-0 sm:left-1/2 z-30 w-[min(calc(100%-1rem),200px)] sm:w-[min(calc(100%-1rem),260px)] sm:-translate-x-1/2 translate-y-0 sm:ml-3 sm:-translate-y-4 md:ml-4 md:w-[min(calc(100%-1rem),288px)] md:-translate-y-5 lg:top-2 lg:ml-5 lg:-translate-y-2.5"
+                Try a Free Class
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+            <Link href="/courses">
+              <Button
+                variant="outline"
+                size="lg"
+                className="h-12 rounded-full border-gray-300 bg-white/80 px-8 text-base font-bold text-gray-800 backdrop-blur-md hover:bg-white"
               >
-                <div
-                  className="animate-float bg-white p-2.5 sm:p-3 rounded-2xl shadow-xl border border-gray-100/80
-                             flex items-center gap-2 sm:gap-3 hover:shadow-2xl transition-shadow duration-300"
-                >
-                  <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 border-purple-100 shrink-0">
-                    <Image src="/teacher.png" alt="Teacher" fill className="object-cover" />
-                  </div>
-                  <div className="flex flex-col min-w-0 flex-1 gap-0.5">
-                    <span className="text-[10px] sm:text-sm font-bold text-gray-900 leading-tight">Expert Teachers</span>
-                    <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-orange-600">
-                      Stanford Alumni
-                    </span>
-                  </div>
-                  <div className="hidden sm:flex flex-col items-center shrink-0 w-[52px] sm:w-[56px]">
-                    <svg
-                      className="w-[52px] h-[30px] sm:w-[56px] sm:h-[32px]"
-                      viewBox="0 0 56 32"
-                      aria-hidden
-                    >
-                      <path
-                        d="M 8 28 A 20 20 0 0 1 48 28"
-                        fill="none"
-                        stroke="#facc15"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                        pathLength={100}
-                        strokeDasharray="90 10"
-                      />
-                    </svg>
-                    <span className="text-[8px] sm:text-[9px] font-bold text-gray-700 text-center leading-tight -mt-0.5">
-                      90% Success Rate
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* ── Live Classes — farther right, lower in blue area, straight pill wrapper ── */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="pointer-events-none absolute right-2 bottom-[-15px] sm:bottom-auto sm:right-0 sm:top-[26%] z-30 w-max max-w-[calc(100%-1rem)] translate-x-0 sm:translate-x-3 flex flex-col items-center md:top-[28%] md:translate-x-5 md:max-w-[calc(100%-0.5rem)] lg:top-[30%] lg:translate-x-6"
-              >
-                <div className="pointer-events-auto flex w-full justify-center transform-none">
-                  <LiveClassesPill />
-                </div>
-              </motion.div>
-
-              {/* Phone Video — positioned vs hero image box so it moves up with the visual */}
-              <motion.div
-                initial={{ opacity: 0, y: 50, rotate: 0 }}
-                animate={{ opacity: 1, y: 0, rotate: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="absolute right-0 bottom-8 z-20 hidden aspect-[9/18] w-[88px] translate-x-2 md:block md:bottom-16 md:w-[98px] md:translate-x-3 lg:bottom-4 lg:w-[108px] lg:translate-x-4"
-              >
-                <div className="animate-hero-phone-float h-full w-full overflow-hidden rounded-[0.95rem] border-[3px] border-gray-900 bg-gray-900 shadow-2xl lg:rounded-[1.1rem]">
-                  <div className="relative h-full w-full rounded-[0.85rem] bg-slate-800 md:rounded-[0.95rem] lg:rounded-[1.05rem]">
-                    <HeroTestimonialPhoneVideo
-                      videoClassName="h-full w-full object-cover"
-                      badgeClassName="absolute right-1 top-1 z-10 rounded bg-white/90 px-1 py-0.5 text-[5px] font-bold text-gray-900 shadow-sm backdrop-blur md:right-1.5 md:top-1.5 md:text-[6px]"
-                    />
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Code badge — sm+ only */}
-              {/* <motion.div
-                initial={{ opacity: 0, scale: 0.5, rotate: 0 }}
-                animate={{ opacity: 1, scale: 1, rotate: 12 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="absolute -right-2 lg:-right-4 bottom-28 lg:bottom-36 bg-white px-3 py-2 rounded-xl shadow-xl z-20 hidden sm:block border border-gray-100"
-              >
-                <span className="font-mono text-[10px] sm:text-xs font-bold text-orange-500">while(fun) &#123; code() &#125;</span>
-              </motion.div> */}
-            </div>
-
-            {/* Squiggly arrows — desktop only */}
-            {/* <svg className="absolute top-[10%] left-[-5%] w-16 h-16 lg:w-24 lg:h-24 text-purple-400 z-40 lg:block hidden animate-pulse-slow" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
-              <path d="M10,50 Q40,10 80,40" /><path d="M70,35 L80,40 L75,50" />
-            </svg>
-            <svg className="absolute bottom-[10%] right-[-5%] w-14 h-14 lg:w-20 lg:h-20 text-orange-400 z-40 lg:block hidden transform -rotate-12" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round">
-              <path d="M80,80 Q50,40 20,60" /><path d="M30,55 L20,60 L25,70" />
-            </svg> */}
+                Explore Courses
+              </Button>
+            </Link>
           </div>
+        </motion.div>
 
+        {/* "Crack Australian Exams" card — right side */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+          className="mt-8 self-center rounded-2xl border border-white/70 bg-white/90 p-5 shadow-xl backdrop-blur-md sm:mt-10 lg:absolute lg:right-4 lg:top-[58%] lg:mt-0 lg:max-w-xs xl:right-8"
+        >
+          <h3 className="mb-3 text-base font-bold text-gray-900">
+            Crack Australian Exams
+          </h3>
+          <ul className="grid grid-cols-2 gap-x-5 gap-y-2.5 lg:grid-cols-1">
+            {EXAMS.map((exam) => (
+              <li key={exam} className="flex items-center gap-2 text-sm font-medium text-gray-700">
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500">
+                  <Check className="h-3 w-3 text-white" strokeWidth={3} />
+                </span>
+                {exam}
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      </motion.div>
+
+      {/* ── Floating decor (reuse existing 3D assets) ── */}
+      <div className="animate-float pointer-events-none absolute bottom-28 left-3 z-20 h-14 w-14 sm:left-8 sm:h-20 sm:w-20 md:bottom-32">
+        <Image src="/floating-icons/book.png" alt="" fill className="object-contain drop-shadow-xl" />
+      </div>
+      <div
+        className="animate-float pointer-events-none absolute bottom-28 right-3 z-20 h-14 w-14 sm:right-8 sm:h-20 sm:w-20 md:bottom-32"
+        style={{ animationDelay: "1.2s" }}
+      >
+        <Image src="/floating-icons/lightbulb.png" alt="" fill className="object-contain drop-shadow-xl" />
+      </div>
+
+      {/* ── Bottom stats bar ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.5 }}
+        className="absolute inset-x-0 bottom-10 z-20 px-4 sm:bottom-12"
+      >
+        <div className="mx-auto grid max-w-5xl grid-cols-2 gap-x-4 gap-y-4 rounded-3xl border border-white/70 bg-white/90 px-6 py-4 shadow-xl backdrop-blur-md md:grid-cols-4 md:gap-x-2">
+          {STATS.map(({ icon: Icon, title, sub, color }) => (
+            <div key={title} className="flex items-center justify-center gap-2.5 md:gap-3">
+              <Icon className={`h-6 w-6 shrink-0 ${color}`} />
+              <div className="leading-tight">
+                <p className="text-sm font-bold text-gray-900">{title}</p>
+                <p className="text-sm font-medium text-gray-500">{sub}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Scroll-down chevron */}
+      <div className="absolute bottom-2 left-1/2 z-20 hidden -translate-x-1/2 sm:block">
+        <div className="flex h-9 w-9 animate-bounce items-center justify-center rounded-full border border-gray-300 bg-white/80 shadow-sm backdrop-blur">
+          <ChevronDown className="h-4 w-4 text-gray-500" />
         </div>
       </div>
     </section>
