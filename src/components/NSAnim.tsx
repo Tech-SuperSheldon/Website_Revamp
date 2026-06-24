@@ -42,7 +42,7 @@ export default function NSAnim() {
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
             className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight"
           >
             The <span className="text-orange-500">SuperSheldon</span> Experience
@@ -50,7 +50,7 @@ export default function NSAnim() {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ delay: 0.1 }}
             className="text-gray-600 max-w-2xl mx-auto text-lg"
           >
@@ -65,7 +65,7 @@ export default function NSAnim() {
               key={video.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: index * 0.1 }}
               className="group"
             >

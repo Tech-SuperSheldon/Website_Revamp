@@ -58,7 +58,7 @@ export function AutoplayMutedVideo({
       muted
       playsInline
       loop
-      preload="auto"
+      preload="none"
       {...rest}
     >
       {children}

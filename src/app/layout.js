@@ -1,5 +1,3 @@
-import CursorTrail from "@/components/sharedcomps/CursorTrail";
-import { icons } from "lucide-react";
 import "./globals.css";
 import { Quicksand } from "next/font/google";
 import Script from "next/script";
@@ -9,8 +7,9 @@ import FestiveOverlay from "@/components/sharedcomps/Festiveoverlay";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   variable: "--font-quicksand",
+  display: "swap",
 });
 
 export const metadata = {
@@ -27,7 +26,7 @@ export default function RootLayout({ children }) {
         {/* 1️⃣ Microsoft Clarity */}
         <Script
           id="microsoft-clarity"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               (function(c,l,a,r,i,t,y){
@@ -40,7 +39,7 @@ export default function RootLayout({ children }) {
         />
 
         {/* 2️⃣ Google Tag Manager (Head) */}
-        <Script id="gtm-script" strategy="afterInteractive">
+        <Script id="gtm-script" strategy="lazyOnload">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -51,11 +50,11 @@ export default function RootLayout({ children }) {
         {/* 3️⃣ Google Analytics (GA4) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-T3X5175CZ7"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         <Script
           id="google-analytics"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -69,7 +68,7 @@ export default function RootLayout({ children }) {
         {/* 4️⃣ Meta Pixel (Facebook Pixel - UPDATED SINGLE VERSION) */}
         <Script
           id="meta-pixel"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)

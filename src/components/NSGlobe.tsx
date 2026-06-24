@@ -34,6 +34,10 @@ export function NSGlobe({ opacity = "opacity-10", size = 500, className = "" }: 
         }
         .animate-spin-globe {
           animation: spin-globe 20s linear infinite;
+          will-change: background-position;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .animate-spin-globe { animation: none; }
         }
       `}</style>
     </>

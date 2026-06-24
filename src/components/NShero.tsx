@@ -137,7 +137,7 @@ export function Hero() {
             alt="Students learning online"
             fill
             priority
-            sizes="100vw"
+            sizes="(max-width: 768px) 115vw, 90vw"
             className="object-contain object-bottom drop-shadow-2xl"
           />
 

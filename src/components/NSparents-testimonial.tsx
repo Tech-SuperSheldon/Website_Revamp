@@ -61,7 +61,7 @@ const TESTIMONIALS: Testimonial[] = [
 export function ParentsTestimonialSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scrolling effect for desktop
+  // Auto-scrolling effect for desktop — paused when off-screen
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
@@ -69,20 +69,38 @@ export function ParentsTestimonialSection() {
     let animationFrameId: number;
     let scrollPos = 0;
     const speed = 0.5;
+    let running = false;
 
     const scroll = () => {
-        if (scrollContainer) {
-            scrollPos += speed;
-            if (scrollPos >= scrollContainer.scrollWidth / 2) {
-                scrollPos = 0;
-            }
-            scrollContainer.scrollLeft = scrollPos;
-        }
-        animationFrameId = requestAnimationFrame(scroll);
+      if (!running) return;
+      scrollPos += speed;
+      if (scrollPos >= scrollContainer.scrollWidth / 2) {
+        scrollPos = 0;
+      }
+      scrollContainer.scrollLeft = scrollPos;
+      animationFrameId = requestAnimationFrame(scroll);
     };
 
-    animationFrameId = requestAnimationFrame(scroll);
-    return () => cancelAnimationFrame(animationFrameId);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !running) {
+          running = true;
+          animationFrameId = requestAnimationFrame(scroll);
+        } else if (!entry.isIntersecting) {
+          running = false;
+          cancelAnimationFrame(animationFrameId);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(scrollContainer);
+
+    return () => {
+      running = false;
+      observer.disconnect();
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   const textTestimonials = TESTIMONIALS.filter(t => t.type === 'text');
@@ -197,11 +215,12 @@ function TestimonialCard({ item, isMobile }: { item: Testimonial, isMobile?: boo
                     {/* Header: Avatar & Date */}
                     <div className="flex items-center gap-4 mb-5">
                         <div className="relative w-12 h-12 rounded-full overflow-hidden shadow-sm ring-2 ring-gray-50">
-                            <Image 
-                                src={item.avatar} 
-                                alt={item.name} 
-                                fill 
-                                className="object-cover" 
+                            <Image
+                                src={item.avatar}
+                                alt={item.name}
+                                fill
+                                sizes="48px"
+                                className="object-cover"
                             />
                         </div>
                         <div className="flex flex-col">

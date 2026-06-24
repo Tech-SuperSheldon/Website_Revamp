@@ -168,9 +168,11 @@ const NSLevelUp = () => {
                               </div>
                               
                               {/* Actual Image */}
-                              <img 
-                                  src={FEATURES[activeIndex].image} 
-                                  alt={`LevelUp Screen ${activeIndex + 1}`} 
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                  src={FEATURES[activeIndex].image}
+                                  alt={`LevelUp Screen ${activeIndex + 1}`}
+                                  loading="lazy"
                                   className="w-full h-full object-cover relative z-10 rounded-t-2xl shadow-sm"
                                   onError={(e) => {
                                       e.currentTarget.style.display = 'none';
@@ -186,7 +188,7 @@ const NSLevelUp = () => {
             </div>
 
             {/* App Store / Play Store Buttons */}
-            <div className="grid w-full max-w-[300px] grid-cols-2 gap-3 sm:gap-4 md:max-w-[330px] md:gap-3">
+            <div className="grid w-full max-w-[380px] grid-cols-2 gap-3 sm:gap-4 md:max-w-[420px] md:gap-3">
               <Link href="/demo" className="flex min-h-[3.5rem] md:min-h-[4rem] items-center justify-center gap-2 rounded-2xl bg-black px-3 py-2 sm:py-4 md:py-3 text-white shadow-lg transition-transform hover:scale-[1.02] hover:bg-gray-800 active:scale-95 sm:gap-3 sm:px-4 md:gap-2">
                 <svg className="w-9 h-9 md:w-10 md:h-10 shrink-0" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.26-.79 3.59-.76 1.54.04 2.87.82 3.59 2.05-3.09 1.83-2.6 5.86.35 7.14-.65 1.76-1.52 3.6-2.61 3.74zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>

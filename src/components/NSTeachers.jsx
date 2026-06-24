@@ -1,7 +1,7 @@
 
 "use client"
 import React, { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useAnimation, useInView } from "framer-motion";
 import { Play } from "lucide-react";
 
 const teachers = [
@@ -80,6 +80,20 @@ const teachers = [
 export default function TeacherCarousel() {
   const [activeVideo, setActiveVideo] = useState(null);
   const videoRef = useRef(null);
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { amount: 0.1 });
+  const controls = useAnimation();
+
+  useEffect(() => {
+    if (isInView) {
+      void controls.start({
+        x: ["0%", "-100%"],
+        transition: { repeat: Infinity, duration: 40, ease: "linear" },
+      });
+    } else {
+      controls.stop();
+    }
+  }, [isInView, controls]);
 
   // Close popup when video ends
   useEffect(() => {
@@ -102,7 +116,7 @@ export default function TeacherCarousel() {
   }, [activeVideo]);
 
   return (
-    <div className="relative w-full overflow-hidden py-6 md:py-10">
+    <div ref={containerRef} className="relative w-full overflow-hidden py-6 md:py-10">
       {/* Header */}
       <div className="text-center mb-6 md:mb-10 px-4">
         <h2 className="text-3xl md:text-5xl font-bold text-gray-900 leading-tight">
@@ -116,12 +130,7 @@ export default function TeacherCarousel() {
       {/* Scrolling Cards */}
       <motion.div
         className="flex gap-6"
-        animate={{ x: ["0%", "-100%"] }}
-        transition={{
-          repeat: Infinity,
-          duration: 40,
-          ease: "linear",
-        }}
+        animate={controls}
       >
         {[...teachers, ...teachers].map((teacher, index) => (
           <div
@@ -184,7 +193,7 @@ export default function TeacherCarousel() {
               playsInline
               autoPlay
               muted
-              preload="auto"
+              preload="none"
               controls={false}
             />
           </div>

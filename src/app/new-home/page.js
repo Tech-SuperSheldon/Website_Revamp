@@ -1,23 +1,24 @@
 // Preview route: us-website home DESIGN with revamp CONTENT.
 // Section order mirrors website1/us-website page.tsx, with revamp extras folded in.
+import dynamic from 'next/dynamic';
 import { Header } from '@/components/NSheader';
 import { Hero } from '@/components/NShero';
-import { TestimonialSection } from '@/components/NSstudent-testimonial';
-import USCourseTree from '@/components/USCourseTree';
-import NSClassVideoSection from '@/components/NSClassVideosection';
-import NSChoose from '@/components/NSChoose';
-import TestimonialVideoBoost from '@/components/NSAlexVideo';
-import { ParentsTestimonialSection } from '@/components/NSparents-testimonial';
-import NSAnim from '@/components/NSAnim';
-import NSTeacherTest from '@/components/NSTeacherTest';
-import TeacherCarousel from '@/components/NSTeachers';
-import FeatureSlider from '@/components/NSFeatures';
-import NSLevelUp from '@/components/NSApp';
-import FAQ from '@/components/NSFAQ';
-import { Footer } from '@/components/NSfooter';
 
-// revamp extras (kept per request, restyled to match us-website design)
-import Review from '@/components/Review';
+// Below-fold components loaded lazily to reduce initial JS bundle
+const TestimonialSection   = dynamic(() => import('@/components/NSstudent-testimonial').then(m => ({ default: m.TestimonialSection })));
+const USCourseTree         = dynamic(() => import('@/components/USCourseTree'));
+const NSClassVideoSection  = dynamic(() => import('@/components/NSClassVideosection'));
+const NSChoose             = dynamic(() => import('@/components/NSChoose'));
+const TestimonialVideoBoost = dynamic(() => import('@/components/NSAlexVideo'));
+const ParentsTestimonialSection = dynamic(() => import('@/components/NSparents-testimonial').then(m => ({ default: m.ParentsTestimonialSection })));
+const Review               = dynamic(() => import('@/components/Review'));
+const NSAnim               = dynamic(() => import('@/components/NSAnim'));
+const NSTeacherTest        = dynamic(() => import('@/components/NSTeacherTest'));
+const TeacherCarousel      = dynamic(() => import('@/components/NSTeachers'));
+const FeatureSlider        = dynamic(() => import('@/components/NSFeatures'));
+const NSLevelUp            = dynamic(() => import('@/components/NSApp'));
+const FAQ                  = dynamic(() => import('@/components/NSFAQ'));
+const Footer               = dynamic(() => import('@/components/NSfooter').then(m => ({ default: m.Footer })));
 
 export const metadata = {
   title: 'SuperSheldon | Interactive Online Learning for Kids & Students',
