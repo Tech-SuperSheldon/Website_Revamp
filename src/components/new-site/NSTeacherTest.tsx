@@ -161,7 +161,7 @@ export default function NSTeacherTest() {
                  </div>
             </div>
             <div className="flex items-center gap-2 mb-2">
-                <span className="text-[10px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded">Grade 5</span>
+                <span className="text-[10px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded">Year 5</span>
                 <span className="ml-auto text-[10px] bg-orange-100 text-orange-600 px-1.5 py-0.5 rounded">Math</span>
             </div>
             <h4 className="text-xs font-bold text-gray-900 leading-tight mb-2">
@@ -175,7 +175,7 @@ export default function NSTeacherTest() {
           {/* Card 2: Small (Chemistry) */}
           <div className="absolute top-[60%] left-10 lg:left-32 bg-white p-3 rounded-2xl shadow-xl w-[180px] scale-90 transform rotate-3 hover:rotate-0 transition-transform duration-300 z-10 animate-float-delayed hidden md:block">
              <div className="flex items-center gap-2 mb-2">
-                <span className="text-[10px] font-bold text-purple-500 bg-purple-50 px-2 py-0.5 rounded">Grade 9</span>
+                <span className="text-[10px] font-bold text-purple-500 bg-purple-50 px-2 py-0.5 rounded">Year 9</span>
                 <span className="ml-auto text-[10px] bg-purple-100 text-purple-600 px-1.5 py-0.5 rounded">Chem</span>
             </div>
             <div className="relative w-full h-20 rounded-xl bg-gray-100 overflow-hidden mb-2 flex items-center justify-center">
@@ -198,7 +198,7 @@ export default function NSTeacherTest() {
                  </div>
             </div>
              <div className="flex items-center gap-2 mb-2">
-                <span className="text-[10px] font-bold text-green-500 bg-green-50 px-2 py-0.5 rounded">Grade 10</span>
+                <span className="text-[10px] font-bold text-green-500 bg-green-50 px-2 py-0.5 rounded">Year 10</span>
                 <span className="ml-auto text-[10px] bg-green-100 text-green-600 px-1.5 py-0.5 rounded">Physics</span>
             </div>
             <h4 className="text-xs font-bold text-gray-900 leading-tight mb-2">

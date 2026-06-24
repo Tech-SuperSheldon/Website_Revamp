@@ -96,7 +96,7 @@ export default function Hero() {
   };
 
   const highlightOptions = [
-    { text: "SATs.", color: "#FFD700" },
+    { text: "HSC.", color: "#FFD700" },
     { text: "ICAS.", color: "#ff8800ff" },
     { text: "NAPLAN.", color: "#FF1493" },
   ];

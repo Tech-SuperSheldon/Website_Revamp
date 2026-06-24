@@ -48,9 +48,9 @@ export function Footer() {
             <h3 className="font-bold text-slate-900 mb-3">Programs</h3>
             <ul className="space-y-2 text-sm text-slate-600">
               <FooterLink href="#">Primary School Tuition</FooterLink>
-              <FooterLink href="#">11+ Exam Preparation</FooterLink>
-              <FooterLink href="#">SATs Preparation</FooterLink>
-              <FooterLink href="#">GCSE English & Maths</FooterLink>
+              <FooterLink href="#">NAPLAN Exam Preparation</FooterLink>
+              <FooterLink href="#">Selective & Scholarship Preparation</FooterLink>
+              <FooterLink href="#">HSC English & Maths</FooterLink>
             </ul>
           </div>
 

@@ -238,7 +238,7 @@
 //         number: "02",
 //         icon: "📌",
 //         title: "Give Your Child the Exam Edge",
-//         desc: "Customized 1:1 tutoring for NAPLAN, UK Exams, SATs & international assessments.",
+//         desc: "Customized 1:1 tutoring for NAPLAN, ICAS, Selective School & HSC assessments.",
 //       },
 //       {
 //         number: "03",
@@ -454,7 +454,7 @@ const slides = [
         number: "02",
         icon: "📌",
         title: "Give Your Child the Exam Edge",
-        desc: "Customized 1:1 tutoring for NAPLAN, UK Exams, SATs & international assessments.",
+        desc: "Customized 1:1 tutoring for NAPLAN, ICAS, Selective School & HSC assessments.",
       },
       {
         number: "03",

@@ -12,7 +12,7 @@ export default function NSPricing({ course }: NSPricingProps) {
   const pricingPlans = course.pricing || [
     {
       title: "Basic Pack",
-      price: "$360",
+      price: "A$360",
       duration: "/ 24 classes",
       features: [
         "Perfect for getting started",
@@ -25,7 +25,7 @@ export default function NSPricing({ course }: NSPricingProps) {
     },
     {
       title: "Standard Pack",
-      price: "$672",
+      price: "A$672",
       duration: "/ 48 classes",
       features: [
         "Most popular choice for steady progress",
@@ -39,7 +39,7 @@ export default function NSPricing({ course }: NSPricingProps) {
     },
     {
       title: "Premium Pack",
-      price: "$1152",
+      price: "A$1152",
       duration: "/ 96 classes",
       features: [
         "Comprehensive year-round learning",

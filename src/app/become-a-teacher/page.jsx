@@ -133,7 +133,7 @@ const TESTIMONIALS = [
     rating: 5,
     quote: "I was nervous about online teaching but Super Sheldon made the transition seamless. My student retention rate is 95% and growing every month.",
     name: "Sudarshana Thakur",
-    role: "11+ Coach",
+    role: "Selective School Coach",
     tenure: "18 months with Super Sheldon",
   },
   {
@@ -179,7 +179,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Which subjects and exams do you cover?",
-    a: "We cover NAPLAN, ICAS, 11+, Selective School Entry, HSC, and general K-12 curriculum support across Maths, English, Science, Writing, and more. If you have expertise in a subject we don't yet offer, let us know.",
+    a: "We cover NAPLAN, ICAS, Selective School Entry, Scholarship, HSC, and general K-12 curriculum support across Maths, English, Science, Writing, and more. If you have expertise in a subject we don't yet offer, let us know.",
   },
   {
     q: "How and when do I get paid?",
@@ -190,8 +190,8 @@ const FAQ_ITEMS = [
     a: "Absolutely. Every educator completes our structured onboarding covering platform tools, curriculum delivery, and effective student engagement. Ongoing CPD sessions and a dedicated support team are available throughout your time with us.",
   },
   {
-    q: "Can I teach from outside Australia or the UK?",
-    a: "Yes — we have educators across multiple time zones. As long as you can cover sessions during AU or UK student hours and have a stable internet connection, you are welcome to apply from anywhere.",
+    q: "Can I teach from outside Australia?",
+    a: "Yes — we have educators across multiple time zones. As long as you can cover sessions during Australian student hours and have a stable internet connection, you are welcome to apply from anywhere.",
   },
 ];
 
@@ -601,7 +601,7 @@ function HeroSection({ onApply }) {
             <span className="mt-2 block">of Learning</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-gray-600 text-lg sm:text-xl max-w-lg mb-10 leading-relaxed font-medium mx-auto sm:mx-0">
-            <span className="hidden sm:inline">Join 100+ expert educators reaching 5K+ students across Australia, the UK and the US.<br />
+            <span className="hidden sm:inline">Join 100+ expert educators reaching 5K+ students across Australia.<br />
             Flexible hours, competitive pay, world-class tools.</span>
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex flex-wrap items-center justify-center sm:justify-start gap-4 mb-10">
@@ -1686,7 +1686,7 @@ function OpenRolesSection({ onApply }) {
                 value={filters.subject}
                 onChange={(e) => setFilters((f) => ({ ...f, subject: e.target.value }))}
               >
-                {["Any", "Maths", "English", "Science", "NAPLAN", "11+"].map((v) => (
+                {["Any", "Maths", "English", "Science", "NAPLAN", "Selective"].map((v) => (
                   <option key={v} value={v}>{v === "Any" ? "Subject Area" : v}</option>
                 ))}
               </select>
@@ -2140,7 +2140,7 @@ function FinalCTASection({ onApply }) {
             variants={fadeUp}
             className="text-white/55 text-lg sm:text-xl mb-10 max-w-xl mx-auto leading-relaxed"
           >
-            Join 500+ educators transforming exam prep for students across Australia and the UK. Your application takes less than 5 minutes.
+            Join 500+ educators transforming exam prep for students across Australia. Your application takes less than 5 minutes.
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">

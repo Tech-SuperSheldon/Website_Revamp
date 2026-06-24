@@ -76,7 +76,7 @@ const defaultChapters: Chapter[] = [
 const defaultPricing: PricingPlan[] = [
   {
     title: "Basic Pack",
-    price: "$360",
+    price: "A$360",
     duration: "/ 24 classes",
     features: [
       "Perfect for getting started",
@@ -89,7 +89,7 @@ const defaultPricing: PricingPlan[] = [
   },
   {
     title: "Standard Pack",
-    price: "$672",
+    price: "A$672",
     duration: "/ 48 classes",
     features: [
       "Most popular choice for steady progress",
@@ -103,7 +103,7 @@ const defaultPricing: PricingPlan[] = [
   },
   {
     title: "Premium Pack",
-    price: "$1152",
+    price: "A$1152",
     duration: "/ 96 classes",
     features: [
       "Comprehensive year-round learning",
@@ -119,54 +119,54 @@ const defaultPricing: PricingPlan[] = [
 export const coursesData: Record<string, Course[]> = {
   "Test Prep": [
     {
-      id: "sat-prep",
-      title: "Ace the SAT Exam",
-      desc: "Comprehensive preparation for the Digital SAT, covering Reading & Writing and Math with advanced strategies.",
-      img: "/sat.jpeg",
+      id: "selective-prep",
+      title: "Selective School Exam Prep",
+      desc: "Comprehensive preparation for Selective High School and Scholarship entry exams, covering Reading, Writing, Mathematical Reasoning and Thinking Skills.",
+      img: "/course/y9selacc.jpg",
       type: "Exam Prep",
       categ: "Elite",
       topics: 10,
       duration: "12 Weeks",
       chapters: [
-        { 
-          title: "Introduction to Digital SAT", 
-          description: "Get familiar with the new digital format, scoring systems, and essential test-taking software." 
+        {
+          title: "Introduction to Selective & Scholarship Exams",
+          description: "Understand the selective entry test format, scoring, and what assessors are looking for on the day."
         },
-        { 
-          title: "Reading: Core Strategies", 
-          description: "Learn to identify main ideas, tone, and evidence-based answers in complex reading passages." 
+        {
+          title: "Reading: Core Strategies",
+          description: "Learn to identify main ideas, tone, and evidence-based answers in complex reading passages."
         },
-        { 
-          title: "Writing & Language Mechanics", 
-          description: "Master grammar, punctuation, and rhetorical skills to ace the writing portion of the exam." 
+        {
+          title: "Writing & Language Conventions",
+          description: "Master grammar, punctuation, and persuasive techniques to ace the writing component of the exam."
         },
-        { 
-          title: "Math: Heart of Algebra", 
-          description: "Focus on linear equations, systems, and inequalities that form the core of the SAT Math section." 
+        {
+          title: "Mathematical Reasoning: Algebra",
+          description: "Focus on linear equations, patterns, and number relationships that form the core of the reasoning section."
         },
-        { 
-          title: "Problem Solving & Data Analysis", 
-          description: "Master ratios, percentages, and data interpretation from charts and graphs." 
+        {
+          title: "Problem Solving & Data Analysis",
+          description: "Master ratios, percentages, and data interpretation from charts and graphs."
         },
-        { 
-          title: "Passport to Advanced Math", 
-          description: "Tackle complex equations, functions, and non-linear expressions with confidence." 
+        {
+          title: "Thinking Skills & Logic",
+          description: "Tackle abstract reasoning, deduction, and non-routine problems with confidence."
         },
-        { 
-          title: "Geometry & Trigonometry", 
-          description: "Review essential properties of shapes, circles, and trigonometric functions commonly tested." 
+        {
+          title: "Geometry & Measurement",
+          description: "Review essential properties of shapes, area, perimeter, and spatial reasoning commonly tested."
         },
-        { 
-          title: "Expert Calculator Techniques", 
-          description: "Maximize your efficiency using the built-in Desmos calculator for complex math problems." 
+        {
+          title: "Time Management Techniques",
+          description: "Maximise your efficiency under strict time limits with smart question-selection strategies."
         },
-        { 
-          title: "Full Mock Test & Review", 
-          description: "Take a timed practice test under realistic conditions, followed by a detailed diagnostic review." 
+        {
+          title: "Full Mock Test & Review",
+          description: "Take a timed practice test under realistic conditions, followed by a detailed diagnostic review."
         },
-        { 
-          title: "Final Test Day Strategies", 
-          description: "Final tips on time management, stress reduction, and what to expect on your big day." 
+        {
+          title: "Final Test Day Strategies",
+          description: "Final tips on time management, stress reduction, and what to expect on your big day."
         }
       ],
       pricing: defaultPricing,
@@ -175,54 +175,54 @@ export const coursesData: Record<string, Course[]> = {
       lastUpdated: "12/03/2026"
     },
     {
-      id: "act-prep",
-      title: "Ace the ACT Exam",
-      desc: "Full coverage of English, Math, Reading, and Science sections for the ACT exam.",
-      img: "/act.jpeg",
+      id: "naplan-prep",
+      title: "NAPLAN Prep",
+      desc: "Full coverage of Reading, Writing, Language Conventions, and Numeracy for the NAPLAN assessment (Years 3, 5, 7 & 9).",
+      img: "/course/y9naplangm.jpg",
       type: "Exam Prep",
       categ: "Advanced",
       topics: 10,
       duration: "10 Weeks",
       chapters: [
-        { 
-          title: "ACT Overview & Scoring", 
-          description: "Understand the ACT structure, timing, and how to leverage the scoring system to your advantage." 
+        {
+          title: "NAPLAN Overview & Test Format",
+          description: "Understand the NAPLAN structure, timing, and how the online adaptive test works to your advantage."
         },
-        { 
-          title: "English: Usage & Mechanics", 
-          description: "Deep dive into grammar rules, sentence structure, and conventions of standard written English." 
+        {
+          title: "Language Conventions: Grammar & Punctuation",
+          description: "Deep dive into grammar rules, sentence structure, and conventions of standard written English."
         },
-        { 
-          title: "English: Rhetorical Skills", 
-          description: "Learn to evaluate the effectiveness of text through strategy, organization, and style analysis." 
+        {
+          title: "Language Conventions: Spelling",
+          description: "Build spelling accuracy with proven strategies for the words most commonly tested."
         },
-        { 
-          title: "Math: Algebra Foundations", 
-          description: "Review essential algebra concepts from pre-algebra to intermediate algebra for the ACT." 
+        {
+          title: "Numeracy: Number & Algebra",
+          description: "Review essential number sense, patterns, and algebraic thinking for the numeracy paper."
         },
-        { 
-          title: "Math: Geometry & Coordinate Math", 
-          description: "Master plane geometry and coordinate geometry concepts frequently encountered on the test." 
+        {
+          title: "Numeracy: Measurement & Geometry",
+          description: "Master measurement, shapes, and spatial reasoning concepts frequently encountered on the test."
         },
-        { 
-          title: "Math: Advanced Trigonometry", 
-          description: "Tackle advanced math topics including trigonometry and complex numbers with ease." 
+        {
+          title: "Numeracy: Statistics & Probability",
+          description: "Tackle data interpretation, chance, and graph-reading questions with ease."
         },
-        { 
-          title: "Reading: Key Ideas & Details", 
-          description: "Improve your ability to skim effectively and pinpoint critical details in various text genres." 
+        {
+          title: "Reading: Comprehension Strategies",
+          description: "Improve your ability to skim effectively and pinpoint critical details across various text genres."
         },
-        { 
-          title: "Science: Data Interpretation", 
-          description: "Learn systematic approaches to interpreting trends and data from scientific passages." 
+        {
+          title: "Writing: Narrative Texts",
+          description: "Learn structured approaches to planning and crafting engaging narrative responses under time pressure."
         },
-        { 
-          title: "Science: Scientific Investigation", 
-          description: "Master the logic behind experimental design and the evaluation of conflicting viewpoints." 
+        {
+          title: "Writing: Persuasive Texts",
+          description: "Master the logic, structure, and language techniques behind high-scoring persuasive writing."
         },
-        { 
-          title: "Full ACT Practice Exam", 
-          description: "Simulate a real ACT testing environment to build stamina and identify remaining weak spots." 
+        {
+          title: "Full NAPLAN Practice Test",
+          description: "Simulate a real NAPLAN testing environment to build stamina and identify remaining weak spots."
         }
       ],
       pricing: defaultPricing,
@@ -235,7 +235,7 @@ export const coursesData: Record<string, Course[]> = {
     {
       id: "math-foundations",
       title: "Master Math for School and Exam",
-      desc: "From core fundamentals to advanced problem solving, tailored to your grade level.",
+      desc: "From core fundamentals to advanced problem solving, tailored to your year level.",
       img: "/math.jpeg",
       type: "Math",
       categ: "Foundational",

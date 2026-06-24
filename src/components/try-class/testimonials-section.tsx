@@ -14,10 +14,10 @@ export function TestimonialsSection() {
     },
     {
       name: "Michael Patel",
-      location: "London",
+      location: "Sydney",
       year: "Year 9",
       quote:
-        "The English tutor understood exactly what my son needed for his GCSEs. He achieved a Grade 8 – we couldn't be happier!",
+        "The English tutor understood exactly what my son needed for his HSC. He achieved a Band 6 – we couldn't be happier!",
     },
     {
       name: "Emma Thompson",
@@ -35,7 +35,7 @@ export function TestimonialsSection() {
           Hear From Happy Parents
         </h2>
         <p className="text-slate-600 max-w-2xl mx-auto mb-12">
-          Real families, real results. See how Apollo has helped students across the UK
+          Real families, real results. See how SuperSheldon has helped students across Australia
           excel in English and Maths.
         </p>
 

@@ -23,7 +23,7 @@ const features = [
     color: "bg-purple-100 text-purple-600",
     title: "Curriculum-Aligned Learning",
     description:
-      "Aligned with leading international curricula across English, Mathematics, and Science. We support UK pathways (KS1-GCSE & 11+), Australia's NAPLAN, and key US curriculum standards, ensuring students stay on track wherever they study.",
+      "Aligned with the Australian Curriculum across English, Mathematics, and Science. We support NAPLAN, ICAS, Selective School and Scholarship entry, and HSC pathways, ensuring students stay on track wherever they study.",
   },
   {
     icon: Calendar,

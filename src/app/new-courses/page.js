@@ -1,18 +1,17 @@
-// Preview route: us-website courses page DESIGN, copied up to the course listing only.
-// Mirrors website1/us-website src/app/courses/page.tsx but stops before the
-// "Experience the Classroom" (NSClassVideoSection) section and everything below it.
+// Australian courses listing page. Renders the course listing only
+// (stops before the "Experience the Classroom" / NSClassVideoSection section).
 import { Header } from '@/components/NSheader';
-import NSCourseMainUS from '@/components/newcourse/NSCourseMainUS';
+import NSCourseMainAU from '@/components/newcourse/NSCourseMainAU';
 
 export const metadata = {
-  title: 'Explore Our US Courses | SuperSheldon',
+  title: 'Explore Our Australian Courses | SuperSheldon',
 };
 
 export default function NewCourses() {
   return (
     <main>
       <Header />
-      <NSCourseMainUS />
+      <NSCourseMainAU />
     </main>
   );
 }

@@ -9,7 +9,7 @@ const slides = [
   {
     video: assetUrl("/videos/vid1.mp4"),
     heading: "AI-Powered Level-Up Learning",
-    desc: "SuperSheldon offers an AI-driven learning app that helps students level up their skills, with personalized study plans from NAPLAN to SAT exam preparation.",
+    desc: "SuperSheldon offers an AI-driven learning app that helps students level up their skills, with personalized study plans from NAPLAN to HSC exam preparation.",
     color: "#eab308", // Yellow-500
   },
   {
@@ -26,8 +26,8 @@ const slides = [
   },
   {
     video: assetUrl("/videos/vid4.mp4"),
-    heading: "Trusted by Families Worldwide",
-    desc: "SuperSheldon is a globally trusted platform, used and loved by families across the UK, Australia, and the USA.",
+    heading: "Trusted by Families Across Australia",
+    desc: "SuperSheldon is a trusted platform, used and loved by families across Australia.",
     color: "#8b5cf6", // Violet-500
   },
 ];

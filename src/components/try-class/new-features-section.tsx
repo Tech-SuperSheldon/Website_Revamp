@@ -23,9 +23,9 @@ const features = [
   {
     icon: Target,
     color: "bg-purple-100 text-purple-600",
-    title: "Globally Aligned Curriculum Support",
+    title: "Curriculum-Aligned Support",
     description:
-      "Our learning programs align with recognised UK, US, and Australian curriculum, covering English, Maths, and Science with targeted preparation for 11+, GCSE, PSAT, SAT, ACT, AP, and NAPLAN.",
+      "Our learning programs align with the Australian Curriculum, covering English, Maths, and Science with targeted preparation for NAPLAN, ICAS, Selective School, Scholarship, and HSC exams.",
   },
   {
     icon: Calendar,

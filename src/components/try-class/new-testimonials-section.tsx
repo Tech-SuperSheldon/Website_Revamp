@@ -18,12 +18,12 @@ const testimonials = [
   },
   {
     name: "Michael Patel",
-    grade: "GCSE English",
-    country: "UK",
+    grade: "HSC English",
+    country: "Australia",
     avatar: "/avatars/testimonial-2.png",
     content: (
       <>
-        The English tutor understood exactly what my son needed for his GCSEs. He achieved a <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">Grade 8</span> – we couldn&apos;t be happier!
+        The English tutor understood exactly what my son needed for his HSC. He achieved a <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">Band 6</span> – we couldn&apos;t be happier!
       </>
     ),
   },
@@ -63,11 +63,11 @@ const testimonials = [
   {
     name: "David Chen",
     grade: "11 Plus Prep",
-    country: "UK",
+    country: "Australia",
     avatar: "/avatars/testimonial-6.png",
     content: (
       <>
-        SuperSheldon is a <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">game changer</span>. My son finally feels <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">ready for his 11+ exams</span>.
+        SuperSheldon is a <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">game changer</span>. My son finally feels <span className="text-orange-600 font-semibold bg-orange-50 px-1 rounded">ready for his Selective School exams</span>.
       </>
     ),
   },

@@ -35,7 +35,7 @@ const TESTIMONIALS: Testimonial[] = [
     id: '2',
     type: 'video',
     name: 'Ayesha R.',
-    title: 'Grade 10 Student',
+    title: 'Year 10 Student',
     avatar: '/new-site/testimonials/avatar_2_ayesha.png',
     date: '02/07/2025',
     stars: 5,

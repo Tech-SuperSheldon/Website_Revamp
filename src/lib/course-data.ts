@@ -357,7 +357,7 @@ export const coursesData: Record<string, Course[]> = {
     {
       id: "sat",
       title: "ICAS Olympian Prep Course",
-      type: "SAT Exam",
+      type: "ICAS Exam",
       duration: "22hr 30min",
       topics: 24,
       sales: 160,
@@ -382,7 +382,7 @@ export const coursesData: Record<string, Course[]> = {
     {
       id: "igcse",
       title: "NAPLAN Grand Master Course",
-      type: "IGCSE",
+      type: "NAPLAN Exam",
       duration: "22hr 30min",
       topics: 30,
       sales: 365,

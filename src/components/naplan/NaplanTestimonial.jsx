@@ -64,7 +64,7 @@ export default function NaplanTestimonial() {
           {/* Testimonial Box */}
           <div className="bg-white p-8 rounded-2xl shadow flex flex-col justify-center h-[200px] sm:h-[250px]">
             <p className="text-gray-600 text-base sm:text-lg italic mb-4 leading-relaxed">
-              “I am Riya, mother of Ananya in Grade 5. SuperSheldon's Math Classes have been outstanding - Ananya truly Enjoys learning and has shown great improvement.”
+              “I am Riya, mother of Ananya in Year 5. SuperSheldon's Math Classes have been outstanding - Ananya truly Enjoys learning and has shown great improvement.”
             </p>
             <div className="text-sm text-gray-500 mt-auto">
               Parent of Year 5 Student

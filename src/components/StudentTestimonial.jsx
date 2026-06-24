@@ -13,7 +13,7 @@ const testimonials = [
   },
   {
     text:
-      "I am Riya, mother of Ananya in Grade 5. SuperSheldon's Math Classes have been outstanding - Ananya truly Enjoys learning and has shown great improvement.",
+      "I am Riya, mother of Ananya in Year 5. SuperSheldon's Math Classes have been outstanding - Ananya truly Enjoys learning and has shown great improvement.",
     name: "— Mrs. Riya",
     image: "/k2g.png",
   },

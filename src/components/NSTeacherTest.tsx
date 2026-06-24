@@ -194,7 +194,7 @@ export default function NSTeacherTest() {
               <Image src="/course/Teacher1.png" alt="Ashita Gunjikar" fill sizes="(max-width: 768px) 80px, 220px" className="object-contain" />
             </div>
             <div className="flex items-center gap-2 mb-2">
-                <span className="text-[8px] font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded">Grade 5</span>
+                <span className="text-[8px] font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded">Year 5</span>
                 <span className="ml-auto text-[8px] bg-orange-50 text-[#e87f1e] px-1.5 py-0.5 rounded border border-orange-100">Math</span>
             </div>
             <h4 className="text-xs font-bold text-gray-900 leading-tight mb-2">
@@ -217,7 +217,7 @@ export default function NSTeacherTest() {
             className="absolute top-[60%] left-10 lg:left-32 bg-white p-3 rounded-2xl shadow-xl w-[180px] scale-90 z-10 animate-float-delayed hidden md:block cursor-pointer"
           >
              <div className="flex items-center gap-2 mb-2">
-                <span className="text-[8px] font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded">Grade 9</span>
+                <span className="text-[8px] font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded">Year 9</span>
                 <span className="ml-auto text-[8px] bg-orange-50 text-[#e87f1e] px-1.5 py-0.5 rounded border border-orange-100">Chem</span>
             </div>
             <div className="relative w-full h-20 rounded-xl overflow-hidden mb-2 bg-gray-50">
@@ -244,7 +244,7 @@ export default function NSTeacherTest() {
               <Image src="/course/Teacher5.png" alt="Priya Sharma" fill sizes="(max-width: 768px) 80px, 220px" className="object-contain" />
             </div>
             <div className="flex items-center gap-2 mb-2">
-                <span className="text-[8px] font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded">Grade 10</span>
+                <span className="text-[8px] font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded">Year 10</span>
                 <span className="ml-auto text-[8px] bg-orange-50 text-[#e87f1e] px-1.5 py-0.5 rounded border border-orange-100">Physics</span>
             </div>
             <h4 className="text-xs font-bold text-gray-900 leading-tight mb-2">

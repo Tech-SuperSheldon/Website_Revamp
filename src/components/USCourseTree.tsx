@@ -32,10 +32,10 @@ const US_COURSES = [
   },
   {
     id: "senior",
-    title: "SAT & HSC",
+    title: "HSC & ATAR",
     type: "Exam Prep",
     duration: "Year 9–12",
-    desc: "Senior exam mastery for SAT and HSC with advanced strategies in English and Mathematics.",
+    desc: "Senior exam mastery for HSC and ATAR with advanced strategies in English and Mathematics.",
     img: "/course/y12hsc.jpg",
   },
 ];

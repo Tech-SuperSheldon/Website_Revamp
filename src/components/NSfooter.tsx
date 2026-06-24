@@ -47,7 +47,7 @@ export function Footer() {
                        </div>
                   </Link>
                   <p className="text-white font-medium text-[15px] leading-relaxed mb-4">
-                      SuperSheldon is a trusted global learning platform offering expert-led exam preparation for UK, US, and Australian students.
+                      SuperSheldon is a trusted online learning platform offering expert-led exam preparation for Australian students.
                   </p>
 
                   <div className="flex flex-wrap gap-3">
@@ -131,7 +131,7 @@ export function Footer() {
                           <li><RollingLink href="/courses" hoverColor="text-black" baseColor="text-white">NAPLAN Exam</RollingLink></li>
                           <li><RollingLink href="/courses" hoverColor="text-black" baseColor="text-white">ICAS</RollingLink></li>
                           <li><RollingLink href="/courses" hoverColor="text-black" baseColor="text-white">HSC</RollingLink></li>
-                          <li><RollingLink href="/courses" hoverColor="text-black" baseColor="text-white">SAT</RollingLink></li>
+                          <li><RollingLink href="/courses" hoverColor="text-black" baseColor="text-white">Selective School</RollingLink></li>
                        </ul>
                   </div>
 

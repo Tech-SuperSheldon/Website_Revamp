@@ -6,7 +6,7 @@ export const faqSections = [
       {
         question: "What age groups are SuperSheldon courses designed for?",
         answer:
-          "Our programs are tailored for students from Grade 3 to Grade 12, covering early foundation levels to advanced exam preparation for NAPLAN, SAT, and ICAS across the UK, Australia, and the US.",
+          "Our programs are tailored for students from Year 3 to Year 12, covering early foundation levels to advanced exam preparation for NAPLAN, ICAS, Selective School, and HSC across Australia.",
       },
       {
         question: "Is there any homework or outside practice required?",

@@ -38,7 +38,7 @@ const TESTIMONIALS: Testimonial[] = [
     id: '3',
     type: 'text',
     name: 'Mrs. Riya',
-    title: 'Parent of Ananya, Grade 5',
+    title: 'Parent of Ananya, Year 5',
     avatar: '/k2g.png',
     date: '23/11/2024',
     stars: 5,

@@ -9,7 +9,7 @@ interface ApplyModalProps {
   onClose: () => void;
 }
 
-const SUBJECTS = ["Maths", "English", "Science", "NAPLAN", "11+", "ICAS", "Other"];
+const SUBJECTS = ["Maths", "English", "Science", "NAPLAN", "Selective", "ICAS", "Other"];
 const EXPERIENCE_LEVELS = ["Less than 1 year", "1–2 years", "3–5 years", "5+ years"];
 
 type Step = 1 | 2 | 3;

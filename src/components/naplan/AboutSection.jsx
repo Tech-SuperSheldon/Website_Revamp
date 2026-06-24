@@ -18,7 +18,7 @@
 //     {
 //       icon: "/icons/expert.svg",
 //       title: "Expert Tutors",
-//       desc: "Qualified 11+ & NAPLAN specialists with targeted feedback.",
+//       desc: "Qualified NAPLAN & Selective School specialists with targeted feedback.",
 //     },
 //     {
 //       icon: "/icons/progress.svg",
@@ -116,7 +116,7 @@ export default function AboutSection() {
     {
       icon: "Users",
       title: "Expert Tutors",
-      desc: "Qualified 11+ & NAPLAN specialists with targeted feedback.",
+      desc: "Qualified NAPLAN & Selective School specialists with targeted feedback.",
     },
     {
       icon: "BarChart2",

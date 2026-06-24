@@ -346,7 +346,7 @@ const coursesData = {
     {
       id: "sat",
       title: "ICAS Olympian Prep Course",
-      type: "SAT Exam",
+      type: "ICAS Exam",
       duration: "22hr 30min",
       topics: 24,
       sales: 160,
@@ -371,7 +371,7 @@ const coursesData = {
     {
       id: "igcse",
       title: "NAPLAN Grand Master Course",
-      type: "IGCSE",
+      type: "NAPLAN Exam",
       duration: "22hr 30min",
       topics: 30,
       sales: 365,
