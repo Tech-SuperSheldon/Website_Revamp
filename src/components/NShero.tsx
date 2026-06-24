@@ -180,7 +180,7 @@ export function Hero() {
           className="mx-auto flex max-w-4xl flex-col items-center text-center"
         >
           {/* Pill */}
-          <span className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-700 shadow-sm backdrop-blur-md sm:text-xs">
+          <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-700 shadow-sm backdrop-blur-md sm:text-xs">
             <span className="text-base leading-none">🪙</span>
             Australia&apos;s Best Online Learning Platform
             <span className="text-base leading-none">🇦🇺</span>

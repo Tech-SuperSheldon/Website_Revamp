@@ -26,7 +26,7 @@ export function Header() {
   const headerWidth = useTransform(scrollY, [0, 100], ["100%", "82%"]);
   const headerTop = useTransform(scrollY, [0, 100], ["0px", "16px"]);
   const headerRadius = useTransform(scrollY, [0, 100], ["0px", "50px"]);
-  const headerPadding = useTransform(scrollY, [0, 100], ["0.35rem", "0rem"]);
+  const headerPadding = useTransform(scrollY, [0, 100], ["0.85rem", "0.45rem"]);
   const logoScale = useTransform(scrollY, [0, 100], [1, 1.1]);
 
   useEffect(() => {
