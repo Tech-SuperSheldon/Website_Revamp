@@ -15,7 +15,6 @@ import FeatureSlider from '@/components/NSFeatures';
 import NSLevelUp from '@/components/NSApp';
 import FAQ from '@/components/NSFAQ';
 import { Footer } from '@/components/NSfooter';
-import FloatingArrowWhatsApp from '@/components/ArrowAndWhatsapp';
 
 // revamp extras (kept per request, restyled to match us-website design)
 import Review from '@/components/Review';
@@ -43,7 +42,6 @@ export default function NewHome() {
       <NSLevelUp />
       <FAQ />
       <Footer />
-      <FloatingArrowWhatsApp />
     </main>
   );
 }

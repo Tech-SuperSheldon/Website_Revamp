@@ -129,7 +129,7 @@ export function Hero() {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
-        className="pointer-events-none absolute inset-x-0 bottom-[100px] z-[3] flex justify-center"
+        className="pointer-events-none absolute inset-x-0 bottom-[160px] z-[3] flex justify-center"
       >
         <div className="relative aspect-[1460/586] w-[115%] max-w-none sm:w-[90%] md:w-auto md:h-[40vh] md:max-h-[420px] md:min-h-[260px]">
           <Image
@@ -187,7 +187,7 @@ export function Hero() {
           </span>
 
           {/* Headline */}
-          <h1 className="mt-5 font-extrabold leading-[1.1] tracking-tight text-gray-900 drop-shadow-sm text-2xl sm:text-3xl md:text-4xl md:whitespace-nowrap lg:text-5xl">
+          <h1 className="mt-2 font-extrabold leading-[1.1] tracking-tight text-gray-900 drop-shadow-sm text-2xl sm:text-3xl md:text-4xl md:whitespace-nowrap lg:text-5xl">
             <span className="block">Dream Big. Learn Smart.</span>
             <span className="mt-1 block">
               Crack{" "}
@@ -198,13 +198,13 @@ export function Hero() {
           </h1>
 
           {/* Subtext */}
-          <p className="mt-5 max-w-xl text-base font-medium leading-relaxed text-gray-700 sm:text-lg">
+          <p className="mt-3 max-w-xl text-base font-medium leading-relaxed text-gray-700 sm:text-lg">
             Live interactive classes, expert mentors, and a proven path to top
             scores in Australian Exams.
           </p>
 
           {/* CTAs */}
-          <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row">
+          <div className="mt-4 flex flex-col items-center gap-3 sm:flex-row">
             <Link href="/demo">
               <Button
                 variant="gradient"
@@ -232,7 +232,7 @@ export function Hero() {
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-          className="mt-8 self-center rounded-2xl border border-white/70 bg-white/90 p-5 shadow-xl backdrop-blur-md sm:mt-10 lg:absolute lg:right-4 lg:top-[calc(58%_-_100px)] lg:mt-0 lg:max-w-xs xl:right-8"
+          className="mt-8 self-center rounded-2xl border border-white/70 bg-white/90 p-5 shadow-xl backdrop-blur-md sm:mt-10 lg:absolute lg:right-4 lg:top-[calc(58%_-_160px)] lg:mt-0 lg:max-w-xs xl:right-8"
         >
           <h3 className="mb-3 text-base font-bold text-gray-900">
             Crack Australian Exams
@@ -251,11 +251,11 @@ export function Hero() {
       </motion.div>
 
       {/* ── Floating decor (reuse existing 3D assets) ── */}
-      <div className="animate-float pointer-events-none absolute bottom-[212px] left-3 z-20 h-14 w-14 sm:left-8 sm:h-20 sm:w-20 md:bottom-[228px]">
+      <div className="animate-float pointer-events-none absolute bottom-[272px] left-3 z-20 h-14 w-14 sm:left-8 sm:h-20 sm:w-20 md:bottom-[288px]">
         <Image src="/floating-icons/book.png" alt="" fill className="object-contain drop-shadow-xl" />
       </div>
       <div
-        className="animate-float pointer-events-none absolute bottom-[212px] right-3 z-20 h-14 w-14 sm:right-8 sm:h-20 sm:w-20 md:bottom-[228px]"
+        className="animate-float pointer-events-none absolute bottom-[272px] right-3 z-20 h-14 w-14 sm:right-8 sm:h-20 sm:w-20 md:bottom-[288px]"
         style={{ animationDelay: "1.2s" }}
       >
         <Image src="/floating-icons/lightbulb.png" alt="" fill className="object-contain drop-shadow-xl" />
@@ -266,7 +266,7 @@ export function Hero() {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.5 }}
-        className="absolute inset-x-0 bottom-[50px] z-20 px-4"
+        className="absolute inset-x-0 bottom-[110px] z-20 px-4"
       >
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-x-4 gap-y-4 rounded-3xl border border-white/70 bg-white/90 px-6 py-4 shadow-xl backdrop-blur-md md:grid-cols-4 md:gap-x-2">
           {STATS.map(({ icon: Icon, title, sub, color }) => (
