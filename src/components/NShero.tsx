@@ -94,7 +94,8 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="scale-105 object-cover object-center"
+          className="scale-105 object-cover"
+          style={{ objectPosition: "center -100px" }}
         />
         {/* Readability + bottom blend into page */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/5 to-white/85" />
@@ -128,7 +129,7 @@ export function Hero() {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] flex justify-center"
+        className="pointer-events-none absolute inset-x-0 bottom-[100px] z-[3] flex justify-center"
       >
         <div className="relative aspect-[1460/586] w-[115%] max-w-none sm:w-[90%] md:w-auto md:h-[40vh] md:max-h-[420px] md:min-h-[260px]">
           <Image
@@ -169,7 +170,7 @@ export function Hero() {
       {/* ── Layer 4: Content (normal) ── */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 mx-auto flex min-h-[calc(100svh+100px)] w-full max-w-7xl flex-col justify-end px-4 pt-16 pb-[200px] sm:px-6 md:pt-20 md:pb-[calc(40vh+20px)]"
+        className="relative z-10 mx-auto flex min-h-[calc(100svh+100px)] w-full max-w-7xl flex-col justify-start px-4 pt-16 pb-[180px] sm:px-6 md:pt-16 md:pb-[200px]"
       >
         {/* Centered headline block */}
         <motion.div
@@ -231,7 +232,7 @@ export function Hero() {
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-          className="mt-8 self-center rounded-2xl border border-white/70 bg-white/90 p-5 shadow-xl backdrop-blur-md sm:mt-10 lg:absolute lg:right-4 lg:top-[58%] lg:mt-0 lg:max-w-xs xl:right-8"
+          className="mt-8 self-center rounded-2xl border border-white/70 bg-white/90 p-5 shadow-xl backdrop-blur-md sm:mt-10 lg:absolute lg:right-4 lg:top-[calc(58%_-_100px)] lg:mt-0 lg:max-w-xs xl:right-8"
         >
           <h3 className="mb-3 text-base font-bold text-gray-900">
             Crack Australian Exams
@@ -250,11 +251,11 @@ export function Hero() {
       </motion.div>
 
       {/* ── Floating decor (reuse existing 3D assets) ── */}
-      <div className="animate-float pointer-events-none absolute bottom-28 left-3 z-20 h-14 w-14 sm:left-8 sm:h-20 sm:w-20 md:bottom-32">
+      <div className="animate-float pointer-events-none absolute bottom-[212px] left-3 z-20 h-14 w-14 sm:left-8 sm:h-20 sm:w-20 md:bottom-[228px]">
         <Image src="/floating-icons/book.png" alt="" fill className="object-contain drop-shadow-xl" />
       </div>
       <div
-        className="animate-float pointer-events-none absolute bottom-28 right-3 z-20 h-14 w-14 sm:right-8 sm:h-20 sm:w-20 md:bottom-32"
+        className="animate-float pointer-events-none absolute bottom-[212px] right-3 z-20 h-14 w-14 sm:right-8 sm:h-20 sm:w-20 md:bottom-[228px]"
         style={{ animationDelay: "1.2s" }}
       >
         <Image src="/floating-icons/lightbulb.png" alt="" fill className="object-contain drop-shadow-xl" />
@@ -265,7 +266,7 @@ export function Hero() {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 0.5 }}
-        className="absolute inset-x-0 bottom-0 z-20 px-4"
+        className="absolute inset-x-0 bottom-[50px] z-20 px-4"
       >
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-x-4 gap-y-4 rounded-3xl border border-white/70 bg-white/90 px-6 py-4 shadow-xl backdrop-blur-md md:grid-cols-4 md:gap-x-2">
           {STATS.map(({ icon: Icon, title, sub, color }) => (
