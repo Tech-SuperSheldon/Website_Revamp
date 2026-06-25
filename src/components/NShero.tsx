@@ -2,7 +2,8 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import countries from "world-countries";
+import { useOpenDemoBooking } from "@/components/utils/navigation";
 import {
   motion,
   useScroll,
@@ -35,11 +36,24 @@ const STATS = [
   { icon: ShieldCheck, title: "Trusted by 500K+", sub: "Students", color: "text-emerald-500" },
 ] as const;
 
+// Derive an international dial code (e.g. "+61") from an ISO-2 country code.
+function dialCodeFromCca2(cca2: string): string {
+  const c = countries.find((x) => x.cca2 === cca2);
+  if (!c?.idd?.root) return "+1";
+  return `${c.idd.root}${c.idd.suffixes?.[0] ?? ""}`;
+}
+
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReduced = useReducedMotion();
   const [isDesktop, setIsDesktop] = useState(false);
+
+  // Phone form → redirect to /demo
+  const openDemoBooking = useOpenDemoBooking();
+  const [phone, setPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [dialCode, setDialCode] = useState("+1");
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
@@ -47,6 +61,21 @@ export function Hero() {
     update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
+  }, []);
+
+  // Auto-detect the visitor's country dial code for the phone input.
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(
+          "https://iplocate.io/api/lookup?apikey=0e7ca4b669dc85fbc604c1776a93d3e5"
+        );
+        const data = await res.json();
+        if (data?.country_code) setDialCode(dialCodeFromCca2(data.country_code));
+      } catch {
+        setDialCode("+1");
+      }
+    })();
   }, []);
 
   // Ensure the class video autoplays inline/muted across browsers.
@@ -203,28 +232,46 @@ export function Hero() {
             scores in Australian Exams.
           </p>
 
-          {/* CTAs */}
-          <div className="mt-4 flex flex-col items-center gap-3 sm:flex-row">
-            <Link href="/demo">
+          {/* Phone form CTA → /demo */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (/^\d{6,15}$/.test(phone)) {
+                setPhoneError("");
+                openDemoBooking();
+              } else {
+                setPhoneError("Please enter a valid phone number");
+              }
+            }}
+            className="-mt-1 flex w-full max-w-md flex-col gap-2"
+          >
+            <div className="flex items-center gap-1 overflow-hidden rounded-full border-2 border-orange-500 bg-white/90 p-1 pl-0 shadow-lg backdrop-blur-md">
+              <span className="flex h-12 w-16 shrink-0 items-center justify-center border-r border-gray-200 text-sm font-semibold text-gray-700">
+                {dialCode}
+              </span>
+              <input
+                id="phone"
+                type="tel"
+                inputMode="numeric"
+                placeholder="Phone number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="h-12 min-w-0 flex-1 bg-transparent px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400"
+              />
               <Button
+                type="submit"
                 variant="gradient"
                 size="lg"
-                className="h-12 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-8 text-base font-bold shadow-lg shadow-orange-500/30 hover:to-orange-500"
+                className="h-10 shrink-0 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-5 text-sm font-bold shadow-md shadow-orange-500/30 hover:to-orange-500 sm:px-6 sm:text-base"
               >
                 Try a Free Class
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-1.5 h-4 w-4" />
               </Button>
-            </Link>
-            <Link href="/courses">
-              <Button
-                variant="outline"
-                size="lg"
-                className="h-12 rounded-full border-gray-300 bg-white/80 px-8 text-base font-bold text-gray-800 backdrop-blur-md hover:bg-white"
-              >
-                Explore Courses
-              </Button>
-            </Link>
-          </div>
+            </div>
+            {phoneError && (
+              <p className="text-sm font-medium text-red-500">{phoneError}</p>
+            )}
+          </form>
         </motion.div>
 
         {/* "Crack Australian Exams" card — right side */}
