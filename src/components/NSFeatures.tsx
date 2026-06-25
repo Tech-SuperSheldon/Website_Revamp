@@ -33,9 +33,14 @@ const features = [
   {
     title: "24x7 Support",
     desc: "Support from our help desk 24x7.",
+    bullets: [
+      "Live chat & email assistance anytime",
+      "Technical and academic help, always on",
+      "Fast responses — no waiting, ever",
+    ],
     video: assetUrl("/newsite/5points/support.mp4"),
-    layout: "horizontal", // 9:16 Portrait in Wide Card -> Side-by-side effectively uses space
-    className: "md:col-span-2 bg-white text-black border border-gray-200", // Bottom White/Gray card
+    layout: "horizontal",
+    className: "md:col-span-2 bg-white text-black border border-gray-200",
   },
   {
     title: "Easy & Personalized Curriculum",
@@ -73,7 +78,7 @@ export default function FeatureSlider() {
         for Bright <span className="text-[#e87f1e]">Futures</span>
       </motion.h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-fr">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:grid-rows-[360px_auto]">
         {orderedFeatures.slice(0, 5).map((f, i) => (
           <motion.div
             key={i}
@@ -82,7 +87,7 @@ export default function FeatureSlider() {
             transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.2 }}
             className={`relative rounded-[2rem] overflow-hidden flex shadow-sm transform transition-transform hover:scale-[1.01] ${f.className} ${f.layout === 'horizontal' ? 'flex-row items-stretch' : f.fillMedia ? 'flex-col' : 'flex-col justify-between'}`}
-            style={{ minHeight: '260px' }}
+            style={{ minHeight: '300px' }}
           >
             {/* Globe decoration for Worldwide card */}
             {f.title === "Worldwide best tutor experience" && (
@@ -99,6 +104,16 @@ export default function FeatureSlider() {
               <p className={`text-sm md:text-base leading-relaxed opacity-90`}>
                 {f.desc}
               </p>
+              {f.bullets && (
+                <ul className="mt-3 space-y-2">
+                  {f.bullets.map((b: string, bi: number) => (
+                    <li key={bi} className="flex items-start gap-2 text-sm md:text-base opacity-80">
+                      <span className="mt-1 w-2 h-2 rounded-full bg-current shrink-0" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              )}
               {f.image && (
                 <div className="mt-auto flex justify-center -mb-5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -131,7 +131,7 @@ const NSLevelUp = () => {
 
           {/* Central Phone Mockup & Buttons */}
           <div className="z-20 flex shrink-0 flex-col items-center gap-0">
-            <div className="relative origin-top scale-[0.65] sm:scale-75 md:scale-[0.82] -mb-[170px] sm:-mb-[140px] md:-mb-[94px]">
+            <div className="relative origin-top scale-[0.65] sm:scale-75 md:scale-[0.82] -mb-[170px] sm:-mb-[140px] md:-mb-[78px]">
                {/* Phone Body */}
               <div className="h-[480px] w-[240px] border-[10px] border-gray-900 bg-gray-900 relative overflow-hidden rounded-[2.5rem] shadow-2xl sm:h-[520px] sm:w-[260px] sm:border-[12px] sm:rounded-[3rem]">
                  {/* Dynamic Island / Notch */}
