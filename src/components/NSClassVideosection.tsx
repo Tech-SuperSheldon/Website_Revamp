@@ -106,7 +106,7 @@ export default function NSClassVideoSection() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative w-full py-8 md:py-20 overflow-hidden">
+    <section ref={containerRef} className="relative w-full pt-4 md:pt-8 pb-8 md:pb-20 overflow-hidden">
       {/* Background Decor Removed */}
       
       {/* --- BACKGROUND ANIMATED TEXT --- */}

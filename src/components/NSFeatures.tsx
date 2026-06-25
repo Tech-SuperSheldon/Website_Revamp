@@ -18,7 +18,8 @@ const features = [
     title: "Ask Nova AI",
     desc: "Get instant answers for NAPLAN prep, homework help, and future study guidance.",
     video: assetUrl("/newsite/5points/1.mp4"),
-    layout: "vertical", // 9:16 Portrait in Narrow Card -> Vertical stack OK
+    layout: "vertical",
+    fillMedia: true,
     className: "md:col-span-1 bg-[#dcefb6] text-black", // Lime card
   },
   {
@@ -32,8 +33,7 @@ const features = [
   {
     title: "24x7 Support",
     desc: "Support from our help desk 24x7.",
-    video: assetUrl("/newsite/5points/6.mp4"),
-    image: assetUrl("/247.png"),
+    video: assetUrl("/newsite/5points/support.mp4"),
     layout: "horizontal", // 9:16 Portrait in Wide Card -> Side-by-side effectively uses space
     className: "md:col-span-2 bg-white text-black border border-gray-200", // Bottom White/Gray card
   },
@@ -41,7 +41,8 @@ const features = [
     title: "Easy & Personalized Curriculum",
     desc: "Learning made simple, structured, and tailored for every child.",
     video: assetUrl("/newsite/5points/3.mp4"),
-    layout: "vertical", // 4:3 Landscape in Narrow Card -> Vertical stack OK
+    layout: "vertical",
+    fillMedia: true,
     className: "md:col-span-1 bg-white text-black border border-gray-200", // Small White card
   },
 ];

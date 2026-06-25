@@ -193,8 +193,11 @@ export function Hero() {
             className="object-contain object-bottom drop-shadow-2xl"
           />
 
-          {/* Class video laptop — sits on the desk, centered between the students */}
-          <div className="absolute bottom-[5%] left-1/2 w-[23%] -translate-x-1/2">
+          {/* Class video laptop — sits on the desk, centered between the students.
+               left-[52%]: gap center between students is at x=755/1460=51.7%, not exactly 50%.
+               w-[19%]: 277px fits within the 248px student gap with slight natural overlap.
+               bottom-[13%]: places video bottom at y≈510, sitting on the desk (content ends y=529). */}
+          <div className="absolute bottom-[13%] left-[52%] w-[19%] -translate-x-1/2">
             <div className="relative overflow-hidden rounded-md drop-shadow-2xl">
               <video
                 ref={videoRef}
