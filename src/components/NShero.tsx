@@ -6,6 +6,7 @@ import countries from "world-countries";
 import { useOpenDemoBooking } from "@/components/utils/navigation";
 import {
   motion,
+  AnimatePresence,
   useScroll,
   useTransform,
   useSpring,
@@ -27,6 +28,18 @@ const EXAMS = [
   "NAPLAN",
   "OC / Selective Entry",
   "Scholarship Exams",
+] as const;
+
+// Famous Australian exams rotated through the hero headline.
+const HEADLINE_EXAMS = [
+  "NAPLAN.",
+  "HSC.",
+  "Selective.",
+  "OC Test.",
+  "ICAS.",
+  "VCE.",
+  "ATAR.",
+  "Scholarship.",
 ] as const;
 
 const STATS = [
@@ -54,6 +67,16 @@ export function Hero() {
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [dialCode, setDialCode] = useState("+1");
+
+  // Rotate the headline exam name.
+  const [examIndex, setExamIndex] = useState(0);
+  useEffect(() => {
+    const id = setInterval(
+      () => setExamIndex((i) => (i + 1) % HEADLINE_EXAMS.length),
+      2200
+    );
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
@@ -220,8 +243,19 @@ export function Hero() {
             <span className="block">Dream Big. Learn Smart.</span>
             <span className="mt-1 block">
               Crack{" "}
-              <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">
-                Australia&apos;s Best.
+              <span className="relative inline-flex overflow-hidden align-bottom">
+                <AnimatePresence mode="popLayout" initial={false}>
+                  <motion.span
+                    key={HEADLINE_EXAMS[examIndex]}
+                    initial={{ y: "100%", opacity: 0 }}
+                    animate={{ y: "0%", opacity: 1 }}
+                    exit={{ y: "-100%", opacity: 0 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent"
+                  >
+                    {HEADLINE_EXAMS[examIndex]}
+                  </motion.span>
+                </AnimatePresence>
               </span>
             </span>
           </h1>
@@ -243,10 +277,10 @@ export function Hero() {
                 setPhoneError("Please enter a valid phone number");
               }
             }}
-            className="-mt-1 flex w-full max-w-md flex-col gap-2"
+            className="mt-3 flex w-full max-w-sm flex-col gap-2"
           >
             <div className="flex items-center gap-1 overflow-hidden rounded-full border-2 border-orange-500 bg-white/90 p-1 pl-0 shadow-lg backdrop-blur-md">
-              <span className="flex h-12 w-16 shrink-0 items-center justify-center border-r border-gray-200 text-sm font-semibold text-gray-700">
+              <span className="flex h-9 w-12 shrink-0 items-center justify-center border-r border-gray-200 text-xs font-semibold text-gray-700">
                 {dialCode}
               </span>
               <input
@@ -256,16 +290,16 @@ export function Hero() {
                 placeholder="Phone number"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="h-12 min-w-0 flex-1 bg-transparent px-3 text-sm text-gray-900 outline-none placeholder:text-gray-400"
+                className="h-9 min-w-0 flex-1 bg-transparent px-2 text-xs text-gray-900 outline-none placeholder:text-gray-400"
               />
               <Button
                 type="submit"
                 variant="gradient"
                 size="lg"
-                className="h-10 shrink-0 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-5 text-sm font-bold shadow-md shadow-orange-500/30 hover:to-orange-500 sm:px-6 sm:text-base"
+                className="h-8 shrink-0 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-4 text-xs font-bold shadow-md shadow-orange-500/30 hover:to-orange-500"
               >
                 Try a Free Class
-                <ArrowRight className="ml-1.5 h-4 w-4" />
+                <ArrowRight className="ml-1 h-3.5 w-3.5" />
               </Button>
             </div>
             {phoneError && (
