@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { Header } from '@/components/NSheader';
 import { Hero } from '@/components/NShero';
+import NovaChatbot from '@/components/NovaChatbot';
 
 // Below-fold components loaded lazily to reduce initial JS bundle
 const TestimonialSection   = dynamic(() => import('@/components/NSstudent-testimonial').then(m => ({ default: m.TestimonialSection })));
@@ -43,6 +44,7 @@ export default function NewHome() {
       <NSLevelUp />
       <FAQ />
       <Footer />
+      <NovaChatbot />
     </main>
   );
 }

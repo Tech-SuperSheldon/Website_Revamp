@@ -27,7 +27,8 @@ export function Header() {
   const headerTop = useTransform(scrollY, [0, 100], ["0px", "16px"]);
   const headerRadius = useTransform(scrollY, [0, 100], ["0px", "50px"]);
   const headerPadding = useTransform(scrollY, [0, 100], ["0.85rem", "0.45rem"]);
-  const logoScale = useTransform(scrollY, [0, 100], [1, 1.1]);
+  // The logo will start 2.2x larger, and scale up to 2.5x when scrolled
+  const logoScale = useTransform(scrollY, [0, 100], [2.2, 2.5]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,25 +53,24 @@ export function Header() {
           }
         `}
       >
+        {/* ── Removed initial opacity=0 and delay here so it loads instantly ── */}
         <motion.div 
           style={{ paddingTop: headerPadding, paddingBottom: headerPadding }}
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
           className="container mx-auto px-4 flex items-center justify-between gap-2 transition-all"
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2 w-16 sm:w-20 md:w-24 shrink-0">
             <motion.div
               style={{ scale: logoScale }}
               className="relative h-8 w-8 shrink-0 origin-left sm:h-10 sm:w-10 md:h-10 md:w-10"
             >
-                 <Image
-                    src="/logo.png"
-                    alt="SuperSheldon Logo"
-                    fill
-                    className="object-contain"
-                 />
+              <Image
+                src="/logo.png"
+                alt="SuperSheldon Logo"
+                fill
+                priority // ── Added priority so the logo downloads immediately ──
+                className="object-contain"
+              />
             </motion.div>
           </Link>
 
@@ -114,22 +114,28 @@ export function Header() {
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl pt-24 px-6 md:hidden flex flex-col gap-6 items-center"
           >
-             {navLinks.map((link) => (
+            {navLinks.map((link) => (
               <Link 
                 key={link.name} 
                 href={link.href}
-                className="text-3xl font-medium text-gray-800 hover:text-purple-600"
+                className="text-xl font-medium text-gray-800 hover:text-purple-600 transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.name}
               </Link>
             ))}
             <div className="h-px w-full bg-gray-100 my-2" />
-            <Link href="https://supersheldon.wise.live/login?loginRedirected=true" target="_blank" rel="noopener noreferrer" onClick={() => setIsMobileMenuOpen(false)} className="text-2xl font-medium text-gray-600">
+            <Link 
+              href="https://supersheldon.wise.live/login?loginRedirected=true" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              onClick={() => setIsMobileMenuOpen(false)} 
+              className="text-lg font-medium text-gray-600"
+            >
               Login
             </Link>
-             <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button className="w-full bg-gray-900 text-white rounded-full px-8 py-8 text-2xl">
+             <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)} className="w-full max-w-[280px]">
+                <Button className="w-full bg-gray-900 text-white rounded-full px-6 py-4 text-lg">
                     Try a free Class
                 </Button>
             </Link>

@@ -2,7 +2,6 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
-import countries from "world-countries";
 import { useOpenDemoBooking } from "@/components/utils/navigation";
 import {
   motion,
@@ -30,7 +29,6 @@ const EXAMS = [
   "Scholarship Exams",
 ] as const;
 
-// Famous Australian exams rotated through the hero headline.
 const HEADLINE_EXAMS = [
   "NAPLAN.",
   "HSC.",
@@ -49,27 +47,19 @@ const STATS = [
   { icon: ShieldCheck, title: "Trusted by 500K+", sub: "Students", color: "text-emerald-500" },
 ] as const;
 
-// Derive an international dial code (e.g. "+61") from an ISO-2 country code.
-function dialCodeFromCca2(cca2: string): string {
-  const c = countries.find((x) => x.cca2 === cca2);
-  if (!c?.idd?.root) return "+1";
-  return `${c.idd.root}${c.idd.suffixes?.[0] ?? ""}`;
-}
-
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReduced = useReducedMotion();
   const [isDesktop, setIsDesktop] = useState(false);
 
-  // Phone form → redirect to /demo
   const openDemoBooking = useOpenDemoBooking();
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState("");
-  const [dialCode, setDialCode] = useState("+1");
+  const [dialCode, setDialCode] = useState("+61");
 
-  // Rotate the headline exam name.
   const [examIndex, setExamIndex] = useState(0);
+
   useEffect(() => {
     const id = setInterval(
       () => setExamIndex((i) => (i + 1) % HEADLINE_EXAMS.length),
@@ -86,22 +76,6 @@ export function Hero() {
     return () => mq.removeEventListener("change", update);
   }, []);
 
-  // Auto-detect the visitor's country dial code for the phone input.
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch(
-          "https://iplocate.io/api/lookup?apikey=0e7ca4b669dc85fbc604c1776a93d3e5"
-        );
-        const data = await res.json();
-        if (data?.country_code) setDialCode(dialCodeFromCca2(data.country_code));
-      } catch {
-        setDialCode("+1");
-      }
-    })();
-  }, []);
-
-  // Ensure the class video autoplays inline/muted across browsers.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -111,34 +85,31 @@ export function Hero() {
     void v.play().catch(() => {});
   }, []);
 
-  // Rich parallax on desktop, near-static on mobile / reduced-motion.
   const f = prefersReduced ? 0 : isDesktop ? 1 : 0.18;
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
+
   const ease = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,
   });
 
-  // Background slow, flag medium, students fast.
   const bgY = useTransform(ease, [0, 1], ["0%", `${-6 * f}%`]);
-  const flagY = useTransform(ease, [0, 1], ["0%", `${-16 * f}%`]);
   const studentsY = useTransform(ease, [0, 1], ["0%", `${-26 * f}%`]);
   const contentY = useTransform(ease, [0, 1], ["0%", `${-8 * f}%`]);
-  // Subtle fade of foreground/content as you scroll past.
   const contentOpacity = useTransform(ease, [0, 0.7, 1], [1, 1, 0.35]);
 
   return (
     <section
       ref={sectionRef}
       id="hero"
-      className="relative min-h-[calc(100svh+100px)] w-full overflow-x-clip overflow-y-clip bg-gradient-to-b from-sky-100 to-white"
+      className="relative flex flex-col min-h-[100svh] md:min-h-[calc(100svh+100px)] w-full overflow-x-clip overflow-y-clip bg-gradient-to-b from-sky-100 to-white"
     >
-      {/* ── Layer 1: Background — Sydney (slow) ── */}
+      {/* ── Layer 1: Background — Sydney (priority load, no blur) ── */}
       <motion.div style={{ y: bgY }} className="absolute -inset-x-0 -top-[8%] z-0 h-[116%] w-full">
         <Image
           src="/hero/sydney.jpg"
@@ -146,42 +117,16 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="scale-105 object-cover"
-          style={{ objectPosition: "center -100px" }}
+          className="scale-105 object-cover object-[center_80%] md:object-[center_-100px]"
         />
-        {/* Readability + bottom blend into page */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/5 to-white/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/5 to-white/60 sm:to-white/85" />
         <div className="absolute inset-0 bg-gradient-to-r from-white/40 via-transparent to-transparent" />
       </motion.div>
 
-      {/* ── Layer 2: Midground — Australian flag, top-right (medium) ── */}
-      <motion.div
-        style={{ y: flagY }}
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.9, ease: "easeOut" }}
-        className="pointer-events-none absolute right-2 top-16 z-[2] w-[30%] max-w-[200px] sm:right-6 md:top-20 lg:w-[18%]"
-      >
-        <Image
-          src="/hero/flag.png"
-          alt="Australian flag"
-          width={598}
-          height={552}
-          className="h-auto w-full drop-shadow-xl"
-        />
-      </motion.div>
-
-      {/* ── Layer 3: Foreground group — students + laptop, locked together (fast) ──
-           Sized by HEIGHT so it occupies a consistent lower band regardless of the
-           viewport's aspect ratio (prevents the students from getting too tall on
-           short/wide screens). The laptop is positioned as a % of this group so its
-           size relative to the students always matches the reference composite. */}
+      {/* ── Layer 2: Foreground group — students + laptop (priority load, no blur) ── */}
       <motion.div
         style={{ y: studentsY }}
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
-        className="pointer-events-none absolute inset-x-0 bottom-[160px] z-[3] flex justify-center"
+        className="pointer-events-none absolute inset-x-0 bottom-[240px] sm:bottom-[160px] z-[3] flex justify-center"
       >
         <div className="relative aspect-[1460/586] w-[115%] max-w-none sm:w-[90%] md:w-auto md:h-[40vh] md:max-h-[420px] md:min-h-[260px]">
           <Image
@@ -193,21 +138,19 @@ export function Hero() {
             className="object-contain object-bottom drop-shadow-2xl"
           />
 
-          {/* Class video laptop — sits on the desk, centered between the students.
-               left-[52%]: gap center between students is at x=755/1460=51.7%, not exactly 50%.
-               w-[19%]: 277px fits within the 248px student gap with slight natural overlap.
-               bottom-[13%]: places video bottom at y≈510, sitting on the desk (content ends y=529). */}
+          {/* Class video laptop */}
           <div className="absolute bottom-[13%] left-[52%] w-[19%] -translate-x-1/2">
             <div className="relative overflow-hidden rounded-md drop-shadow-2xl">
               <video
                 ref={videoRef}
                 src="/hero/class-video.webm"
+                poster="/hero/class-video-poster.jpg"
                 className="block h-auto w-full"
                 autoPlay
                 loop
                 muted
                 playsInline
-                preload="auto"
+                preload="none"
               />
               {/* Live badge */}
               <span className="absolute left-1.5 top-1.5 inline-flex items-center gap-1 rounded bg-white/90 px-1.5 py-0.5 text-[7px] font-bold uppercase tracking-wide text-gray-900 shadow-sm backdrop-blur md:text-[9px]">
@@ -222,18 +165,14 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* ── Layer 4: Content (normal) ── */}
+      {/* ── Layer 3: Content ── */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 mx-auto flex min-h-[calc(100svh+100px)] w-full max-w-7xl flex-col justify-start px-4 pt-16 pb-[180px] sm:px-6 md:pt-16 md:pb-[200px]"
+        className="relative z-10 mx-auto flex flex-1 w-full max-w-7xl flex-col justify-start px-4 pt-16 pb-[230px] sm:pb-[180px] sm:px-6 md:pt-16 md:pb-[200px]"
       >
         {/* Centered headline block */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="mx-auto flex max-w-4xl flex-col items-center text-center"
-        >
+        <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
+
           {/* Pill */}
           <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-700 shadow-sm backdrop-blur-md sm:text-xs">
             <span className="text-base leading-none">🪙</span>
@@ -269,7 +208,7 @@ export function Hero() {
             scores in Australian Exams.
           </p>
 
-          {/* Phone form CTA → /demo */}
+          {/* Phone form CTA */}
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -282,7 +221,8 @@ export function Hero() {
             }}
             className="mt-3 flex w-full max-w-sm flex-col gap-2"
           >
-            <div className="flex items-center gap-1 overflow-hidden rounded-full border-2 border-orange-500 bg-white/90 p-1 pl-0 shadow-lg backdrop-blur-md">
+            {/* Phone input row — always full width */}
+            <div className="flex items-center gap-1 overflow-hidden rounded-full border-2 border-orange-500 bg-white/90 py-1 pl-0 pr-1 shadow-lg backdrop-blur-md sm:pr-1">
               <span className="flex h-9 w-12 shrink-0 items-center justify-center border-r border-gray-200 text-xs font-semibold text-gray-700">
                 {dialCode}
               </span>
@@ -295,29 +235,36 @@ export function Hero() {
                 onChange={(e) => setPhone(e.target.value)}
                 className="h-9 min-w-0 flex-1 bg-transparent px-2 text-xs text-gray-900 outline-none placeholder:text-gray-400"
               />
+              {/* Button inside pill — desktop only */}
               <Button
                 type="submit"
                 variant="gradient"
                 size="lg"
-                className="h-8 shrink-0 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-4 text-xs font-bold shadow-md shadow-orange-500/30 hover:to-orange-500"
+                className="hidden sm:flex h-8 shrink-0 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-4 text-xs font-bold shadow-md shadow-orange-500/30 hover:to-orange-500"
               >
                 Try a Free Class
                 <ArrowRight className="ml-1 h-3.5 w-3.5" />
               </Button>
             </div>
+
+            {/* Standalone button — mobile only */}
+            <Button
+              type="submit"
+              variant="gradient"
+              size="lg"
+              className="flex sm:hidden w-full rounded-full bg-gradient-to-r from-orange-500 to-orange-600 py-3 text-sm font-bold shadow-md shadow-orange-500/30 hover:to-orange-500"
+            >
+              Try a Free Class
+            </Button>
+
             {phoneError && (
               <p className="text-sm font-medium text-red-500">{phoneError}</p>
             )}
           </form>
-        </motion.div>
+        </div>
 
-        {/* "Crack Australian Exams" card — right side */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
-          className="mt-8 self-center rounded-2xl border border-white/70 bg-white/90 p-5 shadow-xl backdrop-blur-md sm:mt-10 lg:absolute lg:right-4 lg:top-[calc(58%_-_160px)] lg:mt-0 lg:max-w-xs xl:right-8"
-        >
+        {/* "Crack Australian Exams" card — Instantly visible on lg screens */}
+        <div className="hidden lg:block mt-8 self-center rounded-2xl border border-white/70 bg-white/90 p-5 shadow-xl backdrop-blur-md sm:mt-10 lg:absolute lg:right-4 lg:top-[calc(58%_-_160px)] lg:mt-0 lg:max-w-xs xl:right-8">
           <h3 className="mb-3 text-base font-bold text-gray-900">
             Crack Australian Exams
           </h3>
@@ -331,27 +278,22 @@ export function Hero() {
               </li>
             ))}
           </ul>
-        </motion.div>
+        </div>
       </motion.div>
 
-      {/* ── Floating decor (reuse existing 3D assets) ── */}
-      <div className="animate-float pointer-events-none absolute bottom-[272px] left-3 z-20 h-14 w-14 sm:left-8 sm:h-20 sm:w-20 md:bottom-[288px]">
-        <Image src="/floating-icons/book.png" alt="" fill className="object-contain drop-shadow-xl" />
+      {/* ── Floating decor — Added priority to load instantly ── */}
+      <div className="animate-float pointer-events-none absolute bottom-[300px] left-3 z-20 h-14 w-14 sm:left-8 sm:h-20 sm:w-20 sm:bottom-[272px] md:bottom-[288px]">
+        <Image src="/floating-icons/book.png" alt="" fill priority className="object-contain drop-shadow-xl" />
       </div>
       <div
-        className="animate-float pointer-events-none absolute bottom-[272px] right-3 z-20 h-14 w-14 sm:right-8 sm:h-20 sm:w-20 md:bottom-[288px]"
+        className="animate-float pointer-events-none absolute bottom-[300px] right-3 z-20 h-14 w-14 sm:right-8 sm:h-20 sm:w-20 sm:bottom-[272px] md:bottom-[288px]"
         style={{ animationDelay: "1.2s" }}
       >
-        <Image src="/floating-icons/lightbulb.png" alt="" fill className="object-contain drop-shadow-xl" />
+        <Image src="/floating-icons/lightbulb.png" alt="" fill priority className="object-contain drop-shadow-xl" />
       </div>
 
-      {/* ── Bottom stats bar ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.5 }}
-        className="absolute inset-x-0 bottom-[110px] z-20 px-4"
-      >
+      {/* ── Bottom stats bar — Instantly visible ── */}
+      <div className="relative w-full z-20 px-4 mt-auto pb-10 sm:absolute sm:inset-x-0 sm:bottom-[110px] sm:mt-0 sm:pb-0">
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-x-4 gap-y-4 rounded-3xl border border-white/70 bg-white/90 px-6 py-4 shadow-xl backdrop-blur-md md:grid-cols-4 md:gap-x-2">
           {STATS.map(({ icon: Icon, title, sub, color }) => (
             <div key={title} className="flex items-center justify-center gap-2.5 md:gap-3">
@@ -363,7 +305,7 @@ export function Hero() {
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
 
       {/* Scroll-down chevron */}
       <div className="absolute bottom-2 left-1/2 z-20 hidden -translate-x-1/2 sm:block">
