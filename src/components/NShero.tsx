@@ -168,7 +168,7 @@ export function Hero() {
       {/* ── Layer 3: Content ── */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 mx-auto flex flex-1 w-full max-w-7xl flex-col justify-start px-4 pt-16 pb-[230px] sm:pb-[180px] sm:px-6 md:pt-16 md:pb-[200px]"
+        className="relative z-10 mx-auto flex flex-1 w-full max-w-7xl flex-col justify-start px-4 pt-8 pb-[230px] sm:pb-[180px] sm:px-6 md:pt-10 md:pb-[200px]"
       >
         {/* Centered headline block */}
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">

@@ -32,7 +32,7 @@ export default function NewHome() {
   return (
     <main className="new-home-bg">
       <NSDeadlineBanner />
-      <Header />
+      <Header stacked />
       <Hero />
       <TestimonialSection />
       <USCourseTree />

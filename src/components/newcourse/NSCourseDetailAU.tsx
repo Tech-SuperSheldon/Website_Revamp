@@ -13,6 +13,7 @@ import NSCourseModules from "./NSCourseModules";
 import NSCertificate from "./NSCertificate";
 import NSJoinUs from "./NSJoinUs";
 import NSPricing from "./NSPricing";
+import DownloadBrochureButton from "./DownloadBrochureButton";
 
 interface NSCourseDetailAUProps {
     courseId: string;
@@ -60,11 +61,14 @@ export default function NSCourseDetailAU({ courseId }: NSCourseDetailAUProps) {
                 <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
                     {course.title}
                 </h1>
-                <Link href="/demo">
-                    <button className="bg-orange-600 text-white px-8 py-3 rounded-full font-bold hover:bg-orange-700 transition-all shadow-lg shadow-orange-500/30 whitespace-nowrap">
-                        Enroll as a Champ
-                    </button>
-                </Link>
+                <div className="flex flex-wrap items-center gap-3">
+                    <DownloadBrochureButton course={course} variant="solid" />
+                    <Link href="/demo">
+                        <button className="bg-orange-600 text-white px-8 py-3 rounded-full font-bold hover:bg-orange-700 transition-all shadow-lg shadow-orange-500/30 whitespace-nowrap">
+                            Enroll as a Champ
+                        </button>
+                    </Link>
+                </div>
            </div>
       </div>
 

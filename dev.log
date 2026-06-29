@@ -1,0 +1,24 @@
+
+> supersheldon-landing@0.1.0 dev
+> next dev --turbopack
+
+ ⚠ Port 3000 is in use by an unknown process, using available port 3001 instead.
+   ▲ Next.js 15.5.19 (Turbopack)
+   - Local:        http://localhost:3001
+   - Network:      http://10.0.7.177:3001
+   - Experiments (use with caution):
+     · optimizePackageImports
+
+ ✓ Starting...
+ ✓ Ready in 16.7s
+ ○ Compiling /new-courses ...
+ ✓ Compiled /new-courses in 49.6s
+ GET /new-courses 200 in 51429ms
+ ○ Compiling /new-courses/[slug] ...
+ ✓ Compiled /new-courses/[slug] in 5.6s
+ GET /new-courses/selective-prep 200 in 8994ms
+ GET /new-courses/selective-prep 200 in 498ms
+ GET /new-courses 200 in 685ms
+ GET /new-courses/selective-prep 200 in 1860ms
+ GET /new-courses 200 in 1024ms
+[?25h

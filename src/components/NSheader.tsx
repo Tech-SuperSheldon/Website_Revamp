@@ -17,7 +17,7 @@ const navLinks = [
   { name: "Become a Teacher", href: "/become-a-teacher" },
 ];
 
-export function Header() {
+export function Header({ stacked = false }: { stacked?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
@@ -40,24 +40,34 @@ export function Header() {
 
   return (
     <>
+      {/*
+        ── `stacked` (used on /new-home): sticky + in normal flow, so it sits
+           BELOW the deadline strip and ABOVE the hero — no overlap.
+        ── default: fixed overlay (unchanged behavior for all other pages).
+        Centering uses mx-auto on the inner pill box so it works in both modes.
+      */}
       <motion.header
-        style={{
-          width: headerWidth,
-          top: headerTop,
-          borderRadius: headerRadius,
-        }}
-        className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ease-in-out
-          ${isScrolled
-            ? "bg-white/70 backdrop-blur-md shadow-lg border border-white/20 max-w-4xl"
-            : "bg-white w-full border-b border-gray-100 shadow-sm"
-          }
-        `}
+        className={`${stacked ? "sticky" : "fixed"} inset-x-0 top-0 z-50 pointer-events-none`}
       >
-        {/* ── Removed initial opacity=0 and delay here so it loads instantly ── */}
-        <motion.div 
-          style={{ paddingTop: headerPadding, paddingBottom: headerPadding }}
-          className="container mx-auto px-4 flex items-center justify-between gap-2 transition-all"
+        {/* Pill box: full-width bar at top, shrinks to a centered floating pill on scroll */}
+        <motion.div
+          style={{
+            width: headerWidth,
+            marginTop: headerTop,
+            borderRadius: headerRadius,
+          }}
+          className={`pointer-events-auto mx-auto transition-all duration-300 ease-in-out
+            ${isScrolled
+              ? "bg-white/70 backdrop-blur-md shadow-lg border border-white/20 max-w-4xl"
+              : "bg-white w-full border-b border-gray-100 shadow-sm"
+            }
+          `}
         >
+          {/* ── Removed initial opacity=0 and delay here so it loads instantly ── */}
+          <motion.div
+            style={{ paddingTop: headerPadding, paddingBottom: headerPadding }}
+            className="container mx-auto px-4 flex items-center justify-between gap-2 transition-all"
+          >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 w-16 sm:w-20 md:w-24 shrink-0">
             <motion.div
@@ -102,6 +112,7 @@ export function Header() {
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
+          </motion.div>
         </motion.div>
       </motion.header>
 

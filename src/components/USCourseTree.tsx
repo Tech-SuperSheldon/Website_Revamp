@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -83,6 +83,12 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
 
 export default function USCourseTree() {
   const [activeYear, setActiveYear] = useState("Year 5");
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = scrollRef.current?.querySelector<HTMLElement>('[data-active="true"]');
+    el?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+  }, [activeYear]);
 
   const items = coursesData[activeYear] || [];
 
@@ -109,28 +115,14 @@ export default function USCourseTree() {
           </p>
         </motion.div>
 
-        {/* Year Selector — mobile dropdown */}
-        <div className="sm:hidden mb-3">
-          <select
-            value={activeYear}
-            onChange={(e) => setActiveYear(e.target.value)}
-            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 font-semibold"
-          >
-            {years.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Year Selector — desktop pill tabs */}
-        <div className="hidden sm:flex flex-wrap justify-center gap-2 mb-3">
+        {/* Year Selector — horizontally scrollable pill row (mobile + desktop) */}
+        <div ref={scrollRef} className="flex overflow-x-auto no-scrollbar gap-2 mb-3 pb-1">
           {years.map((year) => (
             <button
               key={year}
+              data-active={activeYear === year ? "true" : undefined}
               onClick={() => setActiveYear(year)}
-              className={`relative px-5 py-2 rounded-full text-sm font-semibold transition-colors duration-200 ${
+              className={`relative flex-shrink-0 px-5 py-2 rounded-full text-sm font-semibold transition-colors duration-200 ${
                 activeYear === year
                   ? "text-white"
                   : "text-gray-500 hover:text-gray-800"

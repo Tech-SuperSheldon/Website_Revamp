@@ -6,6 +6,7 @@ import Link from "next/link";
 import { coursesData, Course } from "@/lib/course-data-au";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Filter, Check } from "lucide-react";
+import DownloadBrochureButton from "./DownloadBrochureButton";
 
 export default function NSCourseMainAU() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -197,13 +198,17 @@ export default function NSCourseMainAU() {
                                     </p>
 
                                     <div className="mt-auto">
-                                        <button className="w-full py-3 rounded-xl bg-gray-50 text-gray-900 font-bold hover:bg-orange-500 hover:text-white transition-all duration-300 mb-5 flex items-center justify-center gap-2 group/btn">
+                                        <button className="w-full py-3 rounded-xl bg-gray-50 text-gray-900 font-bold hover:bg-orange-500 hover:text-white transition-all duration-300 mb-3 flex items-center justify-center gap-2 group/btn">
                                             Explore Course
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover/btn:translate-x-1 transition-transform">
                                                 <path d="M5 12h14" />
                                                 <path d="m12 5 7 7-7 7" />
                                             </svg>
                                         </button>
+
+                                        <div className="mb-5">
+                                            <DownloadBrochureButton course={course} variant="compact" />
+                                        </div>
 
                                         <div className="flex items-center justify-between text-xs text-gray-400 font-bold border-t border-gray-100 pt-5 uppercase tracking-wider">
                                             <div className="flex items-center gap-2">
