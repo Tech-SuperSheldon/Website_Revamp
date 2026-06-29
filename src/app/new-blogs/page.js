@@ -1,5 +1,5 @@
 import Header from "@/components/HeroHeaderNav";
-import Footer from "@/components/Footer";
+import { Footer } from "@/components/NSfooter";
 import FloatingArrowWhatsApp from "@/components/ArrowAndWhatsapp";
 import NSBlogMainUS from "@/components/newblog/NSBlogMainUS";
 

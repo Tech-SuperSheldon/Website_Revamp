@@ -4,6 +4,9 @@ import dynamic from 'next/dynamic';
 import { Header } from '@/components/NSheader';
 import { Hero } from '@/components/NShero';
 import NovaChatbot from '@/components/NovaChatbot';
+import FloatingArrowWhatsApp from '@/components/ArrowAndWhatsapp';
+import NSCookieConsent from '@/components/NSCookieConsent';
+import NSDeadlineBanner from '@/components/NSDeadlineBanner';
 
 // Below-fold components loaded lazily to reduce initial JS bundle
 const TestimonialSection   = dynamic(() => import('@/components/NSstudent-testimonial').then(m => ({ default: m.TestimonialSection })));
@@ -28,6 +31,7 @@ export const metadata = {
 export default function NewHome() {
   return (
     <main className="new-home-bg">
+      <NSDeadlineBanner />
       <Header />
       <Hero />
       <TestimonialSection />
@@ -45,6 +49,8 @@ export default function NewHome() {
       <FAQ />
       <Footer />
       <NovaChatbot />
+      <FloatingArrowWhatsApp side="right" />
+      <NSCookieConsent />
     </main>
   );
 }

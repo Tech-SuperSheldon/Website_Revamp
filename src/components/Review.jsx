@@ -1,6 +1,3 @@
-
-
-
 "use client";
 import React from "react";
 
@@ -30,55 +27,23 @@ const Review = () => {
       {/* Cards */}
       <div className="mt-12 w-full max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Card 1 */}
-        <div
-          className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300"
-          style={{ boxShadow: "-6px 6px 0px #000000" }}
-        >
-          <div className="bg-[#58D2A8] px-6 py-6">
-            <h3 className="font-rowdies text-left font-bold text-xl sm:text-2xl text-white">
-              01. Learn
-            </h3>
-          </div>
-          <div className="px-6 py-6 text-left">
-            <p className="font-poppins text-sm sm:text-base md:text-lg text-gray-700">
-              82% of Supersheldon parents agree their child’s grades have
-              improved.
-            </p>
+        <div className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300 shadow-lg">
+          <div className="w-full h-64 sm:h-72 md:h-80 overflow-hidden flex items-center justify-center bg-gray-50">
+            <img src="/Bento Blocks _ Analytics Card.gif" alt="Analytics" className="w-[140%] h-[140%] object-cover object-center" />
           </div>
         </div>
 
         {/* Card 2 */}
-        <div
-          className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300"
-          style={{ boxShadow: "-6px 6px 0px #000000" }}
-        >
-          <div className="bg-[#FF6B2C] px-6 py-6">
-            <h3 className="font-rowdies text-left font-bold text-xl sm:text-2xl text-white">
-              02. Academics
-            </h3>
-          </div>
-          <div className="px-6 py-6 text-left">
-            <p className="font-poppins text-sm sm:text-base md:text-lg text-gray-700">
-              95% of Supersheldon parents celebrate their child’s improved
-              grades and academic success.
-            </p>
+        <div className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300 shadow-lg">
+          <div className="w-full h-64 sm:h-72 md:h-80 overflow-hidden flex items-center justify-center bg-gray-50">
+            <img src="/Bento Blocks _ Conversion Card.gif" alt="Conversion" className="w-[140%] h-[140%] object-cover object-center" />
           </div>
         </div>
 
         {/* Card 3 */}
-        <div
-          className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300"
-          style={{ boxShadow: "-6px 6px 0px #000000" }}
-        >
-          <div className="bg-[#2F2467] px-6 py-6">
-            <h3 className="font-rowdies text-left font-bold text-xl sm:text-2xl text-white">
-              03. Parents Feedback
-            </h3>
-          </div>
-          <div className="px-6 py-6 text-left">
-            <p className="font-poppins text-sm sm:text-base md:text-lg text-gray-700">
-              85% of Supersheldon parents agree their child is more confident.
-            </p>
+        <div className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300 shadow-lg">
+          <div className="w-full h-64 sm:h-72 md:h-80 overflow-hidden flex items-center justify-center bg-gray-50">
+            <img src="/Bento Blocks _ Meter Card.gif" alt="Meter" className="w-[140%] h-[140%] object-cover object-center" />
           </div>
         </div>
       </div>

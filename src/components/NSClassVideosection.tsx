@@ -14,17 +14,20 @@ const infoCards = [
   {
     id: 1,
     title: "1:1 Sessions",
-    icon: "/3column/1.gif",
+    icon: "/Sketches _ Call to action.gif",
+    description: "Personalized attention to ensure every concept is clearly understood.",
   },
   {
     id: 2,
     title: "Live Recorded Classes",
-    icon: "/3column/2.gif",
+    icon: "/Sketches _ Flow chart.gif",
+    description: "Revisit lessons anytime to reinforce learning at your own pace.",
   },
   {
     id: 3,
-    title: "Homework and tests",
-    icon: "/3column/3.gif",
+    title: "Homework & Tests",
+    icon: "/Sketches _ Process optimisation.gif",
+    description: "Regular practice to track progress and master new skills effectively.",
   },
 ];
 
@@ -221,60 +224,48 @@ export default function NSClassVideoSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 w-full max-w-6xl mt-12 px-4 relative">
             <GridBackground zIndex={0} cellSize={36} lineColor="rgba(0,0,0,0.09)" fadeRadius="60%" />
             {/* Item 1 */}
-            <motion.div 
+            <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
                 className="flex flex-col items-center text-center group"
             >
-                <div className="w-20 h-20 rounded-3xl bg-orange-50 flex items-center justify-center mb-6 shadow-xl shadow-orange-100 transition-transform group-hover:scale-110 duration-300">
-                     <Image src={infoCards[0].icon} alt={infoCards[0].title} width={48} height={48} unoptimized />
+                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-orange-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
+                     <img src={infoCards[0].icon} alt="1:1 Sessions" className="object-contain w-full h-full" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-3">1:1 Sessions</h3>
-                <p className="text-slate-500 leading-relaxed max-w-xs mx-auto">
-                    Personalized attention to ensure every concept is clearly understood.
-                </p>
             </motion.div>
 
             {/* Separator 1 (Hidden on mobile) */}
-             <div className="hidden md:block w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent absolute left-1/3 h-40 mt-10" />
+             <div className="hidden md:block w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent absolute left-1/3 h-48 mt-4" />
 
             {/* Item 2 */}
-            <motion.div 
+            <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
                 className="flex flex-col items-center text-center group"
             >
-                <div className="w-20 h-20 rounded-3xl bg-orange-50 flex items-center justify-center mb-6 shadow-xl shadow-orange-100 transition-transform group-hover:scale-110 duration-300">
-                    <Image src={infoCards[1].icon} alt={infoCards[1].title} width={48} height={48} unoptimized />
+                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-orange-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
+                    <img src={infoCards[1].icon} alt="Live Recorded Classes" className="object-contain w-full h-full" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-3">Live Recorded Classes</h3>
-                <p className="text-slate-500 leading-relaxed max-w-xs mx-auto">
-                    Revisit lessons anytime to reinforce learning at your own pace.
-                </p>
             </motion.div>
 
             {/* Separator 2 (Hidden on mobile) */}
-            <div className="hidden md:block w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent absolute right-1/3 h-40 mt-10" />
+            <div className="hidden md:block w-px bg-gradient-to-b from-transparent via-slate-200 to-transparent absolute right-1/3 h-48 mt-4" />
 
             {/* Item 3 */}
-            <motion.div 
+            <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
                 className="flex flex-col items-center text-center group"
             >
-                <div className="w-20 h-20 rounded-3xl bg-orange-50 flex items-center justify-center mb-6 shadow-xl shadow-orange-100 transition-transform group-hover:scale-110 duration-300">
-                    <Image src={infoCards[2].icon} alt={infoCards[2].title} width={48} height={48} unoptimized />
+                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-orange-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
+                    <img src={infoCards[2].icon} alt="Homework & Tests" className="object-contain w-full h-full" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-3">Homework & Tests</h3>
-                <p className="text-slate-500 leading-relaxed max-w-xs mx-auto">
-                    Regular practice to track progress and master new skills effectively.
-                </p>
             </motion.div>
         </div>
 

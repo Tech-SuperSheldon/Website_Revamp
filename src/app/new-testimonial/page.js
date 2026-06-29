@@ -1,5 +1,5 @@
-import { Header } from "@/components/new-site/NSheader";
-import { Footer } from "@/components/new-site/NSfooter";
+import { Header } from "@/components/NSheader";
+import { Footer } from "@/components/NSfooter";
 import NSReviewsUS from "@/components/newreview/NSReviewsUS";
 
 export const metadata = {

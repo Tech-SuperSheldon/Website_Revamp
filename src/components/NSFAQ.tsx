@@ -14,7 +14,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="relative pt-28 pb-10 md:py-24 lg:my-16 xl:pt-8" id="faq">
+    <section className="relative pt-28 pb-0 md:pt-24 md:pb-0 lg:mt-16 lg:mb-0 xl:pt-8" id="faq">
          {/* Background Decoration commented out for cleaner look as requested
       // <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
       //   <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-100 rounded-full blur-[100px] opacity-40" />
@@ -25,14 +25,15 @@ export default function FAQ() {
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Title */}
+        {/* Title */}
         <motion.div
            initial={{ opacity: 0, y: 20 }}
            whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: true }}
            transition={{ duration: 0.6 }}
-           className="text-center mb-6 sm:mb-16 mt-8 sm:mt-0"
+           className="text-center mb-3 mt-8 sm:mt-0"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-quicksand font-bold text-gray-900 mb-4 px-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-quicksand font-bold text-gray-900 mb-3 px-4">
             Frequently Asked <span className="relative inline-block">
               <span className="relative z-10 text-orange-600">Questions</span>
               <span className="absolute bottom-1 left-0 w-full h-3 bg-orange-100 -z-10 rounded-sm" />
@@ -41,27 +42,20 @@ export default function FAQ() {
           <p className="text-gray-600 font-manrope text-base sm:text-xl max-w-2xl mx-auto px-4">
             If you have any other questions, feel free to reach out directly.
           </p>
-           
-           {/* CTA Buttons - Adjusted for mobile row */}
-            <div className="flex flex-nowrap overflow-x-auto no-scrollbar justify-start sm:justify-center gap-3 mb-12 pb-4 px-4">
-                <Link href="https://wa.me/917974695618" target="_blank" rel="noopener noreferrer" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-md transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
-                    Contact us
-                </Link>
-                <Link href="/demo" className="bg-orange-100 hover:bg-orange-200 text-orange-800 font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-sm border border-orange-200 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
-                    Try a Free Class
-                </Link>
-            </div>
-
         </motion.div>
 
-        {/* Section Tabs - Kept but styled cleaner */}
-        <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-wrap justify-center mb-10 gap-2"
-        >
+        {/* CTA Buttons */}
+        <div className="flex flex-nowrap overflow-x-auto no-scrollbar justify-start sm:justify-center gap-3 px-4 mb-2">
+            <Link href="https://wa.me/917974695618" target="_blank" rel="noopener noreferrer" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-md transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
+                Contact us
+            </Link>
+            <Link href="/demo" className="bg-orange-100 hover:bg-orange-200 text-orange-800 font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-sm border border-orange-200 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
+                Try a Free Class
+            </Link>
+        </div>
+
+        {/* Section Tabs */}
+        <div className="flex flex-wrap justify-center gap-2">
             {faqSections.map((section, idx) => (
                 <button
                 key={idx}
@@ -71,17 +65,16 @@ export default function FAQ() {
                 }}
                 className={`relative px-6 py-2 rounded-full font-semibold transition-all duration-300 text-sm sm:text-base ${
                     activeSection === idx
-                    ? "bg-black text-white shadow-lg scale-105"
+                    ? "bg-black text-white shadow-lg"
                     : "bg-orange-50 text-orange-700 hover:bg-orange-100"
                 }`}
                 >
                 {section.title}
                 </button>
             ))}
-        </motion.div>
+        </div>
 
-
-        <div className="space-y-6">
+        <div className="space-y-6 pt-6">
            <AnimatePresence mode="wait">
             <motion.div
                 key={activeSection}
@@ -93,17 +86,17 @@ export default function FAQ() {
             >
               {faqSections[activeSection].faqs.map((item, index) => {
                 const isActive = activeIndex === index;
-                
+
                 return (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     className={`group rounded-[2.5rem] transition-all duration-300 border ${
-                        isActive 
-                        ? "bg-orange-50 border-orange-300 shadow-md" 
+                        isActive
+                        ? "bg-orange-50 border-orange-300 shadow-md"
                         : "bg-white border-orange-100 hover:border-orange-200 hover:bg-orange-50/50"
                     }`}
                   >

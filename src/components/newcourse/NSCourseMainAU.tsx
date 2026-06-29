@@ -153,10 +153,10 @@ export default function NSCourseMainAU() {
                         transition={{ duration: 0.3 }}
                         >
                         <Link href={`/new-courses/${course.id}`} className="group cursor-pointer block h-full">
-                            <div className="rounded-4xl overflow-hidden border border-gray-100 shadow-lg hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-300 flex flex-col h-full transform hover:-translate-y-1 bg-white">
+                            <div className="rounded-[2rem] overflow-hidden border border-gray-100 shadow-lg hover:shadow-2xl hover:shadow-orange-500/10 transition-all duration-300 flex flex-col h-full transform hover:-translate-y-1 bg-white">
                                 
                                 {/* Image Container */}
-                                <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
+                                <div className="relative aspect-video w-full overflow-hidden bg-gray-100 rounded-t-[2rem]">
                                     {course.img ? (
                                       <Image
                                           src={course.img}

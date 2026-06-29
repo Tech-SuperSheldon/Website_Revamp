@@ -65,7 +65,7 @@
 import { useEffect, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
-export default function FloatingArrowWhatsApp() {
+export default function FloatingArrowWhatsApp({ side = "right" }) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -77,30 +77,16 @@ export default function FloatingArrowWhatsApp() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const positionClass = side === "left"
+    ? "left-3 bottom-3 md:left-6 md:bottom-6"
+    : "right-4 bottom-[4.5rem] md:right-5 md:bottom-[5.2rem]";
+
   return (
     <div
-      className={`fixed right-3 bottom-3 md:right-6 md:bottom-6 z-50 flex flex-col items-center gap-2 md:gap-3 transition-all duration-500 ${
+      className={`fixed ${positionClass} z-50 flex flex-col items-center gap-2 md:gap-3 transition-all duration-500 ${
         show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-      {/* Scroll to top button (orange) */}
-      <button
-        onClick={scrollToTop}
-        className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center rounded-full bg-orange-500 shadow-lg ring-1 ring-black/10 transition-transform hover:-translate-y-2 hover:scale-105"
-        title="Back to top"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2.2}
-          stroke="white"
-          className="h-5 w-5 md:h-7 md:w-7"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
-        </svg>
-      </button>
-
       {/* WhatsApp button (green) */}
       <button
         onClick={() =>
@@ -109,10 +95,10 @@ export default function FloatingArrowWhatsApp() {
             "_blank"
           )
         }
-        className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center rounded-full bg-green-500 shadow-lg transition-transform hover:-translate-y-2 hover:scale-105"
+        className="flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-green-500 shadow-lg transition-transform hover:-translate-y-1 hover:scale-105"
         title="WhatsApp"
       >
-        <FaWhatsapp className="h-5 w-5 md:h-7 md:w-7 text-white" />
+        <FaWhatsapp className="h-4 w-4 md:h-5 md:w-5 text-white" />
       </button>
     </div>
   );

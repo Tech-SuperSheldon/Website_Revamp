@@ -2,6 +2,7 @@
 // The detail component ends after Pricing (no "Experience the Classroom" /
 // Features / Teacher / FAQ sections), consistent with the listing page.
 import { Header } from '@/components/NSheader';
+import { Footer } from '@/components/NSfooter';
 import NSCourseDetailAU from '@/components/newcourse/NSCourseDetailAU';
 
 export default async function CourseDetailPage({ params }) {
@@ -10,6 +11,7 @@ export default async function CourseDetailPage({ params }) {
     <main>
       <Header />
       <NSCourseDetailAU courseId={slug} />
+      <Footer />
     </main>
   );
 }

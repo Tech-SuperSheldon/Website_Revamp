@@ -80,7 +80,7 @@ export default function NSAnim() {
                 {/* <div className="absolute bottom-0 left-0 right-0 h-7 bg-black rounded-b-2xl" /> */}
               </div>
               
-              <div className="mt-6 text-center md:text-left">
+              <div className="mt-6 text-center">
                 <h3 className="text-orange-500 text-xl md:text-2xl font-bold mb-2 tracking-tight">
                   {video.title}
                 </h3>

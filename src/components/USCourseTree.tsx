@@ -62,7 +62,7 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
         </div>
 
         {/* CTA */}
-        <div className="border-t border-orange-100 pt-3 mt-auto">
+        <div className="border-t border-orange-100 pt-3 mt-auto flex flex-col gap-2">
           <Link href={course.path}>
             <button className="w-full bg-orange-500 text-white rounded-lg py-2.5 text-sm font-semibold hover:bg-orange-600 transition-colors flex items-center justify-center gap-1.5 group/btn">
               Explore Course
@@ -72,6 +72,9 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
               />
             </button>
           </Link>
+          <button className="w-full bg-gray-50 text-gray-700 rounded-lg py-2 text-sm font-semibold hover:bg-gray-100 transition-colors border border-gray-200">
+            Download Brochure
+          </button>
         </div>
       </div>
     </motion.div>
