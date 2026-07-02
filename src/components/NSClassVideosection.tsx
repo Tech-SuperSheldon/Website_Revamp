@@ -157,7 +157,7 @@ export default function NSClassVideoSection() {
         </div>
         
         {/* --- TABLET CONTAINER --- */}
-        <div className="relative w-full max-w-[1000px] aspect-[16/10] md:aspect-[16/9] flex items-center justify-center mt-4 mb-12">
+        <div className="relative w-full max-w-[1000px] aspect-[16/10] md:aspect-[16/9] flex items-center justify-center mt-4 mb-4 md:mb-12">
             
             {/* THE DEVICE (TABLET) */}
             <motion.div 
@@ -221,7 +221,7 @@ export default function NSClassVideoSection() {
 
 
         {/* --- BOTTOM 3-COLUMN INFO SECTION --- */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 w-full max-w-6xl mt-12 px-4 relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 w-full max-w-6xl mt-4 md:mt-12 px-4 relative">
             <GridBackground zIndex={0} cellSize={36} lineColor="rgba(0,0,0,0.09)" fadeRadius="60%" />
             {/* Item 1 */}
             <motion.div

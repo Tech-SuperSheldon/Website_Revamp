@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { coursesData, Course } from "@/lib/course-data-au";
@@ -8,27 +8,101 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, Filter, Check } from "lucide-react";
 import DownloadBrochureButton from "./DownloadBrochureButton";
 
+// Shape returned by the CRM's public course catalog (GET /api/courses ->
+// proxies to the CRM FastAPI backend's GET /api/public/courses).
+type CrmCourse = {
+  id: string;
+  legacy_course_id?: string | null;
+  name: string;
+  grade: string;
+  thumbnail_url?: string | null;
+  brochure_url: string;
+  status: "active" | "inactive";
+};
+
+// A course entry as rendered by the grid: CRM fields (name/grade/thumbnail/
+// brochure) as the source of truth, with any matching hardcoded marketing
+// content (desc/chapters/pricing/etc.) from course-data-au.ts layered in by
+// id when available. Courses added fresh via the CRM (no hardcoded match)
+// render with sensible defaults instead.
+type DisplayCourse = Course & { year: string; brochureUrl: string };
+
+const FALLBACK_IMG = "";
+
 export default function NSCourseMainAU() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const INITIAL_COUNT = 6;
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+  const [crmCourses, setCrmCourses] = useState<CrmCourse[] | null>(null);
 
   const categories = ["All", "Foundational", "Advanced", "Mastery", "Elite"];
 
-  // Flatten courses data to include the year/grade level
-  const allCourses = useMemo(() => {
-    return Object.entries(coursesData).flatMap(([year, courses]) =>
-      courses.map((course) => ({
-        ...course,
-        year, // Attach year/level to the course object for filtering
-      }))
-    );
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/courses")
+      .then((res) => res.json())
+      .then((data) => {
+        if (!cancelled) setCrmCourses(data.data ?? []);
+      })
+      .catch(() => {
+        if (!cancelled) setCrmCourses([]);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  // Get all unique levels for the filter sidebar
-  const years = useMemo(() => Object.keys(coursesData), []);
+  // Hardcoded marketing content, flattened and indexed by id, so a CRM
+  // course can be matched back to its rich description/chapters/pricing.
+  const hardcodedById = useMemo(() => {
+    const map = new Map<string, Course & { year: string }>();
+    Object.entries(coursesData).forEach(([year, courses]) => {
+      courses.forEach((course) => map.set(course.id, { ...course, year }));
+    });
+    return map;
+  }, []);
+
+  // The CRM is the source of truth for which courses are shown at all —
+  // only its active courses are rendered, each merged with any matching
+  // hardcoded marketing content.
+  const allCourses = useMemo<DisplayCourse[]>(() => {
+    if (!crmCourses) return [];
+    return crmCourses
+      .filter((c) => c.status === "active")
+      .map((c) => {
+        const hardcoded = hardcodedById.get(c.legacy_course_id || c.id);
+        return {
+          id: c.legacy_course_id || c.id,
+          title: c.name,
+          year: c.grade,
+          brochureUrl: c.brochure_url || "",
+          desc: hardcoded?.desc ?? "",
+          img: c.thumbnail_url || hardcoded?.img || FALLBACK_IMG,
+          type: hardcoded?.type ?? c.grade,
+          categ: hardcoded?.categ ?? "All",
+          topics: hardcoded?.topics ?? 0,
+          duration: hardcoded?.duration ?? "",
+          chapters: hardcoded?.chapters ?? [],
+          pricing: hardcoded?.pricing,
+          level: hardcoded?.level,
+          benefits: hardcoded?.benefits,
+          resourcesCount: hardcoded?.resourcesCount,
+          lastUpdated: hardcoded?.lastUpdated,
+          learningOutcomes: hardcoded?.learningOutcomes,
+          targetAudience: hardcoded?.targetAudience,
+          testimonial: hardcoded?.testimonial,
+          stats: hardcoded?.stats,
+        };
+      });
+  }, [crmCourses, hardcodedById]);
+
+  // Get all unique grades for the filter sidebar, derived from the CRM course list.
+  const years = useMemo(
+    () => Array.from(new Set(allCourses.map((c) => c.year))),
+    [allCourses]
+  );
 
   const filteredCourses = useMemo(() => {
     return allCourses.filter((course) => {
@@ -141,7 +215,15 @@ export default function NSCourseMainAU() {
             Showing {Math.min(visibleCount, filteredCourses.length)} of {filteredCourses.length} {filteredCourses.length === 1 ? 'program' : 'programs'}
         </motion.div>
 
+        {/* Loading state */}
+        {crmCourses === null && (
+            <div className="text-center py-20">
+                <p className="text-gray-400 text-lg">Loading courses…</p>
+            </div>
+        )}
+
         {/* Course Grid */}
+        {crmCourses !== null && (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
             <AnimatePresence mode="popLayout">
                 {filteredCourses.slice(0, visibleCount).map((course) => (
@@ -207,7 +289,11 @@ export default function NSCourseMainAU() {
                                         </button>
 
                                         <div className="mb-5">
-                                            <DownloadBrochureButton course={course} variant="compact" />
+                                            <DownloadBrochureButton
+                                                course={course}
+                                                variant="compact"
+                                                uploadedBrochureUrl={course.brochureUrl || null}
+                                            />
                                         </div>
 
                                         <div className="flex items-center justify-between text-xs text-gray-400 font-bold border-t border-gray-100 pt-5 uppercase tracking-wider">
@@ -226,8 +312,9 @@ export default function NSCourseMainAU() {
                 ))}
             </AnimatePresence>
         </div>
-        
-        {filteredCourses.length === 0 && (
+        )}
+
+        {crmCourses !== null && filteredCourses.length === 0 && (
             <div className="text-center py-20">
                 <p className="text-gray-400 text-lg">No courses found matching your criteria.</p>
                 <button 

@@ -153,23 +153,13 @@ export function Footer() {
                           <li><RollingLink href="/terms" hoverColor="text-black" baseColor="text-white">Terms & Conditions</RollingLink></li>
                        </ul>
                        <div className="flex flex-col gap-2">
-                          <Link href="https://apps.apple.com/pk/app/levelup-learn-play/id6773067123" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 rounded-lg bg-black px-3 py-2.5 text-white shadow-md transition-transform hover:scale-[1.02] hover:bg-gray-800 active:scale-95">
-                            <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.04 2.26-.79 3.59-.76 1.54.04 2.87.82 3.59 2.05-3.09 1.83-2.6 5.86.35 7.14-.65 1.76-1.52 3.6-2.61 3.74zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                            </svg>
-                            <div className="flex flex-col items-start leading-none">
-                              <span className="text-[9px] uppercase tracking-wider opacity-80">Download on the</span>
-                              <span className="text-[13px] font-semibold">App Store</span>
-                            </div>
+                          <Link href="https://apps.apple.com/pk/app/levelup-learn-play/id6773067123" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center rounded-lg transition-transform hover:scale-[1.02] active:scale-95">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src="/badges/appstore.png" alt="Download on the App Store" className="h-10 w-auto object-contain" />
                           </Link>
-                          <Link href="https://play.google.com/store/apps/details?id=com.supersheldon.levelup&hl=en_IN" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 rounded-lg bg-black px-3 py-2.5 text-white shadow-md transition-transform hover:scale-[1.02] hover:bg-gray-800 active:scale-95">
-                            <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M3.522 3.013a1.996 1.996 0 0 0-.25 1.054v15.86c0 .416.096.793.25 1.06l10.421-10.463L3.522 3.013zm11.025 9.47L4.722 2.65a2.016 2.016 0 0 1 1.258-.291c.219.01.44.053.647.16l11.66 6.643-3.74 3.32zm.542.484l3.96 3.522c1.23.699 1.23 1.833 0 2.529l-2.049 1.168-3.66-3.266 1.749-3.953zM5.385 21.053c-.347.114-.725.132-1.096-.06l10.33-10.372 3.66 3.264-11.66 6.645a2.022 2.022 0 0 1-1.234.523z"/>
-                            </svg>
-                            <div className="flex flex-col items-start leading-none">
-                              <span className="text-[9px] uppercase tracking-wider opacity-80">GET IT ON</span>
-                              <span className="text-[13px] font-semibold">Google Play</span>
-                            </div>
+                          <Link href="https://play.google.com/store/apps/details?id=com.supersheldon.levelup&hl=en_IN" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center rounded-lg transition-transform hover:scale-[1.02] active:scale-95">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src="/badges/playstore.png" alt="Get it on Google Play" className="h-10 w-auto object-contain scale-[1.35]" />
                           </Link>
                        </div>
                   </div>

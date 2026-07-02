@@ -80,7 +80,7 @@ export default function NSTeacherTest() {
   }, [currentVideoIndex, isVisible]);
 
   return (
-    <section className="w-full py-4 md:py-12 overflow-hidden relative">
+    <section className="w-full -mt-[26vh] pt-4 pb-4 md:mt-0 md:py-12 overflow-hidden relative">
       {/* Background decoration removed */}
 
       <div className="container mx-auto px-4">

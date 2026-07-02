@@ -49,7 +49,7 @@ function detectBookingIntent(text: string): boolean {
   return BOOKING_KEYWORDS.some((kw) => lower.includes(kw));
 }
 
-export default function NovaChatbot() {
+export default function NovaChatbot({ mobileHidden = false }: { mobileHidden?: boolean }) {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -77,6 +77,12 @@ export default function NovaChatbot() {
       setTimeout(() => inputRef.current?.focus(), 100);
     }
   }, [open]);
+
+  useEffect(() => {
+    const handler = () => setOpen(true);
+    window.addEventListener("openNova", handler);
+    return () => window.removeEventListener("openNova", handler);
+  }, []);
 
   const addMessage = (msg: Message) => {
     setMessages((prev) => [...prev, msg]);
@@ -405,7 +411,7 @@ export default function NovaChatbot() {
         onClick={() => setOpen((o) => !o)}
         whileHover={{ scale: 1.05, y: -2 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-5 right-4 z-[9999] pl-2 pr-4 py-2 rounded-full bg-gradient-to-br from-orange-500 to-orange-400 shadow-lg shadow-orange-300/50 flex items-center gap-2.5 text-white group"
+        className={`fixed bottom-5 right-4 z-[9999] pl-2 sm:pr-4 pr-2 py-2 rounded-full bg-gradient-to-br from-orange-500 to-orange-400 shadow-lg shadow-orange-300/50 items-center gap-2.5 text-white group ${mobileHidden ? "hidden md:flex" : "flex"}`}
         aria-label="Open Nova chatbot"
       >
         {/* Animated glow ring behind icon */}
@@ -445,7 +451,7 @@ export default function NovaChatbot() {
         </AnimatePresence>
         {!open && (
           <motion.span
-            className="text-sm font-semibold whitespace-nowrap z-10"
+            className="hidden sm:inline text-sm font-semibold whitespace-nowrap z-10"
             initial={{ opacity: 0, x: -5 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.3 }}

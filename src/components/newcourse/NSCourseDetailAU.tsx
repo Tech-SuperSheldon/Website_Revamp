@@ -17,9 +17,10 @@ import DownloadBrochureButton from "./DownloadBrochureButton";
 
 interface NSCourseDetailAUProps {
     courseId: string;
+    uploadedBrochureUrl?: string | null;
 }
 
-export default function NSCourseDetailAU({ courseId }: NSCourseDetailAUProps) {
+export default function NSCourseDetailAU({ courseId, uploadedBrochureUrl }: NSCourseDetailAUProps) {
   // Find the course from the data
   const allCourses: Course[] = Object.values(coursesData).flat();
   const course = allCourses.find((c) => c.id === courseId);
@@ -43,7 +44,7 @@ export default function NSCourseDetailAU({ courseId }: NSCourseDetailAUProps) {
 
   return (
     <>
-    <div className="min-h-screen pb-20 pt-32 md:pt-40 font-sans bg-white">
+    <div className="min-h-screen pb-20 pt-24 md:pt-40 font-sans bg-white">
       
       {/* Breadcrumbs & Title Area */}
       <div className="container mx-auto px-4 max-w-7xl mb-12">
@@ -62,7 +63,7 @@ export default function NSCourseDetailAU({ courseId }: NSCourseDetailAUProps) {
                     {course.title}
                 </h1>
                 <div className="flex flex-wrap items-center gap-3">
-                    <DownloadBrochureButton course={course} variant="solid" />
+                    <DownloadBrochureButton course={course} variant="solid" uploadedBrochureUrl={uploadedBrochureUrl} />
                     <Link href="/demo">
                         <button className="bg-orange-600 text-white px-8 py-3 rounded-full font-bold hover:bg-orange-700 transition-all shadow-lg shadow-orange-500/30 whitespace-nowrap">
                             Enroll as a Champ

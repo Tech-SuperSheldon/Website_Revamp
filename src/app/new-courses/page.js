@@ -3,6 +3,7 @@
 import { Header } from '@/components/NSheader';
 import { Footer } from '@/components/NSfooter';
 import NSCourseMainAU from '@/components/newcourse/NSCourseMainAU';
+import PathwayFinderBanner from '@/components/PathwayFinderBanner';
 
 export const metadata = {
   title: 'Explore Our Australian Courses | SuperSheldon',
@@ -13,6 +14,7 @@ export default function NewCourses() {
     <main>
       <Header />
       <NSCourseMainAU />
+      <PathwayFinderBanner />
       <Footer />
     </main>
   );

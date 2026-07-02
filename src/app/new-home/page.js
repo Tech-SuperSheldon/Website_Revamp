@@ -7,6 +7,7 @@ import NovaChatbot from '@/components/NovaChatbot';
 import FloatingArrowWhatsApp from '@/components/ArrowAndWhatsapp';
 import NSCookieConsent from '@/components/NSCookieConsent';
 import NSDeadlineBanner from '@/components/NSDeadlineBanner';
+import ScrollToTop from '@/components/ScrollToTop';
 
 // Below-fold components loaded lazily to reduce initial JS bundle
 const TestimonialSection   = dynamic(() => import('@/components/NSstudent-testimonial').then(m => ({ default: m.TestimonialSection })));
@@ -22,6 +23,7 @@ const TeacherCarousel      = dynamic(() => import('@/components/NSTeachers'));
 const FeatureSlider        = dynamic(() => import('@/components/NSFeatures'));
 const NSLevelUp            = dynamic(() => import('@/components/NSApp'));
 const FAQ                  = dynamic(() => import('@/components/NSFAQ'));
+const PathwayFinderBanner  = dynamic(() => import('@/components/PathwayFinderBanner'));
 const Footer               = dynamic(() => import('@/components/NSfooter').then(m => ({ default: m.Footer })));
 
 export const metadata = {
@@ -31,6 +33,7 @@ export const metadata = {
 export default function NewHome() {
   return (
     <main className="new-home-bg">
+      <ScrollToTop />
       <NSDeadlineBanner />
       <Header stacked />
       <Hero />
@@ -47,9 +50,10 @@ export default function NewHome() {
       <FeatureSlider />
       <NSLevelUp />
       <FAQ />
+      <PathwayFinderBanner />
       <Footer />
-      <NovaChatbot />
-      <FloatingArrowWhatsApp side="right" />
+      <NovaChatbot mobileHidden={true} />
+      <FloatingArrowWhatsApp side="right" mobileBar={true} />
       <NSCookieConsent />
     </main>
   );

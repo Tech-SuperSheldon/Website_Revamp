@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:brochure": "node scripts/generate-brochure.mjs"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",

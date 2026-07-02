@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Calendar, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -40,17 +40,36 @@ function getDeadlineInfo() {
   const lastDay = new Date(deadlineYear, deadlineMonth + 1, 0).getDate();
   const deadlineDay = Math.min(30, lastDay);
 
-  // Check urgency: within last 5 days of deadline
-  const isUrgent =
-    deadlineMonth === currentMonth &&
-    currentDay >= deadlineDay - 5 &&
-    currentDay <= deadlineDay;
+  // Deadline expires at the end of the deadline day (23:59:59)
+  const deadlineDate = new Date(
+    deadlineYear,
+    deadlineMonth,
+    deadlineDay,
+    23, 59, 59, 999
+  );
 
   return {
     deadline: `${deadlineDay} ${monthNames[deadlineMonth]} ${deadlineYear}`,
     batchStart: `${monthNames[batchMonth]} ${batchYear}`,
-    isUrgent,
-    daysLeft: deadlineMonth === currentMonth ? deadlineDay - currentDay : deadlineDay,
+    deadlineDate,
+  };
+}
+
+function getTimeLeft(deadlineDate: Date) {
+  const diff = Math.max(0, deadlineDate.getTime() - Date.now());
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  return {
+    days,
+    hours,
+    minutes,
+    seconds,
+    isUrgent: diff > 0 && diff <= 5 * 24 * 60 * 60 * 1000,
+    expired: diff <= 0,
   };
 }
 
@@ -58,6 +77,14 @@ export default function NSDeadlineBanner() {
   const [dismissed, setDismissed] = useState(false);
 
   const info = useMemo(() => getDeadlineInfo(), []);
+  const [timeLeft, setTimeLeft] = useState(() => getTimeLeft(info.deadlineDate));
+
+  useEffect(() => {
+    const tick = () => setTimeLeft(getTimeLeft(info.deadlineDate));
+    tick();
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, [info.deadlineDate]);
 
   if (dismissed) return null;
 
@@ -70,7 +97,7 @@ export default function NSDeadlineBanner() {
           exit={{ y: -60, opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
           className={`relative z-[9997] w-full ${
-            info.isUrgent
+            timeLeft.isUrgent
               ? "bg-gradient-to-r from-red-500 to-orange-500"
               : "bg-gradient-to-r from-orange-500 to-orange-400"
           } text-white shadow-md`}
@@ -81,23 +108,38 @@ export default function NSDeadlineBanner() {
               <div className="shrink-0 w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
                 <Clock size={14} className="text-white" />
               </div>
-              <p className="text-xs sm:text-sm font-medium leading-tight truncate">
-                <span className="font-bold">Application Deadline:</span>{" "}
-                {info.deadline}
-                <span className="hidden sm:inline"> · </span>
-                <span className="sm:hidden block text-[10px] opacity-90 mt-0.5">
-                  Next batch starts {info.batchStart}
-                </span>
-                <span className="hidden sm:inline font-semibold">
-                  {" "}| Next batch starts {info.batchStart}
-                </span>
-                {info.isUrgent && (
-                  <span className="ml-1.5 inline-flex items-center gap-1 bg-white/20 px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide">
-                    <Calendar size={10} />
-                    {info.daysLeft} {info.daysLeft === 1 ? "day" : "days"} left
+              <div className="flex flex-col sm:flex-row sm:items-center gap-x-2 gap-y-0.5 min-w-0">
+                <p className="text-xs sm:text-sm font-medium leading-tight truncate">
+                  <span className="font-bold">Application Deadline:</span>{" "}
+                  {info.deadline}
+                  <span className="hidden sm:inline"> · </span>
+                  <span className="sm:hidden block text-[10px] opacity-90 mt-0.5">
+                    Next batch starts {info.batchStart}
                   </span>
+                  <span className="hidden sm:inline font-semibold">
+                    {" "}| Next batch starts {info.batchStart}
+                  </span>
+                </p>
+                {!timeLeft.expired && (
+                  <div className="flex items-center gap-1 shrink-0">
+                    <Calendar size={10} className="hidden sm:inline opacity-90" />
+                    {[
+                      { value: timeLeft.days, label: "d" },
+                      { value: timeLeft.hours, label: "h" },
+                      { value: timeLeft.minutes, label: "m" },
+                      { value: timeLeft.seconds, label: "s" },
+                    ].map((unit, idx) => (
+                      <span
+                        key={unit.label}
+                        className="inline-flex items-baseline gap-0.5 bg-white/20 px-1.5 py-0.5 rounded text-[10px] font-bold tabular-nums"
+                      >
+                        {String(unit.value).padStart(2, "0")}
+                        <span className="opacity-80">{unit.label}</span>
+                      </span>
+                    ))}
+                  </div>
                 )}
-              </p>
+              </div>
             </div>
 
             {/* Right: CTA + Close */}

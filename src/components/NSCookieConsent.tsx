@@ -1,13 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Cookie, X } from "lucide-react";
+import { Cookie } from "lucide-react";
 
 export default function NSCookieConsent() {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
-  if (!show) return null;
+  useEffect(() => {
+    const choice = localStorage.getItem("cookie-consent");
+    if (!choice) setShow(true);
+  }, []);
+
+  const handleAccept = () => {
+    localStorage.setItem("cookie-consent", "accepted");
+    setShow(false);
+  };
+
+  const handleReject = () => {
+    localStorage.setItem("cookie-consent", "rejected");
+    setShow(false);
+  };
 
   return (
     <AnimatePresence>
@@ -17,7 +30,7 @@ export default function NSCookieConsent() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeOut", delay: 1 }}
-          className="fixed bottom-0 left-0 right-0 z-[9998] px-4 py-4 md:px-6 md:py-5"
+          className="fixed bottom-0 left-0 right-0 z-[99999] px-4 py-4 md:px-6 md:py-5"
         >
           <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl border border-orange-100 px-5 py-4 md:px-6 md:py-5 flex flex-col sm:flex-row items-center gap-4">
             {/* Icon */}
@@ -35,17 +48,16 @@ export default function NSCookieConsent() {
             {/* Actions */}
             <div className="flex items-center gap-3 shrink-0">
               <button
-                onClick={() => setShow(false)}
+                onClick={handleReject}
+                className="border border-gray-300 hover:border-gray-400 text-gray-600 hover:text-gray-800 text-sm font-semibold px-5 py-2.5 rounded-full transition-colors duration-200"
+              >
+                Reject
+              </button>
+              <button
+                onClick={handleAccept}
                 className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors duration-200 shadow-md"
               >
                 Accept
-              </button>
-              <button
-                onClick={() => setShow(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors p-1 rounded-full hover:bg-gray-100"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
               </button>
             </div>
           </div>

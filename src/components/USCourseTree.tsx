@@ -63,7 +63,7 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
 
         {/* CTA */}
         <div className="border-t border-orange-100 pt-3 mt-auto flex flex-col gap-2">
-          <Link href={course.path}>
+          <Link href={`/new-courses/${course.id}`}>
             <button className="w-full bg-orange-500 text-white rounded-lg py-2.5 text-sm font-semibold hover:bg-orange-600 transition-colors flex items-center justify-center gap-1.5 group/btn">
               Explore Course
               <ArrowRight
@@ -116,7 +116,7 @@ export default function USCourseTree() {
         </motion.div>
 
         {/* Year Selector — horizontally scrollable pill row (mobile + desktop) */}
-        <div ref={scrollRef} className="flex overflow-x-auto no-scrollbar gap-2 mb-3 pb-1">
+        <div ref={scrollRef} className="flex overflow-x-auto no-scrollbar gap-2 mb-3 pb-1 md:justify-center">
           {years.map((year) => (
             <button
               key={year}

@@ -1,100 +1,105 @@
-// "use client";
-
-// import { useEffect, useState } from "react";
-// import { FaWhatsapp } from "react-icons/fa";
-
-// export default function FloatingArrowWhatsApp() {
-//   const [show, setShow] = useState(false);
-
-//   useEffect(() => {
-//     const timer = setTimeout(() => setShow(true), 200);
-//     return () => clearTimeout(timer);
-//   }, []);
-
-//   const scrollToTop = () => {
-//     window.scrollTo({ top: 0, behavior: "smooth" });
-//   };
-
-//   return (
-//     <div
-//       className={`fixed right-6 bottom-6 z-50 flex flex-col items-center gap-3 transition-all duration-500 ${
-//         show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-//       }`}
-//     >
-//       {/* Scroll to top button (orange) */}
-//       <button
-//         onClick={scrollToTop}
-//         className="flex h-14 w-14 items-center justify-center rounded-full bg-orange-500 shadow-lg ring-1 ring-black/10 transition-transform hover:-translate-y-2 hover:scale-105"
-//         title="Back to top"
-//       >
-//         <svg
-//           xmlns="http://www.w3.org/2000/svg"
-//           fill="none"
-//           viewBox="0 0 24 24"
-//           strokeWidth={2.2}
-//           stroke="white"
-//           className="h-7 w-7"
-//         >
-//           <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
-//         </svg>
-//       </button>
-
-//       {/* WhatsApp button (green) */}
-//       <button
-//         onClick={() =>
-//           window.open(
-//             "https://api.whatsapp.com/send/?phone=917974695618&text&type=phone_number&app_absent=0", // replace with your number/message
-//             "_blank"
-//           )
-//         }
-//         className="flex h-14 w-14 items-center justify-center rounded-full bg-green-500 shadow-lg transition-transform hover:-translate-y-2 hover:scale-105"
-//         title="WhatsApp"
-//       >
-//         <FaWhatsapp className="h-7 w-7 text-white" />
-//       </button>
-//     </div>
-//   );
-// }
-
-
-
-
-
 "use client";
 
 import { useEffect, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
 
-export default function FloatingArrowWhatsApp({ side = "right" }) {
+const WAPP_URL =
+  "https://api.whatsapp.com/send/?phone=917974695618&text&type=phone_number&app_absent=0";
+
+export default function FloatingArrowWhatsApp({ side = "right", mobileBar = false }) {
   const [show, setShow] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setShow(true), 200);
     return () => clearTimeout(timer);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleNovaClick = () => {
+    window.dispatchEvent(new CustomEvent("openNova"));
   };
 
-  const positionClass = side === "left"
-    ? "left-3 bottom-3 md:left-6 md:bottom-6"
-    : "right-4 bottom-[4.5rem] md:right-5 md:bottom-[5.2rem]";
+  const positionClass =
+    side === "left"
+      ? "left-3 bottom-3 md:left-6 md:bottom-6"
+      : "right-4 bottom-[4.5rem] md:right-5 md:bottom-[5.2rem]";
 
+  /* ── Mobile collapsible bar (only when mobileBar=true) ── */
+  if (mobileBar) {
+    return (
+      <>
+        {/* ─── MOBILE: arrow + collapsible icons ─── */}
+        <div
+          className={`md:hidden fixed right-0 bottom-4 z-[9998] flex flex-col items-end gap-2 transition-opacity duration-500 ${
+            show ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          {/* Arrow toggle — always attached to right edge */}
+          <button
+            onClick={() => setCollapsed((c) => !c)}
+            className="w-7 h-10 bg-orange-500 text-white flex items-center justify-center rounded-l-full shadow-md hover:bg-orange-600 transition-colors"
+            aria-label={collapsed ? "Show floating buttons" : "Hide floating buttons"}
+          >
+            {collapsed ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
+          </button>
+
+          {/* Icons — slide off to the right when collapsed */}
+          <div
+            className={`flex flex-col gap-2 pr-3 transition-all duration-300 ${
+              collapsed
+                ? "translate-x-[calc(100%+24px)] opacity-0 pointer-events-none"
+                : "translate-x-0 opacity-100"
+            }`}
+          >
+            {/* WhatsApp */}
+            <button
+              onClick={() => window.open(WAPP_URL, "_blank")}
+              className="w-12 h-12 flex items-center justify-center rounded-full bg-green-500 shadow-lg hover:scale-105 transition-transform"
+              title="WhatsApp"
+            >
+              <FaWhatsapp className="h-6 w-6 text-white" />
+            </button>
+
+            {/* Nova */}
+            <button
+              onClick={handleNovaClick}
+              className="relative w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-orange-400 shadow-lg overflow-hidden border-2 border-white/40 hover:scale-105 transition-transform"
+              title="Chat with Nova"
+            >
+              <Image src="/nova-icon.png" alt="Nova" fill className="object-cover" />
+            </button>
+          </div>
+        </div>
+
+        {/* ─── DESKTOP: standard WhatsApp button only ─── */}
+        <div
+          className={`hidden md:flex fixed right-5 bottom-[5.2rem] z-50 flex-col items-center gap-3 transition-all duration-500 ${
+            show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
+        >
+          <button
+            onClick={() => window.open(WAPP_URL, "_blank")}
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 shadow-lg transition-transform hover:-translate-y-1 hover:scale-105"
+            title="WhatsApp"
+          >
+            <FaWhatsapp className="h-5 w-5 text-white" />
+          </button>
+        </div>
+      </>
+    );
+  }
+
+  /* ── Default behaviour (all other pages) ── */
   return (
     <div
       className={`fixed ${positionClass} z-50 flex flex-col items-center gap-2 md:gap-3 transition-all duration-500 ${
         show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-      {/* WhatsApp button (green) */}
       <button
-        onClick={() =>
-          window.open(
-            "https://api.whatsapp.com/send/?phone=917974695618&text&type=phone_number&app_absent=0",
-            "_blank"
-          )
-        }
+        onClick={() => window.open(WAPP_URL, "_blank")}
         className="flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-green-500 shadow-lg transition-transform hover:-translate-y-1 hover:scale-105"
         title="WhatsApp"
       >

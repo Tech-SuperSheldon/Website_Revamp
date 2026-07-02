@@ -40,7 +40,7 @@ export default function NSChoose() {
   });
 
   return (
-    <section ref={containerRef} className="h-[300vh] relative">
+    <section ref={containerRef} className="h-[160vh] md:h-[300vh] relative">
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
 
         {/* Section Header */}

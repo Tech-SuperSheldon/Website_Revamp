@@ -3,10 +3,14 @@
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { FaWhatsapp } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { TRACKS } from "../quiz-data";
 import type { ScoreResult } from "../scoring";
 import { getTrackCount } from "../counters";
+
+// Same Super Sheldon WhatsApp number used by the floating button site-wide.
+const WAPP_PHONE = "917974695618";
 
 interface Props {
   result: ScoreResult;
@@ -18,6 +22,16 @@ export default function ResultsScreen({ result, onCompare, onRetake }: Props) {
   const t = TRACKS[result.winner];
   const secondKey = result.sortedKeys.find((k) => k !== result.winner)!;
   const isClose = result.confidence !== "clear";
+
+  // Pre-filled WhatsApp message carrying the matched pathway + scores so the
+  // team has full context the moment the family reaches out.
+  const waMessage =
+    `Hi Super Sheldon! I just took the Pathway Finder and my child matched with ` +
+    `*${t.name}* (${result.percentages[result.winner]}% match). ` +
+    `I'd love to know more about the courses for this pathway.`;
+  const waUrl =
+    `https://api.whatsapp.com/send/?phone=${WAPP_PHONE}` +
+    `&text=${encodeURIComponent(waMessage)}&type=phone_number&app_absent=0`;
 
   // Daily-seeded stat resolved on the client to avoid hydration mismatch.
   const [matched, setMatched] = useState<number | null>(null);
@@ -140,7 +154,36 @@ export default function ResultsScreen({ result, onCompare, onRetake }: Props) {
         </div>
       </div>
 
-      <div className="mt-8 rounded-3xl bg-[#0D1B2A] p-8 text-center text-white">
+      {/* Talk to an advisor / share the result over WhatsApp */}
+      <div className="mt-6 rounded-3xl border border-green-200 bg-green-50 p-6">
+        <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-green-500">
+              <FaWhatsapp className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-[#0D1B2A]">
+                Want help choosing a course?
+              </h3>
+              <p className="mt-1 text-sm text-slate-600">
+                Send your {t.shortName} match to our team on WhatsApp and we'll
+                suggest the right course for your child.
+              </p>
+            </div>
+          </div>
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-full bg-green-500 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-green-600 sm:w-auto"
+          >
+            <FaWhatsapp className="h-5 w-5" />
+            Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div className="mt-6 rounded-3xl bg-[#0D1B2A] p-8 text-center text-white">
         <h3 className="text-2xl font-bold">Your next step.</h3>
         <p className="mt-2 text-slate-300">
           See the courses built around this pathway.

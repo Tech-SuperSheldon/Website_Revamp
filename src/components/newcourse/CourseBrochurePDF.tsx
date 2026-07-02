@@ -12,329 +12,244 @@ import {
 import { Course } from "@/lib/course-data-au";
 import { namedTeachers } from "@/lib/teachers-data";
 
-/* ------------------------------------------------------------------ */
-/*  Brand constants                                                    */
-/* ------------------------------------------------------------------ */
-
-const COLORS = {
-  orange: "#f97316",
-  orangeDark: "#ea580c",
-  cream: "#FFF9F3",
-  ink: "#111827",
-  gray: "#6B7280",
-  lightGray: "#E5E7EB",
-  faintGray: "#F3F4F6",
-  white: "#FFFFFF",
-  green: "#16A34A",
+/* ─── Brand ─────────────────────────────────────────── */
+const C = {
+  orange:   "#f97316",
+  orangeDk: "#ea580c",
+  cream:    "#FFF9F3",
+  creamBdr: "#FCE8D6",
+  ink:      "#111827",
+  gray:     "#6B7280",
+  lgray:    "#E5E7EB",
+  fgray:    "#F3F4F6",
+  white:    "#FFFFFF",
+  green:    "#16A34A",
+  blue:     "#3B82F6",
+  purple:   "#8B5CF6",
+  amber:    "#D97706",
+  teal:     "#0D9488",
 };
 
-const LOGO_SRC = "/Final-Logo-bg-removed.png";
-const WEBSITE = "supersheldon.com";
-const WHATSAPP = "+91 7974695618";
-const DEMO_URL = "supersheldon.com/demo";
+const CAT: Record<string, { bg: string; fg: string }> = {
+  "EXAM STRATEGY": { bg: "#FFF7ED", fg: C.orange },
+  "LANGUAGE":      { bg: "#EFF6FF", fg: C.blue },
+  "SPELLING":      { bg: "#F5F3FF", fg: C.purple },
+  "NUMERACY":      { bg: "#FFFBEB", fg: C.amber },
+  "READING":       { bg: "#F0FDFA", fg: C.teal },
+  "WRITING":       { bg: "#F0FDF4", fg: C.green },
+  "EXAM PRACTICE": { bg: "#F9FAFB", fg: C.gray },
+};
 
-// Fallback benefits — mirrors NSCourseDetailAU.tsx so the PDF matches the site.
+const LOGO = "/Final-Logo-bg-removed.png";
+const WEB  = "supersheldon.com";
+const WA   = "+91 7974695618";
+const DEMO = "supersheldon.com/demo";
+
 const DEFAULT_BENEFITS = [
-  "Learn key concepts from the ground up — no prior experience required.",
-  "Master problem-solving techniques for higher scores.",
-  "Understand how to approach complex questions with confidence.",
-  "Save time with smart strategies and shortcuts.",
-  "Gain practical experience with real-world Australian curriculum questions.",
-  "Track progress with regular assessments and feedback.",
+  "Learn key concepts from the ground up",
+  "Master problem-solving techniques for higher scores",
+  "Approach complex questions with confidence",
+  "Save time with smart strategies and shortcuts",
+  "Practice with real-world curriculum questions",
+  "Track progress with regular assessments",
 ];
 
-/* ------------------------------------------------------------------ */
-/*  Styles                                                             */
-/* ------------------------------------------------------------------ */
-
-const styles = StyleSheet.create({
+/* ─── Styles ─────────────────────────────────────────── */
+const S = StyleSheet.create({
   page: {
     fontFamily: "Helvetica",
     fontSize: 10,
-    color: COLORS.ink,
-    backgroundColor: COLORS.white,
-    paddingBottom: 56,
+    color: C.ink,
+    backgroundColor: C.white,
+    paddingBottom: 48,
   },
 
-  /* Hero (cover) */
-  hero: {
-    backgroundColor: COLORS.orange,
-    paddingHorizontal: 40,
-    paddingTop: 36,
-    paddingBottom: 32,
-  },
-  heroTopRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 28,
-  },
-  logo: { height: 34, objectFit: "contain" },
-  heroBrandText: {
-    color: COLORS.white,
-    fontSize: 9,
-    fontFamily: "Helvetica-Bold",
-    letterSpacing: 1,
-    textAlign: "right",
-  },
-  heroEyebrow: {
-    color: COLORS.white,
-    fontSize: 9,
-    fontFamily: "Helvetica-Bold",
-    letterSpacing: 2,
-    textTransform: "uppercase",
-    opacity: 0.9,
-    marginBottom: 8,
-  },
-  heroTitle: {
-    color: COLORS.white,
-    fontSize: 30,
-    fontFamily: "Helvetica-Bold",
-    lineHeight: 1.15,
-    marginBottom: 14,
-  },
-  badgeRow: { flexDirection: "row" },
-  badge: {
-    backgroundColor: "rgba(255,255,255,0.22)",
-    color: COLORS.white,
-    fontSize: 8,
-    fontFamily: "Helvetica-Bold",
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
-    borderRadius: 20,
-    marginRight: 8,
-  },
-
-  /* Generic content padding */
-  body: { paddingHorizontal: 40, paddingTop: 26 },
-
-  sectionTitle: {
-    fontSize: 15,
-    fontFamily: "Helvetica-Bold",
-    color: COLORS.ink,
-    marginBottom: 14,
-  },
-  sectionTitleAccent: {
-    width: 32,
-    height: 3,
-    backgroundColor: COLORS.orange,
-    borderRadius: 2,
-    marginBottom: 14,
-    marginTop: -8,
-  },
-
-  /* Meta grid */
-  metaGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-start",
-    marginHorizontal: -6,
-    marginBottom: 22,
-  },
-  metaCell: {
-    width: "33.33%",
-    paddingHorizontal: 6,
-    marginBottom: 12,
-  },
-  metaBox: {
-    backgroundColor: COLORS.faintGray,
-    borderRadius: 8,
-    padding: 10,
-  },
-  metaLabel: {
-    fontSize: 7.5,
-    color: COLORS.gray,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    fontFamily: "Helvetica-Bold",
-    marginBottom: 4,
-  },
-  metaValue: {
-    fontSize: 11,
-    fontFamily: "Helvetica-Bold",
-    color: COLORS.ink,
-  },
-
-  paragraph: { fontSize: 10.5, lineHeight: 1.6, color: "#374151" },
-
-  /* Instructor */
-  instructorBox: {
-    marginTop: 22,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: COLORS.cream,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#FCE8D6",
-    padding: 16,
-  },
-  instructorAvatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: COLORS.orange,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 14,
-  },
-  instructorInitial: {
-    color: COLORS.white,
-    fontSize: 16,
-    fontFamily: "Helvetica-Bold",
-  },
-
-  /* Modules */
-  moduleRow: {
-    flexDirection: "row",
-    marginBottom: 12,
-    paddingBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.faintGray,
-  },
-  moduleNum: {
-    width: 22,
-    height: 22,
-    borderRadius: 11,
-    backgroundColor: COLORS.orange,
-    color: COLORS.white,
-    fontSize: 9,
-    fontFamily: "Helvetica-Bold",
-    textAlign: "center",
-    paddingTop: 6,
-    marginRight: 12,
-  },
-  moduleTitle: {
-    fontSize: 11,
-    fontFamily: "Helvetica-Bold",
-    color: COLORS.ink,
-    marginBottom: 3,
-  },
-  moduleDesc: { fontSize: 9.5, lineHeight: 1.5, color: COLORS.gray },
-
-  /* Pricing */
-  pricingRow: { flexDirection: "row", marginHorizontal: -5 },
-  priceCard: {
-    flex: 1,
-    marginHorizontal: 5,
-    borderWidth: 1,
-    borderColor: COLORS.lightGray,
-    borderRadius: 10,
-    padding: 12,
-  },
-  priceCardRec: {
-    flex: 1,
-    marginHorizontal: 5,
-    borderWidth: 1.5,
-    borderColor: COLORS.orange,
-    borderRadius: 10,
-    padding: 12,
-    backgroundColor: COLORS.cream,
-  },
-  priceTag: {
-    alignSelf: "flex-start",
-    fontSize: 7,
-    fontFamily: "Helvetica-Bold",
-    color: COLORS.orangeDark,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-    backgroundColor: "#FCE8D6",
-    paddingVertical: 2,
-    paddingHorizontal: 6,
-    borderRadius: 10,
-    marginBottom: 6,
-  },
-  priceTitle: {
-    fontSize: 11,
-    fontFamily: "Helvetica-Bold",
-    color: COLORS.ink,
-    marginBottom: 4,
-  },
-  priceAmount: {
-    fontSize: 18,
-    fontFamily: "Helvetica-Bold",
-    color: COLORS.orange,
-  },
-  priceDuration: { fontSize: 8, color: COLORS.gray, marginBottom: 8 },
-  priceFeature: {
-    fontSize: 8.5,
-    color: "#374151",
-    lineHeight: 1.4,
-    marginBottom: 4,
-    flexDirection: "row",
-  },
-
-  fallbackBox: {
-    backgroundColor: COLORS.cream,
-    borderWidth: 1,
-    borderColor: "#FCE8D6",
-    borderRadius: 10,
-    padding: 16,
-  },
-
-  /* Benefits */
-  benefitRow: { flexDirection: "row", marginBottom: 7, alignItems: "flex-start" },
-  benefitDot: {
-    width: 5,
-    height: 5,
-    borderRadius: 3,
-    backgroundColor: COLORS.orange,
-    marginTop: 4,
-    marginRight: 8,
-  },
-  benefitText: { fontSize: 10, lineHeight: 1.5, color: "#374151", flex: 1 },
-
-  /* Certificate */
-  certBox: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: COLORS.faintGray,
-    borderRadius: 10,
-    padding: 14,
-    marginTop: 4,
-  },
-
-  /* CTA */
-  ctaBox: {
-    backgroundColor: COLORS.ink,
-    borderRadius: 12,
-    padding: 18,
-    marginTop: 18,
-  },
-  ctaTitle: {
-    color: COLORS.white,
-    fontSize: 14,
-    fontFamily: "Helvetica-Bold",
-    marginBottom: 6,
-  },
-  ctaText: { color: "#D1D5DB", fontSize: 9.5, lineHeight: 1.5 },
-  ctaHighlight: { color: COLORS.orange, fontFamily: "Helvetica-Bold" },
-
-  /* Footer (fixed) */
   footer: {
     position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 40,
+    bottom: 0, left: 0, right: 0,
+    height: 36,
     paddingHorizontal: 40,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     borderTopWidth: 1,
-    borderTopColor: COLORS.lightGray,
+    borderTopColor: C.lgray,
   },
-  footerText: { fontSize: 8, color: COLORS.gray },
-  footerBrand: { fontSize: 8, color: COLORS.orange, fontFamily: "Helvetica-Bold" },
+  footerText: { fontSize: 7.5, color: C.gray },
+
+  topStripe: { height: 4, backgroundColor: C.orange },
+
+  /* Cover */
+  hero: {
+    backgroundColor: C.orange,
+    paddingHorizontal: 40,
+    paddingTop: 32,
+    paddingBottom: 28,
+  },
+  heroTopRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 26,
+  },
+  logo: { height: 30, objectFit: "contain" },
+  heroBrochureLabel: {
+    color: C.white, fontSize: 8, fontFamily: "Helvetica-Bold",
+    letterSpacing: 2, opacity: 0.85,
+  },
+  heroEyebrow: {
+    color: C.white, fontSize: 8, fontFamily: "Helvetica-Bold",
+    letterSpacing: 2, opacity: 0.85, marginBottom: 8,
+  },
+  heroTitle: {
+    color: C.white, fontSize: 32, fontFamily: "Helvetica-Bold",
+    lineHeight: 1.1, marginBottom: 12,
+  },
+  badgeRow: { flexDirection: "row" },
+  badge: {
+    backgroundColor: "rgba(255,255,255,0.2)", color: C.white,
+    fontSize: 7.5, fontFamily: "Helvetica-Bold", letterSpacing: 1,
+    paddingVertical: 3, paddingHorizontal: 10,
+    borderRadius: 20, marginRight: 6,
+  },
+
+  /* Stats strip on cover */
+  statsStrip: {
+    flexDirection: "row",
+    paddingHorizontal: 40,
+    paddingVertical: 18,
+    borderBottomWidth: 1,
+    borderBottomColor: C.lgray,
+  },
+  statCell: {
+    flex: 1, alignItems: "center", paddingVertical: 4,
+    borderRightWidth: 1, borderRightColor: C.lgray,
+  },
+  statCellLast: { flex: 1, alignItems: "center", paddingVertical: 4 },
+  statValue: {
+    fontSize: 15, fontFamily: "Helvetica-Bold", color: C.orange, marginBottom: 2,
+  },
+  statLabel: { fontSize: 7.5, color: C.gray, letterSpacing: 0.5 },
+
+  body: { paddingHorizontal: 40, paddingTop: 22 },
+  sectionTitle: {
+    fontSize: 13, fontFamily: "Helvetica-Bold", color: C.ink, marginBottom: 4,
+  },
+  sectionAccent: {
+    width: 30, height: 3, backgroundColor: C.orange,
+    borderRadius: 2, marginBottom: 12,
+  },
+  paragraph: { fontSize: 10.5, lineHeight: 1.6, color: "#374151" },
+
+  instructorBox: {
+    marginTop: 20, flexDirection: "row", alignItems: "center",
+    backgroundColor: C.cream, borderRadius: 10,
+    borderWidth: 1, borderColor: C.creamBdr, padding: 14,
+  },
+  instructorAvatar: {
+    width: 38, height: 38, borderRadius: 19,
+    backgroundColor: C.orange, alignItems: "center",
+    justifyContent: "center", marginRight: 12,
+  },
+  instructorInitial: { color: C.white, fontSize: 15, fontFamily: "Helvetica-Bold" },
+  metaLabel: {
+    fontSize: 7, color: C.gray, fontFamily: "Helvetica-Bold",
+    letterSpacing: 1, marginBottom: 2,
+  },
+  metaValue: { fontSize: 10.5, fontFamily: "Helvetica-Bold", color: C.ink },
+
+  /* Curriculum 2-col */
+  curriculumCols: { flexDirection: "row", paddingHorizontal: 40 },
+  colLeft:  { flex: 1, marginRight: 7 },
+  colRight: { flex: 1, marginLeft: 7 },
+
+  moduleCard: {
+    marginBottom: 9, borderWidth: 1, borderColor: C.lgray,
+    borderRadius: 8, padding: 10, backgroundColor: C.white,
+  },
+  moduleTopRow: { flexDirection: "row", alignItems: "center", marginBottom: 5 },
+  moduleNum: {
+    width: 20, height: 20, borderRadius: 10,
+    backgroundColor: C.orange, alignItems: "center",
+    justifyContent: "center", marginRight: 7,
+  },
+  moduleNumText: { color: C.white, fontSize: 8, fontFamily: "Helvetica-Bold" },
+  catTag: { borderRadius: 10, paddingVertical: 2, paddingHorizontal: 6 },
+  catTagText: { fontSize: 6, fontFamily: "Helvetica-Bold", letterSpacing: 0.3 },
+  moduleTitle: {
+    fontSize: 9.5, fontFamily: "Helvetica-Bold", color: C.ink,
+    marginBottom: 3, lineHeight: 1.3,
+  },
+  moduleDesc: { fontSize: 8.5, lineHeight: 1.4, color: C.gray, marginBottom: 5 },
+  relevancyBox: {
+    borderLeftWidth: 2, borderLeftColor: C.orange,
+    paddingLeft: 6, paddingVertical: 3,
+    backgroundColor: "#FFF7ED", borderRadius: 2,
+  },
+  relevancyLabel: {
+    fontSize: 6, fontFamily: "Helvetica-Bold",
+    color: C.orange, letterSpacing: 0.5, marginBottom: 1,
+  },
+  relevancyText: { fontSize: 7.5, lineHeight: 1.3, color: C.orangeDk },
+
+  /* Pricing page */
+  pricingRow: { flexDirection: "row", marginHorizontal: -5 },
+  priceCard: {
+    flex: 1, marginHorizontal: 5, borderWidth: 1,
+    borderColor: C.lgray, borderRadius: 10, padding: 12,
+  },
+  priceCardRec: {
+    flex: 1, marginHorizontal: 5, borderWidth: 2,
+    borderColor: C.orange, borderRadius: 10, padding: 12,
+    backgroundColor: C.cream,
+  },
+  priceBadge: {
+    alignSelf: "flex-start", fontSize: 6.5, fontFamily: "Helvetica-Bold",
+    color: C.orangeDk, backgroundColor: C.creamBdr,
+    paddingVertical: 2, paddingHorizontal: 6,
+    borderRadius: 10, marginBottom: 6, letterSpacing: 0.5,
+  },
+  priceTitle: { fontSize: 10, fontFamily: "Helvetica-Bold", color: C.ink, marginBottom: 3 },
+  priceAmount: { fontSize: 20, fontFamily: "Helvetica-Bold", color: C.orange, marginBottom: 1 },
+  priceDuration: { fontSize: 7.5, color: C.gray, marginBottom: 8 },
+  priceFeatureRow: { flexDirection: "row", marginBottom: 4 },
+  priceFeaturePlus: { color: C.green, fontSize: 10, marginRight: 4, marginTop: -1 },
+  priceFeatureText: { fontSize: 8, color: "#374151", flex: 1, lineHeight: 1.4 },
+
+  benefitsGrid: { flexDirection: "row", flexWrap: "wrap", marginTop: 4 },
+  benefitItem: {
+    width: "50%", flexDirection: "row",
+    alignItems: "flex-start", paddingRight: 6, marginBottom: 6,
+  },
+  benefitDot: {
+    width: 5, height: 5, borderRadius: 3,
+    backgroundColor: C.orange, marginTop: 4, marginRight: 7,
+  },
+  benefitText: { fontSize: 9, lineHeight: 1.4, color: "#374151", flex: 1 },
+
+  certBox: {
+    flexDirection: "row", alignItems: "center",
+    backgroundColor: C.fgray, borderRadius: 8, padding: 12, marginTop: 14,
+  },
+  certIcon: {
+    width: 30, height: 30, borderRadius: 15,
+    backgroundColor: C.orange, alignItems: "center",
+    justifyContent: "center", marginRight: 12,
+  },
+
+  ctaBox: { backgroundColor: C.ink, borderRadius: 10, padding: 16, marginTop: 12 },
+  ctaTitle: { color: C.white, fontSize: 13, fontFamily: "Helvetica-Bold", marginBottom: 6 },
+  ctaLine: { color: "#D1D5DB", fontSize: 9, lineHeight: 1.5, marginBottom: 2 },
+  ctaHL: { color: C.orange, fontFamily: "Helvetica-Bold" },
+
+  fallbackBox: {
+    backgroundColor: C.cream, borderWidth: 1,
+    borderColor: C.creamBdr, borderRadius: 10, padding: 14,
+  },
 });
 
-/* ------------------------------------------------------------------ */
-/*  Helpers                                                            */
-/* ------------------------------------------------------------------ */
-
+/* ─── Helpers ────────────────────────────────────────── */
 function pickTeacher(courseId: string) {
-  // Same deterministic selection used in NSCourseSidebar.tsx
   const index =
     courseId.split("").reduce((acc, ch) => acc + ch.charCodeAt(0), 0) %
     namedTeachers.length;
@@ -342,35 +257,30 @@ function pickTeacher(courseId: string) {
 }
 
 const Footer = () => (
-  <View style={styles.footer} fixed>
-    <Text style={styles.footerText}>
-      SuperSheldon · {WEBSITE} · WhatsApp {WHATSAPP}
+  <View style={S.footer} fixed>
+    <Text style={S.footerText}>
+      SuperSheldon · {WEB} · WhatsApp {WA}
     </Text>
     <Text
-      style={styles.footerText}
+      style={S.footerText}
       render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
     />
   </View>
 );
 
-/* ------------------------------------------------------------------ */
-/*  Document                                                           */
-/* ------------------------------------------------------------------ */
-
+/* ─── Component ──────────────────────────────────────── */
 export default function CourseBrochurePDF({ course }: { course: Course }) {
-  const teacher = pickTeacher(course.id);
-  const benefits =
-    course.benefits && course.benefits.length > 0
-      ? course.benefits
-      : DEFAULT_BENEFITS;
+  const teacher  = pickTeacher(course.id);
+  const benefits = course.benefits?.length ? course.benefits : DEFAULT_BENEFITS;
+  const chapters = course.chapters || [];
+  const leftChs  = chapters.filter((_, i) => i % 2 === 0);
+  const rightChs = chapters.filter((_, i) => i % 2 === 1);
 
-  const meta = [
-    { label: "Level", value: course.level || "All Levels" },
-    { label: "Lessons", value: `${course.chapters?.length || 10}` },
-    { label: "Duration", value: course.duration || "Flexible" },
-    { label: "Resources", value: `${course.resourcesCount || 3} files` },
+  const coverStats = [
+    { label: "Level",       value: course.level    || "All Levels" },
+    { label: "Duration",    value: course.duration  || "Flexible" },
+    { label: "Modules",     value: String(chapters.length || 10) },
     { label: "Certificate", value: "On Completion" },
-    { label: "Updated", value: course.lastUpdated || "2026" },
   ];
 
   return (
@@ -379,160 +289,211 @@ export default function CourseBrochurePDF({ course }: { course: Course }) {
       author="SuperSheldon"
       subject={course.type}
     >
-      {/* ---------- PAGE 1 : COVER ---------- */}
-      <Page size="A4" style={styles.page}>
-        <View style={styles.hero}>
-          <View style={styles.heroTopRow}>
-            {/* eslint-disable-next-line jsx-a11y/alt-text */}
-            <Image src={LOGO_SRC} style={styles.logo} />
-            <Text style={styles.heroBrandText}>COURSE BROCHURE</Text>
+      {/* ── PAGE 1: COVER ────────────────────────────── */}
+      <Page size="A4" style={S.page}>
+        <View style={S.hero}>
+          <View style={S.heroTopRow}>
+            <Image src={LOGO} style={S.logo} />
+            <Text style={S.heroBrochureLabel}>COURSE BROCHURE 2026</Text>
           </View>
-
-          <Text style={styles.heroEyebrow}>{course.categ} Program</Text>
-          <Text style={styles.heroTitle}>{course.title}</Text>
-          <View style={styles.badgeRow}>
-            <Text style={styles.badge}>{course.type}</Text>
-            <Text style={styles.badge}>{course.categ}</Text>
+          <Text style={S.heroEyebrow}>{(course.categ || "").toUpperCase()} PROGRAM</Text>
+          <Text style={S.heroTitle}>{course.title}</Text>
+          <View style={S.badgeRow}>
+            <Text style={S.badge}>{course.type}</Text>
+            {course.categ ? <Text style={S.badge}>{course.categ}</Text> : null}
           </View>
         </View>
 
-        <View style={styles.body}>
-          {/* Meta grid */}
-          <View style={styles.metaGrid}>
-            {meta.map((m) => (
-              <View key={m.label} style={styles.metaCell}>
-                <View style={styles.metaBox}>
-                  <Text style={styles.metaLabel}>{m.label}</Text>
-                  <Text style={styles.metaValue}>{m.value}</Text>
-                </View>
-              </View>
-            ))}
-          </View>
-
-          {/* Overview */}
-          <Text style={styles.sectionTitle}>Course Overview</Text>
-          <View style={styles.sectionTitleAccent} />
-          <Text style={styles.paragraph}>{course.desc}</Text>
-
-          {/* Instructor */}
-          <View style={styles.instructorBox}>
-            <View style={styles.instructorAvatar}>
-              <Text style={styles.instructorInitial}>
-                {teacher?.name?.charAt(0) || "S"}
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.metaLabel}>Your Instructor</Text>
-              <Text style={styles.metaValue}>{teacher?.name}</Text>
-              <Text style={{ fontSize: 9, color: COLORS.gray, marginTop: 2 }}>
-                {teacher?.subject}
-              </Text>
-            </View>
-          </View>
-        </View>
-
-        <Footer />
-      </Page>
-
-      {/* ---------- PAGE 2 : CURRICULUM ---------- */}
-      <Page size="A4" style={styles.page}>
-        <View style={styles.body}>
-          <Text style={styles.sectionTitle}>Course Curriculum</Text>
-          <View style={styles.sectionTitleAccent} />
-          <Text style={[styles.paragraph, { marginBottom: 18 }]}>
-            {course.chapters?.length || 10} modules designed to build mastery
-            step by step.
-          </Text>
-
-          {(course.chapters || []).map((ch, i) => (
-            <View key={i} style={styles.moduleRow} wrap={false}>
-              <Text style={styles.moduleNum}>{i + 1}</Text>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.moduleTitle}>{ch.title}</Text>
-                {ch.description ? (
-                  <Text style={styles.moduleDesc}>{ch.description}</Text>
-                ) : null}
-              </View>
+        {/* Stats strip */}
+        <View style={S.statsStrip}>
+          {coverStats.map((s, i) => (
+            <View key={s.label} style={i === coverStats.length - 1 ? S.statCellLast : S.statCell}>
+              <Text style={S.statValue}>{s.value}</Text>
+              <Text style={S.statLabel}>{s.label}</Text>
             </View>
           ))}
         </View>
 
+        {/* Overview + instructor */}
+        <View style={S.body}>
+          <Text style={S.sectionTitle}>Course Overview</Text>
+          <View style={S.sectionAccent} />
+          <Text style={S.paragraph}>{course.desc}</Text>
+
+          <View style={S.instructorBox}>
+            <View style={S.instructorAvatar}>
+              <Text style={S.instructorInitial}>
+                {teacher?.name?.charAt(0) || "S"}
+              </Text>
+            </View>
+            <View>
+              <Text style={S.metaLabel}>YOUR INSTRUCTOR</Text>
+              <Text style={S.metaValue}>{teacher?.name || "SuperSheldon Tutor"}</Text>
+              <Text style={{ fontSize: 8.5, color: C.gray, marginTop: 1 }}>
+                {teacher?.subject || "Expert Tutor"}
+              </Text>
+            </View>
+          </View>
+        </View>
+
         <Footer />
       </Page>
 
-      {/* ---------- PAGE 3 : PRICING + VALUE ---------- */}
-      <Page size="A4" style={styles.page}>
-        <View style={styles.body}>
-          {/* Pricing */}
-          <Text style={styles.sectionTitle}>Plans &amp; Pricing</Text>
-          <View style={styles.sectionTitleAccent} />
+      {/* ── PAGE 2: CURRICULUM ───────────────────────── */}
+      <Page size="A4" style={S.page}>
+        <View style={S.topStripe} />
+        <View style={[S.body, { paddingTop: 22 }]}>
+          <Text style={S.sectionTitle}>Course Curriculum</Text>
+          <View style={S.sectionAccent} />
+          <Text style={[S.paragraph, { marginBottom: 14 }]}>
+            {chapters.length} modules designed to build mastery step by step.
+          </Text>
+        </View>
+
+        <View style={S.curriculumCols}>
+          {/* Left column — odd indices */}
+          <View style={S.colLeft}>
+            {leftChs.map((ch, i) => {
+              const idx    = i * 2;
+              const catKey = ch.category || "";
+              const cat    = CAT[catKey];
+              return (
+                <View key={idx} style={S.moduleCard} wrap={false}>
+                  <View style={S.moduleTopRow}>
+                    <View style={S.moduleNum}>
+                      <Text style={S.moduleNumText}>{String(idx + 1).padStart(2, "0")}</Text>
+                    </View>
+                    {cat ? (
+                      <View style={[S.catTag, { backgroundColor: cat.bg }]}>
+                        <Text style={[S.catTagText, { color: cat.fg }]}>{catKey}</Text>
+                      </View>
+                    ) : null}
+                  </View>
+                  <Text style={S.moduleTitle}>{ch.title}</Text>
+                  {ch.description ? <Text style={S.moduleDesc}>{ch.description}</Text> : null}
+                  {ch.relevancy ? (
+                    <View style={S.relevancyBox}>
+                      <Text style={S.relevancyLabel}>WHY IT MATTERS</Text>
+                      <Text style={S.relevancyText}>{ch.relevancy}</Text>
+                    </View>
+                  ) : null}
+                </View>
+              );
+            })}
+          </View>
+
+          {/* Right column — even indices */}
+          <View style={S.colRight}>
+            {rightChs.map((ch, i) => {
+              const idx    = i * 2 + 1;
+              const catKey = ch.category || "";
+              const cat    = CAT[catKey];
+              return (
+                <View key={idx} style={S.moduleCard} wrap={false}>
+                  <View style={S.moduleTopRow}>
+                    <View style={S.moduleNum}>
+                      <Text style={S.moduleNumText}>{String(idx + 1).padStart(2, "0")}</Text>
+                    </View>
+                    {cat ? (
+                      <View style={[S.catTag, { backgroundColor: cat.bg }]}>
+                        <Text style={[S.catTagText, { color: cat.fg }]}>{catKey}</Text>
+                      </View>
+                    ) : null}
+                  </View>
+                  <Text style={S.moduleTitle}>{ch.title}</Text>
+                  {ch.description ? <Text style={S.moduleDesc}>{ch.description}</Text> : null}
+                  {ch.relevancy ? (
+                    <View style={S.relevancyBox}>
+                      <Text style={S.relevancyLabel}>WHY IT MATTERS</Text>
+                      <Text style={S.relevancyText}>{ch.relevancy}</Text>
+                    </View>
+                  ) : null}
+                </View>
+              );
+            })}
+          </View>
+        </View>
+
+        <Footer />
+      </Page>
+
+      {/* ── PAGE 3: PRICING + VALUE ───────────────────── */}
+      <Page size="A4" style={S.page}>
+        <View style={S.topStripe} />
+        <View style={[S.body, { paddingTop: 22 }]}>
+
+          <Text style={S.sectionTitle}>Plans &amp; Pricing</Text>
+          <View style={S.sectionAccent} />
 
           {course.pricing && course.pricing.length > 0 ? (
-            <View style={styles.pricingRow}>
+            <View style={S.pricingRow}>
               {course.pricing.map((plan, i) => (
-                <View
-                  key={i}
-                  style={plan.isRecommended ? styles.priceCardRec : styles.priceCard}
-                >
-                  {plan.tag ? <Text style={styles.priceTag}>{plan.tag}</Text> : null}
-                  <Text style={styles.priceTitle}>{plan.title}</Text>
-                  <Text style={styles.priceAmount}>{plan.price}</Text>
-                  <Text style={styles.priceDuration}>{plan.duration}</Text>
+                <View key={i} style={plan.isRecommended ? S.priceCardRec : S.priceCard}>
+                  {plan.tag ? <Text style={S.priceBadge}>{plan.tag}</Text> : null}
+                  <Text style={S.priceTitle}>{plan.title}</Text>
+                  <Text style={S.priceAmount}>{plan.price}</Text>
+                  <Text style={S.priceDuration}>{plan.duration}</Text>
                   {plan.features.map((f, fi) => (
-                    <View key={fi} style={styles.priceFeature}>
-                      <Text style={{ color: COLORS.green, marginRight: 4 }}>+</Text>
-                      <Text style={{ flex: 1 }}>{f}</Text>
+                    <View key={fi} style={S.priceFeatureRow}>
+                      <Text style={S.priceFeaturePlus}>+</Text>
+                      <Text style={S.priceFeatureText}>{f}</Text>
                     </View>
                   ))}
                 </View>
               ))}
             </View>
           ) : (
-            <View style={styles.fallbackBox}>
-              <Text style={[styles.paragraph, { marginBottom: 4 }]}>
-                Flexible plans tailored to your child&apos;s needs — including
-                1:1 mentorship, weekly classes and assessments.
+            <View style={S.fallbackBox}>
+              <Text style={[S.paragraph, { marginBottom: 4 }]}>
+                Flexible plans tailored to your child&apos;s needs — 1:1 mentorship, weekly classes and assessments.
               </Text>
-              <Text style={{ fontSize: 10, color: COLORS.orangeDark, fontFamily: "Helvetica-Bold" }}>
-                Contact us on WhatsApp {WHATSAPP} for current pricing.
+              <Text style={{ fontSize: 9.5, color: C.orangeDk, fontFamily: "Helvetica-Bold" }}>
+                Contact us on WhatsApp {WA} for current pricing.
               </Text>
             </View>
           )}
 
-          {/* Benefits */}
-          <View style={{ marginTop: 24 }}>
-            <Text style={styles.sectionTitle}>What You&apos;ll Gain</Text>
-            <View style={styles.sectionTitleAccent} />
-            {benefits.map((b, i) => (
-              <View key={i} style={styles.benefitRow}>
-                <View style={styles.benefitDot} />
-                <Text style={styles.benefitText}>{b}</Text>
-              </View>
-            ))}
+          {/* Benefits 2-col */}
+          <View style={{ marginTop: 22 }}>
+            <Text style={S.sectionTitle}>What You&apos;ll Gain</Text>
+            <View style={S.sectionAccent} />
+            <View style={S.benefitsGrid}>
+              {benefits.map((b, i) => (
+                <View key={i} style={S.benefitItem}>
+                  <View style={S.benefitDot} />
+                  <Text style={S.benefitText}>{b}</Text>
+                </View>
+              ))}
+            </View>
           </View>
 
           {/* Certificate */}
-          <View style={[styles.certBox, { marginTop: 16 }]}>
-            <View style={[styles.instructorAvatar, { marginRight: 12 }]}>
-              <Text style={styles.instructorInitial}>★</Text>
+          <View style={S.certBox}>
+            <View style={S.certIcon}>
+              <Text style={{ color: C.white, fontSize: 13, fontFamily: "Helvetica-Bold" }}>★</Text>
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={styles.priceTitle}>Certificate of Completion</Text>
-              <Text style={styles.moduleDesc}>
-                Every student earns a verifiable SuperSheldon certificate on
-                finishing the program.
+              <Text style={S.metaValue}>Certificate of Completion</Text>
+              <Text style={{ fontSize: 8.5, color: C.gray, marginTop: 2, lineHeight: 1.4 }}>
+                Every student earns a verifiable SuperSheldon certificate on finishing the program.
               </Text>
             </View>
           </View>
 
           {/* CTA */}
-          <View style={styles.ctaBox}>
-            <Text style={styles.ctaTitle}>Ready to enrol?</Text>
-            <Text style={styles.ctaText}>
+          <View style={S.ctaBox}>
+            <Text style={S.ctaTitle}>Ready to enrol?</Text>
+            <Text style={S.ctaLine}>
               Book a free demo class at{" "}
-              <Text style={styles.ctaHighlight}>{DEMO_URL}</Text> or message us on
-              WhatsApp <Text style={styles.ctaHighlight}>{WHATSAPP}</Text>. Learn
-              more at <Text style={styles.ctaHighlight}>{WEBSITE}</Text>.
+              <Text style={S.ctaHL}>{DEMO}</Text>
+            </Text>
+            <Text style={S.ctaLine}>
+              Message us on WhatsApp{" "}
+              <Text style={S.ctaHL}>{WA}</Text>
+            </Text>
+            <Text style={S.ctaLine}>
+              Learn more at{" "}
+              <Text style={S.ctaHL}>{WEB}</Text>
             </Text>
           </View>
         </View>

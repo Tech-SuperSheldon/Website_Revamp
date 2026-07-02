@@ -1,6 +1,13 @@
 export interface Chapter {
   title: string;
   description?: string;
+  relevancy?: string;
+  category?: string;
+}
+
+export interface Persona {
+  title: string;
+  desc: string;
 }
 
 export interface PricingPlan {
@@ -28,6 +35,10 @@ export interface Course {
   benefits?: string[];
   resourcesCount?: number;
   lastUpdated?: string;
+  learningOutcomes?: string[];
+  targetAudience?: Persona[];
+  testimonial?: { quote: string; author: string };
+  stats?: { students: string; rating: string; completion: string };
 }
 
 const defaultChapters: Chapter[] = [
@@ -186,49 +197,91 @@ export const coursesData: Record<string, Course[]> = {
       chapters: [
         {
           title: "NAPLAN Overview & Test Format",
-          description: "Understand the NAPLAN structure, timing, and how the online adaptive test works to your advantage."
+          description: "Understand the NAPLAN structure, timing, and how the online adaptive test works to your advantage.",
+          category: "EXAM STRATEGY",
+          relevancy: "Knowing the format removes anxiety and lets you focus on content rather than surprises. Students who understand the structure consistently outperform those who don't.",
         },
         {
           title: "Language Conventions: Grammar & Punctuation",
-          description: "Deep dive into grammar rules, sentence structure, and conventions of standard written English."
+          description: "Deep dive into grammar rules, sentence structure, and conventions of standard written English.",
+          category: "LANGUAGE",
+          relevancy: "Grammar questions are among the most reliable to improve. Small rule changes produce immediate, measurable score gains — this is where effort pays off fastest.",
         },
         {
           title: "Language Conventions: Spelling",
-          description: "Build spelling accuracy with proven strategies for the words most commonly tested."
+          description: "Build spelling accuracy with proven strategies for the words most commonly tested.",
+          category: "SPELLING",
+          relevancy: "Spelling is directly and objectively tested. Drilling the most common patterns secures marks that other students simply leave on the table.",
         },
         {
           title: "Numeracy: Number & Algebra",
-          description: "Review essential number sense, patterns, and algebraic thinking for the numeracy paper."
+          description: "Review essential number sense, patterns, and algebraic thinking for the numeracy paper.",
+          category: "NUMERACY",
+          relevancy: "Number and algebra underpin nearly every numeracy question. A strong base here accelerates progress across all remaining numeracy modules.",
         },
         {
           title: "Numeracy: Measurement & Geometry",
-          description: "Master measurement, shapes, and spatial reasoning concepts frequently encountered on the test."
+          description: "Master measurement, shapes, and spatial reasoning concepts frequently encountered on the test.",
+          category: "NUMERACY",
+          relevancy: "These questions appear in every NAPLAN numeracy paper. Visual reasoning here translates directly to time saved and marks gained on test day.",
         },
         {
           title: "Numeracy: Statistics & Probability",
-          description: "Tackle data interpretation, chance, and graph-reading questions with ease."
+          description: "Tackle data interpretation, chance, and graph-reading questions with ease.",
+          category: "NUMERACY",
+          relevancy: "Data questions are growing in frequency. Students who can read a graph or calculate an average quickly gain a decisive time advantage over peers.",
         },
         {
           title: "Reading: Comprehension Strategies",
-          description: "Improve your ability to skim effectively and pinpoint critical details across various text genres."
+          description: "Improve your ability to skim effectively and pinpoint critical details across various text genres.",
+          category: "READING",
+          relevancy: "Strong readers outperform in every NAPLAN domain. The skimming and inference skills built here also lift Writing and Language Conventions results.",
         },
         {
           title: "Writing: Narrative Texts",
-          description: "Learn structured approaches to planning and crafting engaging narrative responses under time pressure."
+          description: "Learn structured approaches to planning and crafting engaging narrative responses under time pressure.",
+          category: "WRITING",
+          relevancy: "The writing task is NAPLAN's highest-value item. A clear narrative structure — even on an unfamiliar topic — consistently earns top-band marks.",
         },
         {
           title: "Writing: Persuasive Texts",
-          description: "Master the logic, structure, and language techniques behind high-scoring persuasive writing."
+          description: "Master the logic, structure, and language techniques behind high-scoring persuasive writing.",
+          category: "WRITING",
+          relevancy: "Persuasive writing rewards structure and vocabulary — both entirely teachable. Students who hook readers early consistently hit Band 7 and above.",
         },
         {
           title: "Full NAPLAN Practice Test",
-          description: "Simulate a real NAPLAN testing environment to build stamina and identify remaining weak spots."
-        }
+          description: "Simulate a real NAPLAN testing environment to build stamina and identify remaining weak spots.",
+          category: "EXAM PRACTICE",
+          relevancy: "Timed practice under real conditions builds stamina, removes nerves, and reveals exactly what to focus on in the final days before your exam.",
+        },
       ],
       pricing: defaultPricing,
       level: "Intermediate",
       resourcesCount: 12,
-      lastUpdated: "10/03/2026"
+      lastUpdated: "10/03/2026",
+      learningOutcomes: [
+        "Score in the top NAPLAN bands across all four domains",
+        "Write structured narrative and persuasive essays under time pressure",
+        "Apply grammar and punctuation rules with automatic precision",
+        "Solve numeracy problems across algebra, geometry and data",
+        "Read and comprehend complex texts quickly using evidence-finding strategies",
+        "Build stamina and confidence through timed full-mock practice",
+      ],
+      targetAudience: [
+        { title: "Year 3–9 NAPLAN Students", desc: "All year levels — content tailored to your specific paper and cohort." },
+        { title: "Top-Band Seekers", desc: "Students targeting Band 8+ or a significant jump from their current score." },
+        { title: "Structured Learners", desc: "Families who want a teacher-led, systematic approach to exam readiness." },
+      ],
+      testimonial: {
+        quote: "My daughter went from Band 6 to Band 8 in Writing — and topped Numeracy. The structured approach gave her real confidence and a clear game plan for test day.",
+        author: "Sunita R., Parent of a Year 7 Student",
+      },
+      stats: {
+        students: "500+",
+        rating: "4.8 / 5",
+        completion: "92%",
+      },
     }
   ],
   "General Academics": [

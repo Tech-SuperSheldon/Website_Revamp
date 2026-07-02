@@ -78,7 +78,7 @@ export default function TestimonialVideoBoost() {
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.1 }}
       transition={{ duration: 0.5 }}
-      className="relative w-full overflow-hidden py-6 md:py-12 flex justify-center"
+      className="relative w-full overflow-hidden -mt-[28vh] pt-2 pb-6 md:mt-0 md:py-12 flex justify-center"
     >
       <div className="relative w-full max-w-6xl rounded-3xl p-6 md:p-12 mx-4 md:mx-8 flex flex-col items-center justify-center">
         

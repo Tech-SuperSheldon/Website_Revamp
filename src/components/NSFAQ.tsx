@@ -14,7 +14,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="relative pt-28 pb-0 md:pt-24 md:pb-0 lg:mt-16 lg:mb-0 xl:pt-8" id="faq">
+    <section className="relative -mt-[6vh] pt-8 pb-0 md:mt-0 md:pt-24 md:pb-0 lg:mt-16 lg:mb-0 xl:pt-8" id="faq">
          {/* Background Decoration commented out for cleaner look as requested
       // <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
       //   <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-100 rounded-full blur-[100px] opacity-40" />
@@ -45,11 +45,11 @@ export default function FAQ() {
         </motion.div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-nowrap overflow-x-auto no-scrollbar justify-start sm:justify-center gap-3 px-4 mb-2">
-            <Link href="https://wa.me/917974695618" target="_blank" rel="noopener noreferrer" className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-md transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
+        <div className="flex justify-center gap-3 px-4 mb-2">
+            <Link href="https://wa.me/917974695618" target="_blank" rel="noopener noreferrer" className="flex-1 sm:flex-none text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-md transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
                 Contact us
             </Link>
-            <Link href="/demo" className="bg-orange-100 hover:bg-orange-200 text-orange-800 font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-sm border border-orange-200 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
+            <Link href="/demo" className="flex-1 sm:flex-none text-center bg-orange-100 hover:bg-orange-200 text-orange-800 font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-sm border border-orange-200 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
                 Try a Free Class
             </Link>
         </div>
@@ -113,7 +113,7 @@ export default function FAQ() {
                                  +
                              </motion.span>
                          </div>
-                      <span className={`font-anybody text-lg sm:text-lg font-semibold flex-1 ${isActive ? "text-orange-900" : "text-gray-800"}`}>
+                      <span className={`font-anybody text-base sm:text-lg font-semibold flex-1 ${isActive ? "text-orange-900" : "text-gray-800"}`}>
                         {item.question}
                       </span>
                     </button>
@@ -127,7 +127,7 @@ export default function FAQ() {
                           transition={{ duration: 0.3, ease: "easeInOut" }}
                           className="overflow-hidden"
                         >
-                          <div className="px-6 sm:px-8 pb-6 pl-[4.5rem] text-gray-600 font-manrope leading-relaxed">
+                          <div className="px-6 sm:px-8 pb-6 pl-[4.5rem] text-gray-600 font-manrope leading-relaxed text-sm sm:text-base">
                             {item.answer}
                           </div>
                         </motion.div>

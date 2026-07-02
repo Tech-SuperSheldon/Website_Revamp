@@ -44,7 +44,7 @@ const STATS = [
   { icon: GraduationCap, title: "Australia's Top", sub: "Educators", color: "text-orange-500" },
   { icon: TrendingUp, title: "Proven Success", sub: "Record", color: "text-blue-500" },
   { icon: Radio, title: "Live Interactive", sub: "Classes", color: "text-red-500" },
-  { icon: ShieldCheck, title: "Trusted by 500K+", sub: "Students", color: "text-emerald-500" },
+  { icon: ShieldCheck, title: "Trusted by 100+", sub: "Students", color: "text-emerald-500" },
 ] as const;
 
 export function Hero() {
@@ -119,48 +119,46 @@ export function Hero() {
           sizes="100vw"
           className="scale-105 object-cover object-[center_80%] md:object-[center_-100px]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/5 to-white/60 sm:to-white/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/5 to-white" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-transparent h-[55%] top-auto" />
         <div className="absolute inset-0 bg-gradient-to-r from-white/40 via-transparent to-transparent" />
       </motion.div>
 
       {/* ── Layer 2: Foreground group — students + laptop (priority load, no blur) ── */}
       <motion.div
         style={{ y: studentsY }}
-        className="pointer-events-none absolute inset-x-0 bottom-[240px] sm:bottom-[160px] z-[3] flex justify-center"
+        className="pointer-events-none absolute inset-x-0 bottom-[290px] sm:bottom-[210px] z-[3] hidden sm:flex justify-center"
       >
-        <div className="relative aspect-[1460/586] w-[115%] max-w-none sm:w-[90%] md:w-auto md:h-[40vh] md:max-h-[420px] md:min-h-[260px]">
+        <div className="relative aspect-[3/2] sm:aspect-[1460/586] w-[345%] max-w-none sm:w-[90%] md:w-auto md:h-[40vh] md:max-h-[420px] md:min-h-[260px]">
+          {/* Mobile image */}
+          <Image
+            src="/hero/students-mobile.png"
+            alt="Students learning online"
+            fill
+            priority
+            sizes="345vw"
+            className="block sm:hidden object-contain object-bottom drop-shadow-2xl"
+          />
+          {/* Desktop image */}
           <Image
             src="/hero/students.png"
             alt="Students learning online"
             fill
             priority
             sizes="(max-width: 768px) 115vw, 90vw"
-            className="object-contain object-bottom drop-shadow-2xl"
+            className="hidden sm:block object-contain object-bottom drop-shadow-2xl"
           />
 
-          {/* Class video laptop */}
-          <div className="absolute bottom-[13%] left-[52%] w-[19%] -translate-x-1/2">
-            <div className="relative overflow-hidden rounded-md drop-shadow-2xl">
-              <video
-                ref={videoRef}
-                src="/hero/class-video.webm"
-                poster="/hero/class-video-poster.jpg"
-                className="block h-auto w-full"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="none"
-              />
-              {/* Live badge */}
-              <span className="absolute left-1.5 top-1.5 inline-flex items-center gap-1 rounded bg-white/90 px-1.5 py-0.5 text-[7px] font-bold uppercase tracking-wide text-gray-900 shadow-sm backdrop-blur md:text-[9px]">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red-500" />
-                </span>
-                Live
-              </span>
-            </div>
+          {/* Laptop image — hidden on mobile */}
+          <div className="hidden sm:block absolute bottom-[13%] left-[52%] w-[26%] -translate-x-1/2 translate-y-[20px] pointer-events-none">
+            <Image
+              src="/hero/laptop-logo.png"
+              alt="Super Sheldon on laptop"
+              width={400}
+              height={260}
+              priority
+              className="w-full h-auto drop-shadow-2xl"
+            />
           </div>
         </div>
       </motion.div>
@@ -168,13 +166,13 @@ export function Hero() {
       {/* ── Layer 3: Content ── */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
-        className="relative z-10 mx-auto flex flex-1 w-full max-w-7xl flex-col justify-start px-4 pt-8 pb-[230px] sm:pb-[180px] sm:px-6 md:pt-10 md:pb-[200px]"
+        className="relative z-10 mx-auto flex flex-1 w-full max-w-7xl flex-col justify-start px-4 pt-3 pb-4 sm:pb-[180px] sm:px-6 md:pt-4 md:pb-[200px]"
       >
         {/* Centered headline block */}
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
 
           {/* Pill */}
-          <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-700 shadow-sm backdrop-blur-md sm:text-xs">
+          <span className="mt-2 md:mt-2 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-gray-700 shadow-sm backdrop-blur-md sm:text-xs">
             <span className="text-base leading-none">🪙</span>
             Australia&apos;s Best Online Learning Platform
             <span className="text-base leading-none">🇦🇺</span>
@@ -208,6 +206,31 @@ export function Hero() {
             scores in Australian Exams.
           </p>
 
+          {/* Mobile student image — outer holds space in flex flow, inner bleeds to 142vw centered */}
+          <div className="block sm:hidden -mt-[60px] relative w-full h-[95vw]">
+            <div className="absolute left-[calc(50%-14px)] -translate-x-1/2 w-[142vw] h-full">
+              <Image
+                src="/hero/students-mobile.png"
+                alt="Students learning online"
+                fill
+                priority
+                sizes="142vw"
+                className="object-contain drop-shadow-2xl"
+              />
+            </div>
+            {/* Laptop overlay — mobile only */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-[calc(5%+130px)] w-[48vw] z-10 pointer-events-none">
+              <Image
+                src="/hero/laptop-logo.png"
+                alt="Super Sheldon on laptop"
+                width={400}
+                height={260}
+                priority
+                className="w-full h-auto drop-shadow-2xl"
+              />
+            </div>
+          </div>
+
           {/* Phone form CTA */}
           <form
             onSubmit={(e) => {
@@ -219,7 +242,7 @@ export function Hero() {
                 setPhoneError("Please enter a valid phone number");
               }
             }}
-            className="mt-3 flex w-full max-w-sm flex-col gap-2"
+            className="-mt-16 sm:mt-3 relative z-10 flex w-full max-w-sm flex-col gap-2"
           >
             {/* Phone input row — always full width */}
             <div className="flex items-center gap-1 overflow-hidden rounded-full border-2 border-orange-500 bg-white/90 py-1 pl-0 pr-1 shadow-lg backdrop-blur-md sm:pr-1">
@@ -282,18 +305,18 @@ export function Hero() {
       </motion.div>
 
       {/* ── Floating decor — Added priority to load instantly ── */}
-      <div className="animate-float pointer-events-none absolute bottom-[300px] left-3 z-20 h-14 w-14 sm:left-8 sm:h-20 sm:w-20 sm:bottom-[272px] md:bottom-[288px]">
+      <div className="animate-float pointer-events-none absolute bottom-[300px] left-3 z-20 h-14 w-14 hidden sm:block sm:left-8 sm:h-20 sm:w-20 sm:bottom-[272px] md:bottom-[288px]">
         <Image src="/floating-icons/book.png" alt="" fill priority className="object-contain drop-shadow-xl" />
       </div>
       <div
-        className="animate-float pointer-events-none absolute bottom-[300px] right-3 z-20 h-14 w-14 sm:right-8 sm:h-20 sm:w-20 sm:bottom-[272px] md:bottom-[288px]"
+        className="animate-float pointer-events-none absolute bottom-[300px] right-3 z-20 h-14 w-14 hidden sm:block sm:right-8 sm:h-20 sm:w-20 sm:bottom-[272px] md:bottom-[288px]"
         style={{ animationDelay: "1.2s" }}
       >
         <Image src="/floating-icons/lightbulb.png" alt="" fill priority className="object-contain drop-shadow-xl" />
       </div>
 
       {/* ── Bottom stats bar — Instantly visible ── */}
-      <div className="relative w-full z-20 px-4 mt-auto pb-10 sm:absolute sm:inset-x-0 sm:bottom-[110px] sm:mt-0 sm:pb-0">
+      <div className="relative w-full z-20 px-4 mt-auto pb-10 sm:absolute sm:inset-x-0 sm:bottom-[160px] sm:mt-0 sm:pb-0">
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-x-4 gap-y-4 rounded-3xl border border-white/70 bg-white/90 px-6 py-4 shadow-xl backdrop-blur-md md:grid-cols-4 md:gap-x-2">
           {STATS.map(({ icon: Icon, title, sub, color }) => (
             <div key={title} className="flex items-center justify-center gap-2.5 md:gap-3">

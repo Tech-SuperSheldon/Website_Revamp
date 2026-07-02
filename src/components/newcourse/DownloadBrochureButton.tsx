@@ -9,6 +9,8 @@ interface DownloadBrochureButtonProps {
   /** "solid" (default) for the detail page, "compact" for course cards */
   variant?: "solid" | "compact";
   className?: string;
+  /** If set, download this URL directly instead of generating a PDF */
+  uploadedBrochureUrl?: string | null;
 }
 
 function slugify(str: string) {
@@ -22,6 +24,7 @@ export default function DownloadBrochureButton({
   course,
   variant = "solid",
   className = "",
+  uploadedBrochureUrl,
 }: DownloadBrochureButtonProps) {
   const [loading, setLoading] = useState(false);
 
@@ -31,6 +34,20 @@ export default function DownloadBrochureButton({
     e.stopPropagation();
 
     if (loading) return;
+
+    // If an uploaded brochure URL exists, download it directly.
+    if (uploadedBrochureUrl) {
+      const link = document.createElement("a");
+      link.href = uploadedBrochureUrl;
+      link.download = `SuperSheldon-${slugify(course.title)}-Brochure.pdf`;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+
     setLoading(true);
 
     try {
