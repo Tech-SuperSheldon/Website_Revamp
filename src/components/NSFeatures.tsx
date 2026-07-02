@@ -114,12 +114,6 @@ export default function FeatureSlider() {
                   ))}
                 </ul>
               )}
-              {f.image && (
-                <div className="mt-auto flex justify-center -mb-5">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={f.image} alt="feature illustration" loading="lazy" className="w-[140%] max-w-[300px] object-contain drop-shadow-md" />
-                </div>
-              )}
             </div>
 
             {/* Media Container */}
