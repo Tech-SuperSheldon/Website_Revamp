@@ -29,7 +29,7 @@ export default function PathwayFinderBanner() {
             <span className="text-[#60c8f5]">Discover their perfect path.</span>
           </h2>
           <p className="text-slate-300 text-base md:text-lg mb-8 leading-relaxed">
-            Take our 2-minute quiz and we'll match your child with the ideal
+            Take our 2-minute quiz and we&apos;ll match your child with the ideal
             learning journey — built around their goals, strengths, and style.
           </p>
           <Link

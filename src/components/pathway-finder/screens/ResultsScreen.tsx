@@ -166,7 +166,7 @@ export default function ResultsScreen({ result, onCompare, onRetake }: Props) {
                 Want help choosing a course?
               </h3>
               <p className="mt-1 text-sm text-slate-600">
-                Send your {t.shortName} match to our team on WhatsApp and we'll
+                Send your {t.shortName} match to our team on WhatsApp and we&apos;ll
                 suggest the right course for your child.
               </p>
             </div>
