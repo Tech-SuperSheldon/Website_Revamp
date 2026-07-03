@@ -148,7 +148,7 @@ export function Footer() {
                   <div>
                        <h4 className="font-bold text-lg text-white mb-4 font-rowdies">Information</h4>
                        <ul className="space-y-2 font-medium text-white text-[14px] mb-4">
-                          <li><RollingLink href="/#faq" hoverColor="text-black" baseColor="text-white">FAQ</RollingLink></li>
+                          <li><RollingLink href="/faq" hoverColor="text-black" baseColor="text-white">FAQ</RollingLink></li>
                           <li><RollingLink href="/privacy" hoverColor="text-black" baseColor="text-white">Privacy Policy</RollingLink></li>
                           <li><RollingLink href="/terms" hoverColor="text-black" baseColor="text-white">Terms & Conditions</RollingLink></li>
                        </ul>

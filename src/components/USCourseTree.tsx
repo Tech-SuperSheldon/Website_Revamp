@@ -33,6 +33,7 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
           src={course.img}
           alt={course.title}
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-contain"
         />
       </div>

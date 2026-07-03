@@ -92,6 +92,7 @@ export default function NSCourseDetailAU({ courseId, uploadedBrochureUrl }: NSCo
                           src={course.img}
                           alt={course.title}
                           fill
+                          sizes="(max-width: 1024px) 100vw, (max-width: 1280px) 66vw, 830px"
                           className="object-cover"
                       />
                     ) : (

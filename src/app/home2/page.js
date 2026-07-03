@@ -8,6 +8,7 @@ import FloatingArrowWhatsApp from '@/components/ArrowAndWhatsapp';
 import NSCookieConsent from '@/components/NSCookieConsent';
 import NSDeadlineBanner from '@/components/NSDeadlineBanner';
 import ScrollToTop from '@/components/ScrollToTop';
+import Home2Hero from '@/components/Home2Hero';
 
 // Below-fold components loaded lazily to reduce initial JS bundle (mirrors /new-home)
 const TestimonialSection   = dynamic(() => import('@/components/NSstudent-testimonial').then(m => ({ default: m.TestimonialSection })));
@@ -42,16 +43,9 @@ export default function Home2() {
 
       {/* 3D WebGL hero. The iframe has its own scroll that drives the blue-scan
           animation; when it finishes, native scroll chains to this page and the
-          sections below come into view. The rounded bottom + margin give the
-          blue scan area a smooth curved edge and a gap before the testimonials. */}
-      <section className="relative w-full h-[100svh] bg-[#dfd1bc] overflow-hidden rounded-b-[2rem] md:rounded-b-[3.5rem] mb-10 md:mb-16">
-        <iframe
-          src="/home2-hero/index.html"
-          title="3D Hero Animation"
-          className="block h-full w-full border-0"
-          allow="autoplay; fullscreen"
-        />
-      </section>
+          sections below come into view. Deferred behind a poster so its ~4MB
+          payload doesn't compete with this page's hydration — see Home2Hero. */}
+      <Home2Hero />
 
       <TestimonialSection />
       <USCourseTree />
