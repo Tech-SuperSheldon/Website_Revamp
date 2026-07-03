@@ -47,13 +47,15 @@ const STATS = [
   { icon: ShieldCheck, title: "Trusted by 100+", sub: "Students", color: "text-emerald-500" },
 ] as const;
 
+// Tiny inline blur placeholder (12px WebP) for the student LCP image,
+// so first paint shows a soft preview instead of empty space.
+const STUDENTS_BLUR =
+  "data:image/webp;base64,UklGRrAAAABXRUJQVlA4WAoAAAAQAAAACwAABAAAQUxQSD0AAAAAAgAfz2gAAQKTXQACAwBg/2sAAQja6BcAAGz//3oAAB/i/6YAcfv//+0jAJb/5f+CqMSIZz0EABw4NF98AFZQOCBMAAAAsAEAnQEqDAAFAAOAWiWgAnQA3Mx/bAD+6QCLLhbj1vN9n9REhZ978YALvv0+JB9XRyKF+TPhQVt7b7p+1+vkN0k6GvHlMhL/htlAAA=";
+
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReduced = useReducedMotion();
   const [isDesktop, setIsDesktop] = useState(false);
-  // null = not yet measured (SSR / pre-hydration) so neither student image ships until we know the device
-  const [isWide, setIsWide] = useState<boolean | null>(null);
 
   const openDemoBooking = useOpenDemoBooking();
   const [phone, setPhone] = useState("");
@@ -76,25 +78,6 @@ export function Hero() {
     update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
-  }, []);
-
-  // Matches the `sm` (640px) breakpoint used for the student illustration below,
-  // so only the desktop OR mobile asset mounts — never both.
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 640px)");
-    const update = () => setIsWide(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = true;
-    v.defaultMuted = true;
-    v.playsInline = true;
-    void v.play().catch(() => {});
   }, []);
 
   const f = prefersReduced ? 0 : isDesktop ? 1 : 0.18;
@@ -124,7 +107,7 @@ export function Hero() {
       {/* ── Layer 1: Background — Sydney (priority load, no blur) ── */}
       <motion.div style={{ y: bgY }} className="absolute -inset-x-0 -top-[8%] z-0 h-[116%] w-full">
         <Image
-          src="/hero/sydney.jpg"
+          src="/hero/sydney.webp"
           alt="Sydney harbour at sunset"
           fill
           priority
@@ -142,26 +125,25 @@ export function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-[290px] sm:bottom-[210px] z-[3] hidden sm:flex justify-center"
       >
         <div className="relative aspect-[3/2] sm:aspect-[1460/586] w-[345%] max-w-none sm:w-[90%] md:w-auto md:h-[40vh] md:max-h-[420px] md:min-h-[260px]">
-          {/* Desktop image — only mounts on wide screens so the mobile asset is never shipped here */}
-          {isWide === true && (
-            <Image
-              src="/hero/students.png"
-              alt="Students learning online"
-              fill
-              priority
-              sizes="90vw"
-              className="object-contain object-bottom drop-shadow-2xl"
-            />
-          )}
+          {/* Desktop image — CSS-gated by the `hidden sm:flex` parent + lazy loading,
+              so it only downloads on wide screens (no JS mount gate delaying the LCP) */}
+          <Image
+            src="/hero/students.webp"
+            alt="Students learning online"
+            fill
+            sizes="90vw"
+            placeholder="blur"
+            blurDataURL={STUDENTS_BLUR}
+            className="object-contain object-bottom drop-shadow-2xl"
+          />
 
           {/* Laptop image — hidden on mobile */}
           <div className="hidden sm:block absolute bottom-[13%] left-[52%] w-[26%] -translate-x-1/2 translate-y-[20px] pointer-events-none">
             <Image
-              src="/hero/laptop-logo.png"
+              src="/hero/laptop-logo.webp"
               alt="Super Sheldon on laptop"
               width={400}
               height={260}
-              priority
               className="w-full h-auto drop-shadow-2xl"
             />
           </div>
@@ -214,26 +196,25 @@ export function Hero() {
           {/* Mobile student image — outer holds space in flex flow, inner bleeds to 142vw centered */}
           <div className="block sm:hidden -mt-[60px] relative w-full h-[95vw]">
             <div className="absolute left-[calc(50%-14px)] -translate-x-1/2 w-[142vw] h-full">
-              {/* Mobile-only asset — never mounts (or downloads) on wide screens */}
-              {isWide === false && (
-                <Image
-                  src="/hero/students-mobile.png"
-                  alt="Students learning online"
-                  fill
-                  priority
-                  sizes="142vw"
-                  className="object-contain drop-shadow-2xl"
-                />
-              )}
+              {/* Mobile-only asset — CSS-gated by the `block sm:hidden` parent + lazy loading,
+                  so it only downloads on narrow screens */}
+              <Image
+                src="/hero/students-mobile.webp"
+                alt="Students learning online"
+                fill
+                sizes="142vw"
+                placeholder="blur"
+                blurDataURL={STUDENTS_BLUR}
+                className="object-contain drop-shadow-2xl"
+              />
             </div>
             {/* Laptop overlay — mobile only */}
             <div className="absolute left-1/2 -translate-x-1/2 top-[calc(5%+130px)] w-[48vw] z-10 pointer-events-none">
               <Image
-                src="/hero/laptop-logo.png"
+                src="/hero/laptop-logo.webp"
                 alt="Super Sheldon on laptop"
                 width={400}
                 height={260}
-                priority
                 className="w-full h-auto drop-shadow-2xl"
               />
             </div>
