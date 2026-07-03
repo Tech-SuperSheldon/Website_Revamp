@@ -52,6 +52,8 @@ export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const prefersReduced = useReducedMotion();
   const [isDesktop, setIsDesktop] = useState(false);
+  // null = not yet measured (SSR / pre-hydration) so neither student image ships until we know the device
+  const [isWide, setIsWide] = useState<boolean | null>(null);
 
   const openDemoBooking = useOpenDemoBooking();
   const [phone, setPhone] = useState("");
@@ -71,6 +73,16 @@ export function Hero() {
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
     const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  // Matches the `sm` (640px) breakpoint used for the student illustration below,
+  // so only the desktop OR mobile asset mounts — never both.
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 640px)");
+    const update = () => setIsWide(mq.matches);
     update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
@@ -130,24 +142,17 @@ export function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-[290px] sm:bottom-[210px] z-[3] hidden sm:flex justify-center"
       >
         <div className="relative aspect-[3/2] sm:aspect-[1460/586] w-[345%] max-w-none sm:w-[90%] md:w-auto md:h-[40vh] md:max-h-[420px] md:min-h-[260px]">
-          {/* Mobile image */}
-          <Image
-            src="/hero/students-mobile.png"
-            alt="Students learning online"
-            fill
-            priority
-            sizes="345vw"
-            className="block sm:hidden object-contain object-bottom drop-shadow-2xl"
-          />
-          {/* Desktop image */}
-          <Image
-            src="/hero/students.png"
-            alt="Students learning online"
-            fill
-            priority
-            sizes="(max-width: 768px) 115vw, 90vw"
-            className="hidden sm:block object-contain object-bottom drop-shadow-2xl"
-          />
+          {/* Desktop image — only mounts on wide screens so the mobile asset is never shipped here */}
+          {isWide === true && (
+            <Image
+              src="/hero/students.png"
+              alt="Students learning online"
+              fill
+              priority
+              sizes="90vw"
+              className="object-contain object-bottom drop-shadow-2xl"
+            />
+          )}
 
           {/* Laptop image — hidden on mobile */}
           <div className="hidden sm:block absolute bottom-[13%] left-[52%] w-[26%] -translate-x-1/2 translate-y-[20px] pointer-events-none">
@@ -209,14 +214,17 @@ export function Hero() {
           {/* Mobile student image — outer holds space in flex flow, inner bleeds to 142vw centered */}
           <div className="block sm:hidden -mt-[60px] relative w-full h-[95vw]">
             <div className="absolute left-[calc(50%-14px)] -translate-x-1/2 w-[142vw] h-full">
-              <Image
-                src="/hero/students-mobile.png"
-                alt="Students learning online"
-                fill
-                priority
-                sizes="142vw"
-                className="object-contain drop-shadow-2xl"
-              />
+              {/* Mobile-only asset — never mounts (or downloads) on wide screens */}
+              {isWide === false && (
+                <Image
+                  src="/hero/students-mobile.png"
+                  alt="Students learning online"
+                  fill
+                  priority
+                  sizes="142vw"
+                  className="object-contain drop-shadow-2xl"
+                />
+              )}
             </div>
             {/* Laptop overlay — mobile only */}
             <div className="absolute left-1/2 -translate-x-1/2 top-[calc(5%+130px)] w-[48vw] z-10 pointer-events-none">
@@ -306,13 +314,13 @@ export function Hero() {
 
       {/* ── Floating decor — Added priority to load instantly ── */}
       <div className="animate-float pointer-events-none absolute bottom-[300px] left-3 z-20 h-14 w-14 hidden sm:block sm:left-8 sm:h-20 sm:w-20 sm:bottom-[272px] md:bottom-[288px]">
-        <Image src="/floating-icons/book.png" alt="" fill priority className="object-contain drop-shadow-xl" />
+        <Image src="/floating-icons/book.png" alt="" fill loading="lazy" className="object-contain drop-shadow-xl" />
       </div>
       <div
         className="animate-float pointer-events-none absolute bottom-[300px] right-3 z-20 h-14 w-14 hidden sm:block sm:right-8 sm:h-20 sm:w-20 sm:bottom-[272px] md:bottom-[288px]"
         style={{ animationDelay: "1.2s" }}
       >
-        <Image src="/floating-icons/lightbulb.png" alt="" fill priority className="object-contain drop-shadow-xl" />
+        <Image src="/floating-icons/lightbulb.png" alt="" fill loading="lazy" className="object-contain drop-shadow-xl" />
       </div>
 
       {/* ── Bottom stats bar — Instantly visible ── */}

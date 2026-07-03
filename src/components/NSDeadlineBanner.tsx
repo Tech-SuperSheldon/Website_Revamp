@@ -92,7 +92,7 @@ export default function NSDeadlineBanner() {
     <AnimatePresence>
       {!dismissed && (
         <motion.div
-          initial={{ y: -60, opacity: 0 }}
+          initial={false}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -60, opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
