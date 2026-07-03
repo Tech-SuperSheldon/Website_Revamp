@@ -86,8 +86,18 @@ export default function USCourseTree() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = scrollRef.current?.querySelector<HTMLElement>('[data-active="true"]');
-    el?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+    const container = scrollRef.current;
+    const el = container?.querySelector<HTMLElement>('[data-active="true"]');
+    if (!container || !el) return;
+    // Center the active year tab horizontally within its own strip only.
+    // (Using el.scrollIntoView here also scrolled the whole PAGE vertically on
+    // mount because of block:"nearest" — unwanted, especially on /home2 where it
+    // jumped past the 3D hero.)
+    const cRect = container.getBoundingClientRect();
+    const eRect = el.getBoundingClientRect();
+    const left =
+      container.scrollLeft + (eRect.left - cRect.left) - (container.clientWidth - el.clientWidth) / 2;
+    container.scrollTo({ left, behavior: "smooth" });
   }, [activeYear]);
 
   const items = coursesData[activeYear] || [];

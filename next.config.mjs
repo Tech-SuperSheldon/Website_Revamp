@@ -8,7 +8,12 @@ const nextConfig = {
     ],
   },
   experimental: {
-    optimizePackageImports: ["lucide-react", "framer-motion", "@heroicons/react"],
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "@heroicons/react",
+      "react-icons",
+    ],
   },
 };
 

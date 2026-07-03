@@ -19,7 +19,8 @@ export default function TestimonialVideoBoost() {
     v.muted = true;
     v.defaultMuted = true;
     v.playsInline = true;
-    void v.play().catch(() => {});
+    // No play() on mount: with preload="none" that forces the 4MB download
+    // immediately. The IntersectionObserver below plays it once in view.
   }, []);
 
   // 1. Handle Viewport Autoplay (Must be muted to work)
@@ -207,16 +208,17 @@ export default function TestimonialVideoBoost() {
                     <div style={{ width: 36, height: 5, borderRadius: 3, background: "#2a2a2a" }} />
                   </div>
 
-                  {/* Video fills the screen */}
+                  {/* Video fills the screen. No autoPlay attribute: it forces the
+                      4MB fetch on mount even with preload="none". The
+                      IntersectionObserver plays it once it's on-screen. */}
                   <video
                     ref={videoRef}
                     src={assetUrl("/alextestimonial.mp4")}
                     className="w-full h-full object-cover"
                     playsInline
-                    autoPlay
                     loop
                     muted
-                    preload="auto"
+                    preload="none"
                     onPlay={() => setIsPlaying(true)}
                     onPause={() => setIsPlaying(false)}
                     onVolumeChange={() => {

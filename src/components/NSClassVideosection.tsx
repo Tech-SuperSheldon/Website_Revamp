@@ -74,7 +74,10 @@ export default function NSClassVideoSection() {
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
-    void video.play().catch(() => {});
+    // Don't call play() here: with preload="none" that would force the full
+    // 9.5MB download on mount even though this section is far below the fold.
+    // The IntersectionObserver below starts playback (and the download) only
+    // once the device scrolls into view.
   }, []);
 
   // Auto-play attempt on scroll (muted required for autoplay)
@@ -173,16 +176,18 @@ export default function NSClassVideoSection() {
 
                 {/* Video */}
                 <div className="relative w-full h-full bg-slate-800">
+                    {/* No autoPlay attribute: it forces the 9.5MB fetch on mount even
+                        with preload="none". The IntersectionObserver below plays it
+                        (and starts the download) once the tablet is on-screen. */}
                     <video
                         ref={videoRef}
                         className="w-full h-full object-cover"
                         src={assetUrl("/studentvid.mp4")}
                         poster={assetUrl("/thumbnail.png")}
-                        autoPlay
                         loop
                         muted
                         playsInline
-                        preload="auto"
+                        preload="none"
                     />
                     
                     {/* Overlay Controls */}

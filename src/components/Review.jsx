@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 
 const Review = () => {
   return (
@@ -29,51 +30,66 @@ const Review = () => {
         {/* Card 1 */}
         <div className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300 shadow-lg">
           <div className="w-full h-64 sm:h-72 md:h-80 overflow-hidden flex items-center justify-center bg-gray-50">
-            <img src="/Bento Blocks _ Analytics Card.gif" alt="Analytics" className="w-[140%] h-[140%] object-cover object-center" />
+            <img src="/Bento Blocks _ Analytics Card.gif" alt="Analytics" loading="lazy" decoding="async" className="w-[140%] h-[140%] object-cover object-center" />
           </div>
         </div>
 
         {/* Card 2 */}
         <div className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300 shadow-lg">
           <div className="w-full h-64 sm:h-72 md:h-80 overflow-hidden flex items-center justify-center bg-gray-50">
-            <img src="/Bento Blocks _ Conversion Card.gif" alt="Conversion" className="w-[140%] h-[140%] object-cover object-center" />
+            <img src="/Bento Blocks _ Conversion Card.gif" alt="Conversion" loading="lazy" decoding="async" className="w-[140%] h-[140%] object-cover object-center" />
           </div>
         </div>
 
         {/* Card 3 */}
         <div className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300 shadow-lg">
           <div className="w-full h-64 sm:h-72 md:h-80 overflow-hidden flex items-center justify-center bg-gray-50">
-            <img src="/Bento Blocks _ Meter Card.gif" alt="Meter" className="w-[140%] h-[140%] object-cover object-center" />
+            <img src="/Bento Blocks _ Meter Card.gif" alt="Meter" loading="lazy" decoding="async" className="w-[140%] h-[140%] object-cover object-center" />
           </div>
         </div>
       </div>
 
       {/* Floating Animations */}
+      {/* Decorative floating icons. Source PNGs are multi-MB (alarm 4.6MB,
+          calc 4.2MB, ruler 3.9MB) but only ever render at ~60px — next/image
+          resizes + serves WebP (~5KB each) and lazy-loads them off-screen. */}
       <div className="absolute sm:bottom-6 -bottom-4 left-4 sm:left-8 -translate-x-1/3 animate-float1 z-10 rotate-[45]">
-        <img
+        <Image
           src="/icons/pencil.png"
-          alt="book"
+          alt=""
+          width={60}
+          height={60}
+          loading="lazy"
           className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
         />
       </div>
       <div className="absolute sm:bottom-8 -bottom-4 right-4 sm:right-6 animate-float2 z-10">
-        <img
+        <Image
           src="/icons/alarm.png"
-          alt="backpack"
+          alt=""
+          width={60}
+          height={60}
+          loading="lazy"
           className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
         />
       </div>
       <div className="absolute sm:top-4 top-32 left-12 sm:left-32 animate-float2 z-10">
-        <img
+        <Image
           src="/icons/calc.png"
-          alt="lamp"
+          alt=""
+          width={60}
+          height={60}
+          loading="lazy"
           className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
         />
       </div>
       <div className="absolute sm:top-4 top-32 right-12 sm:right-32 animate-float1 z-10">
-        <img
+        <Image
           src="/icons/ruler.png"
-          alt="scholar cap"
+          alt=""
+          width={60}
+          height={60}
+          loading="lazy"
           className="w-10 h-10 sm:w-[60px] sm:h-[60px]"
         />
       </div>
