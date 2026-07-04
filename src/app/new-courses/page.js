@@ -9,11 +9,29 @@ export const metadata = {
   title: 'Explore Our Australian Courses | SuperSheldon',
 };
 
-export default function NewCourses() {
+// Fetched server-side so the course grid (and its thumbnails) can render on
+// first paint instead of waiting on a client-side useEffect fetch after
+// hydration. Falls back to null on failure so NSCourseMainAU's own
+// client-side fetch kicks in as a safety net.
+async function getCourses() {
+  try {
+    const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.supersheldon.com';
+    const res = await fetch(`${base}/api/courses`, { next: { revalidate: 60 } });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.data ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export default async function NewCourses() {
+  const initialCourses = await getCourses();
+
   return (
     <main>
       <Header />
-      <NSCourseMainAU />
+      <NSCourseMainAU initialCourses={initialCourses} />
       <PathwayFinderBanner />
       <Footer />
     </main>

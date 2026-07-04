@@ -29,17 +29,26 @@ type DisplayCourse = Course & { year: string; brochureUrl: string };
 
 const FALLBACK_IMG = "";
 
-export default function NSCourseMainAU() {
+export default function NSCourseMainAU({
+  initialCourses,
+}: {
+  initialCourses?: CrmCourse[] | null;
+}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYears, setSelectedYears] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const INITIAL_COUNT = 6;
   const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
-  const [crmCourses, setCrmCourses] = useState<CrmCourse[] | null>(null);
+  const [crmCourses, setCrmCourses] = useState<CrmCourse[] | null>(
+    initialCourses ?? null
+  );
 
   const categories = ["All", "Foundational", "Advanced", "Mastery", "Elite"];
 
   useEffect(() => {
+    // Already have server-fetched data — skip the redundant client-side
+    // fetch that would otherwise waterfall behind hydration.
+    if (initialCourses) return;
     let cancelled = false;
     fetch("/api/courses")
       .then((res) => res.json())
@@ -52,7 +61,7 @@ export default function NSCourseMainAU() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [initialCourses]);
 
   // Hardcoded marketing content, flattened and indexed by id, so a CRM
   // course can be matched back to its rich description/chapters/pricing.
@@ -226,7 +235,7 @@ export default function NSCourseMainAU() {
         {crmCourses !== null && (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
             <AnimatePresence mode="popLayout">
-                {filteredCourses.slice(0, visibleCount).map((course) => (
+                {filteredCourses.slice(0, visibleCount).map((course, index) => (
                         <motion.div
                         key={`${course.year}-${course.id}`}
                         layout
@@ -246,6 +255,7 @@ export default function NSCourseMainAU() {
                                           alt={course.title}
                                           fill
                                           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                                          priority={index < 3}
                                           className="object-cover transition-transform duration-700 group-hover:scale-110"
                                       />
                                     ) : (

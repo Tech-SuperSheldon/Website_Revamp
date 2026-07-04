@@ -43,7 +43,7 @@ export default function Home2() {
 
       {/* 3D WebGL hero. The iframe has its own scroll that drives the blue-scan
           animation; when it finishes, native scroll chains to this page and the
-          sections below come into view. Deferred behind a poster so its ~4MB
+          sections below come into view. Deferred behind a poster so its ~3MB
           payload doesn't compete with this page's hydration — see Home2Hero. */}
       <Home2Hero />
 

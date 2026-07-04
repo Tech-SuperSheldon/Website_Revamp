@@ -1,7 +1,8 @@
 'use client';
 
-// Deferred loader for the /home2 3D WebGL hero. The iframe pulls in ~4MB
-// (Three.js bundle + GLB models + textures + audio), so mounting it on first
+// Deferred loader for the /home2 3D WebGL hero. The iframe pulls in ~3MB
+// (Three.js bundle + GLB models + textures; audio is stripped from the embed
+// build — see idea_website/portfolio-2025 VITE_SOUNDS), so mounting it on first
 // paint competes with the parent page's hydration. Instead we render a
 // lightweight poster in the scene's own cream background and only mount the
 // iframe once the main thread is idle (requestIdleCallback) — or immediately on
