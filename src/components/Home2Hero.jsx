@@ -9,11 +9,27 @@
 // the first user interaction, whichever comes first. When the iframe document
 // finishes loading we crossfade the poster out. See public/home2-hero/.
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home2Hero() {
   const [mounted, setMounted] = useState(false); // whether the iframe is in the DOM
   const [loaded, setLoaded] = useState(false);   // whether the iframe finished loading
   const firedRef = useRef(false);
+  const router = useRouter();
+
+  // The hero's phone CTA is injected inside the same-origin iframe (see
+  // public/home2-hero/index.html). On a valid submit it postMessages us so we can
+  // do a client-side navigation to /demo — matching useOpenDemoBooking on /new-home.
+  useEffect(() => {
+    const onMessage = (event) => {
+      if (event.origin !== window.location.origin) return;
+      if (event.data?.type === 'ss-open-demo') {
+        router.push('/demo');
+      }
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, [router]);
 
   useEffect(() => {
     const start = () => {
@@ -60,18 +76,6 @@ export default function Home2Hero() {
           allow="autoplay; fullscreen"
         />
       )}
-
-      {/* Poster shown until the iframe document is ready. Uses the same cream as
-          the 3D scene background (matches its <meta theme-color>) so the swap is
-          seamless. Sits above the iframe and fades out on load. */}
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 flex items-center justify-center bg-[#dfd1bc] transition-opacity duration-700 ${
-          loaded ? 'opacity-0' : 'opacity-100'
-        }`}
-      >
-        <span className="h-10 w-10 animate-spin rounded-full border-2 border-black/15 border-t-black/40" />
-      </div>
     </section>
   );
 }

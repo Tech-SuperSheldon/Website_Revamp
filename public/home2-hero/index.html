@@ -60,6 +60,277 @@
       </defs>
     </svg>
     <div id="app"></div>
+
+    <!-- SuperSheldon phone CTA injected into the hero (desktop only). Mirrors the
+         /new-home React form (src/components/NShero.tsx). The Vue app mounts async,
+         so we wait for .hero-content-inner and append the form after the heading
+         copy. On a valid submit we postMessage the parent Next.js page, which does
+         a client-side router.push('/demo') (see Home2Hero.jsx). -->
+    <style>
+      /* Injected phone CTA + trust row. Shown on ALL widths; layout differs by
+         breakpoint. Base = mobile (centered, full-width block button, stacked
+         trust); the min-width:1024px block below restyles to the desktop layout. */
+      #ss-phone-form {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-self: center;
+        width: min(22rem, 84vw);
+        font-family: Urbanist, sans-serif;
+      }
+      #ss-phone-form .ss-pill {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 4px 4px 0;
+        border: 2px solid #f97316;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        overflow: hidden;
+      }
+      #ss-phone-form .ss-dial {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 36px;
+        width: 48px;
+        flex-shrink: 0;
+        border-right: 1px solid #e5e7eb;
+        font-size: 12px;
+        font-weight: 600;
+        color: #374151;
+      }
+      #ss-phone-form .ss-input {
+        height: 36px;
+        min-width: 0;
+        flex: 1;
+        padding: 0 8px;
+        background: transparent;
+        border: 0;
+        outline: none;
+        font-size: 13px;
+        color: #111827;
+      }
+      #ss-phone-form .ss-input::placeholder { color: #9ca3af; }
+      #ss-phone-form .ss-submit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        border: 0;
+        border-radius: 9999px;
+        background: linear-gradient(to right, #f97316, #ea580c);
+        color: #ffffff;
+        font-weight: 700;
+        font-family: inherit;
+        box-shadow: 0 4px 6px -1px rgba(249, 115, 22, 0.3);
+        cursor: pointer;
+        transition: filter 0.2s ease;
+      }
+      #ss-phone-form .ss-submit:hover { filter: brightness(1.05); }
+      #ss-phone-form .ss-submit svg { width: 14px; height: 14px; }
+      /* Mobile: in-pill button hidden, standalone full-width button shown. */
+      #ss-phone-form .ss-submit-inline { display: none; }
+      #ss-phone-form .ss-submit-block {
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 14px;
+      }
+      #ss-phone-form .ss-error {
+        font-size: 13px;
+        font-weight: 500;
+        color: #ef4444;
+        text-align: center;
+      }
+      #ss-phone-form .ss-error:empty { display: none; }
+
+      /* Trust row is desktop-only; hidden on mobile (re-enabled at min-width:1024px). */
+      #ss-trust {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        align-self: center;
+        text-align: center;
+        width: min(22rem, 84vw);
+        font-family: Urbanist, sans-serif;
+      }
+      #ss-trust .ss-trust-col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+      #ss-trust .ss-trust-label {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #5f5646;
+      }
+      #ss-trust .ss-trust-logo {
+        height: 28px;
+        width: auto;
+        object-fit: contain;
+      }
+      #ss-trust .ss-trust-sub {
+        font-size: 12px;
+        color: #5f5646;
+      }
+      #ss-trust .ss-trust-stat {
+        max-width: 15rem;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.3;
+        color: #2d2a24;
+      }
+
+      /* Desktop: form left-aligned, button back inside the pill, trust as a
+         horizontal row with dividers. */
+      @media (min-width: 1024px) {
+        #ss-phone-form {
+          align-self: flex-start;
+          width: 32rem;
+          max-width: 90vw;
+        }
+        #ss-phone-form .ss-submit-inline {
+          display: flex;
+          height: 32px;
+          flex-shrink: 0;
+          padding: 0 16px;
+          font-size: 12px;
+        }
+        #ss-phone-form .ss-submit-block { display: none; }
+
+        #ss-trust {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 28px;
+          align-self: flex-start;
+          text-align: left;
+          width: auto;
+        }
+        #ss-trust .ss-trust-col { align-items: flex-start; }
+        #ss-trust .ss-trust-col + .ss-trust-col {
+          padding-left: 28px;
+          border-left: 1px solid rgba(45, 42, 36, 0.15);
+        }
+      }
+    </style>
+    <script>
+      (function () {
+        var FORM_ID = "ss-phone-form";
+        var TRUST_ID = "ss-trust";
+
+        function buildForm() {
+          var form = document.createElement("form");
+          form.id = FORM_ID;
+          form.setAttribute("novalidate", "");
+          form.innerHTML =
+            '<div class="ss-pill">' +
+            '<span class="ss-dial">+61</span>' +
+            '<input class="ss-input" type="tel" inputmode="numeric" ' +
+            'placeholder="Phone number" aria-label="Phone number" />' +
+            '<button class="ss-submit ss-submit-inline" type="submit">Try a Free Class' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+            'stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ' +
+            'aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>' +
+            "</svg></button>" +
+            "</div>" +
+            '<button class="ss-submit ss-submit-block" type="submit">Try a Free Class</button>' +
+            '<p class="ss-error" role="alert"></p>';
+
+          var input = form.querySelector(".ss-input");
+          var error = form.querySelector(".ss-error");
+
+          form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            var value = (input.value || "").trim();
+            if (/^\d{6,15}$/.test(value)) {
+              error.textContent = "";
+              try {
+                window.parent.postMessage(
+                  { type: "ss-open-demo" },
+                  window.location.origin
+                );
+              } catch (err) {
+                window.top.location.href = "/demo";
+              }
+            } else {
+              error.textContent = "Please enter a valid phone number";
+            }
+          });
+
+          return form;
+        }
+
+        function buildTrust() {
+          var trust = document.createElement("div");
+          trust.id = TRUST_ID;
+          trust.innerHTML =
+            '<div class="ss-trust-col">' +
+            '<p class="ss-trust-label">Trusted Feedback</p>' +
+            '<img class="ss-trust-logo" src="/googlev2.png" alt="Google Reviews" />' +
+            '<p class="ss-trust-sub">30 reviews</p>' +
+            "</div>" +
+            '<div class="ss-trust-col">' +
+            '<p class="ss-trust-label">Accredited by</p>' +
+            '<img class="ss-trust-logo" src="/Stem.png" alt="STEM Accredited" />' +
+            "</div>" +
+            '<div class="ss-trust-col">' +
+            '<p class="ss-trust-stat">80% learners show increased confidence in 2 weeks</p>' +
+            "</div>";
+          return trust;
+        }
+
+        function inject() {
+          var container = document.querySelector(".hero-content-inner");
+          if (!container) return;
+          var copys = container.querySelector(".hero-content-copys");
+          var anchor = copys || null;
+
+          if (!container.querySelector("#" + FORM_ID)) {
+            var form = buildForm();
+            if (anchor && anchor.nextSibling) {
+              container.insertBefore(form, anchor.nextSibling);
+            } else {
+              container.appendChild(form);
+            }
+            anchor = form;
+          } else {
+            anchor = container.querySelector("#" + FORM_ID);
+          }
+
+          if (!container.querySelector("#" + TRUST_ID)) {
+            var trust = buildTrust();
+            if (anchor && anchor.nextSibling) {
+              container.insertBefore(trust, anchor.nextSibling);
+            } else {
+              container.appendChild(trust);
+            }
+          }
+        }
+
+        function start() {
+          inject();
+          var observer = new MutationObserver(function () {
+            inject();
+          });
+          observer.observe(document.body, { childList: true, subtree: true });
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", start);
+        } else {
+          start();
+        }
+      })();
+    </script>
+
     <div class="preloader">
       <svg class="preloader-svg" viewBox="0 0 56 61" xmlns="http://www.w3.org/2000/svg">
         <mask id="preloader-mask">
