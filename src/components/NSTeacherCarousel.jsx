@@ -153,7 +153,7 @@ function TeacherModal({ teacher, onClose }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[10000] flex items-stretch justify-center bg-black/60 backdrop-blur-md md:items-center md:p-6"
+      className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/60 p-3 backdrop-blur-md sm:p-4 md:p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -169,7 +169,7 @@ function TeacherModal({ teacher, onClose }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.94, y: 20 }}
         transition={{ type: "spring", stiffness: 260, damping: 26 }}
-        className="relative flex h-full w-full flex-col overflow-y-auto bg-white shadow-2xl md:h-auto md:max-h-[90vh] md:max-w-5xl md:flex-row md:overflow-hidden md:rounded-[2rem]"
+        className="relative flex max-h-[90vh] w-full max-w-sm flex-col overflow-y-auto rounded-3xl bg-white shadow-2xl md:max-h-[88vh] md:max-w-5xl md:flex-row md:overflow-hidden"
       >
         {/* Close */}
         <button
@@ -182,7 +182,7 @@ function TeacherModal({ teacher, onClose }) {
         </button>
 
         {/* Left — circular avatar + rating (blue panel) */}
-        <div className="relative flex shrink-0 flex-col items-center justify-center gap-4 overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-700 p-8 text-center text-white md:w-[38%]">
+        <div className="relative flex shrink-0 flex-col items-center justify-center gap-3 overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-700 p-6 text-center text-white md:w-[38%] md:gap-4 md:p-8">
           {/* decorative orange glow */}
           <div className="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full bg-orange-400/40 blur-2xl" />
           <div className="pointer-events-none absolute -left-12 bottom-0 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
@@ -191,14 +191,14 @@ function TeacherModal({ teacher, onClose }) {
             <img
               src={teacher.image}
               alt={teacher.name}
-              className="h-40 w-40 rounded-full border-[5px] border-white/90 bg-white object-cover md:h-52 md:w-52"
+              className="h-24 w-24 rounded-full border-[5px] border-white/90 bg-white object-cover sm:h-28 sm:w-28 md:h-52 md:w-52"
             />
           </span>
 
           <div className="relative">
-            <h3 className="text-2xl font-extrabold drop-shadow">{teacher.name}</h3>
+            <h3 className="text-xl font-extrabold drop-shadow md:text-2xl">{teacher.name}</h3>
             <p className="text-sm font-medium text-white/85">{teacher.designation}</p>
-            <div className="mt-3 flex flex-col items-center gap-1">
+            <div className="mt-2 flex flex-col items-center gap-1 md:mt-3">
               <span className="rounded-full bg-white/95 px-3 py-1 shadow-sm">
                 <Stars value={teacher.rating} />
               </span>
