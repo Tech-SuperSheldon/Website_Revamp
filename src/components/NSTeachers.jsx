@@ -1,85 +1,28 @@
 
 "use client"
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
-import { Play } from "lucide-react";
 
+// Full "Know Your Teacher" poster cards. Name, qualification and photo are all
+// baked into each 1080x1080 image, so the card just renders the whole poster
+// square (object-cover = perfect fit, no cropping). Images live in
+// /public/teachers. `name` is kept only for the img alt text / accessibility.
 const teachers = [
-  {
-    id: 1,
-    name: "Ashita Gunjikar",
-    subject: "Mathematics Teacher",
-    image: "/course/Teacher1.png",
-    // video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    id: 2,
-    name: "",
-    subject: "",
-    image: "/course/Teacher2.png",
-    // video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    id: 3,
-    name: "Avishikta Dutta",
-    subject: "Chemistry Teacher",
-    image: "/course/Teacher3.png",
-    // video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    id: 4,
-    name: "",
-    subject: "",
-    image: "/course/Teacher4.png",
-    // video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    id: 5,
-    name: "",
-    subject: "",
-    image: "/course/Teacher5.png",
-    // video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    id: 6,
-    name: "",
-    subject: "",
-    image: "/course/Teacher6.png",
-    // video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    id: 7,
-    name: "",
-    subject: "",
-    image: "/course/Teacher7.png",
-    // video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  {
-    id: 8,
-    name: "",
-    subject: "",
-    image: "/course/Teacher8.png",
-    // video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
-  // {
-  //   id: 9,
-  //   name: "Kavita Rao",
-  //   subject: "SAT Exam Teacher",
-  //   image: "/course/Teacher9.png",
-  //   // video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  // },
-  {
-    id: 10,
-    name: "Priyanshi Agrawal",
-    subject: "AI/ML Python Teacher",
-    image: "/course/Teacher10.png",
-    // video: "https://www.w3schools.com/html/mov_bbb.mp4",
-  },
+  { id: 1,  name: "Khushi Chaubey",   image: "/teachers/khushi-chaubey.png" },
+  { id: 2,  name: "Arfa Zainab",      image: "/teachers/arfa-zainab.png" },
+  { id: 3,  name: "Ruchi Arya",       image: "/teachers/ruchi-arya.png" },
+  { id: 4,  name: "Shahar Banu S",    image: "/teachers/shahar-banu.png" },
+  { id: 5,  name: "Shalini Mahadik",  image: "/teachers/shalini-mahadik.png" },
+  { id: 6,  name: "Shraddha Kamat",   image: "/teachers/shraddha-kamat.png" },
+  { id: 7,  name: "Diana Pereira",    image: "/teachers/diana-pereira.png" },
+  { id: 8,  name: "Gitartha Dutta",   image: "/teachers/gitartha-dutta.png" },
+  { id: 9,  name: "Preksha Sharma",   image: "/teachers/preksha-sharma.png" },
+  { id: 10, name: "Ridhima",          image: "/teachers/ridhima.png" },
+  { id: 11, name: "Rupanshi Kalra",   image: "/teachers/rupanshi-kalra.png" },
+  { id: 12, name: "Muniba Elahi",     image: "/teachers/muniba-elahi.png" },
 ];
 
 export default function TeacherCarousel() {
-  const [activeVideo, setActiveVideo] = useState(null);
-  const videoRef = useRef(null);
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { amount: 0.1 });
   const controls = useAnimation();
@@ -88,32 +31,12 @@ export default function TeacherCarousel() {
     if (isInView) {
       void controls.start({
         x: ["0%", "-100%"],
-        transition: { repeat: Infinity, duration: 40, ease: "linear" },
+        transition: { repeat: Infinity, duration: 60, ease: "linear" },
       });
     } else {
       controls.stop();
     }
   }, [isInView, controls]);
-
-  // Close popup when video ends
-  useEffect(() => {
-    if (videoRef.current) {
-      const handleEnd = () => setActiveVideo(null);
-      videoRef.current.addEventListener("ended", handleEnd);
-      return () => {
-        videoRef.current?.removeEventListener("ended", handleEnd);
-      };
-    }
-  }, [activeVideo]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
-    void video.play().catch(() => {});
-  }, [activeVideo]);
 
   return (
     <div ref={containerRef} className="relative w-full overflow-hidden py-6 md:py-10">
@@ -128,77 +51,21 @@ export default function TeacherCarousel() {
       </div>
 
       {/* Scrolling Cards */}
-      <motion.div
-        className="flex gap-6"
-        animate={controls}
-      >
+      <motion.div className="flex gap-5 md:gap-6" animate={controls}>
         {[...teachers, ...teachers].map((teacher, index) => (
           <div
             key={index}
-            className="relative min-w-[170px] md:min-w-[220px] rounded-2xl shadow-md overflow-hidden bg-white cursor-pointer transition duration-500 hover:shadow-md hover:shadow-gray-500 hover:scale-105"
-            onClick={() => setActiveVideo(teacher.video)}
+            className="relative aspect-square w-[240px] md:w-[320px] shrink-0 rounded-2xl shadow-md overflow-hidden bg-white transition duration-500 hover:shadow-lg hover:shadow-gray-400/60 hover:scale-[1.03]"
           >
             <img
               src={teacher.image}
               alt={teacher.name}
-              className="w-full h-44 md:h-60 object-cover"
+              loading="lazy"
+              className="w-full h-full object-cover"
             />
-
-            {/* Overlay */}
-            <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-3 text-white">
-              <p className="font-semibold text-lg md:text-[23px]">{teacher.name}</p>
-              <p className="text-sm">{teacher.subject}</p>
-              {/* <button
-                aria-label={`Play video of ${teacher.name}`}
-                className="absolute bottom-3 right-3 p-2 bg-blue-600 rounded-full"
-                onClick={(e) => {
-                  e.stopPropagation(); // prevent triggering card click
-                  setActiveVideo(teacher.video);
-                }}
-              >
-                <Play size={18} />
-              </button> */}
-            </div>
           </div>
         ))}
       </motion.div>
-
-      {/* Video Popup */}
-      {activeVideo && (
-        <div
-          className="fixed inset-0 flex items-center justify-center bg-black/80 z-50"
-          onClick={() => setActiveVideo(null)} // click outside closes popup
-        >
-          <div
-            className="relative bg-black rounded-2xl shadow-lg overflow-hidden"
-            style={{
-              width: "min(90vw, 360px)", // Instagram reel size
-              aspectRatio: "9/16",
-            }}
-            onClick={(e) => {
-              e.stopPropagation(); // prevent outside click from closing
-              if (videoRef.current) {
-                if (videoRef.current.paused) {
-                  videoRef.current.play();
-                } else {
-                  videoRef.current.pause();
-                }
-              }
-            }}
-          >
-            <video
-              ref={videoRef}
-              src={activeVideo}
-              className="w-full h-full object-cover"
-              playsInline
-              autoPlay
-              muted
-              preload="none"
-              controls={false}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

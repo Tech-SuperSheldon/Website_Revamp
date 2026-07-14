@@ -21,7 +21,7 @@ const ParentsTestimonialSection = dynamic(() => import('@/components/NSparents-t
 const Review               = dynamic(() => import('@/components/Review'));
 const NSAnim               = dynamic(() => import('@/components/NSAnim'));
 const NSTeacherTest        = dynamic(() => import('@/components/NSTeacherTest'));
-const TeacherCarousel      = dynamic(() => import('@/components/NSTeachers'));
+const TeacherProfiles      = dynamic(() => import('@/components/NSTeacherProfiles'));
 const FeatureSlider        = dynamic(() => import('@/components/NSFeatures'));
 const NSLevelUp            = dynamic(() => import('@/components/NSApp'));
 const FAQ                  = dynamic(() => import('@/components/NSFAQ'));
@@ -55,7 +55,7 @@ export default function Home() {
       <Review />
       <NSAnim />
       <NSTeacherTest />
-      <TeacherCarousel />
+      <TeacherProfiles />
       <FeatureSlider />
       <NSLevelUp />
       <FAQ />
