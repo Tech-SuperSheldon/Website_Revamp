@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
+import { useScroll, useSpring, useTransform, motion, MotionValue } from "framer-motion";
 import { assetUrl } from "@/lib/assetUrl";
 import { AutoplayMutedVideo } from "@/components/AutoplayMutedVideo";
 
@@ -39,8 +39,16 @@ export default function NSChoose() {
     offset: ["start start", "end end"],
   });
 
+  // Smooth the raw scroll value so card transitions feel buttery instead of
+  // snapping 1:1 with every scroll tick (main cause of the "fast/glitchy" feel).
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   return (
-    <section ref={containerRef} className="h-[160vh] md:h-[300vh] relative">
+    <section ref={containerRef} className="h-[320vh] md:h-[300vh] relative">
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
 
         {/* Section Header */}
@@ -70,7 +78,7 @@ export default function NSChoose() {
                 key={i}
                 i={i}
                 data={slide}
-                progress={scrollYProgress}
+                progress={smoothProgress}
                 range={[rangeStart, rangeEnd]}
                 total={slides.length}
               />

@@ -121,7 +121,9 @@ export default function FeatureSlider() {
                {f.video && (
                  <AutoplayMutedVideo
                    src={f.video}
-                   className="w-full h-full object-cover"
+                   /* Mobile: scale up from top so the bottom "jitter.video" watermark
+                      gets cropped out of view. Desktop stays untouched (md:scale-100). */
+                   className="w-full h-full object-cover object-top origin-top scale-[1.15] md:scale-100 md:origin-center"
                  />
                )}
             </div>

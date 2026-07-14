@@ -117,9 +117,9 @@ export function Footer() {
                        <h4 className="font-bold text-lg text-white mb-4 font-rowdies">Sitemap</h4>
                        <ul className="space-y-2 font-medium text-white text-[14px]">
                           <li><RollingLink href="/" hoverColor="text-black" baseColor="text-white">Home</RollingLink></li>
-                          <li><RollingLink href="/courses" hoverColor="text-black" baseColor="text-white">Courses</RollingLink></li>
-                          <li><RollingLink href="/testimonial" hoverColor="text-black" baseColor="text-white">Reviews</RollingLink></li>
-                          <li><RollingLink href="/blogs" hoverColor="text-black" baseColor="text-white">Blogs</RollingLink></li>
+                          <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">Courses</RollingLink></li>
+                          <li><RollingLink href="/new-testimonial" hoverColor="text-black" baseColor="text-white">Reviews</RollingLink></li>
+                          <li><RollingLink href="/new-blogs" hoverColor="text-black" baseColor="text-white">Blogs</RollingLink></li>
                           <li><RollingLink href="/become-a-teacher" hoverColor="text-black" baseColor="text-white">Become a Teacher</RollingLink></li>
                        </ul>
                   </div>
@@ -128,10 +128,10 @@ export function Footer() {
                   <div>
                        <h4 className="font-bold text-lg text-white mb-4 font-rowdies">Learn</h4>
                        <ul className="space-y-2 font-medium text-white text-[14px]">
-                          <li><RollingLink href="/courses" hoverColor="text-black" baseColor="text-white">NAPLAN Exam</RollingLink></li>
-                          <li><RollingLink href="/courses" hoverColor="text-black" baseColor="text-white">ICAS</RollingLink></li>
-                          <li><RollingLink href="/courses" hoverColor="text-black" baseColor="text-white">HSC</RollingLink></li>
-                          <li><RollingLink href="/courses" hoverColor="text-black" baseColor="text-white">Selective School</RollingLink></li>
+                          <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">NAPLAN Exam</RollingLink></li>
+                          <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">ICAS</RollingLink></li>
+                          <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">HSC</RollingLink></li>
+                          <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">Selective School</RollingLink></li>
                        </ul>
                   </div>
 

@@ -1,95 +1,70 @@
-import Footer from '@/components/Footer';
-import HeroHeader from '@/components/waste/HeroHeader';
-// import Hero from '@/components/Hero';
-import CreditsSection from '@/components/Credits';
-import StudentTestimonial from '@/components/StudentTestimonial';
-import HeaderNav from '@/components/HeroHeaderNav';
-import ExamCourses from '@/components/ExamCourses';
-import HeroWithCredits from '@/components/HeroCallWithCredits';
-
-import TeacherTestimonial from '@/components/TeacherTestimonial';
-
-import TeacherCarousel from '@/components/Teachers';
-
-import SubscribeBanner from '@/components/SubscribeBanner';
-
-import FAQ from '@/components/FAQ';
-
-import Features from '@/components/Features';
-
-import Review from '@/components/Review';
-
-import FullPageSlider from '@/components/FullPageScroll';
-
+// Landing page (/) — the new SuperSheldon experience.
+// This is the same design that previously lived at /home2: the 3D WebGL hero
+// (Vue + Three.js, served from /public/home2-hero via iframe) followed by the
+// new-design sections. /home2 now redirects here so there is a single canonical
+// homepage.
+import dynamic from 'next/dynamic';
+import { Header } from '@/components/NSheader';
 import FloatingArrowWhatsApp from '@/components/ArrowAndWhatsapp';
+import NSCookieConsent from '@/components/NSCookieConsent';
+import NSDeadlineBanner from '@/components/NSDeadlineBanner';
+import ScrollToTop from '@/components/ScrollToTop';
+import Home2Hero from '@/components/Home2Hero';
 
-
-import ClassVideoSection from '@/components/Studentvideo';
-import Hero from '@/components/Hero';
-
-import FeatureSlider from '@/components/NewScroller';
-
-import NewExamCourses from '@/components/NewExamCourses';
-
-
-import TryFreeClass from '@/components/freeclass/tryfreeclass';
-
-import TestimonialVideoBoost from '@/components/StudentTestimonialVideoBoost';
-
-import ChristmasPopup from '@/components/ChristmasPopup';
-
-import VideoChoose from '@/components/sharedcomps/VideoChoose';
-
-
+// Below-fold components loaded lazily to reduce initial JS bundle
+const TestimonialSection   = dynamic(() => import('@/components/NSstudent-testimonial').then(m => ({ default: m.TestimonialSection })));
+const USCourseTree         = dynamic(() => import('@/components/USCourseTree'));
+const NSClassVideoSection  = dynamic(() => import('@/components/NSClassVideosection'));
+const NSChoose             = dynamic(() => import('@/components/NSChoose'));
+const TestimonialVideoBoost = dynamic(() => import('@/components/NSAlexVideo'));
+const ParentsTestimonialSection = dynamic(() => import('@/components/NSparents-testimonial').then(m => ({ default: m.ParentsTestimonialSection })));
+const Review               = dynamic(() => import('@/components/Review'));
+const NSAnim               = dynamic(() => import('@/components/NSAnim'));
+const NSTeacherTest        = dynamic(() => import('@/components/NSTeacherTest'));
+const TeacherCarousel      = dynamic(() => import('@/components/NSTeachers'));
+const FeatureSlider        = dynamic(() => import('@/components/NSFeatures'));
+const NSLevelUp            = dynamic(() => import('@/components/NSApp'));
+const FAQ                  = dynamic(() => import('@/components/NSFAQ'));
+const PathwayFinderBanner  = dynamic(() => import('@/components/PathwayFinderBanner'));
+const Footer               = dynamic(() => import('@/components/NSfooter').then(m => ({ default: m.Footer })));
+const NovaChatbot          = dynamic(() => import('@/components/NovaChatbot'));
 
 export const metadata = {
-
-  title: "SuperSheldon | Interactive Online Learning for Kids & Students",
-
-
-  }
+  title: 'SuperSheldon | Interactive Online Learning for Kids & Students',
+};
 
 export default function Home() {
   return (
-    <>
-    {/* <ChristmasPopup/> */}
-      <HeaderNav />
+    <main className="new-home-bg">
+      <ScrollToTop />
+      <NSDeadlineBanner />
+      <Header stacked />
 
+      {/* 3D WebGL hero. The iframe has its own scroll that drives the blue-scan
+          animation; when it finishes, native scroll chains to this page and the
+          sections below come into view. Deferred behind a poster so its ~3MB
+          payload doesn't compete with this page's hydration — see Home2Hero. */}
+      <Home2Hero />
 
-      <Hero/>
-      <CreditsSection/>
-      <TryFreeClass/>
-      <StudentTestimonial />
-
-
-    <NewExamCourses/>
-
-
-      <ClassVideoSection />
-
-      <VideoChoose/>
-
-      <TestimonialVideoBoost/>
-
-
+      <TestimonialSection />
+      <USCourseTree />
+      <NSClassVideoSection />
+      <NSChoose />
+      <TestimonialVideoBoost />
+      <ParentsTestimonialSection />
       <Review />
-
-      
-      <TeacherTestimonial />
-
+      <NSAnim />
+      <NSTeacherTest />
       <TeacherCarousel />
-
-
-      <FeatureSlider/>
+      <FeatureSlider />
+      <NSLevelUp />
       <FAQ />
-
-      
-
+      <PathwayFinderBanner />
       <Footer />
 
-      <FloatingArrowWhatsApp/>
-
-      
-    </>
+      <NovaChatbot mobileHidden={true} />
+      <FloatingArrowWhatsApp side="right" mobileBar={true} />
+      <NSCookieConsent />
+    </main>
   );
 }

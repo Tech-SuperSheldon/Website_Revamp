@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, MotionValue } from "framer-motion";
 import { assetUrl } from "@/lib/assetUrl";
 import { AutoplayMutedVideo } from "@/components/AutoplayMutedVideo";
 
@@ -82,10 +82,18 @@ export default function NSAnim() {
     offset: ["start start", "end end"],
   });
 
+  // Smooth the raw scroll value so card transitions feel buttery instead of
+  // snapping 1:1 with every scroll tick (main cause of the "fast/glitchy" feel).
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   return (
     <>
       {/* ── MOBILE: sticky scroll stacking cards ── */}
-      <section ref={mobileContainerRef} className="md:hidden h-[160vh] relative -mt-[6vh]">
+      <section ref={mobileContainerRef} className="md:hidden h-[320vh] relative -mt-[6vh]">
         <div className="sticky top-0 h-screen flex flex-col items-center justify-start overflow-hidden pt-[13vh] gap-4">
           {/* Header — sits at the top with the cards right below it */}
           <div className="text-center px-4 shrink-0 z-20">
@@ -107,7 +115,7 @@ export default function NSAnim() {
                   key={video.id}
                   i={i}
                   data={video}
-                  progress={scrollYProgress}
+                  progress={smoothProgress}
                   range={[rangeStart, rangeEnd]}
                 />
               );
