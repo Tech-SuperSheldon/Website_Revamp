@@ -11,7 +11,7 @@
 // To add / edit a teacher, just add an object here — the UI is fully
 // data-driven and needs no code changes.
 
-export const teachers = [
+const BASE = [
   {
     id: "khushi-chaubey",
     name: "Khushi Chaubey",
@@ -330,5 +330,34 @@ export const teachers = [
     students: "190+",
   },
 ];
+
+// Achievements per teacher (derived from their posters / qualifications).
+// Editable — add or reword freely.
+const ACHIEVEMENTS = {
+  "khushi-chaubey": ["🏅 Gold Medalist — B.Sc", "Fundamentals & confidence specialist"],
+  "arfa-zainab": ["Biotechnology & Genetics background", "Interactive, concept-first teaching"],
+  "ruchi-arya": ["15+ years teaching experience", "Inquiry-based science expert"],
+  "shahar-banu": ["MSc Botany, BSc.Ed", "Exam-focused, results-driven coaching"],
+  "shalini-mahadik": ["MSc — Organic Chemistry", "Student-centered lesson design"],
+  "shraddha-kamat": [
+    "Certified — IIM Bangalore",
+    "TTT+ certified — IIT Roorkee",
+    "12+ years across all age groups",
+  ],
+  "diana-pereira": ["Vedic Math specialist", "Adaptive, multi-style teaching"],
+  "gitartha-dutta": ["MSc — Chemistry", "Multi-science: Physics, Chemistry, Biology"],
+  "preksha-sharma": ["Japanese JLPT / NAT trainer", "Game-based interactive learning"],
+  "ridhima": ["Teaches Year 1–12", "Patient, empathetic mentor"],
+  "rupanshi-kalra": ["Masters in Economics", "Multi-subject educator"],
+  "muniba-elahi": ["Master's in English & Psychology", "Certified Phonics Teacher"],
+};
+
+// Attach the rectangular card `portrait` (cropped from the same poster as the
+// circular avatar) and the `achievements` list to every teacher.
+export const teachers = BASE.map((t) => ({
+  ...t,
+  portrait: t.image.replace("/avatars/", "/portraits/"),
+  achievements: ACHIEVEMENTS[t.id] || [],
+}));
 
 export default teachers;
