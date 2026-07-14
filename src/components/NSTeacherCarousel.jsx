@@ -187,13 +187,17 @@ function TeacherModal({ teacher, onClose }) {
           <div className="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full bg-orange-400/40 blur-2xl" />
           <div className="pointer-events-none absolute -left-12 bottom-0 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
 
-          <span className="relative rounded-full bg-gradient-to-br from-orange-400 to-amber-400 p-[5px] shadow-xl">
-            <img
-              src={teacher.image}
-              alt={teacher.name}
-              className="h-24 w-24 rounded-full border-[5px] border-white/90 bg-white object-cover sm:h-28 sm:w-28 md:h-52 md:w-52"
-            />
-          </span>
+          <div className="relative rounded-[1.6rem] bg-gradient-to-br from-orange-400 to-amber-400 p-1.5 shadow-2xl">
+            <div className="w-32 overflow-hidden rounded-[1.25rem] bg-white sm:w-36 md:w-48">
+              <div className="aspect-[4/5]">
+                <img
+                  src={teacher.portrait}
+                  alt={teacher.name}
+                  className="h-full w-full object-cover object-top"
+                />
+              </div>
+            </div>
+          </div>
 
           <div className="relative">
             <h3 className="text-xl font-extrabold drop-shadow md:text-2xl">{teacher.name}</h3>
