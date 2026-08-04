@@ -2263,7 +2263,7 @@ export default function BecomeATeacherPage() {
     <main className="bg-[#FFF9F3]">
       <Script
         src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
       />
 
       <StickyApplyCTA onApply={openApply} />

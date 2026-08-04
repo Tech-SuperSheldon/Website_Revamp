@@ -441,7 +441,7 @@ export default function NovaChatbot({ mobileHidden = false }: { mobileHidden?: b
               className="relative w-10 h-10 rounded-full overflow-hidden border-[3px] border-white/40 group-hover:border-white/80 transition-colors duration-300 shrink-0 z-10"
             >
               <Image
-                src="/nova-icon.png"
+                src="/nova-icon.webp"
                 alt="Nova"
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-300"

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import {
   motion,
   useAnimationFrame,
@@ -233,9 +234,11 @@ function Card({ item, index, x, cardWidth, dragStartX, onClick }: { item: any, i
       onClick={handleClick}
     >
       <div className="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white bg-gray-100 group">
-        <img
+        <Image
           src={item.image}
-          alt={item.name}
+          alt={item.name || "Teacher profile"}
+          fill
+          sizes="(max-width: 768px) 100vw, 288px"
           className={`w-full h-full transition-transform duration-500 group-hover:scale-105 ${
             item.name
               ? "object-cover object-top"

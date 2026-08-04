@@ -78,7 +78,7 @@ export default function FloatingArrowWhatsApp({ side = "right", mobileBar = fals
               className="relative w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-orange-400 shadow-lg overflow-hidden border-2 border-white/40 hover:scale-105 transition-transform"
               title="Chat with Nova"
             >
-              <Image src="/nova-icon.png" alt="Nova" fill className="object-cover" />
+              <Image src="/nova-icon.webp" alt="Nova" fill className="object-cover" />
             </button>
           </div>
         </div>

@@ -30,21 +30,27 @@ const Review = () => {
         {/* Card 1 */}
         <div className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300 shadow-lg">
           <div className="w-full h-64 sm:h-72 md:h-80 overflow-hidden flex items-center justify-center bg-gray-50">
-            <img src="/Bento Blocks _ Analytics Card.gif" alt="Analytics" loading="lazy" decoding="async" className="w-[140%] h-[140%] object-cover object-center" />
+            <video autoPlay loop muted playsInline width={600} height={400} className="w-[140%] h-[140%] object-cover object-center">
+              <source src="/bento-analytics.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
 
         {/* Card 2 */}
         <div className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300 shadow-lg">
           <div className="w-full h-64 sm:h-72 md:h-80 overflow-hidden flex items-center justify-center bg-gray-50">
-            <img src="/Bento Blocks _ Conversion Card.gif" alt="Conversion" loading="lazy" decoding="async" className="w-[140%] h-[140%] object-cover object-center" />
+            <video autoPlay loop muted playsInline width={600} height={400} className="w-[140%] h-[140%] object-cover object-center">
+              <source src="/bento-conversion.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
 
         {/* Card 3 */}
         <div className="rounded-2xl bg-white overflow-hidden transform transition hover:-translate-y-2 duration-300 shadow-lg">
           <div className="w-full h-64 sm:h-72 md:h-80 overflow-hidden flex items-center justify-center bg-gray-50">
-            <img src="/Bento Blocks _ Meter Card.gif" alt="Meter" loading="lazy" decoding="async" className="w-[140%] h-[140%] object-cover object-center" />
+            <video autoPlay loop muted playsInline width={600} height={400} className="w-[140%] h-[140%] object-cover object-center">
+              <source src="/bento-meter.mp4" type="video/mp4" />
+            </video>
           </div>
         </div>
       </div>

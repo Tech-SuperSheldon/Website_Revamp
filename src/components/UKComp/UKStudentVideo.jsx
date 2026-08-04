@@ -208,8 +208,8 @@ export default function UKStudentVideo() {
         <video
           ref={videoRef}
           className="w-full h-full object-cover rounded-2xl"
-          src="/studentvid.mp4"
-          poster="/thumbnail.png"
+          src="/studentvid-compressed.mp4"
+          poster="/thumbnail.webp"
         />
         <button
           onClick={togglePlay}

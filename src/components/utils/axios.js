@@ -21,18 +21,15 @@
 
 
 
-import axios from "axios" 
+import axios from "axios";
+import { getApiBaseUrl } from './apiBase.mjs';
 
-// Use environment variable or default to production
 const getBaseURL = () => {
-  if (typeof window !== 'undefined') {
-    // Check if we're on localhost
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-      // Try to use local backend if available, otherwise use production
-      return process.env.NEXT_PUBLIC_API_URL || 'https://website-revamp-mn1t.onrender.com';
-    }
+  const configuredUrl = getApiBaseUrl(process.env);
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    return configuredUrl;
   }
-  return process.env.NEXT_PUBLIC_API_URL || 'https://website-revamp-mn1t.onrender.com';
+  return configuredUrl;
 };
 
 const axiosClient = axios.create({

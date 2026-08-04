@@ -126,7 +126,7 @@ export default function UKCredits() {
                   rel="noopener noreferrer"
                 >
                   <Image
-                    src="/googlev2.png"
+                    src="/googlev2.webp"
                     alt="Google Reviews"
                     width={120}
                     height={120}
@@ -144,7 +144,7 @@ export default function UKCredits() {
           <div className="flex flex-col items-center justify-center space-y-3 break-words w-full">
             <p className="text-xl sm:text-2xl font-semibold break-words w-full">Accredited by</p>
             <Image
-              src="/Stem.png"
+              src="/Stem.webp"
               alt="STEM Accredited"
               width={160}
               height={90}

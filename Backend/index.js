@@ -58,8 +58,12 @@ app.use(cors(corsOptions));
 app.use(express.json()) ;
 
 // Health check endpoint
-app.get("/health", (req, res) => {
-    res.status(200).json({ status: "OK", message: "Server is running" });
+app.get("/health", (_req, res) => {
+  res.status(200).json({
+    status: "ok",
+    service: "website-revamp-backend",
+    timestamp: new Date().toISOString(),
+  });
 });
 
 // Book Demo 

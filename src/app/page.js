@@ -5,11 +5,9 @@
 // homepage.
 import dynamic from 'next/dynamic';
 import { Header } from '@/components/NSheader';
-import FloatingArrowWhatsApp from '@/components/ArrowAndWhatsapp';
-import NSCookieConsent from '@/components/NSCookieConsent';
 import NSDeadlineBanner from '@/components/NSDeadlineBanner';
-import ScrollToTop from '@/components/ScrollToTop';
 import Home2Hero from '@/components/Home2Hero';
+import DeferredWidgets, { DeferredSection } from '@/components/DeferredWidgets';
 
 // Below-fold components loaded lazily to reduce initial JS bundle
 const TestimonialSection   = dynamic(() => import('@/components/NSstudent-testimonial').then(m => ({ default: m.TestimonialSection })));
@@ -27,7 +25,6 @@ const NSLevelUp            = dynamic(() => import('@/components/NSApp'));
 const FAQ                  = dynamic(() => import('@/components/NSFAQ'));
 const PathwayFinderBanner  = dynamic(() => import('@/components/PathwayFinderBanner'));
 const Footer               = dynamic(() => import('@/components/NSfooter').then(m => ({ default: m.Footer })));
-const NovaChatbot          = dynamic(() => import('@/components/NovaChatbot'));
 
 export const metadata = {
   title: 'SuperSheldon | Interactive Online Learning for Kids & Students',
@@ -36,7 +33,6 @@ export const metadata = {
 export default function Home() {
   return (
     <main className="new-home-bg">
-      <ScrollToTop />
       <NSDeadlineBanner />
       <Header stacked />
 
@@ -53,18 +49,32 @@ export default function Home() {
       <TestimonialVideoBoost />
       <ParentsTestimonialSection />
       <Review />
-      <NSAnim />
-      <NSTeacherTest />
-      <TeacherCarousel />
-      <FeatureSlider />
-      <NSLevelUp />
-      <FAQ />
-      <PathwayFinderBanner />
-      <Footer />
+      <DeferredSection>
+        <NSAnim />
+      </DeferredSection>
+      <DeferredSection>
+        <NSTeacherTest />
+      </DeferredSection>
+      <DeferredSection>
+        <TeacherCarousel />
+      </DeferredSection>
+      <DeferredSection>
+        <FeatureSlider />
+      </DeferredSection>
+      <DeferredSection>
+        <NSLevelUp />
+      </DeferredSection>
+      <DeferredSection>
+        <FAQ />
+      </DeferredSection>
+      <DeferredSection>
+        <PathwayFinderBanner />
+      </DeferredSection>
+      <DeferredSection>
+        <Footer />
+      </DeferredSection>
 
-      <NovaChatbot mobileHidden={true} />
-      <FloatingArrowWhatsApp side="right" mobileBar={true} />
-      <NSCookieConsent />
+      <DeferredWidgets mobileHidden={true} side="right" mobileBar={true} />
     </main>
   );
 }

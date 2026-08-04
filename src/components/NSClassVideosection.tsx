@@ -182,8 +182,8 @@ export default function NSClassVideoSection() {
                     <video
                         ref={videoRef}
                         className="w-full h-full object-cover"
-                        src={assetUrl("/studentvid.mp4")}
-                        poster={assetUrl("/thumbnail.png")}
+                        src={assetUrl("/studentvid-compressed.mp4")}
+                        poster={assetUrl("/thumbnail.webp")}
                         loop
                         muted
                         playsInline
@@ -237,7 +237,7 @@ export default function NSClassVideoSection() {
                 className="flex flex-col items-center text-center group"
             >
                 <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-orange-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
-                     <img src={infoCards[0].icon} alt="1:1 Sessions" className="object-contain w-full h-full" />
+                     <Image src={infoCards[0].icon} alt="1:1 Sessions" width={320} height={320} className="object-contain w-full h-full" />
                 </div>
             </motion.div>
 
@@ -253,7 +253,7 @@ export default function NSClassVideoSection() {
                 className="flex flex-col items-center text-center group"
             >
                 <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-orange-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
-                    <img src={infoCards[1].icon} alt="Live Recorded Classes" className="object-contain w-full h-full" />
+                    <Image src={infoCards[1].icon} alt="Live Recorded Classes" width={320} height={320} className="object-contain w-full h-full" />
                 </div>
             </motion.div>
 
@@ -269,7 +269,7 @@ export default function NSClassVideoSection() {
                 className="flex flex-col items-center text-center group"
             >
                 <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-orange-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
-                    <img src={infoCards[2].icon} alt="Homework & Tests" className="object-contain w-full h-full" />
+                    <Image src={infoCards[2].icon} alt="Homework & Tests" width={320} height={320} className="object-contain w-full h-full" />
                 </div>
             </motion.div>
         </div>

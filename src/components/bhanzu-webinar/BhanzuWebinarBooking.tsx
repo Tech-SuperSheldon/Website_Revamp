@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Footer from "@/components/Footer";
@@ -621,7 +622,7 @@ export default function BhanzuWebinarBooking() {
         {/* ── HEADER ── */}
         <header className="wbr-header">
           <Link href="/">
-            <img src="/Final-Logo-bg-removed.png" alt="SuperSheldon" style={{ height: "100px", width: "auto" }} />
+            <Image src="/Final-Logo-bg-removed.png" alt="SuperSheldon" width={220} height={100} style={{ height: "100px", width: "auto" }} />
           </Link>
         </header>
 
@@ -811,7 +812,7 @@ export default function BhanzuWebinarBooking() {
                     </button>
 
                     <div style={{ marginTop: "16px", display: "flex", justifyContent: "center" }}>
-                      <img src="/Final-Logo-bg-removed.png" alt="SuperSheldon" style={{ height: "36px", width: "auto", opacity: 0.85 }} />
+                      <Image src="/Final-Logo-bg-removed.png" alt="SuperSheldon" width={140} height={36} style={{ height: "36px", width: "auto", opacity: 0.85 }} />
                     </div>
                   </form>
                 </>
@@ -831,7 +832,7 @@ export default function BhanzuWebinarBooking() {
                     className="wbr-hero-slide"
                     style={{ opacity: i === heroIndex ? 1 : 0 }}
                   >
-                    <img src={src} alt={`Webinar hero ${i + 1}`} />
+                    <Image src={src} alt={`Webinar hero ${i + 1}`} fill className="object-cover" />
                   </div>
                 ))}
               </div>

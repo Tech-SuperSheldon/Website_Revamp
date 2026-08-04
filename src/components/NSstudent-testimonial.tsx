@@ -137,7 +137,7 @@ export function TestimonialSection() {
           >
               {/* Background Image - Cozy Study Room */}
               <Image
-                src="/cozy_study_bg.png"
+                src="/cozy_study_bg.webp"
                 alt="Cozy Study Background"
                 fill
                 className="object-cover absolute inset-0 z-0 opacity-100 blur-[2px]"

@@ -163,8 +163,8 @@ export default function NSClassVideoSection() {
                     <video
                         ref={videoRef}
                         className="w-full h-full object-cover"
-                        src="/studentvid.mp4"
-                        poster="/thumbnail.png"
+                        src="/studentvid-compressed.mp4"
+                        poster="/thumbnail.webp"
                         playsInline
                         // Intentionally NOT muted by default prop to "unmute it", 
                         // but autoplay policy might require user interaction.

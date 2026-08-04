@@ -1,5 +1,7 @@
 # 1. Base image for building
 FROM node:18-alpine AS builder
+ARG NEXT_PUBLIC_API_URL=http://api.supersheldon.com
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 WORKDIR /app
 
 # Install dependencies
@@ -15,6 +17,8 @@ RUN npm run build
 
 # 2. Production image
 FROM node:18-alpine AS runner
+ARG NEXT_PUBLIC_API_URL=http://api.supersheldon.com
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 WORKDIR /app
 
 ENV NODE_ENV=production

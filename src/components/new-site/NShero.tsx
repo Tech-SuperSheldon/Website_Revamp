@@ -131,10 +131,10 @@ export function Hero() {
                   <Image src="/trustpilot.png" alt="Trustpilot" fill className="object-contain" />
                 </div>
                 <div className="relative h-10 w-28">
-                  <Image src="/googlev2.png" alt="Google Reviews" fill className="object-contain" />
+                  <Image src="/googlev2.webp" alt="Google Reviews" fill className="object-contain" />
                 </div>
                 <div className="relative h-12 w-28">
-                  <Image src="/Stem.png" alt="STEM Accredited" fill className="object-contain" />
+                  <Image src="/Stem.webp" alt="STEM Accredited" fill className="object-contain" />
                 </div>
               </div>
            </div>
@@ -173,7 +173,7 @@ export function Hero() {
                   className="absolute -top-6 -right-6 lg:-right-12 bg-white/95 backdrop-blur-xl p-4 rounded-2xl shadow-xl z-40 flex items-center gap-4 border border-white/50"
                 >
                   <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-purple-100">
-                    <Image src="/teacher.png" alt="Teacher" fill className="object-cover" />
+                    <Image src="/teacher.webp" alt="Teacher" fill className="object-cover" />
                   </div>
                   <div className="flex flex-col">
                     <span className="text-xs font-bold text-gray-900 leading-tight">Expert Teachers</span>

@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 // Feature Data Array - Extensible
@@ -190,13 +191,11 @@ const NSLevelUp = () => {
             {/* App Store / Play Store Buttons */}
             <div className="relative z-10 grid w-full max-w-[380px] grid-cols-2 gap-3 sm:gap-4 md:max-w-[420px] md:gap-3">
               <Link href="https://apps.apple.com/pk/app/levelup-learn-play/id6773067123" target="_blank" rel="noopener noreferrer" className="flex min-h-[3.5rem] md:min-h-[4rem] items-center justify-center rounded-2xl transition-transform hover:scale-[1.02] active:scale-95">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/badges/appstore.png" alt="Download on the App Store" className="h-full w-full object-contain" />
+                <Image src="/badges/appstore.png" alt="Download on the App Store" width={180} height={56} className="h-full w-full object-contain" />
               </Link>
 
               <Link href="https://play.google.com/store/apps/details?id=com.supersheldon.levelup&hl=en_IN" target="_blank" rel="noopener noreferrer" className="flex min-h-[3.5rem] md:min-h-[4rem] items-center justify-center rounded-2xl transition-transform hover:scale-[1.02] active:scale-95">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/badges/playstore.png" alt="Get it on Google Play" className="h-full w-full object-contain scale-125" />
+                <Image src="/badges/playstore.png" alt="Get it on Google Play" width={180} height={56} className="h-full w-full object-contain scale-125" />
               </Link>
             </div>
           </div>

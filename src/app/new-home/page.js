@@ -3,10 +3,8 @@
 import dynamic from 'next/dynamic';
 import { Header } from '@/components/NSheader';
 import { Hero } from '@/components/NShero';
-import FloatingArrowWhatsApp from '@/components/ArrowAndWhatsapp';
-import NSCookieConsent from '@/components/NSCookieConsent';
 import NSDeadlineBanner from '@/components/NSDeadlineBanner';
-import ScrollToTop from '@/components/ScrollToTop';
+import DeferredWidgets, { DeferredSection } from '@/components/DeferredWidgets';
 
 // Below-fold components loaded lazily to reduce initial JS bundle
 const TestimonialSection   = dynamic(() => import('@/components/NSstudent-testimonial').then(m => ({ default: m.TestimonialSection })));
@@ -24,9 +22,6 @@ const NSLevelUp            = dynamic(() => import('@/components/NSApp'));
 const FAQ                  = dynamic(() => import('@/components/NSFAQ'));
 const PathwayFinderBanner  = dynamic(() => import('@/components/PathwayFinderBanner'));
 const Footer               = dynamic(() => import('@/components/NSfooter').then(m => ({ default: m.Footer })));
-// Floating chat widget — not needed for first paint, so keep it out of the
-// initial JS and let it stream in after the page is interactive.
-const NovaChatbot          = dynamic(() => import('@/components/NovaChatbot'));
 
 export const metadata = {
   title: 'SuperSheldon | Interactive Online Learning for Kids & Students',
@@ -35,7 +30,6 @@ export const metadata = {
 export default function NewHome() {
   return (
     <main className="new-home-bg">
-      <ScrollToTop />
       <NSDeadlineBanner />
       <Header stacked />
       <Hero />
@@ -46,17 +40,31 @@ export default function NewHome() {
       <TestimonialVideoBoost />
       <ParentsTestimonialSection />
       <Review />
-      <NSAnim />
-      <NSTeacherTest />
-      <TeacherCarousel />
-      <FeatureSlider />
-      <NSLevelUp />
-      <FAQ />
-      <PathwayFinderBanner />
-      <Footer />
-      <NovaChatbot mobileHidden={true} />
-      <FloatingArrowWhatsApp side="right" mobileBar={true} />
-      <NSCookieConsent />
+      <DeferredSection>
+        <NSAnim />
+      </DeferredSection>
+      <DeferredSection>
+        <NSTeacherTest />
+      </DeferredSection>
+      <DeferredSection>
+        <TeacherCarousel />
+      </DeferredSection>
+      <DeferredSection>
+        <FeatureSlider />
+      </DeferredSection>
+      <DeferredSection>
+        <NSLevelUp />
+      </DeferredSection>
+      <DeferredSection>
+        <FAQ />
+      </DeferredSection>
+      <DeferredSection>
+        <PathwayFinderBanner />
+      </DeferredSection>
+      <DeferredSection>
+        <Footer />
+      </DeferredSection>
+      <DeferredWidgets mobileHidden={true} side="right" mobileBar={true} />
     </main>
   );
 }

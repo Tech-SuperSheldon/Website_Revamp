@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         {/* 1️⃣ Microsoft Clarity */}
         <Script
           id="microsoft-clarity"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function(c,l,a,r,i,t,y){
@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
         />
 
         {/* 2️⃣ Google Tag Manager (Head) */}
-        <Script id="gtm-script" strategy="lazyOnload">
+        <Script id="gtm-script" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -50,11 +50,11 @@ export default function RootLayout({ children }) {
         {/* 3️⃣ Google Analytics (GA4) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-T3X5175CZ7"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
         <Script
           id="google-analytics"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -68,7 +68,7 @@ export default function RootLayout({ children }) {
         {/* 4️⃣ Meta Pixel (Facebook Pixel - UPDATED SINGLE VERSION) */}
         <Script
           id="meta-pixel"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               !function(f,b,e,v,n,t,s)

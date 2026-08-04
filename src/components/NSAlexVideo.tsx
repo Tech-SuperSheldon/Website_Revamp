@@ -135,7 +135,7 @@ export default function TestimonialVideoBoost() {
               className="mt-6 md:mt-10 rounded-2xl overflow-hidden shadow-xl border border-gray-100 relative aspect-video w-full max-w-lg mx-auto md:mx-0 bg-gray-100 group"
             >
               <Image
-                src="/alexphoto.png"
+                src="/alexphoto.webp"
                 alt="Alex - SuperSheldon Success Story"
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"

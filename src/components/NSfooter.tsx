@@ -154,12 +154,10 @@ export function Footer() {
                        </ul>
                        <div className="flex flex-col gap-2">
                           <Link href="https://apps.apple.com/pk/app/levelup-learn-play/id6773067123" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center rounded-lg transition-transform hover:scale-[1.02] active:scale-95">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="/badges/appstore.png" alt="Download on the App Store" className="h-10 w-auto object-contain" />
+                            <Image src="/badges/appstore.png" alt="Download on the App Store" width={140} height={40} className="h-10 w-auto object-contain" />
                           </Link>
                           <Link href="https://play.google.com/store/apps/details?id=com.supersheldon.levelup&hl=en_IN" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center rounded-lg transition-transform hover:scale-[1.02] active:scale-95">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src="/badges/playstore.png" alt="Get it on Google Play" className="h-10 w-auto object-contain scale-[1.35]" />
+                            <Image src="/badges/playstore.png" alt="Get it on Google Play" width={140} height={40} className="h-10 w-auto object-contain scale-[1.35]" />
                           </Link>
                        </div>
                   </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { Review } from "@/lib/review-data-us";
 
 interface NSReviewCardProps {
@@ -13,9 +14,11 @@ export default function NSReviewCard({ review }: NSReviewCardProps) {
           <div className="relative">
              {/* Gradient border effect for avatar */}
             <div className="absolute -inset-0.5 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full opacity-75"></div>
-            <img
+            <Image
                 src={review.profilePic}
                 alt={review.name}
+                width={48}
+                height={48}
                 className="relative w-12 h-12 rounded-full object-cover border-2 border-white"
             />
           </div>

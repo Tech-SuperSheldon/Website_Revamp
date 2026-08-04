@@ -107,7 +107,7 @@ export function TestimonialSection() {
           <div className="relative w-full lg:w-2/3 rounded-[2rem] shadow-2xl flex flex-col md:flex-row items-center bg-transparent group border border-gray-100 overflow-hidden">
               {/* Background Image - Cozy Study Room */}
               <Image
-                src="/cozy_study_bg.png"
+                src="/cozy_study_bg.webp"
                 alt="Cozy Study Background"
                 fill
                 className="object-cover absolute inset-0 z-0 opacity-100 blur-[2px]"
