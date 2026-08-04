@@ -13,8 +13,9 @@
     "incremental": true,
     "module": "esnext",
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
+    "ignoreDeprecations": "5.0",
     "isolatedModules": true,
     "jsx": "preserve",
     "plugins": [
@@ -22,8 +23,6 @@
         "name": "next"
       }
     ],
-    "baseUrl": ".",
-    "ignoreDeprecations": "6.0",
     "paths": {
       "@/*": [
         "./src/*"
