@@ -23,6 +23,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* Warm up connections to third-party script origins so the
+            afterInteractive tags below don't pay DNS+TLS setup cost when
+            they actually fire. */}
+        <link rel="preconnect" href="https://www.clarity.ms" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://www.facebook.com" />
+
         {/* 1️⃣ Microsoft Clarity */}
         <Script
           id="microsoft-clarity"

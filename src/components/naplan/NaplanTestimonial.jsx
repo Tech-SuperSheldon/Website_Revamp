@@ -26,7 +26,7 @@
 //           {/* Student Image */}
 //           <div className="relative w-full h-[200px] sm:h-[250px] rounded-2xl overflow-hidden">
 //             <Image
-//               src="/k1b.png"
+//               src="/k1b.webp"
 //               alt="Students"
 //               fill
 //               className="object-cover"
@@ -74,7 +74,7 @@ export default function NaplanTestimonial() {
           {/* Student Image */}
           <div className="relative w-full h-[200px] sm:h-[250px] bg-white rounded-2xl overflow-hidden border-4 border-purple-200 shadow-md flex items-center justify-center">
             <Image
-              src="/k2g.png"
+              src="/k2g.webp"
               alt="Students"
               fill
               className="object-contain"

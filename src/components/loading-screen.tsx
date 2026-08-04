@@ -70,7 +70,7 @@ export function LoadingScreen({ children }: { children: React.ReactNode }) {
           >
             <div className="w-32 h-32 md:w-48 md:h-48 relative">
                  <Image 
-                    src="/logo.png" 
+                    src="/logo.webp" 
                     alt="Logo" 
                     fill 
                     className="object-contain"

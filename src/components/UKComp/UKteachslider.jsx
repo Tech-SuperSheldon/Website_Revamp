@@ -9,7 +9,7 @@ import { Play } from "lucide-react";
 //     id: 1,
 //     name: "Ashita Gunjikar",
 //     subject: "Mathematics Teacher",
-//     image: "/course/Teacher1.png",
+//     image: "/course/Teacher1.webp",
 //     // video: "https://www.w3schools.com/html/mov_bbb.mp4",
 //   },
 //   {
@@ -23,7 +23,7 @@ import { Play } from "lucide-react";
 //     id: 3,
 //     name: "Avishikta Dutta",
 //     subject: "Chemistry Teacher",
-//     image: "/course/Teacher3.png",
+//     image: "/course/Teacher3.webp",
 //     // video: "https://www.w3schools.com/html/mov_bbb.mp4",
 //   },
 //   {
@@ -37,7 +37,7 @@ import { Play } from "lucide-react";
 //     id: 5,
 //     name: "Anita Sharma",
 //     subject: "English Teacher",
-//     image: "/course/Teacher5.png",
+//     image: "/course/Teacher5.webp",
 //     // video: "https://www.w3schools.com/html/mov_bbb.mp4",
 //   },
 //   {
@@ -72,7 +72,7 @@ import { Play } from "lucide-react";
 //     id: 10,
 //     name: "Priyanshi Agrawal",
 //     subject: "AI/ML Python Teacher",
-//     image: "/course/Teacher10.png",
+//     image: "/course/Teacher10.webp",
 //     // video: "https://www.w3schools.com/html/mov_bbb.mp4",
 //   },
 // ];
@@ -82,7 +82,7 @@ const teachers = [
     id: 1,
     name: "Ashita Gunjikar",
     subject: "Mathematics Teacher",
-    image: "/course/Teacher1.png",
+    image: "/course/Teacher1.webp",
     // video: "https://www.w3schools.com/html/mov_bbb.mp4",
   },
   {
@@ -96,7 +96,7 @@ const teachers = [
     id: 3,
     name: "Avishikta Dutta",
     subject: "Chemistry Teacher",
-    image: "/course/Teacher3.png",
+    image: "/course/Teacher3.webp",
     // video: "https://www.w3schools.com/html/mov_bbb.mp4",
   },
   {
@@ -110,7 +110,7 @@ const teachers = [
     id: 5,
     name: "",
     subject: "",
-    image: "/course/Teacher5.png",
+    image: "/course/Teacher5.webp",
     // video: "https://www.w3schools.com/html/mov_bbb.mp4",
   },
   {
@@ -145,7 +145,7 @@ const teachers = [
     id: 10,
     name: "Priyanshi Agrawal",
     subject: "AI/ML Python Teacher",
-    image: "/course/Teacher10.png",
+    image: "/course/Teacher10.webp",
     // video: "https://www.w3schools.com/html/mov_bbb.mp4",
   },
 ];

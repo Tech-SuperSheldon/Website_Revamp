@@ -17,7 +17,7 @@ export function Footer() {
                 <Link href="/" className="flex items-center gap-3 mb-6">
                      <div className="relative w-28 h-28">
                          <Image 
-                            src="/logo.png" 
+                            src="/logo.webp" 
                             alt="SuperSheldon" 
                             fill 
                             className="object-contain"

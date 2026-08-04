@@ -243,7 +243,7 @@ export function NewHeroSection() {
         <div className="flex justify-center mb-6 md:mb-8">
           <div className="relative w-48 h-16 md:w-64 md:h-20">
             <Image
-              src="/logo.png"
+              src="/logo.webp"
               alt="Super Sheldon Logo"
               fill
               className="object-contain"

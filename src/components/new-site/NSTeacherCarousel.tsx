@@ -15,7 +15,7 @@ const teachers = [
     id: 1,
     name: "Ashita Gunjikar",
     subject: "Mathematics Teacher",
-    image: "/course/Teacher1.png",
+    image: "/course/Teacher1.webp",
     video: "/videos/video1.mp4",
   },
   {
@@ -28,7 +28,7 @@ const teachers = [
     id: 3,
     name: "Avishikta Dutta",
     subject: "Chemistry Teacher",
-    image: "/course/Teacher3.png",
+    image: "/course/Teacher3.webp",
   },
   {
     id: 4,
@@ -40,7 +40,7 @@ const teachers = [
     id: 5,
     name: "",
     subject: "",
-    image: "/course/Teacher5.png",
+    image: "/course/Teacher5.webp",
   },
   {
     id: 6,
@@ -64,7 +64,7 @@ const teachers = [
     id: 10,
     name: "Priyanshi Agrawal",
     subject: "AI/ML Python Teacher",
-    image: "/course/Teacher10.png",
+    image: "/course/Teacher10.webp",
   },
 ];
 

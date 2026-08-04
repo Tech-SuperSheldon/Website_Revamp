@@ -88,7 +88,7 @@ export const reviews: Review[] = [
     source: "Website",
     text: "He has had the best Math classes at SuperSheldon — the progress and confidence he has gained are amazing!",
     link: "#",
-    profilePic: "/k1b.png",
+    profilePic: "/k1b.webp",
     handle: "@mrs_divya"
   },
   {
@@ -101,7 +101,7 @@ export const reviews: Review[] = [
     source: "Website",
     text: "SuperSheldon's Math classes have been outstanding — Ananya truly enjoys learning and has shown great improvement.",
     link: "#",
-    profilePic: "/k2g.png",
+    profilePic: "/k2g.webp",
     handle: "@mrs_riya"
   },
   {
@@ -114,7 +114,7 @@ export const reviews: Review[] = [
     source: "Website",
     text: "I joined SuperSheldon a couple of months ago and I'm really happy with my teacher — kind and patient, and explains Maths and English so I understand.",
     link: "#",
-    profilePic: "/k4b.png",
+    profilePic: "/k4b.webp",
     handle: "@alex_y4"
   },
   {
@@ -127,7 +127,7 @@ export const reviews: Review[] = [
     source: "Website",
     text: "SuperSheldon transformed how my son sees Math. He used to hate it, but now he runs to his laptop for the lessons. The gamified approach really works wonders!",
     link: "#",
-    profilePic: "/new-site/testimonials/avatar_1_david.png",
+    profilePic: "/new-site/testimonials/avatar_1_david.webp",
     handle: "@david_m"
   },
   {
@@ -140,7 +140,7 @@ export const reviews: Review[] = [
     source: "Website",
     text: "The combination of videos, practice tasks, and certificates really boosted my confidence. I actually look forward to every class now!",
     link: "#",
-    profilePic: "/new-site/testimonials/avatar_2_ayesha.png",
+    profilePic: "/new-site/testimonials/avatar_2_ayesha.webp",
     handle: "@ayesha_r"
   },
   {
@@ -153,7 +153,7 @@ export const reviews: Review[] = [
     source: "Website",
     text: "I was looking for a curriculum that adapts to my child's pace. SuperSheldon's adaptive learning path is exactly what we needed. The progress reports are detailed and helpful.",
     link: "#",
-    profilePic: "/new-site/testimonials/avatar_3_kethy.png",
+    profilePic: "/new-site/testimonials/avatar_3_kethy.webp",
     handle: "@kathy_v"
   },
   {
@@ -166,7 +166,7 @@ export const reviews: Review[] = [
     source: "Website",
     text: "The coding modules are fantastic. I actually built my first app after just two weeks! It feels less like studying and more like building cool stuff.",
     link: "#",
-    profilePic: "/new-site/testimonials/avatar_4_thomas.png",
+    profilePic: "/new-site/testimonials/avatar_4_thomas.webp",
     handle: "@thomas_a"
   },
   {
@@ -179,7 +179,7 @@ export const reviews: Review[] = [
     source: "Website",
     text: "I recommend SuperSheldon to all my students for extra practice. The visual explanations for complex science concepts are better than any textbook I've seen.",
     link: "#",
-    profilePic: "/new-site/testimonials/avatar_1_david.png",
+    profilePic: "/new-site/testimonials/avatar_1_david.webp",
     handle: "@mr_jenkins"
   }
 

@@ -9,18 +9,18 @@ const testimonials = [
     text:
       "I am Divya, mother of Kiaan. He has had the best Math classes at SuperSheldon — the progress and confidence he has gained are amazing!",
     name: "— Mrs. Divya",
-    image: "/k1b.png",
+    image: "/k1b.webp",
   },
   {
     text:
       "I am Riya, mother of Ananya in Year 5. SuperSheldon's Math Classes have been outstanding - Ananya truly Enjoys learning and has shown great improvement.",
     name: "— Mrs. Riya",
-    image: "/k2g.png",
+    image: "/k2g.webp",
   },
   {
     text: " My name's Alex. I'm from Melbourne. I joined Super Sheldon around two months, and really happy with the teacher, kind and pensive, and explain me maths and English. I understand, and I am really happy now. Thank you.",
     name: "— Alex, Year 4, Australian Student ",
-    image: "/k4b.png",
+    image: "/k4b.webp",
   },
 ];
 

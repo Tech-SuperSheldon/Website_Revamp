@@ -16,7 +16,7 @@ export const teachers: Teacher[] = [
     id: 1,
     name: "Ashita Gunjikar",
     subject: "Mathematics Teacher",
-    image: "/course/Teacher1.png",
+    image: "/course/Teacher1.webp",
     video: assetUrl("/videos/video1.mp4"),
   },
   {
@@ -29,7 +29,7 @@ export const teachers: Teacher[] = [
     id: 3,
     name: "Avishikta Dutta",
     subject: "Chemistry Teacher",
-    image: "/course/Teacher3.png",
+    image: "/course/Teacher3.webp",
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ export const teachers: Teacher[] = [
     id: 5,
     name: "Priya Sharma",
     subject: "NAPLAN Specialist",
-    image: "/course/Teacher5.png",
+    image: "/course/Teacher5.webp",
   },
   {
     id: 6,
@@ -65,7 +65,7 @@ export const teachers: Teacher[] = [
     id: 10,
     name: "Priyanshi Agrawal",
     subject: "AI/ML Python Teacher",
-    image: "/course/Teacher10.png",
+    image: "/course/Teacher10.webp",
   },
 ];
 

@@ -75,7 +75,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
               className="relative h-8 w-8 shrink-0 origin-left sm:h-10 sm:w-10 md:h-10 md:w-10"
             >
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="SuperSheldon Logo"
                 fill
                 priority // ── Added priority so the logo downloads immediately ──

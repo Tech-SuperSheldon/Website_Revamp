@@ -56,7 +56,7 @@ export function Header() {
           <Link href="/" className="flex items-center gap-2">
             <div className="relative w-16 h-16 md:w-24 md:h-24">
                  <Image 
-                    src="/logo.png" 
+                    src="/logo.webp" 
                     alt="SuperSheldon Logo" 
                     fill 
                     className="object-contain"

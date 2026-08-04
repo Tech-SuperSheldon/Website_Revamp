@@ -10,6 +10,7 @@
 //    skeleton loaders. Transform-only animations for smooth 60fps.
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   motion,
@@ -62,11 +63,11 @@ function LazyImg({ src, alt, className = "" }) {
       {!loaded && (
         <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200" />
       )}
-      <img
+      <Image
         src={src}
         alt={alt}
-        loading="lazy"
-        decoding="async"
+        fill
+        sizes="(max-width: 640px) 72vw, (max-width: 768px) 46vw, (max-width: 1024px) 32vw, (max-width: 1280px) 24vw, 20vw"
         onLoad={() => setLoaded(true)}
         className={`${className} transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
       />

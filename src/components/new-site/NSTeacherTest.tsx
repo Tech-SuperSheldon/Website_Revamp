@@ -106,7 +106,7 @@ export default function NSTeacherTest() {
                 playsInline
                 onClick={toggleMute}
                 onEnded={handleVideoEnded}
-                poster="/new-site/testimonials/video_thumb_ayesha.png"
+                poster="/new-site/testimonials/video_thumb_ayesha.webp"
             >
                 <source src={videos[currentVideoIndex]} type="video/mp4" />
                 Your browser does not support the video tag.

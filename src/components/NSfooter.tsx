@@ -39,7 +39,7 @@ export function Footer() {
                   <Link href="/" className="mb-4 block">
                        <div className="relative w-48 h-12">
                            <Image
-                              src="/logo.png"
+                              src="/logo.webp"
                               alt="SuperSheldon"
                               fill
                               className="object-contain object-left"

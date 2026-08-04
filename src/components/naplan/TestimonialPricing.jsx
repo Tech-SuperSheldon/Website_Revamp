@@ -104,7 +104,7 @@ export default function TestimonialsPricing() {
 
           {/* Student Image */}
           <div className="relative w-full h-[200px] sm:h-[250px] rounded-2xl overflow-hidden">
-            <Image src="/k1b.png" alt="Students" fill className="object-cover" />
+            <Image src="/k1b.webp" alt="Students" fill className="object-cover" />
           </div>
         </motion.div>
 

@@ -37,7 +37,7 @@ export function FooterSignature() {
         >
                 {/* Rolling Map Texture */}
                 <div 
-                    className="absolute inset-0 bg-[url('/world-map.png')] bg-cover opacity-80"
+                    className="absolute inset-0 bg-[url('/world-map.webp')] bg-cover opacity-80"
                     style={{ 
                         backgroundSize: '200% 100%',
                         animation: 'spin-globe 20s linear infinite'

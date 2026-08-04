@@ -56,7 +56,7 @@
 //         {/* Logo */}
 //         <Link href="/" className="flex items-center">
 //           <Image
-//             src="/logo.png"
+//             src="/logo.webp"
 //             alt="SuperSheldon Logo"
 //             width={160} // slightly smaller
 //             height={40}
@@ -177,7 +177,7 @@
 //         {/* Logo */}
 //         <Link href="/" className="flex items-center">
 //           <Image
-//             src="/logo.png"
+//             src="/logo.webp"
 //             alt="SuperSheldon Logo"
 //             width={160}
 //             height={40}
@@ -352,7 +352,7 @@ export default function UKHeader() {
         {/* Logo */}
         <Link href="/uk" className="flex items-center">
           <Image
-            src="/logo.png"
+            src="/logo.webp"
             alt="SuperSheldon Logo"
             width={160}
             height={40}

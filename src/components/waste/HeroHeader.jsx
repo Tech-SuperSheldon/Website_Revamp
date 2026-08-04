@@ -72,7 +72,7 @@ export default function HeroHeader() {
         <header style={quicksand}>
           <nav className="flex items-center justify-between py-2">
             <Image
-              src="/newlogo.png"
+              src="/newlogo.webp"
               alt="SuperSheldon Logo"
               width={170}
               height={20}

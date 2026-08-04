@@ -9,7 +9,7 @@ export default function PathwayFinderBanner() {
       {/* Background image */}
       <div className="relative w-full" style={{ minHeight: '260px' }}>
         <Image
-          src="/pathway-banner.jpeg"
+          src="/pathway-banner.webp"
           alt="Super Sheldon kids learning"
           fill
           className="object-cover object-right md:object-center"

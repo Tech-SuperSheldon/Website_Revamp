@@ -9,13 +9,13 @@ const testimonials = [
     text:
       "I am Divya, mother of Kiaan. He has had the best Math classes at SuperSheldon — the progress and confidence he has gained are amazing!",
     name: "— Mrs. Divya",
-    image: "/k1b.png",
+    image: "/k1b.webp",
   },
   {
     text:
       "I am Riya, mother of Ananya in Grade 5. SuperSheldon's Math Classes have been outstanding - Ananya truly Enjoys learning and has shown great improvement.",
     name: "— Mrs. Riya",
-    image: "/k2g.png",
+    image: "/k2g.webp",
   },
   {
     text: " East or West, Super Sheldon is the best. We love Super Sheldon. ",

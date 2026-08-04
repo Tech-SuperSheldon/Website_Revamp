@@ -135,7 +135,7 @@ export default function NSTeacherTest() {
                 preload="none"
                 onClick={toggleMute}
                 onEnded={handleVideoEnded}
-                poster={assetUrl("/new-site/testimonials/video_thumb_ayesha.png")}
+                poster={assetUrl("/new-site/testimonials/video_thumb_ayesha.webp")}
             >
                 <source src={videos[currentVideoIndex]} type="video/mp4" />
                 Your browser does not support the video tag.
@@ -191,7 +191,7 @@ export default function NSTeacherTest() {
           >
             {/* Teacher photo */}
             <div className="relative w-full h-28 rounded-xl overflow-hidden mb-3 bg-gray-50">
-              <Image src="/course/Teacher1.png" alt="Ashita Gunjikar" fill sizes="(max-width: 768px) 80px, 220px" className="object-contain" />
+              <Image src="/course/Teacher1.webp" alt="Ashita Gunjikar" fill sizes="(max-width: 768px) 80px, 220px" className="object-contain" />
             </div>
             <div className="flex items-center gap-2 mb-2">
                 <span className="text-[8px] font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded">Year 5</span>
@@ -221,7 +221,7 @@ export default function NSTeacherTest() {
                 <span className="ml-auto text-[8px] bg-orange-50 text-[#e87f1e] px-1.5 py-0.5 rounded border border-orange-100">Chem</span>
             </div>
             <div className="relative w-full h-20 rounded-xl overflow-hidden mb-2 bg-gray-50">
-                <Image src="/course/Teacher3.png" alt="Avishikta Dutta" fill sizes="(max-width: 768px) 80px, 180px" className="object-contain" />
+                <Image src="/course/Teacher3.webp" alt="Avishikta Dutta" fill sizes="(max-width: 768px) 80px, 180px" className="object-contain" />
             </div>
             <h4 className="text-xs font-bold text-gray-900 leading-tight">
                 Periodic Table Basics
@@ -241,7 +241,7 @@ export default function NSTeacherTest() {
           >
             {/* Teacher photo */}
             <div className="relative w-full h-28 rounded-xl overflow-hidden mb-3 bg-gray-50">
-              <Image src="/course/Teacher5.png" alt="Priya Sharma" fill sizes="(max-width: 768px) 80px, 220px" className="object-contain" />
+              <Image src="/course/Teacher5.webp" alt="Priya Sharma" fill sizes="(max-width: 768px) 80px, 220px" className="object-contain" />
             </div>
             <div className="flex items-center gap-2 mb-2">
                 <span className="text-[8px] font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded">Year 10</span>
@@ -271,7 +271,7 @@ export default function NSTeacherTest() {
                 <span className="ml-auto text-[8px] bg-orange-50 text-[#e87f1e] px-1.5 py-0.5 rounded border border-orange-100">English</span>
             </div>
             <div className="relative w-full h-20 rounded-xl overflow-hidden mb-2 bg-gray-50">
-                <Image src="/course/Teacher10.png" alt="Priyanshi Agrawal" fill sizes="(max-width: 768px) 80px, 180px" className="object-contain" />
+                <Image src="/course/Teacher10.webp" alt="Priyanshi Agrawal" fill sizes="(max-width: 768px) 80px, 180px" className="object-contain" />
             </div>
             <h4 className="text-xs font-bold text-gray-900 leading-tight">
                 Reading Comprehension

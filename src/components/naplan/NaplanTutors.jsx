@@ -8,7 +8,7 @@ export default function NaplanTutors() {
     {
       name: "Ms. Alice Brown",
       subject: "Reading & Writing",
-      image: "/course/Teacher1.png",
+      image: "/course/Teacher1.webp",
     },
     {
       name: "Mr. Daniel Lee",
@@ -18,7 +18,7 @@ export default function NaplanTutors() {
     {
       name: "Ms. Priya Patel",
       subject: "Language Conventions",
-      image: "/course/Teacher10.png",
+      image: "/course/Teacher10.webp",
     },
   ];
 

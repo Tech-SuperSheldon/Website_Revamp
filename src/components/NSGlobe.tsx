@@ -19,7 +19,7 @@ export function NSGlobe({ opacity = "opacity-10", size = 500, className = "" }: 
         <div className="w-full h-full rounded-full relative overflow-hidden shadow-[inset_-20px_-20px_50px_rgba(0,0,0,0.1)]">
           {/* Rolling Map Texture */}
           <div
-            className="absolute inset-0 bg-[url('/world-map.png')] bg-cover opacity-80 animate-spin-globe"
+            className="absolute inset-0 bg-[url('/world-map.webp')] bg-cover opacity-80 animate-spin-globe"
             style={{ backgroundSize: "200% 100%" }}
           />
           {/* Shadow Overlay for 3D effect */}
