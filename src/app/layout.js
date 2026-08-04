@@ -23,13 +23,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Warm up connections to third-party script origins so the
-            afterInteractive tags below don't pay DNS+TLS setup cost when
-            they actually fire. */}
-        <link rel="preconnect" href="https://www.clarity.ms" />
+        {/* Preconnect is expensive (DNS+TLS held open) and should be used
+            sparingly — only for the origin that loads soonest/matters most.
+            GTM fires first and is what most users are waiting on; the rest
+            get the cheaper DNS-only hint. */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://www.google-analytics.com" />
-        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://www.clarity.ms" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://www.facebook.com" />
 
         {/* 1️⃣ Microsoft Clarity */}

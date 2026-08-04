@@ -2,12 +2,15 @@
 
 // Deferred loader for the /home2 3D WebGL hero. The iframe pulls in ~3MB
 // (Three.js bundle + GLB models + textures; audio is stripped from the embed
-// build — see idea_website/portfolio-2025 VITE_SOUNDS), so mounting it on first
-// paint competes with the parent page's hydration. Instead we render a
-// lightweight poster in the scene's own cream background and only mount the
-// iframe once the main thread is idle (requestIdleCallback) — or immediately on
-// the first user interaction, whichever comes first. When the iframe document
-// finishes loading we crossfade the poster out. See public/home2-hero/.
+// build — see idea_website/portfolio-2025 VITE_SOUNDS) and runs a continuous
+// WebGL render loop once mounted, so we only mount it on the user's first
+// interaction (scroll/click/touch/keypress) rather than on an idle timer —
+// the render loop itself (not just the initial load) is expensive enough
+// that starting it automatically tanks Total Blocking Time even on a fast
+// machine. Passive visitors see the static poster indefinitely; anyone who
+// engages with the page gets the full 3D scene exactly as before. When the
+// iframe document finishes loading we crossfade the poster out. See
+// public/home2-hero/.
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -38,27 +41,15 @@ export default function Home2Hero() {
       setMounted(true);
     };
 
-    // Prefer idle time so the parent page becomes interactive first; the
-    // timeout guarantees the hero still loads promptly on a busy main thread.
-    let idleId;
-    const usingIdle = typeof window.requestIdleCallback === 'function';
-    if (usingIdle) {
-      idleId = window.requestIdleCallback(start, { timeout: 2500 });
-    } else {
-      idleId = window.setTimeout(start, 1200);
-    }
-
-    // Any early intent to engage the hero should start it right away.
+    // Only start on real user intent — no idle-timer auto-start. The WebGL
+    // scene's render loop runs continuously once mounted, so auto-starting
+    // it (even at idle) means every visitor pays that main-thread cost
+    // whether or not they ever engage with the hero.
     const opts = { once: true, passive: true };
     const events = ['pointerdown', 'touchstart', 'wheel', 'keydown'];
     events.forEach((e) => window.addEventListener(e, start, opts));
 
     return () => {
-      if (usingIdle) {
-        window.cancelIdleCallback?.(idleId);
-      } else {
-        clearTimeout(idleId);
-      }
       events.forEach((e) => window.removeEventListener(e, start));
     };
   }, []);
