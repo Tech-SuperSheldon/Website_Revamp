@@ -33,6 +33,20 @@ html {
   scrollbar-color: #f97316 #f1f5f9;
 }
 
+/* Blue scrollbar theme, scoped to /uk/home only via a class toggled on <html>
+   by UKHomeThemeEffect (src/components/UKHome/UKHomeThemeEffect.tsx). Higher
+   specificity than the unscoped rules above, so it only applies when that
+   class is present — the orange scrollbar on "/" and "/uk" is unaffected. */
+html.uk-home-theme::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #2563eb, #1d4ed8);
+}
+html.uk-home-theme::-webkit-scrollbar-thumb:hover {
+  background: #1e40af;
+}
+html.uk-home-theme {
+  scrollbar-color: #2563eb #f1f5f9;
+}
+
 /* /new-home page background: white with a faint gradient box texture */
 .new-home-bg {
   background-color: #ffffff;
