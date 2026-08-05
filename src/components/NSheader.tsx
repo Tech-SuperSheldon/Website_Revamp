@@ -22,11 +22,6 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
 
-  // Transform values for pill effect
-  const headerWidth = useTransform(scrollY, [0, 100], ["100%", "82%"]);
-  const headerTop = useTransform(scrollY, [0, 100], ["0px", "16px"]);
-  const headerRadius = useTransform(scrollY, [0, 100], ["0px", "50px"]);
-  const headerPadding = useTransform(scrollY, [0, 100], ["0.85rem", "0.45rem"]);
   // The logo will start 2.2x larger, and scale up to 2.5x when scrolled
   const logoScale = useTransform(scrollY, [0, 100], [2.2, 2.5]);
 
@@ -34,7 +29,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -51,22 +46,18 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
       >
         {/* Pill box: full-width bar at top, shrinks to a centered floating pill on scroll */}
         <motion.div
-          style={{
-            width: headerWidth,
-            marginTop: headerTop,
-            borderRadius: headerRadius,
-          }}
           className={`pointer-events-auto mx-auto transition-all duration-300 ease-in-out
             ${isScrolled
-              ? "bg-white/70 backdrop-blur-md shadow-lg border border-white/20 max-w-4xl"
-              : "bg-white w-full border-b border-gray-100 shadow-sm"
+              ? "w-[82%] mt-4 rounded-[50px] bg-white/70 backdrop-blur-md shadow-lg border border-white/20 max-w-4xl"
+              : "w-full mt-0 rounded-none bg-white border-b border-gray-100 shadow-sm"
             }
           `}
         >
           {/* ── Removed initial opacity=0 and delay here so it loads instantly ── */}
           <motion.div
-            style={{ paddingTop: headerPadding, paddingBottom: headerPadding }}
-            className="container mx-auto px-4 flex items-center justify-between gap-2 transition-all"
+            className={`container mx-auto px-4 flex items-center justify-between gap-2 transition-all
+              ${isScrolled ? "py-[0.45rem]" : "py-[0.85rem]"}
+            `}
           >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 w-16 sm:w-20 md:w-24 shrink-0">

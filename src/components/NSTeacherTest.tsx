@@ -36,7 +36,9 @@ export default function NSTeacherTest() {
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
-    void video.play().catch(() => {});
+    // No play() here: with preload="none" that would force the 3-3.5MB
+    // fetch immediately on mount. The IntersectionObserver below plays it
+    // (and starts the download) only once it's actually in view.
   }, []);
 
   useEffect(() => {
@@ -130,7 +132,6 @@ export default function NSTeacherTest() {
                 ref={videoRef}
                 className="w-full h-full object-cover cursor-pointer"
                 muted={isMuted}
-                autoPlay
                 playsInline
                 preload="none"
                 onClick={toggleMute}

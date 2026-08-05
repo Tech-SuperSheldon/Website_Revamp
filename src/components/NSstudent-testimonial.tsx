@@ -53,6 +53,7 @@ export function TestimonialSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [refreshKey, setRefreshKey] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const nextTestimonial = () => {
     setDirection(1);
@@ -64,13 +65,40 @@ export function TestimonialSection() {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
+  // Only auto-advance while the section is on-screen — otherwise this ticks
+  // (and re-renders) every 10s for the whole session regardless of scroll position.
   useEffect(() => {
-    const timer = setInterval(() => {
-      nextTestimonial();
-      setRefreshKey((prev) => prev + 1);
-    }, 10000);
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
 
-    return () => clearInterval(timer);
+    let timer: ReturnType<typeof setInterval> | null = null;
+    const start = () => {
+      if (timer) return;
+      timer = setInterval(() => {
+        nextTestimonial();
+        setRefreshKey((prev) => prev + 1);
+      }, 10000);
+    };
+    const stop = () => {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) start();
+        else stop();
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+
+    return () => {
+      stop();
+      observer.disconnect();
+    };
   }, []);
 
   // Variants for slide animation
@@ -90,7 +118,7 @@ export function TestimonialSection() {
   };
 
   return (
-    <section className="py-4 md:py-6 lg:pt-0 overflow-hidden relative">
+    <section ref={sectionRef} className="py-4 md:py-6 lg:pt-0 overflow-hidden relative">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col lg:flex-row gap-6 items-stretch justify-center max-w-[95rem] mx-auto min-h-[400px] lg:h-[300px]">
           

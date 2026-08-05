@@ -1,7 +1,7 @@
 "use client"
 
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
 import { Play, Star } from 'lucide-react';
 import { motion, useAnimationFrame, useMotionValue } from 'framer-motion';
@@ -114,50 +114,6 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 export function ParentsTestimonialSection() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  // Auto-scrolling effect for desktop — paused when off-screen
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
-    let animationFrameId: number;
-    let scrollPos = 0;
-    const speed = 0.5;
-    let running = false;
-
-    const scroll = () => {
-      if (!running) return;
-      scrollPos += speed;
-      if (scrollPos >= scrollContainer.scrollWidth / 2) {
-        scrollPos = 0;
-      }
-      scrollContainer.scrollLeft = scrollPos;
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !running) {
-          running = true;
-          animationFrameId = requestAnimationFrame(scroll);
-        } else if (!entry.isIntersecting) {
-          running = false;
-          cancelAnimationFrame(animationFrameId);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    observer.observe(scrollContainer);
-
-    return () => {
-      running = false;
-      observer.disconnect();
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-
   const textTestimonials = TESTIMONIALS.filter(t => t.type === 'text');
   const row1 = textTestimonials.slice(0, Math.ceil(textTestimonials.length / 2));
   const row2 = textTestimonials.slice(Math.ceil(textTestimonials.length / 2));
@@ -193,22 +149,23 @@ export function ParentsTestimonialSection() {
       </motion.div>
 
       {/* Desktop Scrolling Container */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: 50 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        ref={scrollRef}
-        className="flex md:flex gap-6 overflow-x-hidden w-full pb-10 select-none cursor-grab active:cursor-grabbing [perspective:1000px] md:[perspective:1000px] max-md:hidden"
+        className="pb-10 max-md:hidden"
       >
-        {[...textTestimonials, ...textTestimonials, ...textTestimonials].map((item, index) => (
-          <div 
-            key={`${item.id}-${index}`}
-            className="group relative min-w-[280px] md:min-w-[400px] h-[360px] md:h-[450px]"
-          >
-            <TestimonialCard item={item} />
-          </div>
-        ))}
+        <Marquee velocity={-0.05}>
+          {textTestimonials.map((item) => (
+            <div
+              key={item.id}
+              className="group relative min-w-[400px] h-[450px] pr-6"
+            >
+              <TestimonialCard item={item} />
+            </div>
+          ))}
+        </Marquee>
       </motion.div>
 
        {/* Mobile Marquee Rows */}
