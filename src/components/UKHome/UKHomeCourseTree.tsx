@@ -64,7 +64,7 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
 
         {/* CTA */}
         <div className="border-t border-blue-100 pt-3 mt-auto flex flex-col gap-2">
-          <Link href={`/new-courses/${course.id}`}>
+          <Link href={`/uk/new-courses/${course.id}`}>
             <button className="w-full bg-blue-500 text-white rounded-lg py-2.5 text-sm font-semibold hover:bg-blue-600 transition-colors flex items-center justify-center gap-1.5 group/btn">
               Explore Course
               <ArrowRight

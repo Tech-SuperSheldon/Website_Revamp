@@ -1,6 +1,6 @@
 'use client';
 
-// Loader for the /uk/home 3D WebGL hero. Same bundle/behavior as Home2Hero,
+// Loader for the /uk 3D WebGL hero. Same bundle/behavior as Home2Hero,
 // pointed at the UK-reskinned static copy (see public/uk-home2-hero/) whose
 // overlay phone-CTA uses blue accents and a +44 dial code instead of +61.
 import { useEffect, useRef, useState } from 'react';

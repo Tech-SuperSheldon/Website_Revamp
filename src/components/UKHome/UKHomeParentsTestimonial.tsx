@@ -154,13 +154,23 @@ export function ParentsTestimonialSection() {
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true, amount: 0.2 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="pb-10 max-md:hidden"
+        className="hidden md:flex md:flex-col gap-8 pb-10"
       >
         <Marquee velocity={-0.05}>
-          {textTestimonials.map((item) => (
+          {row1.map((item) => (
             <div
               key={item.id}
-              className="group relative min-w-[400px] h-[450px] pr-6"
+              className="group relative w-[320px] h-[450px] pr-6 shrink-0"
+            >
+              <TestimonialCard item={item} />
+            </div>
+          ))}
+        </Marquee>
+        <Marquee velocity={0.05}>
+          {row2.map((item) => (
+            <div
+              key={item.id}
+              className="group relative w-[320px] h-[450px] pr-6 shrink-0"
             >
               <TestimonialCard item={item} />
             </div>
@@ -268,11 +278,11 @@ function TestimonialCard({ item, isMobile }: { item: Testimonial, isMobile?: boo
     return (
         <div className="relative w-full h-full">
             {/* --- TESTIMONIAL CARD (Desktop) --- */}
-            <div className="w-full h-full rounded-[32px] bg-gradient-to-br from-[#eef4ff] to-[#dbe8ff] shadow-md border border-blue-300 p-6 md:p-8 flex flex-col justify-between overflow-hidden">
+            <div className="w-full h-full rounded-[32px] bg-gradient-to-br from-[#eef4ff] to-[#dbe8ff] shadow-md border border-blue-300 p-6 flex flex-col justify-between overflow-hidden">
 
                 {/* Header: Avatar & Date */}
-                <div className="flex items-start justify-between mb-6">
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-blue-400 shadow-md">
+                <div className="flex items-start justify-between mb-4">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-blue-400 shadow-md">
                         <Image
                             src={item.avatar}
                             alt={item.name}
@@ -286,21 +296,21 @@ function TestimonialCard({ item, isMobile }: { item: Testimonial, isMobile?: boo
                 </div>
 
                 {/* Content (Text only) */}
-                <div className="relative z-10 grow flex flex-col justify-center mb-6">
-                    <p className="text-base md:text-lg leading-relaxed font-medium text-gray-800">
+                <div className="relative z-10 grow flex flex-col justify-center mb-4 overflow-hidden">
+                    <p className="text-base leading-relaxed font-medium text-gray-800 whitespace-normal">
                         {item.quote || "The combination of videos, practice tasks, and certificates really boosted my confidence."}
                     </p>
                 </div>
 
                 {/* Footer: Stars & Name */}
-                <div className="relative z-10 pt-4 border-t border-blue-300/50">
+                <div className="relative z-10 pt-3 border-t border-blue-300/50">
                     <div className="flex gap-1 mb-2 text-[#1d4ed8]">
                         {[...Array(item.stars)].map((_, i) => (
-                            <Star key={i} fill="currentColor" className="w-5 h-5 drop-shadow-sm" />
+                            <Star key={i} fill="currentColor" className="w-4 h-4 drop-shadow-sm" />
                         ))}
                     </div>
-                    <h3 className="font-bold text-lg text-gray-900">{item.name}</h3>
-                    <p className="text-sm text-[#1e40af] font-semibold tracking-wide">
+                    <h3 className="font-bold text-base text-gray-900">{item.name}</h3>
+                    <p className="text-xs text-[#1e40af] font-semibold tracking-wide">
                         {item.title}
                     </p>
                 </div>

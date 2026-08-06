@@ -1,8 +1,56 @@
-// Course content copied verbatim from src/components/UKComp/UKExamData.jsx
-// (the data source /uk's homepage course section uses), so /uk shows the
-// same UK exam courses (GCSE, iGCSE, 11+, A-Level, etc.) instead of the AU
-// (NAPLAN/ICAS/HSC) course set. Card UI stays whatever UKHomeCourseTree.tsx
-// already renders — only this data changed.
+// Full UK course catalog data, used by /uk/new-courses (listing + detail
+// pages). Course content (id/title/img/desc/chapters) is copied verbatim
+// from src/components/UKHome/uk-course-data.ts (the lean teaser dataset
+// /uk's course tree uses) so both pages show the same UK exam courses
+// (GCSE, iGCSE, 11+, A-Level, Common Entrance, SATs, etc.). This file adds
+// the richer fields (categ, and optional pricing/benefits/level/etc.) that
+// the full listing/detail UI needs — mirroring how course-data-au.ts is a
+// richer superset of the AU homepage's lean course-data.ts.
+
+export interface Chapter {
+  title: string;
+  description?: string;
+  relevancy?: string;
+  category?: string;
+}
+
+export interface Persona {
+  title: string;
+  desc: string;
+}
+
+export interface PricingPlan {
+  title: string;
+  price: string;
+  duration: string;
+  features: string[];
+  description?: string;
+  tag?: string;
+  isRecommended?: boolean;
+}
+
+export interface Course {
+  id: string;
+  title: string;
+  desc: string;
+  img: string;
+  type: string;
+  categ: string;
+  topics: number;
+  duration: string;
+  chapters: Chapter[];
+  pricing?: PricingPlan[];
+  level?: string;
+  benefits?: string[];
+  resourcesCount?: number;
+  lastUpdated?: string;
+  learningOutcomes?: string[];
+  targetAudience?: Persona[];
+  testimonial?: { quote: string; author: string };
+  stats?: { students: string; rating: string; completion: string };
+  sales?: number;
+  rating?: number;
+}
 
 export const years = [
   "Year 1",
@@ -20,25 +68,6 @@ export const years = [
   "Year 13",
   "Year 14",
 ];
-
-export interface Chapter {
-  title: string;
-}
-
-export interface Course {
-  id: string;
-  title: string;
-  type: string;
-  duration: string;
-  topics: number;
-  sales: number;
-  rating: number;
-  img: string;
-  brochure: string;
-  path: string;
-  desc: string;
-  chapters: Chapter[];
-}
 
 const CH_7_8PLUS: Chapter[] = [
   { title: "Reading Comprehension: Understanding and interpreting texts" },
@@ -150,13 +179,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y1-earlystart",
       title: "SuperSheldon Early Start",
       type: "Early Skills / Entry Basics",
+      categ: "Primary",
       duration: "",
       topics: 19,
       sales: 212,
       rating: 4.7,
       img: "/UK/courses/y11.jpg",
-      brochure: "",
-      path: "",
       desc: "An engaging introduction to foundational learning for young learners (Age 5–6). Focuses on early literacy, numeracy, and curiosity-building through interactive learning.",
       chapters: [
         { title: "Number and Place Value: Understanding numbers up to 20, counting forwards and backwards" },
@@ -177,13 +205,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y2-ks1sats",
       title: "SuperSheldon KS1 SATs Booster",
       type: "KS1 SATs Preparation",
+      categ: "Primary",
       duration: "",
       topics: 25,
       sales: 178,
       rating: 4.3,
       img: "/UK/courses/y21.jpg",
-      brochure: "",
-      path: "",
       desc: "Targeted preparation for KS1 SATs with engaging exercises in English and Maths to build exam confidence and key skills for future success.",
       chapters: [
         { title: "Reading Comprehension: Understanding simple texts" },
@@ -204,13 +231,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y3-7plus",
       title: "SuperSheldon 7+ Prep",
       type: "Independent School Entry Preparation",
+      categ: "Entrance Prep",
       duration: "",
       topics: 14,
       sales: 239,
       rating: 4.8,
       img: "/UK/courses/y31.jpg",
-      brochure: "",
-      path: "",
       desc: "Comprehensive preparation for 7+ entrance exams, focusing on literacy, reasoning, and early problem-solving techniques.",
       chapters: CH_7_8PLUS,
     },
@@ -218,13 +244,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y3-8plus",
       title: "SuperSheldon 8+ Advantage",
       type: "Independent School Entry Preparation",
+      categ: "Entrance Prep",
       duration: "",
       topics: 20,
       sales: 172,
       rating: 4.5,
       img: "/UK/courses/y32.jpg",
-      brochure: "",
-      path: "",
       desc: "Designed for students aiming for 8+ independent school entry, this course builds analytical thinking and advanced comprehension skills.",
       chapters: CH_7_8PLUS,
     },
@@ -234,13 +259,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y4-9plus",
       title: "SuperSheldon 9+ Mastery",
       type: "Selective Entry Exam Preparation",
+      categ: "Entrance Prep",
       duration: "",
       topics: 17,
       sales: 360,
       rating: 4.6,
       img: "/UK/courses/y41.jpg",
-      brochure: "",
-      path: "",
       desc: "Advanced preparation for 9+ selective school entry exams with focused modules on comprehension, reasoning, and applied maths.",
       chapters: CH_9PLUS,
     },
@@ -250,13 +274,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y5-10plus",
       title: "SuperSheldon 10+ Success",
       type: "Selective School Preparation",
+      categ: "Entrance Prep",
       duration: "",
       topics: 29,
       sales: 312,
       rating: 4.9,
       img: "/UK/courses/y61.jpg",
-      brochure: "",
-      path: "",
       desc: "Develops advanced problem-solving and reasoning skills to prepare for 10+ selective school exams with confidence and strategy.",
       chapters: CH_10PLUS,
     },
@@ -266,13 +289,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y6-11plus",
       title: "SuperSheldon 11+ Success",
       type: "Grammar & Independent School Exam Preparation",
+      categ: "Entrance Prep",
       duration: "",
       topics: 28,
       sales: 372,
       rating: 4.5,
       img: "/UK/courses/y61.jpg",
-      brochure: "",
-      path: "",
       desc: "Comprehensive preparation for 11+ Grammar and Independent School entrance exams, covering verbal, non-verbal, maths, and English reasoning.",
       chapters: CH_11PLUS,
     },
@@ -280,13 +302,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y6-ks2sats",
       title: "SuperSheldon KS2 SATs Power",
       type: "SATs Exam Preparation",
+      categ: "Entrance Prep",
       duration: "",
       topics: 26,
       sales: 318,
       rating: 4.1,
       img: "/UK/courses/y62.jpg",
-      brochure: "",
-      path: "",
       desc: "Focused revision and practice for KS2 SATs, ensuring mastery of key concepts in English, maths, and reasoning for high attainment.",
       chapters: CH_KS2_KS3,
     },
@@ -296,13 +317,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y7-foundation",
       title: "SuperSheldon KS3 Foundation Boost",
       type: "KS3 Transition",
+      categ: "KS3 & Common Entrance",
       duration: "",
       topics: 16,
       sales: 276,
       rating: 4.4,
       img: "/UK/courses/y71.jpg",
-      brochure: "",
-      path: "",
       desc: "Smooth transition from KS2 to KS3 with strong foundations in English, maths, and science through engaging and challenging lessons.",
       chapters: CH_KS2_KS3,
     },
@@ -312,13 +332,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y8-13plus",
       title: "SuperSheldon 13+ Common Entrance Mastery",
       type: "13+ Entrance Preparation",
+      categ: "KS3 & Common Entrance",
       duration: "",
       topics: 22,
       sales: 315,
       rating: 4.2,
       img: "/UK/courses/y81.jpg",
-      brochure: "",
-      path: "",
       desc: "Rigorous preparation for 13+ Common Entrance Exams, focusing on English, maths, and reasoning at an advanced level.",
       chapters: CH_13PLUS_CASE,
     },
@@ -326,13 +345,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y8-case",
       title: "SuperSheldon 13+ Scholarship Edge (CASE)",
       type: "Scholarship Preparation",
+      categ: "KS3 & Common Entrance",
       duration: "",
       topics: 19,
       sales: 224,
       rating: 4.8,
       img: "/UK/courses/y82.jpg",
-      brochure: "",
-      path: "",
       desc: "A high-performance course designed for students targeting scholarships or competitive entry exams through analytical depth and mastery.",
       chapters: CH_13PLUS_CASE,
     },
@@ -342,13 +360,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y9-progress",
       title: "SuperSheldon KS3 Progress Builder",
       type: "KS3 Consolidation / GCSE Foundation",
+      categ: "KS3 & Common Entrance",
       duration: "",
       topics: 21,
       sales: 181,
       rating: 4.3,
       img: "/UK/courses/y91.jpg",
-      brochure: "",
-      path: "",
       desc: "Consolidate KS3 learning and begin GCSE foundations with focused modules in core subjects to build confidence for upcoming exams.",
       chapters: CH_KS2_KS3,
     },
@@ -358,13 +375,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y10-gcsecore",
       title: "SuperSheldon GCSE Core Prep",
       type: "GCSE Preparation",
+      categ: "GCSE & iGCSE",
       duration: "",
       topics: 23,
       sales: 360,
       rating: 4.9,
       img: "/UK/courses/y101.jpg",
-      brochure: "",
-      path: "",
       desc: "Strong foundation in GCSE core subjects — English, Maths, and Science — through targeted lessons and structured practice.",
       chapters: CH_GCSE_CORE,
     },
@@ -374,13 +390,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y11-fasttrack",
       title: "SuperSheldon GCSE Fast-Track Success",
       type: "GCSE Final Exam Preparation",
+      categ: "GCSE & iGCSE",
       duration: "",
       topics: 26,
       sales: 374,
       rating: 4.7,
       img: "/UK/courses/y101.jpg",
-      brochure: "",
-      path: "",
       desc: "Final-year revision and accelerated strategies for high GCSE performance with intensive coverage of all major subjects.",
       chapters: CH_GCSE_ALEVEL,
     },
@@ -388,13 +403,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y11-igcse",
       title: "SuperSheldon iGCSE Global Advantage",
       type: "iGCSE Preparation",
+      categ: "GCSE & iGCSE",
       duration: "",
       topics: 29,
       sales: 356,
       rating: 4.8,
       img: "/UK/courses/y101.jpg",
-      brochure: "",
-      path: "",
       desc: "Comprehensive iGCSE preparation across subjects with an emphasis on global perspectives, critical thinking, and exam strategies.",
       chapters: CH_GCSE_ALEVEL,
     },
@@ -404,13 +418,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y12-as",
       title: "SuperSheldon AS Level Builder",
       type: "AS/A-Level Start",
+      categ: "A-Level & Beyond",
       duration: "",
       topics: 18,
       sales: 280,
       rating: 4.4,
       img: "/UK/courses/y101.jpg",
-      brochure: "",
-      path: "",
       desc: "Start A-Level journey with foundational modules to ensure a strong understanding of advanced topics and exam readiness.",
       chapters: CH_GCSE_ALEVEL,
     },
@@ -420,13 +433,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y13-al",
       title: "SuperSheldon A-Level Success",
       type: "A-Level & University Entrance",
+      categ: "A-Level & Beyond",
       duration: "",
       topics: 24,
       sales: 368,
       rating: 4.9,
       img: "/UK/courses/y101.jpg",
-      brochure: "",
-      path: "",
       desc: "Final preparation for A-Levels and competitive university entrance exams, including Oxbridge preparation, UCAS applications, and specialist pathways.",
       chapters: CH_GCSE_ALEVEL,
     },
@@ -436,13 +448,12 @@ export const coursesData: Record<string, Course[]> = {
       id: "y14-special",
       title: "SuperSheldon Specialist Pathways",
       type: "Medicine / Law / Economics & Maths Prep",
+      categ: "A-Level & Beyond",
       duration: "",
       topics: 30,
       sales: 380,
       rating: 5.0,
       img: "/UK/courses/y101.jpg",
-      brochure: "",
-      path: "",
       desc: "Specialist courses tailored for students preparing for competitive tests such as UCAT, BMAT, LNAT, TMUA, STEP, and MAT, along with bespoke university application guidance.",
       chapters: CH_GCSE_ALEVEL,
     },

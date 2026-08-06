@@ -36,7 +36,7 @@ export function Footer() {
                   transition={{ duration: 0.6 }}
                   className="lg:w-[20%] lg:ml-8 flex flex-col items-start"
               >
-                  <Link href="/uk/home" className="mb-4 block">
+                  <Link href="/uk" className="mb-4 block">
                        <div className="relative w-48 h-12">
                            <Image
                               src="/logo.webp"
@@ -116,8 +116,8 @@ export function Footer() {
                   <div>
                        <h4 className="font-bold text-lg text-white mb-4 font-rowdies">Sitemap</h4>
                        <ul className="space-y-2 font-medium text-white text-[14px]">
-                          <li><RollingLink href="/uk/home" hoverColor="text-black" baseColor="text-white">Home</RollingLink></li>
-                          <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">Courses</RollingLink></li>
+                          <li><RollingLink href="/uk" hoverColor="text-black" baseColor="text-white">Home</RollingLink></li>
+                          <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">Courses</RollingLink></li>
                           <li><RollingLink href="/new-testimonial" hoverColor="text-black" baseColor="text-white">Reviews</RollingLink></li>
                           <li><RollingLink href="/new-blogs" hoverColor="text-black" baseColor="text-white">Blogs</RollingLink></li>
                           <li><RollingLink href="/become-a-teacher" hoverColor="text-black" baseColor="text-white">Become a Teacher</RollingLink></li>

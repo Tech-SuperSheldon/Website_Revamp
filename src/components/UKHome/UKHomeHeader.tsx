@@ -10,8 +10,8 @@ import { Menu, X } from "lucide-react";
 import { RollingLink } from "../RollingLink";
 
 const navLinks = [
-  { name: "Home", href: "/uk/home" },
-  { name: "Courses", href: "/new-courses" },
+  { name: "Home", href: "/uk" },
+  { name: "Courses", href: "/uk/new-courses" },
   { name: "Testimonial", href: "/new-testimonial" },
   { name: "Blogs", href: "/new-blogs" },
   { name: "Become a Teacher", href: "/become-a-teacher" },
@@ -60,7 +60,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
             `}
           >
           {/* Logo */}
-          <Link href="/uk/home" className="flex items-center gap-2 w-16 sm:w-20 md:w-24 shrink-0">
+          <Link href="/uk" className="flex items-center gap-2 w-16 sm:w-20 md:w-24 shrink-0">
             <motion.div
               style={{ scale: logoScale }}
               className="relative h-8 w-8 shrink-0 origin-left sm:h-10 sm:w-10 md:h-10 md:w-10"
