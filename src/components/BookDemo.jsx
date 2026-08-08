@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import GlossyButton from './GlossyButton';
 import axiosClient from './utils/axios';
 import PhoneField from './demo/PhoneField';
+import CountrySelect from './demo/CountrySelect';
 import { DEFAULT_COUNTRY, findByIso } from './demo/countries';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -12,6 +13,7 @@ export default function BookDemo() {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
+    residenceCountry: '',
     grade: '',
     subject: '',
   });
@@ -36,7 +38,10 @@ export default function BookDemo() {
         const res = await fetch('https://ipapi.co/json/', { signal: controller.signal });
         const data = await res.json();
         const detected = findByIso(data?.country_code);
-        if (active && detected) setCountry(detected);
+        if (active && detected) {
+          setCountry(detected);
+          setFormData((prev) => (prev.residenceCountry ? prev : { ...prev, residenceCountry: detected.iso }));
+        }
       } catch {
         /* keep default (Australia) */
       } finally {
@@ -110,6 +115,8 @@ export default function BookDemo() {
     if (!nat) e.mobile = 'Mobile number is required';
     else if (nat.length < 6 || nat.length > 14) e.mobile = 'Please enter a valid mobile number';
 
+    if (!formData.residenceCountry) e.residenceCountry = 'Country is required';
+
     if (!formData.grade.trim()) e.grade = 'Grade is required';
     else if (formData.grade.length > 8) e.grade = 'Grade must be less than 8 characters';
 
@@ -151,6 +158,7 @@ export default function BookDemo() {
         // Full international number (country code + national) so the Slack
         // notification shows the dial code, e.g. 61XXXXXXXXX.
         mobile: Number(country.dial + nat),
+        country: findByIso(formData.residenceCountry)?.name || '',
         grade: formData.grade.trim(),
         subject: formData.subject.trim(),
       };
@@ -178,7 +186,7 @@ export default function BookDemo() {
 
   const resetForm = () => {
     setIsRegistered(false);
-    setFormData({ fullName: '', email: '', grade: '', subject: '' });
+    setFormData({ fullName: '', email: '', residenceCountry: '', grade: '', subject: '' });
     setNationalNumber('');
     setEmailStatus('idle');
     setErrors({});
@@ -330,6 +338,20 @@ export default function BookDemo() {
                   We detect your country automatically — just enter your number.
                 </p>
                 {errors.mobile && <p className="mt-1 text-sm text-red-600">{errors.mobile}</p>}
+              </div>
+
+              {/* Country of residence */}
+              <div>
+                <label className="mb-1 block text-sm font-medium text-gray-700">Country *</label>
+                <CountrySelect
+                  value={formData.residenceCountry}
+                  onChange={(iso) => {
+                    setFormData((prev) => ({ ...prev, residenceCountry: iso }));
+                    if (errors.residenceCountry) setErrors((prev) => ({ ...prev, residenceCountry: '' }));
+                  }}
+                  error={errors.residenceCountry}
+                />
+                {errors.residenceCountry && <p className="mt-1 text-sm text-red-600">{errors.residenceCountry}</p>}
               </div>
 
               {/* Grade */}

@@ -18,7 +18,10 @@ const userSchema = new Schema({
     mobile:{
         type : Number ,
         required: true ,
-        immutable: true 
+        immutable: true
+    } ,
+    country:{
+        type : String
     } ,
     grade:{
         type : String ,

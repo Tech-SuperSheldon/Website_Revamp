@@ -15,7 +15,7 @@ const sendSlackMessage = async (formData) => {
       return { ok: true, message: 'Slack not configured' };
     }
 
-    const { fullName, email, mobile, childAgeYear, grade, subject, createdAt } = formData;
+    const { fullName, email, mobile, country, childAgeYear, grade, subject, createdAt } = formData;
 
     const subjectText = subject || 'N/A';
     const ageOrGradeText = grade ? `Grade ${grade}` : childAgeYear ? childAgeYear : 'N/A';
@@ -46,6 +46,10 @@ const sendSlackMessage = async (formData) => {
             {
               type: 'mrkdwn',
               text: `:e-mail: *Email:*\n${email || 'N/A'}`
+            },
+            {
+              type: 'mrkdwn',
+              text: `:earth_americas: *Country:*\n${country || 'N/A'}`
             },
             {
               type: 'mrkdwn',
