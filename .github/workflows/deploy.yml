@@ -17,8 +17,13 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
+            source ~/.nvm/nvm.sh
+            nvm use 24.19.0
+
             cd ~/revamp/Website_Revamp
             git pull origin main
+
             cd Backend
             npm install
+
             pm2 restart revamp-backend
