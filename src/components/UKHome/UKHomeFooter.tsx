@@ -90,7 +90,7 @@ export function Footer() {
                   <div className="flex flex-col gap-3 text-[13px] text-white font-medium">
                       <div className="flex items-start gap-2">
                           <Phone className="w-4 h-4 shrink-0 mt-0.5" strokeWidth={2} />
-                          <p><span className="font-bold">Phone:</span> +91 7974695618 / +44 0000 000000</p>
+                          <p><span className="font-bold">Phone:</span> +91 7974695618 / +44 7360270223</p>
                       </div>
                       <div className="flex items-start gap-2">
                           <Mail className="w-4 h-4 shrink-0 mt-0.5" strokeWidth={2} />
