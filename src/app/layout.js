@@ -57,6 +57,21 @@ export default function RootLayout({ children }) {
           })(window,document,'script','dataLayer','GTM-W52HW3B7');`}
         </Script>
 
+        {/* 2️⃣b Second Google Tag Manager container. Lives here in the root
+            layout — which wraps every route — so it loads once on every page
+            of /, /au, /uk and the campaign pages alike. Deliberately NOT
+            placed in the header/footer components: those are duplicated per
+            region (NSheader, UKHomeHeader, AU/NSheader, HeroHeaderNav, …) and
+            several pages render more than one, which would fire the container
+            twice and double-count every pageview. */}
+        <Script id="gtm-script-2" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-MXGQC6QG');`}
+        </Script>
+
         {/* 3️⃣ Google Analytics (GA4) */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-T3X5175CZ7"
@@ -103,6 +118,16 @@ export default function RootLayout({ children }) {
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-W52HW3B7"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
+
+        {/* Google Tag Manager (noscript) — second container */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MXGQC6QG"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}

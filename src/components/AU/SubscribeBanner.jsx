@@ -1,0 +1,218 @@
+// "use client";
+// import React, { useState } from "react";
+// import Image from "next/image";
+// import GlossyButton from "./GlossyButton"; 
+// import { useOpenDemoBooking } from "./utils/navigation";
+
+// const SubscribeSection = () => {
+//   const [email, setEmail] = useState("");
+//   const [error, setError] = useState("");
+//   const openDemoBooking = useOpenDemoBooking();
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     if (!email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+//       setError("Please enter a valid email address");
+//       return;
+//     }
+//     setError("");
+//     openDemoBooking();
+//   };
+
+//   return (
+//     <section
+//       id="try-a-free-class"
+//       className="relative mx-auto w-[90%] mt-4 mb-4 rounded-2xl overflow-hidden text-white font-poppins flex items-center justify-center h-[370px] bg-[#4D2C5E]"
+//     >
+//       {/* Content */}
+//       <div className="relative z-10 flex flex-col items-center text-center max-w-xl">
+//         <h2 className="text-3xl md:text-4xl font-semibold mb-4">Subscribe to Supersheldon</h2>
+//         <p className="mb-6 text-base md:text-lg">
+//           Stay ahead with the latest courses, exam tips, and free learning resources.
+//         </p>
+
+//         {/* Email + Button with inline alert */}
+//         <form onSubmit={handleSubmit} className="relative w-full max-w-md">
+//           <input
+//             type="email"
+//             placeholder="Enter your email"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//             className={`w-full rounded-full py-4 px-6 text-gray-800 outline-none shadow-lg pr-40 ${
+//               error ? "border-2 border-red-500" : ""
+//             }`}
+//           />
+//           <div className="absolute top-1/2 right-2 -translate-y-1/2">
+//             <GlossyButton type="submit" className="px-4 py-2 rounded-full text-sm">
+//               Try a free Class
+//             </GlossyButton>
+//           </div>
+//           {/* Error text inside form */}
+//           {error && <p className="absolute left-4 -bottom-6 text-red-400 text-sm">{error}</p>}
+//         </form>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default SubscribeSection;
+
+
+
+
+
+
+
+
+// "use client";
+// import React, { useState } from "react";
+// import GlossyButton from "./GlossyButton"; 
+// import { useOpenDemoBooking } from "./utils/navigation";
+
+// const SubscribeSection = () => {
+//   const [email, setEmail] = useState("");
+//   const [error, setError] = useState("");
+//   const openDemoBooking = useOpenDemoBooking();
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     if (!email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+//       setError("Please enter a valid email address");
+//       return;
+//     }
+//     setError("");
+//     openDemoBooking();
+//   };
+
+//   return (
+//     <section
+//       id="try-a-free-class"
+//       className="relative mx-auto w-[90%] mt-4 mb-4 rounded-2xl overflow-hidden text-white font-poppins flex items-center justify-center h-[370px] bg-[#4D2C5E]"
+//     >
+//       {/* Top-left crossing circles forming a sharp ellipse */}
+//       <div className="absolute top-0 left-0 border-4 border-white rounded-full w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 -translate-x-1/3 -translate-y-1/2"></div>
+//       <div className="absolute top-0 left-0 border-4 border-white rounded-full w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 -translate-x-1/2 -translate-y-1/3"></div>
+
+//       {/* Top-right crossing circles forming a sharp ellipse */}
+//       <div className="absolute top-0 right-0 border-4 border-white rounded-full w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 translate-x-1/3 -translate-y-1/2"></div>
+//       <div className="absolute top-0 right-0 border-4 border-white rounded-full w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 translate-x-1/2 -translate-y-1/3"></div>
+
+//       {/* Content */}
+//       <div className="relative z-10 flex flex-col items-center text-center max-w-xl">
+//         <h2 className="text-3xl md:text-4xl font-semibold mb-4">Ready to See the Difference?</h2>
+//         <p className="mb-6 text-base md:text-lg">
+//           Book a free diagnostic test and see how your child can excel with Super Sheldon.
+//         </p>
+
+//         {/* Email + Button with inline alert */}
+//         <form onSubmit={handleSubmit} className="relative w-full max-w-md">
+//           <input
+//             type="email"
+//             placeholder="Enter your email"
+//             value={email}
+//             onChange={(e) => setEmail(e.target.value)}
+//             className={`w-full rounded-full py-4 px-6 text-gray-800 outline-none shadow-lg pr-40 ${
+//               error ? "border-2 border-red-500" : ""
+//             }`}
+//           />
+//           <div className="absolute top-1/2 right-2 -translate-y-1/2">
+//             <GlossyButton type="submit" className="px-4 py-2 rounded-full text-sm">
+//               Book Free Trial Now
+//             </GlossyButton>
+//           </div>
+//           {error && <p className="absolute left-4 -bottom-6 text-red-400 text-sm">{error}</p>}
+//         </form>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default SubscribeSection;
+
+
+
+
+
+
+
+
+
+"use client";
+import React, { useState } from "react";
+import GlossyButton from "./GlossyButton";
+import { useOpenDemoBooking } from "./utils/navigation";
+
+const SubscribeSection = () => {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const openDemoBooking = useOpenDemoBooking();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+    setError("");
+    openDemoBooking();
+  };
+
+  return (
+    <section
+      id="try-a-free-class"
+      className="relative mx-auto w-[90%] mt-4 mb-4 rounded-2xl overflow-hidden text-white font-poppins flex items-center justify-center h-[370px] bg-[#4D2C5E]"
+    >
+      {/* Top-left crossing circles forming a sharp ellipse */}
+      <div className="absolute top-[-5%] sm:top-0 left-0 border-4 border-white rounded-full w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 -translate-x-1/3 -translate-y-1/2"></div>
+      <div className="absolute top-[-4%] sm:top-0 left-0 border-4 border-white rounded-full w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 -translate-x-1/2 -translate-y-1/3"></div>
+
+      {/* Top-right crossing circles forming a sharp ellipse */}
+      <div className="absolute top-[-5%] sm:top-0 right-0 border-4 border-white rounded-full w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 translate-x-1/3 -translate-y-1/2"></div>
+      <div className="absolute top-[-4%] sm:top-0 right-0 border-4 border-white rounded-full w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 translate-x-1/2 -translate-y-1/3"></div>
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center text-center max-w-xl px-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-4">
+          Ready to See the Difference?
+        </h2>
+        <p className="mb-6 text-sm sm:text-base md:text-lg">
+          Book a free diagnostic test and see how your child can excel with Super Sheldon.
+        </p>
+
+        {/* Email + Button with inline alert */}
+        <form
+          onSubmit={handleSubmit}
+          className="relative w-full max-w-md flex flex-col sm:flex-row items-center gap-3 sm:gap-0"
+        >
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={`w-full rounded-full py-3 sm:py-4 px-5 sm:px-6 text-gray-800 outline-none shadow-lg ${
+              error ? "border-2 border-red-500" : ""
+            }`}
+          />
+
+          {/* Button goes below input on mobile, inline on larger screens */}
+          <div className="w-full sm:w-auto sm:absolute sm:top-1/2 sm:right-2 sm:-translate-y-1/2 mt-2 sm:mt-0">
+            <GlossyButton
+              type="submit"
+              className="w-full sm:w-auto px-5 py-3 sm:py-2 rounded-full text-sm"
+            >
+              Book Free Trial Now
+            </GlossyButton>
+          </div>
+
+          {error && (
+            <p className="absolute left-4 -bottom-6 text-red-400 text-sm">
+              {error}
+            </p>
+          )}
+        </form>
+      </div>
+    </section>
+  );
+};
+
+export default SubscribeSection;

@@ -1,0 +1,109 @@
+
+
+"use client";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const features = [
+  {
+    title: "Various features",
+    desc: "Weekly Exam Insights, PTM Reposrts and Actionable Feedback.",
+    image: "/scroller/5.jpg",
+  },
+  {
+    title: "Interactive Sessions",
+    desc: "INteractive sessions to keep your child engaged.",
+    image: "/scroller/1.png",
+  },
+  {
+    title: "Experienced Tutors",
+    desc: "Tutors with vast Knowledge and Experience for your child.",
+    image: "/scroller/2.png",
+  },
+  {
+    title: "24x7 Support",
+    desc: "Support from our help desk 24x7.",
+    image: "/scroller/3.png",
+  },
+  {
+    title: "Track Progress",
+    desc: "Track your child's progress and performance through our portal.",
+    image: "/scroller/4.png",
+  },
+];
+
+export default function FeatureSlider() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Auto switch every 5s
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % features.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center px-6 md:px-12 py-8">
+      {/* Heading */}
+      <h2 className="text-4xl md:text-6xl font-semibold text-center mb-8 leading-tight">
+        The <span className="text-purple-600">Smart</span> Choice for
+        <br />
+        <span className="text-red-500">Bright</span>{" "}
+        <span className="text-orange-400">Futures</span>
+      </h2>
+
+      <div className="flex flex-col md:flex-row items-center justify-center gap-6 w-full max-w-[1200px]">
+        {/* Left menu */}
+        <div className="w-full md:w-1/3 space-y-6">
+          {features.map((f, i) => (
+            <motion.div
+              key={i}
+              onClick={() => setActiveIndex(i)}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className={`p-6 rounded-xl cursor-pointer transition-all relative overflow-hidden text-left`}
+              style={{
+                borderLeft:
+                  i === activeIndex ? "6px solid orange" : "6px solid transparent",
+              }}
+            >
+              <div className="relative z-10">
+                <h3
+                  className={`font-semibold text-lg md:text-xl ${
+                    i === activeIndex ? "text-purple-600" : "text-gray-900"
+                  }`}
+                >
+                  {f.title}
+                </h3>
+                <p
+                  className={`text-sm md:text-base mt-1 ${
+                    i === activeIndex ? "text-gray-600" : "text-gray-500"
+                  }`}
+                >
+                  {f.desc}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Right content */}
+        <div className="w-full md:w-2/3 flex justify-center items-center relative overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={activeIndex}
+              src={features[activeIndex].image}
+              alt={features[activeIndex].title}
+              initial={{ x: 200, opacity: 0, scale: 0.9 }}
+              animate={{ x: 0, opacity: 1, scale: 1 }}
+              exit={{ x: -200, opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              className="w-full max-w-[450px] md:max-w-[550px] rounded-2xl shadow-xl"
+            />
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
