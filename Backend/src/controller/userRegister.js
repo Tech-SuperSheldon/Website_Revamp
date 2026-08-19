@@ -1,6 +1,7 @@
 const validate = require("../utils/validator") ;
 const User = require("../model/user") ;
 const { sendSlackMessage } = require("../utils/slackService");
+const { sendToGoogleSheet } = require("../utils/sheetsService");
 
 const bookDemo = async(req,res)=>{
 
@@ -16,6 +17,10 @@ const bookDemo = async(req,res)=>{
 
         sendSlackMessage(user).catch(err => {
           console.error("Failed to send Slack notification:", err);
+        });
+
+        sendToGoogleSheet(user).catch(err => {
+          console.error("Failed to send Google Sheet notification:", err);
         });
 
         res.status(200).json({
