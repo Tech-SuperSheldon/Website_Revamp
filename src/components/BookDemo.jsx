@@ -1,6 +1,7 @@
 // components/BookDemo.jsx
 "use client";
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import GlossyButton from './GlossyButton';
 import axiosClient from './utils/axios';
 import PhoneField from './demo/PhoneField';
@@ -33,6 +34,7 @@ function captureUtmParams() {
 }
 
 export default function BookDemo() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -47,11 +49,16 @@ export default function BookDemo() {
 
   useEffect(() => {
     setUtmParams(captureUtmParams());
-  }, []);
+    // Warm up the confirmation route so the redirect after a successful
+    // booking lands instantly instead of showing a blank flash.
+    router.prefetch('/thank-you');
+  }, [router]);
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isRegistered, setIsRegistered] = useState(false);
+  // Stays true from a successful POST until the browser has actually moved to
+  // /thank-you, so the button never flips back to a clickable state.
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const [submitError, setSubmitError] = useState('');
   // 'idle' | 'checking' | 'valid' | 'invalid'
   const [emailStatus, setEmailStatus] = useState('idle');
@@ -194,7 +201,24 @@ export default function BookDemo() {
 
       const response = await axiosClient.post('/user/bookDemo', requestData);
       if (response.status === 200 || response.status === 201) {
-        setIsRegistered(true);
+        // Hand the details to /thank-you through sessionStorage rather than the
+        // URL, so no name or email leaks into analytics, history or a shared link.
+        try {
+          sessionStorage.setItem(
+            'demo_booking',
+            JSON.stringify({
+              fullName: requestData.fullName,
+              email: requestData.email,
+              grade: requestData.grade,
+              subject: requestData.subject,
+            })
+          );
+        } catch {
+          /* private mode / storage full — /thank-you falls back to generic copy */
+        }
+        setIsRedirecting(true);
+        router.push('/thank-you');
+        return; // keep the spinner up; the page is on its way out
       }
     } catch (error) {
       if (error?.response) {
@@ -213,51 +237,9 @@ export default function BookDemo() {
     }
   };
 
-  const resetForm = () => {
-    setIsRegistered(false);
-    setFormData({ fullName: '', email: '', residenceCountry: '', grade: '', subject: '' });
-    setNationalNumber('');
-    setEmailStatus('idle');
-    setErrors({});
-    setSubmitError('');
-  };
-
-  // ─────────────────────────── Thanks screen ───────────────────────────
-  if (isRegistered) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-blue-50 p-4">
-        <div className="w-full max-w-md rounded-3xl bg-white p-8 text-center shadow-2xl ring-1 ring-black/5">
-          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
-            <svg className="h-11 w-11 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h2 className="mb-2 text-3xl font-extrabold text-gray-900">Thank you! 🎉</h2>
-          <p className="text-gray-600">
-            Your free demo is booked{formData.fullName ? `, ${formData.fullName.split(' ')[0]}` : ''}.
-          </p>
-          <p className="mt-1 text-gray-600">Our team will contact you shortly to confirm the details.</p>
-
-          <div className="mt-6 flex flex-col gap-3">
-            <a
-              href="/"
-              className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 px-4 py-3 font-semibold text-white shadow-md transition-transform hover:scale-[1.02]"
-            >
-              Back to Home
-            </a>
-            <button
-              onClick={resetForm}
-              className="w-full rounded-xl border border-gray-200 px-4 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-50"
-            >
-              Book Another Demo
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   // ─────────────────────────────── Form ────────────────────────────────
+  // On success the visitor is sent to /thank-you — there is no inline
+  // confirmation screen here any more.
   return (
     <div className="min-h-screen py-8 px-4">
       <div className="mx-auto max-w-2xl overflow-hidden rounded-xl bg-white/95 shadow-xl">
@@ -415,16 +397,16 @@ export default function BookDemo() {
 
               <GlossyButton
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isRedirecting}
                 className="w-full rounded-lg bg-[#e66e37] px-4 py-3 font-medium text-white transition duration-300 hover:bg-[#e68355] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {isSubmitting ? (
+                {isSubmitting || isRedirecting ? (
                   <span className="flex items-center justify-center">
                     <svg className="-ml-1 mr-3 h-5 w-5 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                     </svg>
-                    Submitting…
+                    {isRedirecting ? 'Booked! Taking you there…' : 'Submitting…'}
                   </span>
                 ) : (
                   'Submit Booking'

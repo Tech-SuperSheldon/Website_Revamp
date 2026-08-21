@@ -173,5 +173,118 @@ html.uk-home-theme {
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 
+/* ───────────────── /thank-you page (post demo-booking) ─────────────────
+   Scoped with a `ty-` prefix so nothing here leaks into other routes. */
+
+/* Warm confetti backdrop + soft aurora glows behind the card. */
+.ty-aurora {
+  background:
+    radial-gradient(60% 50% at 15% 0%, rgba(230, 110, 55, 0.18) 0%, rgba(255, 249, 243, 0) 70%),
+    radial-gradient(55% 45% at 90% 10%, rgba(250, 204, 21, 0.20) 0%, rgba(255, 249, 243, 0) 70%),
+    radial-gradient(70% 60% at 50% 110%, rgba(59, 130, 246, 0.12) 0%, rgba(255, 249, 243, 0) 70%);
+}
+
+/* Success ring: pulses outward once the badge lands. */
+@keyframes ty-ring {
+  0%   { transform: scale(0.6); opacity: 0.55; }
+  70%  { transform: scale(1.55); opacity: 0; }
+  100% { transform: scale(1.55); opacity: 0; }
+}
+.ty-ring {
+  animation: ty-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) 0.25s infinite;
+}
+
+/* Checkmark stroke draws itself in. */
+@keyframes ty-draw {
+  to { stroke-dashoffset: 0; }
+}
+.ty-check {
+  stroke-dasharray: 32;
+  stroke-dashoffset: 32;
+  animation: ty-draw 0.55s cubic-bezier(0.65, 0, 0.35, 1) 0.35s forwards;
+}
+
+/* Badge pops in with a small overshoot. */
+@keyframes ty-pop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  60%  { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.ty-pop { animation: ty-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* Confetti burst radiating out of the checkmark, with a touch of gravity
+   on the way out (the mid stop overshoots upward, the end drops back). */
+@keyframes ty-burst {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.3) rotate(0deg);
+    opacity: 0;
+  }
+  12% { opacity: 1; }
+  70% {
+    transform: translate3d(calc(var(--ty-bx) * 0.92), calc(var(--ty-by) * 1.02), 0)
+               scale(1) rotate(calc(var(--ty-brot) * 0.7));
+    opacity: 1;
+  }
+  85% { opacity: 0.85; }
+  100% {
+    transform: translate3d(var(--ty-bx), calc(var(--ty-by) + 46px), 0)
+               scale(0.9) rotate(var(--ty-brot));
+    opacity: 0;
+  }
+}
+.ty-burst {
+  opacity: 0;
+  animation: ty-burst var(--ty-bdur, 1.2s) cubic-bezier(0.16, 0.8, 0.36, 1) 0.42s forwards;
+}
+
+/* Slow-drifting background orbs. Long, offset durations so the three never
+   line up into a visible pulse. */
+@keyframes ty-orb-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(60px, 40px, 0) scale(1.12); }
+}
+@keyframes ty-orb-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-50px, 55px, 0) scale(0.9); }
+}
+@keyframes ty-orb-c {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(45px, -60px, 0) scale(1.15); }
+}
+.ty-orb { will-change: transform; }
+.ty-orb-a { animation: ty-orb-a 22s ease-in-out infinite; }
+.ty-orb-b { animation: ty-orb-b 27s ease-in-out infinite 2s; }
+.ty-orb-c { animation: ty-orb-c 19s ease-in-out infinite 1s; }
+
+/* Confetti pieces fall once, then settle out of view. */
+@keyframes ty-fall {
+  0%   { transform: translate3d(0, -12vh, 0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 1; }
+  100% { transform: translate3d(var(--ty-drift, 0px), 108vh, 0) rotate(var(--ty-spin, 540deg)); opacity: 0; }
+}
+.ty-confetti {
+  animation: ty-fall var(--ty-dur, 4s) linear var(--ty-delay, 0s) forwards;
+}
+
+/* The badge animations are held at their 0% frame (all of which are invisible)
+   until the component mounts and adds .ty-go. Without this they would burn
+   through on first paint — while the card is still hidden behind its
+   framer-motion entrance — and the visitor would never see them. A paused
+   animation doesn't accumulate time, so it resumes cleanly from the start.
+   These rules must stay AFTER the ones above: the `animation` shorthand resets
+   animation-play-state, so an earlier pause would be overridden. */
+.ty-ring, .ty-check, .ty-pop, .ty-burst { animation-play-state: paused; }
+.ty-go .ty-ring,
+.ty-go .ty-check,
+.ty-go .ty-pop,
+.ty-go .ty-burst { animation-play-state: running; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ty-ring, .ty-check, .ty-pop, .ty-confetti, .ty-burst, .ty-orb { animation: none; }
+  .ty-check { stroke-dashoffset: 0; }
+  .ty-confetti, .ty-burst { opacity: 0; }
+}
+
+
 
 
