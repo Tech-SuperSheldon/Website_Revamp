@@ -8,6 +8,29 @@ import CountrySelect from './demo/CountrySelect';
 import { DEFAULT_COUNTRY, findByIso } from './demo/countries';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+
+// Reads UTM params from the current URL and stashes them in sessionStorage so
+// they still get attached to the form even if the visitor browses around
+// before submitting.
+function captureUtmParams() {
+  if (typeof window === 'undefined') return {};
+  const params = new URLSearchParams(window.location.search);
+  const fromUrl = {};
+  UTM_KEYS.forEach((key) => {
+    const value = params.get(key);
+    if (value) fromUrl[key] = value;
+  });
+  if (Object.keys(fromUrl).length > 0) {
+    sessionStorage.setItem('utm_params', JSON.stringify(fromUrl));
+    return fromUrl;
+  }
+  try {
+    return JSON.parse(sessionStorage.getItem('utm_params') || '{}');
+  } catch {
+    return {};
+  }
+}
 
 export default function BookDemo() {
   const [formData, setFormData] = useState({
@@ -20,6 +43,11 @@ export default function BookDemo() {
   // Phone is handled separately: country (dial code) + national digits.
   const [country, setCountry] = useState(DEFAULT_COUNTRY);
   const [nationalNumber, setNationalNumber] = useState('');
+  const [utmParams, setUtmParams] = useState({});
+
+  useEffect(() => {
+    setUtmParams(captureUtmParams());
+  }, []);
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -161,6 +189,7 @@ export default function BookDemo() {
         country: findByIso(formData.residenceCountry)?.name || '',
         grade: formData.grade.trim(),
         subject: formData.subject.trim(),
+        ...utmParams,
       };
 
       const response = await axiosClient.post('/user/bookDemo', requestData);

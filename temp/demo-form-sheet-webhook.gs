@@ -22,6 +22,11 @@ function doPost(e) {
         "Country",
         "Grade",
         "Subject",
+        "UTM Source",
+        "UTM Medium",
+        "UTM Campaign",
+        "UTM Content",
+        "UTM Term",
       ]);
     }
 
@@ -33,6 +38,11 @@ function doPost(e) {
       data.country || "",
       data.grade || "",
       data.subject || "",
+      data.utm_source || "",
+      data.utm_medium || "",
+      data.utm_campaign || "",
+      data.utm_content || "",
+      data.utm_term || "",
     ]);
 
     return ContentService
@@ -43,6 +53,40 @@ function doPost(e) {
       .createTextOutput(JSON.stringify({ status: "error", error: err.message }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+// --- one-off helper: run this once from the Apps Script editor (select
+// "addUtmColumns" in the function dropdown, then click Run) to add the 5
+// UTM header columns to an EXISTING "Demo Leads" sheet that predates them.
+// Safe to run more than once — it skips any header that's already there.
+function addUtmColumns() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) {
+    Logger.log('Sheet "' + SHEET_NAME + '" not found.');
+    return;
+  }
+
+  const lastCol = sheet.getLastColumn();
+  const headerRange = sheet.getRange(1, 1, 1, Math.max(lastCol, 1));
+  const headers = lastCol > 0 ? headerRange.getValues()[0] : [];
+
+  const utmHeaders = [
+    "UTM Source",
+    "UTM Medium",
+    "UTM Campaign",
+    "UTM Content",
+    "UTM Term",
+  ];
+
+  const missing = utmHeaders.filter((h) => headers.indexOf(h) === -1);
+  if (missing.length === 0) {
+    Logger.log("All UTM columns already present, nothing to do.");
+    return;
+  }
+
+  sheet.getRange(1, lastCol + 1, 1, missing.length).setValues([missing]);
+  Logger.log("Added columns: " + missing.join(", "));
 }
 
 // --- temporary test helper, delete after debugging ---
@@ -56,6 +100,11 @@ function testDoPost() {
         country: "India",
         grade: "5",
         subject: "Math",
+        utm_source: "google",
+        utm_medium: "cpc",
+        utm_campaign: "summer_sale",
+        utm_content: "blue_button",
+        utm_term: "online tutoring",
         createdAt: new Date().toISOString()
       })
     }

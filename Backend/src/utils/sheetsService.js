@@ -10,7 +10,10 @@ const sendToGoogleSheet = async (formData) => {
       return { ok: true, message: 'Google Sheet not configured' };
     }
 
-    const { fullName, email, mobile, country, grade, subject, createdAt } = formData;
+    const {
+      fullName, email, mobile, country, grade, subject, createdAt,
+      utm_source, utm_medium, utm_campaign, utm_content, utm_term,
+    } = formData;
 
     const response = await fetch(process.env.GOOGLE_SHEET_WEBHOOK_URL, {
       method: 'POST',
@@ -23,6 +26,11 @@ const sendToGoogleSheet = async (formData) => {
         grade: grade || '',
         subject: subject || '',
         createdAt: createdAt ? new Date(createdAt).toISOString() : new Date().toISOString(),
+        utm_source: utm_source || '',
+        utm_medium: utm_medium || '',
+        utm_campaign: utm_campaign || '',
+        utm_content: utm_content || '',
+        utm_term: utm_term || '',
       }),
     });
 

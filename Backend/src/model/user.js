@@ -34,6 +34,21 @@ const userSchema = new Schema({
         required: true ,
         minLength: 3 ,
         maxLength: 15
+    } ,
+    utm_source: {
+        type : String
+    } ,
+    utm_medium: {
+        type : String
+    } ,
+    utm_campaign: {
+        type : String
+    } ,
+    utm_content: {
+        type : String
+    } ,
+    utm_term: {
+        type : String
     }
 },{
     timestamps: true
