@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import { Header } from '@/components/NSheader';
 import NSDeadlineBanner from '@/components/NSDeadlineBanner';
 import Home2Hero from '@/components/Home2Hero';
+import TrustedByFamiliesMobile from '@/components/TrustedByFamiliesMobile';
 import DeferredWidgets, { DeferredSection } from '@/components/DeferredWidgets';
 
 // Below-fold components loaded lazily to reduce initial JS bundle
@@ -41,6 +42,7 @@ export default function Home() {
           sections below come into view. Mounts immediately on page load — see
           Home2Hero. */}
       <Home2Hero />
+      <TrustedByFamiliesMobile />
 
       <TestimonialSection />
       <USCourseTree />

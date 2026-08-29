@@ -28,9 +28,9 @@ const testimonials = [
   
 ];
 
-const Counter = ({ from, to, suffix, refreshKey }: { from: number; to: number; suffix: string; refreshKey?: number }) => {
+const Counter = ({ from, to, suffix }: { from: number; to: number; suffix: string }) => {
   const nodeRef = useRef<HTMLSpanElement>(null);
-  const inView = useInView(nodeRef, { once: false, margin: "-50px" });
+  const inView = useInView(nodeRef, { once: true, margin: "-50px" });
 
   useEffect(() => {
     const node = nodeRef.current;
@@ -39,12 +39,12 @@ const Counter = ({ from, to, suffix, refreshKey }: { from: number; to: number; s
         duration: 2,
         ease: "easeOut",
         onUpdate(value) {
-          node.textContent = Math.floor(value) + suffix;
+          node.textContent = Math.floor(value).toLocaleString("en-US") + suffix;
         },
       });
       return () => controls.stop();
     }
-  }, [from, to, suffix, inView, refreshKey]);
+  }, [from, to, suffix, inView]);
 
   return <span ref={nodeRef}>{from}{suffix}</span>;
 };
@@ -52,7 +52,6 @@ const Counter = ({ from, to, suffix, refreshKey }: { from: number; to: number; s
 export function TestimonialSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  const [refreshKey, setRefreshKey] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
 
   const nextTestimonial = () => {
@@ -76,7 +75,6 @@ export function TestimonialSection() {
       if (timer) return;
       timer = setInterval(() => {
         nextTestimonial();
-        setRefreshKey((prev) => prev + 1);
       }, 10000);
     };
     const stop = () => {
@@ -134,22 +132,22 @@ export function TestimonialSection() {
              <div className="relative inset-0 flex flex-col justify-center z-10 h-full">
                 <div className="grid grid-cols-3 lg:grid-cols-1 gap-2 md:gap-6 lg:gap-8 text-center lg:text-left">
                      <div>
-                        <h3 className="text-3xl md:text-5xl lg:text-7xl font-rowdies font-black tracking-tighter text-[#e87f1e]">
-                            <Counter key={`learners-${refreshKey}`} from={0} to={10} suffix="K+" refreshKey={refreshKey} />
+                        <h3 className="text-2xl md:text-4xl lg:text-6xl font-rowdies font-black tracking-tighter text-[#e87f1e]">
+                            <Counter from={0} to={10000} suffix="+" />
                         </h3>
-                        <p className="text-[10px] md:text-sm text-gray-900 font-bold uppercase tracking-widest mt-1 lg:mt-0">Learners</p>
+                        <p className="text-[10px] md:text-sm text-gray-900 font-bold uppercase tracking-widest mt-1 lg:mt-0">Learners taught</p>
                     </div>
                      <div>
-                        <h3 className="text-3xl md:text-5xl lg:text-7xl font-rowdies font-black tracking-tighter text-[#e87f1e]">
-                            <Counter key={`countries-${refreshKey}`} from={0} to={10} suffix="+" refreshKey={refreshKey} />
+                        <h3 className="text-2xl md:text-4xl lg:text-6xl font-rowdies font-black tracking-tighter text-[#e87f1e]">
+                            <Counter from={0} to={500} suffix="+" />
                         </h3>
-                        <p className="text-[10px] md:text-sm text-gray-900 font-bold uppercase tracking-widest mt-1 lg:mt-0">Countries</p>
+                        <p className="text-[10px] md:text-sm text-gray-900 font-bold uppercase tracking-widest mt-1 lg:mt-0">Verified tutors</p>
                     </div>
                      <div>
-                        <h3 className="text-3xl md:text-5xl lg:text-7xl font-rowdies font-black tracking-tighter text-[#e87f1e]">
-                            <Counter key={`success-${refreshKey}`} from={0} to={98} suffix="%" refreshKey={refreshKey} />
+                        <h3 className="text-2xl md:text-4xl lg:text-6xl font-rowdies font-black tracking-tighter text-[#e87f1e]">
+                            <Counter from={0} to={15} suffix="+" />
                         </h3>
-                        <p className="text-[10px] md:text-sm text-gray-900 font-bold uppercase tracking-widest mt-1 lg:mt-0">Success Rate</p>
+                        <p className="text-[10px] md:text-sm text-gray-900 font-bold uppercase tracking-widest mt-1 lg:mt-0">Countries reached</p>
                     </div>
                 </div>
              </div>
