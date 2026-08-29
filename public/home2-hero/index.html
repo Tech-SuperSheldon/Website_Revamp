@@ -49,6 +49,84 @@
     </style>
     <script type="module" crossorigin src="/home2-hero/chunks/index-eeBi9twy.js"></script>
     <link rel="stylesheet" crossorigin href="/home2-hero/assets/CNUUonPj.css">
+    <!-- SuperSheldon phone-portrait overrides for the two hologram overlays:
+         .box-description (the "SuperSheldon · Australia" bar plus the copy
+         that types out during the scan) and .box-services (the "Features"
+         list). Both are absolutely positioned against the iframe's bottom
+         edge, so on a phone they are the first things to go when vertical
+         space is tight. Three adjustments:
+           1. Narrower, centred boxes — the parent page pins the enquiry arrow,
+              the WhatsApp button and the Nova chat bubble to the bottom-right
+              corner (~60px in from the right edge; see
+              src/components/ArrowAndWhatsapp.jsx). Insetting the box equally
+              on both sides keeps the copy clear of that rail while still
+              filling its box edge-to-edge — padding only the right side left
+              a ragged gap, and insetting only the right side looked pinned.
+           2. Compact caption — the bundle's portrait sizes (12/18px padding,
+              22px name) are tuned for a full-screen viewport and waste ~30px
+              of height inside an embedded hero.
+           3. Compact Features list — the tallest overlay (title + 5 bullets),
+              which otherwise reaches up into the avatar: ~205px down to ~150px.
+         Selectors are repeated (.box-description.box-description…) purely to
+         out-specify the bundle's scoped `[data-v-*]` rules without !important;
+         the hash is regenerated on every rebuild of the Vue app, so we must
+         not name it here. Keep in sync with public/uk-home2-hero/index.html. -->
+    <style>
+      @media (orientation: portrait) and (max-width: 767.98px) {
+        /* 1. The bundle pins both boxes flush left and spans them full width.
+              Inset them equally instead, so they read as centred cards. The
+              40px on top of the usual 16px outer margin is what keeps the
+              copy clear of the parent page's floating rail (arrow + WhatsApp
+              + Nova: 48px icons sitting 12px in from the right edge, see
+              src/components/ArrowAndWhatsapp.jsx) — text now ends ~68px from
+              the right edge, the rail starts at 60px. */
+        .box-description.box-description.box-description,
+        .box-services.box-services.box-services {
+          --ss-box-inset: calc(var(--space-outer) + 40px);
+          left: var(--ss-box-inset);
+          width: calc(100% - var(--ss-box-inset) * 2);
+        }
+
+        /* 2. Scan caption. */
+        .box-description.box-description .box-description-details {
+          padding: 8px 12px;
+        }
+        .box-description.box-description .box-description-details-name {
+          font-size: 18px;
+        }
+        .box-description.box-description .box-description-details-location-copy {
+          font-size: 14px;
+        }
+        .box-description.box-description .box-description-copy {
+          padding: 8px 12px;
+          font-size: 14px;
+          line-height: 1.35;
+        }
+
+        /* 3. Features list. */
+        .box-services.box-services .box-services-content {
+          padding: 8px 12px;
+          gap: 6px;
+        }
+        .box-services.box-services .box-services-title {
+          font-size: 16px;
+        }
+        .box-services.box-services .box-services-list {
+          gap: 5px;
+        }
+        .box-services.box-services .box-services-list-item {
+          padding-left: 14px;
+        }
+        /* Re-centre the bullet against the shorter line box. */
+        .box-services.box-services .box-services-list-item::before {
+          top: 6px;
+        }
+        .box-services.box-services .box-services-list-item-name {
+          font-size: 13px;
+          line-height: 1.35;
+        }
+      }
+    </style>
   </head>
   <body class="is-loading">
     <svg style="display: none" viewBox="0 0 56 61" xmlns="http://www.w3.org/2000/svg">
