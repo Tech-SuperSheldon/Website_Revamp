@@ -11,7 +11,7 @@ import { RollingLink } from "./RollingLink";
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "Courses", href: "/new-courses" },
+  { name: "Academies", href: "/academies" },
   { name: "Testimonial", href: "/new-testimonial" },
   { name: "Blogs", href: "/new-blogs" },
   { name: "Become a Teacher", href: "/become-a-teacher" },
