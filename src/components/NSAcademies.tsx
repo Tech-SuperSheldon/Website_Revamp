@@ -127,7 +127,7 @@ export default function NSAcademies() {
     <section id="academies" className="relative py-6 md:py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...riseOnce(reduce)} className="text-center mb-10 md:mb-14">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#03215F] tracking-tight leading-tight">
             Four academies, one <Highlight reduce={reduce}>tutor</Highlight> your child trusts
           </h2>
           <p className="mt-3 text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">

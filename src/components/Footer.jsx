@@ -23,7 +23,6 @@ export default function Footer() {
               height={80}
               className="h-auto w-auto"
             />
-            <span className="font-extrabold text-2xl sm:text-3xl">Supersheldon</span>
           </div>
 
           {/* <p className="text-gray-700 text-base sm:text-lg leading-snug">

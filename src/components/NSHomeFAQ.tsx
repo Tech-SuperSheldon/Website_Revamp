@@ -39,7 +39,7 @@ export default function NSHomeFAQ() {
     <section id="faq" className="relative py-6 md:py-10">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...riseOnce(reduce)} className="text-center mb-8 md:mb-10">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#03215F] tracking-tight">
             Frequently asked <Highlight reduce={reduce}>questions</Highlight>
           </h2>
           <p className="mt-3 text-gray-600 text-base sm:text-lg max-w-xl mx-auto">

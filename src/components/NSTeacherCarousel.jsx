@@ -338,8 +338,8 @@ export default function NSTeacherCarousel({ data = TEACHERS }) {
           <Sparkles className="h-3.5 w-3.5" />
           Our Mentors
         </span>
-        <h2 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl">
-          Meet Our <span className="text-orange-500">Teachers</span>
+        <h2 className="text-4xl font-extrabold tracking-tight text-[#03215F] md:text-5xl">
+          Meet Our <span className="text-[#FFCC00]">Teachers</span>
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-base text-gray-500">
           Expert mentors from around the world — tap any teacher to know them better.
