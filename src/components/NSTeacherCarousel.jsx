@@ -331,7 +331,7 @@ export default function NSTeacherCarousel({ data = TEACHERS }) {
   const close = useCallback(() => setSelected(null), []);
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-b from-white to-blue-50/40 py-16 md:py-24">
+    <section className="relative w-full overflow-hidden bg-gradient-to-b from-white to-blue-50/40 py-6 md:py-10">
       {/* Heading */}
       <div className="mx-auto mb-10 max-w-3xl px-4 text-center md:mb-14">
         <span className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-600">

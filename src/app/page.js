@@ -7,8 +7,10 @@ import dynamic from 'next/dynamic';
 import { Header } from '@/components/NSheader';
 import NSDeadlineBanner from '@/components/NSDeadlineBanner';
 import Home2Hero from '@/components/Home2Hero';
-import TrustedByFamiliesMobile from '@/components/TrustedByFamiliesMobile';
+import TrustedByBar from '@/components/TrustedByBar';
 import DeferredWidgets, { DeferredSection } from '@/components/DeferredWidgets';
+import ScrollProgressBar from '@/components/ScrollProgressBar';
+import FloatingTryClassButton from '@/components/FloatingTryClassButton';
 
 // Below-fold components loaded lazily to reduce initial JS bundle
 const TestimonialSection   = dynamic(() => import('@/components/NSstudent-testimonial').then(m => ({ default: m.TestimonialSection })));
@@ -23,8 +25,12 @@ const NSTeacherTest        = dynamic(() => import('@/components/NSTeacherTest'))
 const TeacherCarousel      = dynamic(() => import('@/components/NSTeacherCarousel'));
 const FeatureSlider        = dynamic(() => import('@/components/NSFeatures'));
 const NSLevelUp            = dynamic(() => import('@/components/NSApp'));
-const FAQ                  = dynamic(() => import('@/components/NSFAQ'));
-const PathwayFinderBanner  = dynamic(() => import('@/components/PathwayFinderBanner'));
+// Redesign sections, sitting between the stats strip and the footer.
+const NSWhySheldon         = dynamic(() => import('@/components/NSWhySheldon'));
+const NSParentsSaying      = dynamic(() => import('@/components/NSParentsSaying'));
+const NSAcademies          = dynamic(() => import('@/components/NSAcademies'));
+// Short landing-page FAQ. The long categorised one (NSFAQ) is still used by /new-home.
+const FAQ                  = dynamic(() => import('@/components/NSHomeFAQ'));
 const Footer               = dynamic(() => import('@/components/NSfooter').then(m => ({ default: m.Footer })));
 
 export const metadata = {
@@ -34,6 +40,7 @@ export const metadata = {
 export default function Home() {
   return (
     <main className="new-home-bg">
+      <ScrollProgressBar />
       <NSDeadlineBanner />
       <Header stacked />
 
@@ -42,9 +49,13 @@ export default function Home() {
           sections below come into view. Mounts immediately on page load — see
           Home2Hero. */}
       <Home2Hero />
-      <TrustedByFamiliesMobile />
+      <TrustedByBar />
 
       <TestimonialSection />
+      {/* Temporarily removed for landing page redesign preview — from
+          Focused Exam Mastery Courses (USCourseTree) through Try our app,
+          LevelUp (NSLevelUp / NSApp). Restore by uncommenting. */}
+      {/*
       <USCourseTree />
       <NSClassVideoSection />
       <NSChoose />
@@ -58,25 +69,30 @@ export default function Home() {
         <NSTeacherTest />
       </DeferredSection>
       <DeferredSection>
-        <TeacherCarousel />
-      </DeferredSection>
-      <DeferredSection>
         <FeatureSlider />
       </DeferredSection>
       <DeferredSection>
         <NSLevelUp />
       </DeferredSection>
+      */}
+
+      <NSParentsSaying />
+      <NSAcademies />
+      <NSWhySheldon />
+
+      <DeferredSection>
+        <TeacherCarousel />
+      </DeferredSection>
+
       <DeferredSection>
         <FAQ />
-      </DeferredSection>
-      <DeferredSection>
-        <PathwayFinderBanner />
       </DeferredSection>
       <DeferredSection>
         <Footer />
       </DeferredSection>
 
       <DeferredWidgets mobileHidden={true} side="right" mobileBar={true} />
+      <FloatingTryClassButton />
     </main>
   );
 }

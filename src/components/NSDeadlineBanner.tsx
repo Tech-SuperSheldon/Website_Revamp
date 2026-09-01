@@ -96,32 +96,27 @@ export default function NSDeadlineBanner() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -60, opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className={`relative z-[9997] w-full ${
-            timeLeft.isUrgent
-              ? "bg-gradient-to-r from-red-500 to-orange-500"
-              : "bg-gradient-to-r from-orange-500 to-orange-400"
-          } text-white shadow-md`}
+          className="relative z-[9997] w-full bg-[#FFCC00] text-black shadow-md"
         >
-          <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
+          <div className="max-w-7xl mx-auto px-4 py-1.5 sm:py-2.5 flex items-center justify-between gap-3">
             {/* Left: Icon + Text */}
-            <div className="flex items-center gap-2.5 flex-1 min-w-0">
-              <div className="shrink-0 w-7 h-7 rounded-full bg-white/20 flex items-center justify-center">
-                <Clock size={14} className="text-white" />
+            <div className="flex items-center gap-2 sm:gap-2.5 flex-1 min-w-0">
+              <div className="hidden sm:flex shrink-0 w-7 h-7 rounded-full bg-black/10 items-center justify-center">
+                <Clock size={14} className="text-black" />
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-x-2 gap-y-0.5 min-w-0">
-                <p className="text-xs sm:text-sm font-medium leading-tight truncate">
+              <div className="flex flex-row items-center gap-x-1.5 sm:gap-x-2 min-w-0">
+                {/* Mobile: one condensed row — deadline date + countdown. The
+                    batch-start text is desktop-only; with it back in, that's
+                    the line that pushed this to 3 stacked rows on mobile. */}
+                <p className="min-w-0 flex-1 sm:flex-initial text-[11px] sm:text-sm font-medium leading-tight truncate">
                   <span className="font-bold">Application Deadline:</span>{" "}
                   {info.deadline}
-                  <span className="hidden sm:inline"> · </span>
-                  <span className="sm:hidden block text-[10px] opacity-90 mt-0.5">
-                    Next batch starts {info.batchStart}
-                  </span>
                   <span className="hidden sm:inline font-semibold">
                     {" "}| Next batch starts {info.batchStart}
                   </span>
                 </p>
                 {!timeLeft.expired && (
-                  <div className="flex items-center gap-1 shrink-0">
+                  <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
                     <Calendar size={10} className="hidden sm:inline opacity-90" />
                     {[
                       { value: timeLeft.days, label: "d" },
@@ -131,7 +126,7 @@ export default function NSDeadlineBanner() {
                     ].map((unit, idx) => (
                       <span
                         key={unit.label}
-                        className="inline-flex items-baseline gap-0.5 bg-white/20 px-1.5 py-0.5 rounded text-[10px] font-bold tabular-nums"
+                        className="inline-flex items-baseline gap-0.5 bg-black/10 px-1 py-0.5 rounded text-[9px] sm:px-1.5 sm:text-[10px] font-bold tabular-nums"
                       >
                         {String(unit.value).padStart(2, "0")}
                         <span className="opacity-80">{unit.label}</span>
@@ -146,17 +141,19 @@ export default function NSDeadlineBanner() {
             <div className="flex items-center gap-2 shrink-0">
               <Link
                 href="/demo"
-                className="hidden sm:inline-flex items-center gap-1.5 bg-white text-orange-600 text-xs font-bold px-3 py-1.5 rounded-full hover:bg-orange-50 transition-colors shadow-sm"
+                data-floating-cta-avoid
+                className="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-[#8a6800] to-[#c99700] text-white text-xs font-bold px-3 py-1.5 rounded-full border border-black/10 hover:from-[#775900] hover:to-[#b38a00] transition-colors shadow-sm shadow-black/20"
               >
                 Apply for Demo
                 <ArrowRight size={12} />
               </Link>
               <button
                 onClick={() => setDismissed(true)}
-                className="text-white/70 hover:text-white transition-colors p-1 rounded-full hover:bg-white/10"
+                className="text-black/60 hover:text-black transition-colors p-0.5 sm:p-1 rounded-full hover:bg-black/10"
                 aria-label="Dismiss banner"
               >
-                <X size={16} />
+                <X size={14} className="sm:hidden" />
+                <X size={16} className="hidden sm:block" />
               </button>
             </div>
           </div>

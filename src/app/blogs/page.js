@@ -1,4 +1,4 @@
-import Header from "@/components/HeroHeaderNav";
+import { Header } from "@/components/NSheader";
 import Footer from "@/components/Footer";
 import FloatingArrowWhatsApp from "@/components/ArrowAndWhatsapp";
 import RecentPost from "@/components/blog comps/RecentPosts";

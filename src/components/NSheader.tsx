@@ -89,8 +89,8 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
             <Link href="https://supersheldon.wise.live/login?loginRedirected=true" target="_blank" rel="noopener noreferrer" className="text-base font-medium text-gray-700 hover:text-gray-900 transition-colors">
               Login
             </Link>
-            <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button variant="gradient" className="rounded-full px-6 py-5 text-base shadow-md transition-all hover:shadow-lg hover:shadow-orange-500/20 whitespace-nowrap">
+            <Link href="/demo" data-floating-cta-avoid onClick={() => setIsMobileMenuOpen(false)}>
+                <Button variant="gradient" className="rounded-full px-6 py-5 text-base shadow-md transition-all hover:shadow-lg hover:shadow-yellow-500/30 whitespace-nowrap bg-none bg-[#FFCC00] from-transparent to-transparent text-black hover:bg-[#e6b800] hover:opacity-100">
                     Try a free Class
                 </Button>
             </Link>
@@ -136,8 +136,8 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
             >
               Login
             </Link>
-             <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)} className="w-full max-w-[280px]">
-                <Button className="w-full bg-gray-900 text-white rounded-full px-6 py-4 text-lg">
+             <Link href="/demo" data-floating-cta-avoid onClick={() => setIsMobileMenuOpen(false)} className="w-full max-w-[280px]">
+                <Button className="w-full bg-[#FFCC00] hover:bg-[#e6b800] text-black rounded-full px-6 py-4 text-lg">
                     Try a free Class
                 </Button>
             </Link>

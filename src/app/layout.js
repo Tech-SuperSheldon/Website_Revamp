@@ -1,14 +1,23 @@
 import "./globals.css";
-import { Quicksand } from "next/font/google";
+import { Baloo_2, Manrope } from "next/font/google";
 import Script from "next/script";
 
 
 import FestiveOverlay from "@/components/sharedcomps/Festiveoverlay";
 
-const quicksand = Quicksand({
+// Headings site-wide use Baloo 2 (see globals.css h1-h6 rule); body text uses
+// Manrope via the Tailwind `sans` family below.
+const baloo2 = Baloo_2({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-quicksand",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-baloo",
+  display: "swap",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -112,7 +121,7 @@ export default function RootLayout({ children }) {
       </head>
 
       <body
-        className={`${quicksand.variable} font-sans relative overflow-x-hidden bg-[#FFF9F3] min-h-screen`}
+        className={`${baloo2.variable} ${manrope.variable} font-sans relative overflow-x-hidden bg-[#FFF9F3] min-h-screen`}
       >
         {/* Google Tag Manager (noscript) */}
         <noscript>

@@ -6,6 +6,7 @@ const {connect} = require("./src/config/db") ;
 const cors = require("cors") ;
 const userRouter = require("./src/routes/userRouter") ;
 const superSheldonFormRouter = require("./src/routes/superSheldonFormRouter") ;
+const learnLeadRouter = require("./src/routes/learnLeadRouter") ;
 
 // Mongoose model for storing form submissions
 const SendEmailModel = require("./src/model/sendEmail");
@@ -66,8 +67,11 @@ app.get("/health", (_req, res) => {
   });
 });
 
-// Book Demo 
+// Book Demo
 app.use("/user" , userRouter) ;
+
+// "Learn [Subject]" multi-step lead form (UK/AU)
+app.use("/learn-lead" , learnLeadRouter) ;
 
 // --------- Guide Download Endpoint ----------
 app.post("/api/download-guide", async (req, res) => {

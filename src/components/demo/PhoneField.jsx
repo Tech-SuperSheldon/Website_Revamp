@@ -75,7 +75,7 @@ export default function PhoneField({
 
       {/* Dropdown */}
       {open && (
-        <div className="absolute z-30 mt-1 max-h-72 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl">
+        <div className="relative z-30 mt-1 max-h-72 w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl">
           <div className="border-b border-gray-100 p-2">
             <input
               autoFocus

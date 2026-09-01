@@ -17,7 +17,7 @@ export function Footer() {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-        className="relative w-full bg-[#E87F1E] rounded-t-[2.5rem] md:rounded-t-[4rem] flex flex-col pt-8 pb-4 md:pt-10 md:pb-6 overflow-hidden shadow-2xl"
+        className="relative w-full bg-[#03215F] rounded-t-[2.5rem] md:rounded-t-[4rem] flex flex-col pt-8 pb-4 md:pt-10 md:pb-6 overflow-hidden shadow-2xl"
       >
         {/* Globe background decoration */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
@@ -36,10 +36,10 @@ export function Footer() {
                   transition={{ duration: 0.6 }}
                   className="lg:w-[20%] lg:ml-8 flex flex-col items-start"
               >
-                  <Link href="/" className="mb-4 block">
-                       <div className="relative w-48 h-12">
+                  <Link href="/" className="mb-1 block">
+                       <div className="relative w-80 h-28">
                            <Image
-                              src="/logo.webp"
+                              src="/logo-footer.png"
                               alt="SuperSheldon"
                               fill
                               className="object-contain object-left"

@@ -94,6 +94,13 @@ export default function Home2Hero() {
     <section
       ref={sectionRef}
       style={{ height: `calc(100svh - ${topOffset}px)` }}
+      // The hero's own "Try a Free Class" phone-mockup CTA lives inside the
+      // iframe (public/home2-hero/index.html), a separate document the
+      // floating button's IntersectionObserver can't see into directly.
+      // Marking the whole hero as an avoid-target is the practical fix: it's
+      // nearly full-viewport height, so while any of it is on screen there's
+      // already a "Try a Free Class" CTA in view somewhere within it.
+      data-floating-cta-avoid
       className="relative w-full h-[100svh] bg-[#dfd1bc] overflow-hidden rounded-b-[2rem] md:rounded-b-[3.5rem] mb-10 md:mb-16"
     >
       {mounted && (

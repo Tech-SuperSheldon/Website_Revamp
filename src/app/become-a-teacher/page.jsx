@@ -39,7 +39,7 @@ import Image from "next/image";
 import Script from "next/script";
 import { Icon } from "@iconify/react";
 import dynamic from "next/dynamic";
-import HeaderNav from "@/components/HeroHeaderNav";
+import { Header } from "@/components/NSheader";
 import Footer from "@/components/Footer";
 
 const NSTeacherCarousel = dynamic(
@@ -577,7 +577,7 @@ function HeroSection({ onApply }) {
       </div>
 
       {/* Left content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 pt-16 pb-4 sm:pb-44 lg:pt-32 lg:pb-48">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 pt-6 pb-4 sm:pb-44 lg:pt-8 lg:pb-48">
         
         {/* ── DESKTOP LAYOUT (sm+) — unchanged ── */}
         <div className="hidden sm:block max-w-xl lg:max-w-[48%] text-center sm:text-left">
@@ -2267,7 +2267,7 @@ export default function BecomeATeacherPage() {
       />
 
       <StickyApplyCTA onApply={openApply} />
-      <HeaderNav />
+      <Header stacked />
 
       <HeroSection onApply={openApply} />
       <AnimatedStatsBar />

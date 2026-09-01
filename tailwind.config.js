@@ -5,6 +5,9 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
+    // src/lib holds shared class strings (see lib/motion.ts). Without this the
+    // utilities named only there are never generated.
+    './src/lib/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -31,7 +34,8 @@ module.exports = {
         // Add any custom colors here
       },
        fontFamily: {
-        sans: ["var(--font-quicksand)", "sans-serif"], // ✅ Quicksand global
+        sans: ["var(--font-manrope)", "sans-serif"], // body text — Manrope
+        heading: ["var(--font-baloo)", "sans-serif"], // headings — Baloo 2 (also applied globally to h1-h6, see globals.css)
       },
       animation: {
         'float-1': 'float-1 4s ease-in-out infinite',

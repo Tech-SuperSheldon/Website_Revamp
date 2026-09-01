@@ -1,6 +1,6 @@
 "use client"
 
-import Header from "@/components/HeroHeaderNav";
+import { Header } from "@/components/NSheader";
 import TeacherTestimonial from "@/components/TeacherTestimonial";
 import FullPageSlider from "@/components/FullPageScroll";
 import FAQ from "@/components/FAQ";

@@ -6,9 +6,21 @@
 
 const SHEET_NAME = "Demo Leads"; // change if your tab is named differently
 
+// Tabs used by the "Learn [Subject]" multi-step lead form (formType: "learn").
+const LEARN_SHEET_NAMES = { uk: "UK", au: "Aus" };
+const LEARN_HEADERS = [
+  "Created At", "Updated At", "Status", "Subject", "Grade", "Mobile",
+  "Date", "Time", "Timezone",
+  "UTM Source", "UTM Medium", "UTM Campaign", "UTM Content", "UTM Term",
+];
+
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
+
+    if (data.formType === "learn") {
+      return handleLearnLead(data);
+    }
 
     const ss = SpreadsheetApp.getActiveSpreadsheet();
     let sheet = ss.getSheetByName(SHEET_NAME);
@@ -53,6 +65,80 @@ function doPost(e) {
       .createTextOutput(JSON.stringify({ status: "error", error: err.message }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+// Handles "Learn [Subject]" lead submissions. Routes into the "UK"/"Aus" tab
+// based on data.country, and upserts by Mobile+Subject so that the partial
+// row created when the visitor enters their phone number gets updated in
+// place (instead of duplicated) once they finish the form.
+function handleLearnLead(data) {
+  const tabName = LEARN_SHEET_NAMES[String(data.country || "").toLowerCase()];
+  if (!tabName) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: "error", error: "Unknown country: " + data.country }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(tabName);
+  if (!sheet) {
+    sheet = ss.insertSheet(tabName);
+    sheet.appendRow(LEARN_HEADERS);
+  }
+
+  const now = new Date();
+  const mobile = data.mobile || "";
+  const subject = data.subject || "";
+  const status = data.stage === "complete" ? "Complete" : "Partial";
+
+  // Look for an existing, not-yet-complete row for this Mobile+Subject to
+  // update in place rather than appending a duplicate.
+  const lastRow = sheet.getLastRow();
+  let targetRow = -1;
+  if (lastRow > 1) {
+    const values = sheet.getRange(2, 1, lastRow - 1, LEARN_HEADERS.length).getValues();
+    for (let i = values.length - 1; i >= 0; i--) {
+      const row = values[i];
+      const rowMobile = row[5];
+      const rowSubject = row[3];
+      const rowStatus = row[2];
+      if (rowMobile === mobile && rowSubject === subject && rowStatus !== "Complete") {
+        targetRow = i + 2; // account for header row + 0-index
+        break;
+      }
+    }
+  }
+
+  const rowValues = [
+    null, // Created At — filled below, either kept or set on insert
+    now, // Updated At
+    status,
+    subject,
+    data.grade || "",
+    mobile,
+    data.date || "",
+    data.time || "",
+    data.timezone || "",
+    data.utm_source || "",
+    data.utm_medium || "",
+    data.utm_campaign || "",
+    data.utm_content || "",
+    data.utm_term || "",
+  ];
+
+  if (targetRow > 0) {
+    // Keep the original Created At, update everything else.
+    const createdAt = sheet.getRange(targetRow, 1).getValue();
+    rowValues[0] = createdAt;
+    sheet.getRange(targetRow, 1, 1, LEARN_HEADERS.length).setValues([rowValues]);
+  } else {
+    rowValues[0] = data.createdAt ? new Date(data.createdAt) : now;
+    sheet.appendRow(rowValues);
+  }
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: "ok" }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 // --- one-off helper: run this once from the Apps Script editor (select
