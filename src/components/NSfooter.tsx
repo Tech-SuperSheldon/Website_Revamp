@@ -17,7 +17,7 @@ export function Footer() {
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, amount: 0.1 }}
         transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-        className="relative w-full bg-[#03215F] rounded-t-[2.5rem] md:rounded-t-[4rem] flex flex-col pt-8 pb-4 md:pt-10 md:pb-6 overflow-hidden shadow-2xl"
+        className="relative w-full bg-[#03215F] rounded-t-[1.5rem] sm:rounded-t-[2.5rem] md:rounded-t-[4rem] flex flex-col pt-4 pb-2 sm:pt-6 md:pt-10 md:pb-6 overflow-hidden shadow-2xl"
       >
         {/* Globe background decoration */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
@@ -26,7 +26,7 @@ export function Footer() {
         <div className="container mx-auto px-4 md:px-6">
 
           {/* Main Content: Brand | Contact | Links */}
-          <div className="flex flex-col lg:flex-row justify-between gap-6 lg:gap-6 mb-6 text-white">
+          <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-6 mb-4 sm:mb-6 text-white">
 
               {/* Brand Section */}
               <motion.div
@@ -37,7 +37,7 @@ export function Footer() {
                   className="lg:w-[20%] lg:ml-8 flex flex-col items-start"
               >
                   <Link href="/" className="mb-1 block">
-                       <div className="relative w-44 h-16">
+                       <div className="relative w-32 h-12 sm:w-40 sm:h-14 md:w-44 md:h-16">
                            <Image
                               src="/logo-footer.png"
                               alt="SuperSheldon"
@@ -46,7 +46,7 @@ export function Footer() {
                            />
                        </div>
                   </Link>
-                  <p className="text-white font-medium text-[15px] leading-relaxed mb-4">
+                  <p className="text-white font-medium text-[12px] sm:text-[13px] md:text-[15px] leading-relaxed mb-4">
                       SuperSheldon is a trusted online learning platform offering expert-led exam preparation for Australian students.
                   </p>
 
@@ -86,8 +86,8 @@ export function Footer() {
                   transition={{ duration: 0.6, delay: 0.1 }}
                   className="lg:w-[22%] flex flex-col"
               >
-                  <h4 className="font-bold text-lg text-white mb-4 font-rowdies">Contact</h4>
-                  <div className="flex flex-col gap-3 text-[13px] text-white font-medium">
+                  <h4 className="font-bold text-base sm:text-lg text-white mb-4 font-rowdies">Contact</h4>
+                  <div className="flex flex-col gap-3 text-[11px] sm:text-[12px] md:text-[13px] text-white font-medium">
                       <div className="flex items-start gap-2">
                           <Phone className="w-4 h-4 shrink-0 mt-0.5" strokeWidth={2} />
                           <p><span className="font-bold">Phone:</span> +91 7974695618 / +61 485860132</p>
@@ -109,13 +109,13 @@ export function Footer() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="lg:w-auto lg:mr-8 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-6"
+                  className="lg:w-auto lg:mr-8 grid grid-cols-2 gap-x-4 sm:gap-x-6 md:gap-x-8 gap-y-4 sm:gap-y-6"
               >
 
                   {/* Column 1: Sitemap */}
                   <div>
-                       <h4 className="font-bold text-lg text-white mb-4 font-rowdies">Sitemap</h4>
-                       <ul className="space-y-2 font-medium text-white text-[14px]">
+                       <h4 className="font-bold text-base sm:text-lg text-white mb-2 sm:mb-4 font-rowdies">Sitemap</h4>
+                       <ul className="space-y-1.5 sm:space-y-2 font-medium text-white text-[12px] sm:text-[13px] md:text-[14px]">
                           <li><RollingLink href="/" hoverColor="text-black" baseColor="text-white">Home</RollingLink></li>
                           <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">Courses</RollingLink></li>
                           <li><RollingLink href="/new-testimonial" hoverColor="text-black" baseColor="text-white">Reviews</RollingLink></li>
@@ -126,8 +126,8 @@ export function Footer() {
 
                   {/* Column 2: Learn */}
                   <div>
-                       <h4 className="font-bold text-lg text-white mb-4 font-rowdies">Learn</h4>
-                       <ul className="space-y-2 font-medium text-white text-[14px]">
+                       <h4 className="font-bold text-base sm:text-lg text-white mb-2 sm:mb-4 font-rowdies">Learn</h4>
+                       <ul className="space-y-1.5 sm:space-y-2 font-medium text-white text-[12px] sm:text-[13px] md:text-[14px]">
                           <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">NAPLAN Exam</RollingLink></li>
                           <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">ICAS</RollingLink></li>
                           <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">HSC</RollingLink></li>
@@ -137,8 +137,8 @@ export function Footer() {
 
                   {/* Column 3: Account */}
                   <div>
-                       <h4 className="font-bold text-lg text-white mb-4 font-rowdies">Account</h4>
-                       <ul className="space-y-2 font-medium text-white text-[14px]">
+                       <h4 className="font-bold text-base sm:text-lg text-white mb-2 sm:mb-4 font-rowdies">Account</h4>
+                       <ul className="space-y-1.5 sm:space-y-2 font-medium text-white text-[12px] sm:text-[13px] md:text-[14px]">
                           <li><RollingLink href="https://supersheldon.wise.live/" target="_blank" rel="noopener noreferrer" hoverColor="text-black" baseColor="text-white">Sign up</RollingLink></li>
                           <li><RollingLink href="https://supersheldon.wise.live/" target="_blank" rel="noopener noreferrer" hoverColor="text-black" baseColor="text-white">Sign in</RollingLink></li>
                        </ul>
@@ -146,20 +146,12 @@ export function Footer() {
 
                   {/* Column 4: Information */}
                   <div>
-                       <h4 className="font-bold text-lg text-white mb-4 font-rowdies">Information</h4>
-                       <ul className="space-y-2 font-medium text-white text-[14px] mb-4">
+                       <h4 className="font-bold text-base sm:text-lg text-white mb-2 sm:mb-4 font-rowdies">Information</h4>
+                       <ul className="space-y-1.5 sm:space-y-2 font-medium text-white text-[12px] sm:text-[13px] md:text-[14px] mb-4">
                           <li><RollingLink href="/faq" hoverColor="text-black" baseColor="text-white">FAQ</RollingLink></li>
                           <li><RollingLink href="/privacy" hoverColor="text-black" baseColor="text-white">Privacy Policy</RollingLink></li>
                           <li><RollingLink href="/terms" hoverColor="text-black" baseColor="text-white">Terms & Conditions</RollingLink></li>
                        </ul>
-                       <div className="flex flex-col gap-2">
-                          <Link href="https://apps.apple.com/pk/app/levelup-learn-play/id6773067123" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center rounded-lg transition-transform hover:scale-[1.02] active:scale-95">
-                            <Image src="/badges/appstore.png" alt="Download on the App Store" width={140} height={40} className="h-10 w-auto object-contain" />
-                          </Link>
-                          <Link href="https://play.google.com/store/apps/details?id=com.supersheldon.levelup&hl=en_IN" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center rounded-lg transition-transform hover:scale-[1.02] active:scale-95">
-                            <Image src="/badges/playstore.png" alt="Get it on Google Play" width={140} height={40} className="h-10 w-auto object-contain scale-[1.35]" />
-                          </Link>
-                       </div>
                   </div>
 
               </motion.div>
@@ -172,12 +164,12 @@ export function Footer() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="border-t border-white/25 pt-4 flex flex-col md:flex-row items-center justify-between gap-4"
+            className="border-t border-white/25 pt-2 sm:pt-4 flex flex-col md:flex-row items-center justify-between gap-2 sm:gap-4"
           >
                {/* Left side hidden as requested "do not put designed by" */}
                <div className="hidden md:block"></div> 
                
-               <p className="text-white text-[15px] font-bold">
+               <p className="text-white text-[11px] sm:text-[13px] md:text-[15px] font-bold">
                   © SuperSheldon LLP. All rights reserved.
                </p>
           </motion.div>

@@ -32,13 +32,13 @@ export function RollingLink({ href, children, className = "", target, rel, baseC
           transition={{ duration: 0.15, ease: "easeInOut" }}
         >
           {/* Ghost Element to set width */}
-          <span className="invisible block font-medium text-[17px] opacity-0" aria-hidden="true">
+          <span className="invisible block font-medium text-current opacity-0" aria-hidden="true">
             {children}
           </span>
 
           {/* Front Face (Default) */}
           <span
-            className={`absolute inset-0 flex items-center ${baseColor} font-medium text-[17px] bg-transparent whitespace-nowrap`}
+            className={`absolute inset-0 flex items-center ${baseColor} font-medium text-current bg-transparent whitespace-nowrap`}
             style={{ backfaceVisibility: 'hidden', transform: 'translateZ(14px)' }}
           >
             {children}
@@ -46,7 +46,7 @@ export function RollingLink({ href, children, className = "", target, rel, baseC
 
           {/* Top Face (Rolls in from top) */}
           <span
-            className={`absolute inset-0 flex items-center ${hoverColor} font-bold text-[17px] bg-transparent whitespace-nowrap`}
+            className={`absolute inset-0 flex items-center ${hoverColor} font-bold text-current bg-transparent whitespace-nowrap`}
             style={{ backfaceVisibility: 'hidden', transform: 'rotateX(90deg) translateZ(14px)' }}
           >
             {children}

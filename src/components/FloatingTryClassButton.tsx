@@ -20,6 +20,29 @@ import { motion, useReducedMotion } from "framer-motion";
 import { SPRING } from "@/lib/motion";
 
 const AVOID_SELECTOR = "[data-floating-cta-avoid]";
+const BOTTOM_THRESHOLD = 100; // Hide button when within 100px of page bottom
+
+function useNearBottomOfPage() {
+  const [isNearBottom, setIsNearBottom] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const distanceFromBottom = documentHeight - (scrollTop + windowHeight);
+      
+      setIsNearBottom(distanceFromBottom < BOTTOM_THRESHOLD);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return isNearBottom;
+}
 
 function useAnyAvoidTargetVisible() {
   const [anyVisible, setAnyVisible] = useState(false);
@@ -71,6 +94,7 @@ function useAnyAvoidTargetVisible() {
 export default function FloatingTryClassButton() {
   const reduce = useReducedMotion() ?? false;
   const hideForOtherCTA = useAnyAvoidTargetVisible();
+  const isNearBottom = useNearBottomOfPage();
   const [settled, setSettled] = useState(false);
 
   // Small delay so it doesn't flash in before the page has laid itself out
@@ -80,7 +104,7 @@ export default function FloatingTryClassButton() {
     return () => clearTimeout(t);
   }, []);
 
-  const show = settled && !hideForOtherCTA;
+  const show = settled && !hideForOtherCTA && !isNearBottom;
 
   return (
     <motion.div
