@@ -37,7 +37,7 @@ export function Footer() {
                   className="lg:w-[20%] lg:ml-8 flex flex-col items-start"
               >
                   <Link href="/" className="mb-1 block">
-                       <div className="relative w-80 h-28">
+                       <div className="relative w-44 h-16">
                            <Image
                               src="/logo-footer.png"
                               alt="SuperSheldon"
