@@ -19,6 +19,7 @@ type Academy = {
   key: string;
   letter: string;
   title: string;
+  subtitle: string;
   accent: string;
   subjects: string[];
 };
@@ -28,6 +29,7 @@ const ACADEMIES: Academy[] = [
     key: "tuition",
     letter: "T",
     title: "Tuition Academy",
+    subtitle: "School Readiness",
     accent: NAVY,
     subjects: ["Maths", "Science", "English", "Reasoning"],
   },
@@ -35,6 +37,7 @@ const ACADEMIES: Academy[] = [
     key: "exam",
     letter: "E",
     title: "Exam Academy",
+    subtitle: "Exam Readiness",
     accent: ORANGE,
     subjects: ["11+ Exam", "NAPLAN"],
   },
@@ -42,6 +45,7 @@ const ACADEMIES: Academy[] = [
     key: "skill",
     letter: "S",
     title: "Skill Academy",
+    subtitle: "Skill Development",
     accent: NAVY,
     subjects: ["Vedic Maths", "Chess", "Coding", "AI & Gen AI", "Public Speaking"],
   },
@@ -49,6 +53,7 @@ const ACADEMIES: Academy[] = [
     key: "language",
     letter: "L",
     title: "Language Academy",
+    subtitle: "Language Mastery",
     accent: ORANGE,
     subjects: ["Hindi", "Japanese", "German", "French", "Spanish", "Urdu", "Arabic"],
   },
@@ -89,6 +94,10 @@ function AcademyCard({
         </span>
         <h3 className="text-xl font-bold text-gray-900">{academy.title}</h3>
       </div>
+
+      <p className="relative text-xs font-semibold text-white bg-gray-300 inline-block px-3 py-1 rounded-full mb-3 w-fit">
+        {academy.subtitle}
+      </p>
 
       <p className="relative text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-2">
         Pick a subject to start
