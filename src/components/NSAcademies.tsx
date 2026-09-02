@@ -21,6 +21,8 @@ type Academy = {
   title: string;
   accent: string;
   subjects: string[];
+  placeholder: string;
+  prompt: string;
 };
 
 const ACADEMIES: Academy[] = [
@@ -30,6 +32,8 @@ const ACADEMIES: Academy[] = [
     title: "School Readiness",
     accent: NAVY,
     subjects: ["Maths", "Science", "English", "Reasoning"],
+    placeholder: "Select a subject",
+    prompt: "Pick a subject to start",
   },
   {
     key: "exam",
@@ -37,6 +41,8 @@ const ACADEMIES: Academy[] = [
     title: "Exam Readiness",
     accent: ORANGE,
     subjects: ["11+ Exam", "NAPLAN"],
+    placeholder: "Select an exam",
+    prompt: "Pick an exam to start",
   },
   {
     key: "skill",
@@ -44,6 +50,8 @@ const ACADEMIES: Academy[] = [
     title: "Skill Academy",
     accent: NAVY,
     subjects: ["Vedic Maths", "Chess", "Coding", "AI & Gen AI", "Public Speaking"],
+    placeholder: "Select a skill",
+    prompt: "Pick a skill to start",
   },
   {
     key: "language",
@@ -51,6 +59,8 @@ const ACADEMIES: Academy[] = [
     title: "Language Academy",
     accent: ORANGE,
     subjects: ["Hindi", "Japanese", "German", "French", "Spanish", "Urdu", "Arabic"],
+    placeholder: "Select a language",
+    prompt: "Pick a language to start",
   },
 ];
 
@@ -91,7 +101,7 @@ function AcademyCard({
       </div>
 
       <p className="relative text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-2">
-        Pick a subject to start
+        {academy.prompt}
       </p>
       <div className="relative mt-auto" data-floating-cta-avoid>
         <select
@@ -102,7 +112,7 @@ function AcademyCard({
           className="w-full appearance-none rounded-xl bg-gray-50 border border-gray-100 text-gray-700 text-sm font-semibold py-2.5 pl-3.5 pr-9 cursor-pointer hover:bg-[#FFCC00]/20 hover:border-[#e6b800] focus:outline-none focus:ring-2 focus:ring-[#FFCC00] transition-colors duration-200"
         >
           <option value="" disabled>
-            Select a subject
+            {academy.placeholder}
           </option>
           {academy.subjects.map((s) => (
             <option key={s} value={s}>

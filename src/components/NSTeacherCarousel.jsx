@@ -334,12 +334,9 @@ export default function NSTeacherCarousel({ data = TEACHERS }) {
     <section className="relative w-full overflow-hidden bg-gradient-to-b from-white to-blue-50/40 py-6 md:py-10">
       {/* Heading */}
       <div className="mx-auto mb-10 max-w-3xl px-4 text-center md:mb-14">
-        <span className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-600">
-          <Sparkles className="h-3.5 w-3.5" />
-          Our Mentors
-        </span>
+        
         <h2 className="text-4xl font-extrabold tracking-tight text-[#03215F] md:text-5xl">
-          Meet Our <span className="text-[#FFCC00]">Teachers</span>
+          Meet Our <span className="text-[#FFCC00]">Super Tutors</span>
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-base text-gray-500">
           Expert mentors from around the world — tap any teacher to know them better.

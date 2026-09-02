@@ -23,6 +23,8 @@ type Academy = {
   accent: string;
   description: string;
   subjects: string[];
+  placeholder: string;
+  prompt: string;
 };
 
 const ACADEMIES: Academy[] = [
@@ -35,6 +37,8 @@ const ACADEMIES: Academy[] = [
     description:
       "Everyday subject support that keeps pace with — or gets ahead of — your child's school curriculum. Built for steady, confident progress across the core subjects.",
     subjects: ["Maths", "Science", "English", "Reasoning"],
+    placeholder: "Select a subject",
+    prompt: "Pick a subject to start",
   },
   {
     key: "exam",
@@ -45,6 +49,8 @@ const ACADEMIES: Academy[] = [
     description:
       "Focused, timeline-driven preparation for major entrance and standardised exams — built around past papers, timed practice and diagnostic tracking.",
     subjects: ["11+ Exam", "NAPLAN"],
+    placeholder: "Select an exam",
+    prompt: "Pick an exam to start",
   },
   {
     key: "skill",
@@ -55,6 +61,8 @@ const ACADEMIES: Academy[] = [
     description:
       "The things school doesn't always have room for — sharp thinking, real coding ability, and the confidence to speak and write clearly.",
     subjects: ["Vedic Maths", "Chess", "Coding", "AI (Coding, Gen AI, Agent Building)", "Public Speaking + Creative Writing"],
+    placeholder: "Select a skill",
+    prompt: "Pick a skill to start",
   },
   {
     key: "language",
@@ -65,6 +73,8 @@ const ACADEMIES: Academy[] = [
     description:
       "A second (or third) language taught live, by a tutor your child gets to know — not an app that forgets who they are.",
     subjects: ["Hindi", "Japanese", "German", "French", "Spanish", "Urdu", "Arabic"],
+    placeholder: "Select a language",
+    prompt: "Pick a language to start",
   },
 ];
 
@@ -114,7 +124,7 @@ function AcademyDetail({
         </div>
 
         <div className="rounded-2xl bg-gray-50/80 border border-gray-100 p-5 sm:p-6">
-          <h4 className="text-sm font-bold text-gray-900 mb-3">Pick a subject to start</h4>
+          <h4 className="text-sm font-bold text-gray-900 mb-3">{academy.prompt}</h4>
           <div className="relative" data-floating-cta-avoid>
             <select
               value=""
@@ -124,7 +134,7 @@ function AcademyDetail({
               className="w-full appearance-none rounded-xl bg-white border border-gray-200 text-gray-700 text-sm font-semibold py-3 pl-4 pr-9 cursor-pointer hover:border-[#e6b800] focus:outline-none focus:ring-2 focus:ring-[#FFCC00] transition-colors duration-200"
             >
               <option value="" disabled>
-                Choose a subject
+                {academy.placeholder}
               </option>
               {academy.subjects.map((s) => (
                 <option key={s} value={s}>
@@ -156,10 +166,6 @@ export default function AcademiesContent() {
       <section className="relative pt-32 pb-14 md:pt-40 md:pb-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div {...riseOnce(reduce)}>
-            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#FC8741] mb-4">
-              <span className="w-5 h-0.5 bg-[#FC8741] rounded-full" />
-              Academies
-            </span>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[#03215F] tracking-tight leading-tight">
               Four academies, one <Highlight reduce={reduce}>tutor</Highlight> your child trusts
             </h1>

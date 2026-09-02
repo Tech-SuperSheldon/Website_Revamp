@@ -16,6 +16,7 @@
 // which in practice is a mobile-only situation.
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { SPRING } from "@/lib/motion";
 
@@ -119,6 +120,14 @@ export default function FloatingTryClassButton() {
         tabIndex={show ? 0 : -1}
         className="pointer-events-auto inline-flex items-center gap-2 bg-[#FFCC00] hover:bg-[#e6b800] text-black font-bold text-sm px-6 py-3.5 rounded-full shadow-lg shadow-yellow-500/30 transition-colors duration-200"
       >
+        <Image
+          src="/ss-logo-mascot.png"
+          alt=""
+          aria-hidden="true"
+          width={37}
+          height={32}
+          className="h-8 w-8 shrink-0 object-contain"
+        />
         Try a Free Class
       </Link>
     </motion.div>

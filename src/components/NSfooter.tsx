@@ -46,9 +46,7 @@ export function Footer() {
                            />
                        </div>
                   </Link>
-                  <p className="text-white font-medium text-[12px] sm:text-[13px] md:text-[15px] leading-relaxed mb-4">
-                      SuperSheldon is a trusted online learning platform offering expert-led exam preparation for Australian students.
-                  </p>
+                  
 
                   <div className="flex flex-wrap gap-3">
                       {/* Instagram */}
@@ -135,14 +133,14 @@ export function Footer() {
                        </ul>
                   </div>
 
-                  {/* Column 3: Account */}
+                  {/* Column 3: Account
                   <div>
                        <h4 className="font-bold text-base sm:text-lg text-white mb-2 sm:mb-4 font-rowdies">Account</h4>
                        <ul className="space-y-1.5 sm:space-y-2 font-medium text-white text-[12px] sm:text-[13px] md:text-[14px]">
                           <li><RollingLink href="https://supersheldon.wise.live/" target="_blank" rel="noopener noreferrer" hoverColor="text-black" baseColor="text-white">Sign up</RollingLink></li>
                           <li><RollingLink href="https://supersheldon.wise.live/" target="_blank" rel="noopener noreferrer" hoverColor="text-black" baseColor="text-white">Sign in</RollingLink></li>
                        </ul>
-                  </div>
+                  </div> */}
 
                   {/* Column 4: Information */}
                   <div>

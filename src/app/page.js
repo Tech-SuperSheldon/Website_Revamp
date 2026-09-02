@@ -29,6 +29,7 @@ const NSLevelUp            = dynamic(() => import('@/components/NSApp'));
 const NSWhySheldon         = dynamic(() => import('@/components/NSWhySheldon'));
 const NSParentsSaying      = dynamic(() => import('@/components/NSParentsSaying'));
 const NSAcademies          = dynamic(() => import('@/components/NSAcademies'));
+
 // Short landing-page FAQ. The long categorised one (NSFAQ) is still used by /new-home.
 const FAQ                  = dynamic(() => import('@/components/NSHomeFAQ'));
 const Footer               = dynamic(() => import('@/components/NSfooter').then(m => ({ default: m.Footer })));
@@ -79,6 +80,7 @@ export default function Home() {
       <NSParentsSaying />
       <NSAcademies />
       <NSWhySheldon />
+   
 
       <DeferredSection>
         <TeacherCarousel />
