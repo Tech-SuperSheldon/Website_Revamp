@@ -138,7 +138,7 @@ function AcademyDetail({
             />
           </div>
           <p className="mt-3 text-xs text-gray-400">
-            We'll ask for your child's grade next to tailor the free trial.
+            We&apos;ll ask for your child&apos;s grade next to tailor the free trial.
           </p>
         </div>
       </div>
@@ -165,7 +165,7 @@ export default function AcademiesContent() {
             </h1>
             <p className="mt-5 text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
               Every academy starts with the same 1:1 match — pick a subject below to see how
-              we'd tailor a free trial for your child.
+              we&apos;d tailor a free trial for your child.
             </p>
           </motion.div>
         </div>
