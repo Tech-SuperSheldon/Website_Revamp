@@ -26,7 +26,7 @@ export function Footer() {
         <div className="container mx-auto px-4 md:px-6">
 
           {/* Main Content: Brand | Contact | Links */}
-          <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-6 mb-4 sm:mb-6 text-white">
+          <div className="flex flex-col lg:flex-row justify-between gap-4 sm:gap-6 lg:gap-6 mb-4 sm:mb-6 lg:mb-6 text-white">
 
               {/* Brand Section */}
               <motion.div
@@ -103,13 +103,13 @@ export function Footer() {
                   </div>
               </motion.div>
 
-              {/* Links Section */}
+              {/* Links Section (Fixed Layout) */}
               <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="lg:w-auto lg:mr-8 grid grid-cols-2 gap-x-4 sm:gap-x-6 md:gap-x-8 gap-y-4 sm:gap-y-6"
+                  className="lg:w-auto lg:mr-8 grid grid-cols-2 md:grid-cols-4 gap-x-4 sm:gap-x-6 md:gap-x-8 gap-y-4 sm:gap-y-6"
               >
 
                   {/* Column 1: Sitemap */}
@@ -166,7 +166,6 @@ export function Footer() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="border-t border-white/25 pt-2 sm:pt-4 flex flex-col md:flex-row items-center justify-between gap-2 sm:gap-4"
           >
-               {/* Left side hidden as requested "do not put designed by" */}
                <div className="hidden md:block"></div> 
                
                <p className="text-white text-[11px] sm:text-[13px] md:text-[15px] font-bold">
