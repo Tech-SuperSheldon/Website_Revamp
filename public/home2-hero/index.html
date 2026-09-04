@@ -65,8 +65,8 @@
            2. Compact caption — the bundle's portrait sizes (12/18px padding,
               22px name) are tuned for a full-screen viewport and waste ~30px
               of height inside an embedded hero.
-           3. Compact Features list — the tallest overlay (title + 5 bullets),
-              which otherwise reaches up into the avatar: ~205px down to ~150px.
+           (A third block once compacted the .box-services Features card; that
+              card is now replaced by the icon callouts further down.)
          Selectors are repeated (.box-description.box-description…) purely to
          out-specify the bundle's scoped `[data-v-*]` rules without !important;
          the hash is regenerated on every rebuild of the Vue app, so we must
@@ -80,8 +80,7 @@
               + Nova: 48px icons sitting 12px in from the right edge, see
               src/components/ArrowAndWhatsapp.jsx) — text now ends ~68px from
               the right edge, the rail starts at 60px. */
-        .box-description.box-description.box-description,
-        .box-services.box-services.box-services {
+        .box-description.box-description.box-description {
           --ss-box-inset: calc(var(--space-outer) + 40px);
           left: var(--ss-box-inset);
           width: calc(100% - var(--ss-box-inset) * 2);
@@ -103,28 +102,6 @@
           line-height: 1.35;
         }
 
-        /* 3. Features list. */
-        .box-services.box-services .box-services-content {
-          padding: 8px 12px;
-          gap: 6px;
-        }
-        .box-services.box-services .box-services-title {
-          font-size: 16px;
-        }
-        .box-services.box-services .box-services-list {
-          gap: 5px;
-        }
-        .box-services.box-services .box-services-list-item {
-          padding-left: 14px;
-        }
-        /* Re-centre the bullet against the shorter line box. */
-        .box-services.box-services .box-services-list-item::before {
-          top: 6px;
-        }
-        .box-services.box-services .box-services-list-item-name {
-          font-size: 13px;
-          line-height: 1.35;
-        }
       }
     </style>
   </head>
@@ -399,6 +376,373 @@
             inject();
           });
           observer.observe(document.body, { childList: true, subtree: true });
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", start);
+        } else {
+          start();
+        }
+      })();
+    </script>
+
+    <!-- SuperSheldon "Features" redesign. The bundle's BoxServices.vue renders a
+         hologram card with a bulleted list (.box-services) once the scan
+         completes. We hide that card and, inside the same .about-services
+         wrapper, mount five icon callouts arranged around the avatar with
+         dotted leader lines pointing at the body (top: Live Interactive
+         Classes; head level: Personalized Learning Paths / Expert Teachers;
+         hand level: AI-Powered Practice / Progress Tracking).
+         Why inside .about-services: GSAP scrubs that wrapper's opacity with
+         scroll (animations/transitions/about.ts → setupSectionsAnimation), so
+         the new layout inherits the exact fade-in/out timing of the card it
+         replaces. A MutationObserver on the wrapper's inline style toggles
+         .ss-in, which staggers the callouts + lines in.
+         Positions are viewport percentages tuned against the camera's
+         portrait "about" waypoint, whose focus.y was raised 0.8 → 2 in
+         chunks/index-eeBi9twy.js (search `focus:{x:0,y:2,z:6}`) so the avatar
+         sits lower on phones and leaves room for the top callout. Landscape
+         keeps the SuperSheldon/description cards on the left, so the five
+         callouts fan down the avatar's right side instead of surrounding it;
+         short landscape viewports (phones held sideways, < 480px tall) get a
+         compact icon-beside-label column on the right instead (.ss-row).
+         Keep in sync with the other */home2-hero/index.html copy. -->
+    <style>
+      .about-services .box-services { display: none !important; }
+
+      #ss-features {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: calc(var(--lvh) * 100);
+        pointer-events: none;
+        font-family: Urbanist, sans-serif;
+        --ss-icon: 52px;
+        --ss-label: 12.5px;
+        --ss-label-w: 118px;
+        --ss-cyan: rgb(52, 191, 255);
+        --ss-glow: rgba(52, 191, 255, 0.55);
+      }
+      @media (orientation: landscape) {
+        #ss-features {
+          top: calc(var(--lvh) * -50);
+          --ss-icon: 60px;
+          --ss-label: 14px;
+          --ss-label-w: 132px;
+        }
+      }
+      @media (orientation: landscape) and (min-height: 480px) and (min-width: 1280px) {
+        #ss-features { --ss-icon: 66px; --ss-label: 15px; --ss-label-w: 140px; }
+      }
+
+      .ss-callout {
+        --ss-tx: -50%;
+        position: absolute;
+        transform: translate(var(--ss-tx), 10px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        width: var(--ss-label-w);
+        opacity: 0;
+        transition: opacity 0.35s ease, transform 0.35s ease;
+        transition-delay: calc(var(--i) * 90ms);
+      }
+      .ss-in .ss-callout { opacity: 1; transform: translate(var(--ss-tx), 0); }
+      /* Short landscape: icon on the left, label to its right, in one column. */
+      @media (orientation: landscape) and (max-height: 479px) {
+        #ss-features { --ss-icon: 38px; --ss-label: 11.5px; --ss-label-w: 150px; }
+        .ss-callout { --ss-tx: 0; flex-direction: row; gap: 10px; width: auto; max-width: var(--ss-label-w); }
+        .ss-callout .ss-icon { flex-shrink: 0; }
+        .ss-callout .ss-label { text-align: left; }
+        .ss-icon::before { inset: -5px; }
+      }
+
+      .ss-icon {
+        position: relative;
+        width: var(--ss-icon);
+        height: var(--ss-icon);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #eaf7ff;
+        background:
+          radial-gradient(circle at 50% 40%, rgba(52, 191, 255, 0.28) 0%, rgba(0, 53, 133, 0.55) 70%, rgba(0, 53, 133, 0.65) 100%);
+        border: 1.5px solid rgba(120, 214, 255, 0.85);
+        box-shadow:
+          0 0 0 4px rgba(52, 191, 255, 0.12),
+          0 0 18px var(--ss-glow),
+          inset 0 0 12px rgba(52, 191, 255, 0.35);
+      }
+      /* outer thin ring with a gap, like a HUD reticle */
+      .ss-icon::before {
+        content: "";
+        position: absolute;
+        inset: -7px;
+        border-radius: 50%;
+        border: 1px solid rgba(120, 214, 255, 0.55);
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+      }
+      .ss-icon svg {
+        width: 52%;
+        height: 52%;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        filter: drop-shadow(0 0 4px rgba(120, 214, 255, 0.9));
+      }
+      .ss-label {
+        margin: 0;
+        font-size: var(--ss-label);
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: 0.01em;
+        text-align: center;
+        color: #f2faff;
+        text-shadow: 0 0 10px rgba(52, 191, 255, 0.55), 0 1px 2px rgba(0, 20, 60, 0.6);
+      }
+
+      /* dotted leader: a 4px strip of round dots, rotated from its left end */
+      .ss-line {
+        position: absolute;
+        height: 4px;
+        transform-origin: 0 50%;
+        background-image: radial-gradient(circle, rgba(150, 226, 255, 0.95) 1.35px, transparent 1.9px);
+        background-size: 7px 4px;
+        background-repeat: repeat-x;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        transition-delay: calc(var(--i) * 90ms + 120ms);
+      }
+      .ss-in .ss-line { opacity: 1; }
+      .ss-dot {
+        position: absolute;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--ss-cyan);
+        box-shadow: 0 0 8px var(--ss-glow), 0 0 2px #fff;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        transition-delay: calc(var(--i) * 90ms + 180ms);
+      }
+      .ss-in .ss-dot { opacity: 1; }
+    </style>
+    <script>
+      (function () {
+        var ID = "ss-features";
+        // x/y: callout centre (icon centre) as % of the hero; tx/ty: where the
+        // leader line ends on the avatar. Portrait avatar after the camera
+        // tweak: head 25–40%, shoulders ~42%, hands ~53%, feet ~68%.
+        // Landscape avatar: head 17–36%, shoulders ~40%, hands ~58%, feet ~78%.
+        // p = portrait, l = landscape, s = short landscape (< 480px tall).
+        // Leaders start at the icon circle's edge, except a = "box" (the top
+        // callout), whose leader hangs from the bottom of its label instead.
+        var ITEMS = [
+          {
+            label: "Live Interactive Classes",
+            a: "box",
+            p: { x: 50, y: 6.5, tx: 50, ty: 24 },
+            l: { x: 62, y: 9, tx: 54, ty: 20 },
+            s: { x: 72, y: 12, tx: 55, ty: 20 },
+            icon:
+              '<rect x="3" y="5.5" width="13" height="10" rx="2"/>' +
+              '<path d="M16 9.5l4.5-2.5v9L16 13.5"/>' +
+              '<path d="M8.5 8.8v3.6l3.2-1.8z"/>' +
+              '<path d="M7 19h5M9.5 15.5V19"/>',
+          },
+          {
+            label: "Personalized Learning Paths",
+            p: { x: 17, y: 33, tx: 41.5, ty: 37.5 },
+            l: { x: 75, y: 27, tx: 57, ty: 31 },
+            s: { x: 72, y: 31, tx: 57, ty: 34 },
+            icon:
+              '<path d="M16.5 3a3.2 3.2 0 0 1 3.2 3.2c0 2.4-3.2 5.6-3.2 5.6s-3.2-3.2-3.2-5.6A3.2 3.2 0 0 1 16.5 3z"/>' +
+              '<circle cx="16.5" cy="6.2" r="1"/>' +
+              '<path d="M16.5 13.5v1.5a3 3 0 0 1-3 3H9a3 3 0 0 0-3 3"/>' +
+              '<circle cx="5.5" cy="21" r="1.2"/>',
+          },
+          {
+            label: "Expert Teachers",
+            p: { x: 83, y: 33, tx: 58.5, ty: 37.5 },
+            l: { x: 81, y: 47, tx: 58, ty: 43 },
+            s: { x: 72, y: 50, tx: 57, ty: 50 },
+            icon:
+              '<path d="M22 9.5L12 5 2 9.5l10 4.5 10-4.5z"/>' +
+              '<path d="M6.5 12v4.2c0 1.6 2.5 2.8 5.5 2.8s5.5-1.2 5.5-2.8V12"/>' +
+              '<path d="M22 9.5V15"/>',
+          },
+          {
+            label: "AI-Powered Practice",
+            p: { x: 17, y: 58, tx: 37.5, ty: 54 },
+            l: { x: 78, y: 67, tx: 57, ty: 59 },
+            s: { x: 72, y: 69, tx: 55, ty: 64 },
+            icon:
+              '<path d="M11.5 4.5a3 3 0 0 0-5.6 1.4A3 3 0 0 0 4.6 12a3 3 0 0 0 1.3 5.6A3 3 0 0 0 11.5 19.5V4.5z"/>' +
+              '<path d="M11.5 8.5h3.5l1.5-1.5M11.5 12h6M11.5 15.5h3.5l1.5 1.5"/>' +
+              '<circle cx="18" cy="6.5" r="1.1"/><circle cx="19" cy="12" r="1.1"/><circle cx="18" cy="17.5" r="1.1"/>',
+          },
+          {
+            label: "Progress Tracking",
+            p: { x: 83, y: 58, tx: 62.5, ty: 54 },
+            l: { x: 69, y: 84, tx: 55, ty: 77 },
+            s: { x: 72, y: 88, tx: 54, ty: 78 },
+            icon:
+              '<path d="M5 19v-4M9.5 19v-8M14 19V7M18.5 19V4" style="stroke-width:2.6"/>',
+          },
+        ];
+
+        var root = null;
+        var lines = [];
+
+        function build() {
+          root = document.createElement("div");
+          root.id = ID;
+          root.setAttribute("aria-hidden", "true");
+          ITEMS.forEach(function (item, i) {
+            var c = document.createElement("div");
+            c.className = "ss-callout";
+            c.style.setProperty("--i", i);
+            c.innerHTML =
+              '<div class="ss-icon"><svg viewBox="0 0 24 24" aria-hidden="true">' +
+              item.icon +
+              '</svg></div><p class="ss-label">' +
+              item.label +
+              "</p>";
+            var line = document.createElement("div");
+            line.className = "ss-line";
+            line.style.setProperty("--i", i);
+            var dotA = document.createElement("div");
+            dotA.className = "ss-dot";
+            dotA.style.setProperty("--i", i);
+            var dotB = dotA.cloneNode();
+            root.appendChild(line);
+            root.appendChild(dotA);
+            root.appendChild(dotB);
+            root.appendChild(c);
+            lines.push({ item: item, el: c, line: line, dotA: dotA, dotB: dotB });
+          });
+          return root;
+        }
+
+        function mode() {
+          if (!window.matchMedia("(orientation: landscape)").matches) return "p";
+          return window.matchMedia("(max-height: 479px)").matches ? "s" : "l";
+        }
+
+        // Point where a ray from the box centre toward (tx,ty) leaves the box.
+        function edgePoint(rect, tx, ty) {
+          var cx = rect.left + rect.width / 2;
+          var cy = rect.top + rect.height / 2;
+          var dx = tx - cx;
+          var dy = ty - cy;
+          if (!dx && !dy) return { x: cx, y: cy };
+          var sx = dx ? rect.width / 2 / Math.abs(dx) : Infinity;
+          var sy = dy ? rect.height / 2 / Math.abs(dy) : Infinity;
+          var s = Math.min(sx, sy);
+          return { x: cx + dx * s, y: cy + dy * s };
+        }
+
+        function layout() {
+          if (!root || !root.isConnected) return;
+          var W = root.clientWidth;
+          var H = root.clientHeight;
+          if (!W || !H) return;
+          var rootRect = root.getBoundingClientRect();
+          var m = mode();
+          root.classList.toggle("ss-row", m === "s");
+          lines.forEach(function (o) {
+            var p = o.item[m];
+            var x = (p.x / 100) * W;
+            var y = (p.y / 100) * H;
+            var tx = (p.tx / 100) * W;
+            var ty = (p.ty / 100) * H;
+            // Place the callout so its icon centre sits at (x,y). In row mode
+            // the callout is not centred by transform, so offset by the icon.
+            var icon = o.el.firstElementChild;
+            var iconH = icon.offsetHeight || 0;
+            var iconW = icon.offsetWidth || 0;
+            o.el.style.left = (m === "s" ? x - iconW / 2 : x) + "px";
+            o.el.style.top = y - iconH / 2 + "px";
+            // Leader from the icon circle's edge (or the whole callout box for
+            // a = "box"), plus a small gap, to the target.
+            var start;
+            if (o.item.a === "box") {
+              var r = o.el.getBoundingClientRect();
+              start = edgePoint(
+                { left: r.left - rootRect.left, top: r.top - rootRect.top, width: r.width, height: r.height },
+                tx,
+                ty
+              );
+            } else {
+              var ddx = tx - x;
+              var ddy = ty - y;
+              var dd = Math.sqrt(ddx * ddx + ddy * ddy) || 1;
+              // +7 clears the outer reticle ring drawn by .ss-icon::before
+              var rad = iconW / 2 + 7;
+              start = { x: x + (ddx / dd) * rad, y: y + (ddy / dd) * rad };
+            }
+            var dx = tx - start.x;
+            var dy = ty - start.y;
+            var len = Math.sqrt(dx * dx + dy * dy) || 1;
+            var gap = 6;
+            var ux = dx / len;
+            var uy = dy / len;
+            var sx = start.x + ux * gap;
+            var sy = start.y + uy * gap;
+            var l = Math.max(0, len - gap - 5);
+            o.line.style.left = sx + "px";
+            o.line.style.top = sy - 2 + "px";
+            o.line.style.width = l + "px";
+            o.line.style.transform = "rotate(" + (Math.atan2(dy, dx) * 180) / Math.PI + "deg)";
+            o.dotA.style.left = sx + "px";
+            o.dotA.style.top = sy + "px";
+            o.dotB.style.left = tx + "px";
+            o.dotB.style.top = ty + "px";
+          });
+        }
+
+        function watchOpacity(wrapper) {
+          var apply = function () {
+            var o = parseFloat(wrapper.style.opacity);
+            if (isNaN(o)) o = 1;
+            root.classList.toggle("ss-in", o > 0.02);
+          };
+          apply();
+          new MutationObserver(apply).observe(wrapper, { attributes: true, attributeFilter: ["style"] });
+        }
+
+        function mount() {
+          if (root && root.isConnected) return true;
+          var wrapper = document.querySelector(".about-services");
+          if (!wrapper) return false;
+          wrapper.appendChild(root || build());
+          watchOpacity(wrapper);
+          layout();
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+          return true;
+        }
+
+        function start() {
+          if (!mount()) {
+            var mo = new MutationObserver(function () {
+              if (mount()) mo.disconnect();
+            });
+            mo.observe(document.body, { childList: true, subtree: true });
+          }
+          var raf = 0;
+          var onResize = function () {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(layout);
+          };
+          window.addEventListener("resize", onResize);
+          window.addEventListener("orientationchange", onResize);
         }
 
         if (document.readyState === "loading") {
