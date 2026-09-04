@@ -10,7 +10,7 @@ const NSProcess = dynamic(() => import("@/components/NSProcess"));
 export const metadata = {
   title: "Academies | SuperSheldon",
   description:
-    "Explore SuperSheldon's four academies — Tuition, Exam, Skill and Language — each built around a 1:1 tutor match.",
+    "Explore SuperSheldon's three academies — Tuition, Exam and Skill — each built around a 1:1 tutor match.",
 };
 
 export default function AcademiesPage() {

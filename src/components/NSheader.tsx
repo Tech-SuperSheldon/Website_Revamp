@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 import { RollingLink } from "./RollingLink";
 
@@ -15,6 +15,14 @@ const navLinks = [
   { name: "Testimonial", href: "/new-testimonial" },
   { name: "Blogs", href: "/new-blogs" },
   { name: "Become a Teacher", href: "/become-a-teacher" },
+];
+
+// Hover menu under "Academies". Each entry deep-links to the matching
+// AcademyDetail section on /academies (ids = tuition / exam / skill).
+const academyMenu = [
+  { name: "Tuition Academy", subtitle: "School Readiness", letter: "T", accent: "#0b2545", href: "/academies#tuition" },
+  { name: "Exam Academy", subtitle: "Exam Readiness", letter: "E", accent: "#FC8741", href: "/academies#exam" },
+  { name: "Skill Academy", subtitle: "Skill Development", letter: "S", accent: "#0b2545", href: "/academies#skill" },
 ];
 
 export function Header({ stacked = false }: { stacked?: boolean }) {
@@ -77,11 +85,50 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-5 lg:gap-6">
-            {navLinks.map((link) => (
-              <RollingLink key={link.name} href={link.href}>
-                {link.name}
-              </RollingLink>
-            ))}
+            {navLinks.map((link) =>
+              link.name === "Academies" ? (
+                <div key={link.name} className="relative group">
+                  <RollingLink href={link.href}>
+                    <span className="inline-flex items-center gap-1">
+                      {link.name}
+                      <ChevronDown
+                        size={14}
+                        className="transition-transform duration-200 group-hover:rotate-180"
+                      />
+                    </span>
+                  </RollingLink>
+
+                  {/* Hover panel. The pt-3 spacer keeps the pointer inside the
+                      group while it travels from the link down to the menu. */}
+                  <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 invisible opacity-0 translate-y-1 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0">
+                    <div className="w-64 rounded-2xl bg-white border border-gray-100 shadow-xl p-2">
+                      {academyMenu.map((item) => (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-[#FFCC00]/15 transition-colors"
+                        >
+                          <span
+                            className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold shrink-0"
+                            style={{ background: item.accent }}
+                          >
+                            {item.letter}
+                          </span>
+                          <span className="flex flex-col leading-tight">
+                            <span className="text-sm font-semibold text-gray-900">{item.name}</span>
+                            <span className="text-[11px] text-gray-500">{item.subtitle}</span>
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <RollingLink key={link.name} href={link.href}>
+                  {link.name}
+                </RollingLink>
+              )
+            )}
           </nav>
 
           {/* Desktop Actions */}
@@ -117,14 +164,29 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
             className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl pt-24 px-6 md:hidden flex flex-col gap-6 items-center"
           >
             {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                href={link.href}
-                className="text-xl font-medium text-gray-800 hover:text-purple-600 transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
+              <React.Fragment key={link.name}>
+                <Link 
+                  href={link.href}
+                  className="text-xl font-medium text-gray-800 hover:text-purple-600 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+                {link.name === "Academies" && (
+                  <div className="-mt-3 flex flex-col items-center gap-2">
+                    {academyMenu.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className="text-base font-medium text-gray-500 hover:text-orange-500 transition-colors"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </React.Fragment>
             ))}
             <div className="h-px w-full bg-gray-100 my-2" />
             <Link 

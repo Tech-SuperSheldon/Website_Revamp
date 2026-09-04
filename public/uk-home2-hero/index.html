@@ -399,9 +399,14 @@
          replaces. A MutationObserver on the wrapper's inline style toggles
          .ss-in, which staggers the callouts + lines in.
          Positions are viewport percentages tuned against the camera's
-         portrait "about" waypoint, whose focus.y was raised 0.8 → 2 in
+         portrait "about-2" waypoint, whose focus.y was raised 0.8 → 2 in
          chunks/index-eeBi9twy.js (search `focus:{x:0,y:2,z:6}`) so the avatar
-         sits lower on phones and leaves room for the top callout. Landscape
+         sits lower on phones and leaves room for the top callout. "about-1"
+         keeps the original 0.8 so the scan caption at the bottom does not
+         cover the platform; the same chunk's scenes timeline was retimed to
+         glide about-1 → about-2 over 40–65% of the scan (was the whole scan),
+         and the portrait sections timeline shows the callouts from 0.7 (was
+         0.6) so they appear only once the camera has settled. Landscape
          keeps the SuperSheldon/description cards on the left, so the five
          callouts fan down the avatar's right side instead of surrounding it;
          short landscape viewports (phones held sideways, < 480px tall) get a

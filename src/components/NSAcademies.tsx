@@ -1,6 +1,6 @@
 "use client";
 
-// "Four academies, one tutor your child trusts" — the four programme tracks.
+// "Three academies, one tutor your child trusts" — the three programme tracks.
 // Picking a subject from a card's dropdown opens the same booking wizard used
 // on /uk/learn-maths (grade → phone → date & time → timezone) as a modal,
 // scoped to that subject — there's no separate "Book a free trial" button.
@@ -52,15 +52,6 @@ const ACADEMIES: Academy[] = [
     subjects: ["Vedic Maths", "Chess", "Coding", "AI & Gen AI", "Public Speaking"],
     placeholder: "Select a skill",
     prompt: "Pick a skill to start",
-  },
-  {
-    key: "language",
-    letter: "L",
-    title: "Language Academy",
-    accent: ORANGE,
-    subjects: ["Hindi", "Japanese", "German", "French", "Spanish", "Urdu", "Arabic"],
-    placeholder: "Select a language",
-    prompt: "Pick a language to start",
   },
 ];
 
@@ -138,7 +129,7 @@ export default function NSAcademies() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...riseOnce(reduce)} className="text-center mb-10 md:mb-14">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#03215F] tracking-tight leading-tight">
-            Four academies, one <Highlight reduce={reduce}>tutor</Highlight> your child trusts
+            Three academies, one <Highlight reduce={reduce}>tutor</Highlight> your child trusts
           </h2>
           <p className="mt-3 text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
             Every path starts with the same 1:1 match, tailored to what your child needs next.
@@ -150,7 +141,7 @@ export default function NSAcademies() {
           initial="hidden"
           whileInView="show"
           viewport={VIEWPORT}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 items-stretch"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 items-stretch"
         >
           {ACADEMIES.map((a) => (
             <AcademyCard key={a.key} academy={a} reduce={reduce} onSelectSubject={setActiveSubject} />

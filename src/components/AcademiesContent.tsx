@@ -1,6 +1,6 @@
 "use client";
 
-// /academies — full detail page for the four academy tracks teased on the
+// /academies — full detail page for the three academy tracks teased on the
 // homepage (see NSAcademies). Same data/colors/interaction pattern (pick a
 // subject → BookTrialModal opens the LearnForm wizard), just with a full
 // description and the complete subject list per academy instead of a
@@ -9,7 +9,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
-import { rise, riseOnce, stagger, VIEWPORT } from "@/lib/motion";
+import { DUR, EASE, rise, stagger } from "@/lib/motion";
 import Highlight from "@/components/motion/Highlight";
 import BookTrialModal from "@/components/BookTrialModal";
 
@@ -65,18 +65,6 @@ const ACADEMIES: Academy[] = [
     placeholder: "Select a skill",
     prompt: "Pick a skill to start",
   },
-  {
-    key: "language",
-    letter: "L",
-    title: "Language Academy",
-    subtitle: "Language Mastery",
-    accent: ORANGE,
-    description:
-      "A second (or third) language taught live, by a tutor your child gets to know — not an app that forgets who they are.",
-    subjects: ["Hindi", "Japanese", "German", "French", "Spanish", "Urdu", "Arabic"],
-    placeholder: "Select a language",
-    prompt: "Pick a language to start",
-  },
 ];
 
 function AcademyDetail({
@@ -92,7 +80,7 @@ function AcademyDetail({
     <motion.div
       id={academy.key}
       variants={rise(reduce, 28)}
-      className="scroll-mt-24 rounded-2xl md:rounded-[2rem] bg-white border border-gray-100 shadow-sm p-5 sm:p-6 md:p-8"
+      className="scroll-mt-28 rounded-2xl md:rounded-[2rem] bg-white border border-gray-100 shadow-sm p-5 sm:p-6 md:p-8"
     >
       <div className="flex items-center gap-3 mb-4">
         <span
@@ -166,7 +154,11 @@ export default function AcademiesContent() {
       {/* Hero Section with Compact Spacing */}
       <section className="relative pt-20 pb-6 md:pt-24 md:pb-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div {...riseOnce(reduce)}>
+          <motion.div
+            initial={{ opacity: 0, y: reduce ? 0 : 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: DUR.slow, ease: EASE }}
+          >
             
             {/* Banner Container */}
             <div className="relative w-full h-[220px] sm:h-[280px] md:h-[320px] overflow-hidden rounded-2xl md:rounded-[2rem] shadow-lg border border-gray-100 mb-6 sm:mb-8">
@@ -195,7 +187,7 @@ export default function AcademiesContent() {
 
             {/* Sub-heading */}
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#03215F] tracking-tight leading-tight">
-              Four academies, all start with <Highlight reduce={reduce}>1:1 Tutor</Highlight>
+              Three academies, all start with <Highlight reduce={reduce}>1:1 Tutor</Highlight>
             </h2>
             <p className="mt-2 sm:mt-3 text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
               Select the course below and see how we&apos;d tailor a free trial for your child.
@@ -206,11 +198,13 @@ export default function AcademiesContent() {
 
       {/* Academy Details List */}
       <section className="relative pb-10 md:pb-16">
+        {/* Animates on mount, not on scroll: with a scroll trigger the cards
+            stayed invisible on short laptop/phone viewports until the user
+            scrolled, leaving a blank page under the heading. */}
         <motion.div
           variants={stagger(0.08)}
           initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
+          animate="show"
           className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-4 sm:gap-5 md:gap-6"
         >
           {ACADEMIES.map((a) => (
