@@ -5,12 +5,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 import { RollingLink } from "./RollingLink";
 
+import { academyMenu } from "@/lib/academies";
+
+// Hover menu under "Academies" — same data the /academies pages render, so a
+// rename can't drift between the nav and the page.
+const ACADEMY_MENU = academyMenu("au");
+
 const navLinks = [
   { name: "Home", href: "/au" },
+  { name: "Academies", href: "/au/academies" },
   { name: "Courses", href: "/au/new-courses" },
   { name: "Testimonial", href: "/au/new-testimonial" },
   { name: "Blogs", href: "/au/new-blogs" },
@@ -20,6 +27,7 @@ const navLinks = [
 export function Header({ stacked = false }: { stacked?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileAcademiesOpen, setIsMobileAcademiesOpen] = useState(false);
   const { scrollY } = useScroll();
 
   // The logo will start 2.2x larger, and scale up to 2.5x when scrolled
@@ -77,11 +85,50 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-5 lg:gap-6">
-            {navLinks.map((link) => (
-              <RollingLink key={link.name} href={link.href}>
-                {link.name}
-              </RollingLink>
-            ))}
+            {navLinks.map((link) =>
+              link.name === "Academies" ? (
+                <div key={link.name} className="relative group">
+                  <RollingLink href={link.href}>
+                    <span className="inline-flex items-center gap-1">
+                      {link.name}
+                      <ChevronDown
+                        size={14}
+                        className="transition-transform duration-200 group-hover:rotate-180"
+                      />
+                    </span>
+                  </RollingLink>
+
+                  {/* Hover panel. The pt-3 spacer keeps the pointer inside the
+                      group while it travels from the link down to the menu. */}
+                  <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 invisible opacity-0 translate-y-1 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0">
+                    <div className="w-64 rounded-2xl bg-white border border-gray-100 shadow-xl p-2">
+                      {ACADEMY_MENU.map((item) => (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-orange-500/15 transition-colors"
+                        >
+                          <span
+                            className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold shrink-0"
+                            style={{ background: item.accent }}
+                          >
+                            {item.letter}
+                          </span>
+                          <span className="flex flex-col leading-tight">
+                            <span className="text-sm font-semibold text-gray-900">{item.name}</span>
+                            <span className="text-[11px] text-gray-500">{item.subtitle}</span>
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <RollingLink key={link.name} href={link.href}>
+                  {link.name}
+                </RollingLink>
+              )
+            )}
           </nav>
 
           {/* Desktop Actions */}
@@ -89,7 +136,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
             <Link href="https://supersheldon.wise.live/login?loginRedirected=true" target="_blank" rel="noopener noreferrer" className="text-base font-medium text-gray-700 hover:text-gray-900 transition-colors">
               Login
             </Link>
-            <Link href="/au/demo" onClick={() => setIsMobileMenuOpen(false)}>
+            <Link href="/au/demo" data-floating-cta-avoid onClick={() => setIsMobileMenuOpen(false)}>
                 <Button variant="gradient" className="rounded-full px-6 py-5 text-base shadow-md transition-all hover:shadow-lg hover:shadow-orange-500/20 whitespace-nowrap">
                     Try a free Class
                 </Button>
@@ -99,7 +146,10 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
           {/* Mobile Menu Button */}
           <button 
             className="md:hidden text-gray-700 p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={() => {
+              setIsMobileMenuOpen((open) => !open);
+              setIsMobileAcademiesOpen(false);
+            }}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -116,16 +166,59 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl pt-24 px-6 md:hidden flex flex-col gap-6 items-center"
           >
-            {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                href={link.href}
-                className="text-xl font-medium text-gray-800 hover:text-purple-600 transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              link.name === "Academies" ? (
+                <div key={link.name} className="flex w-full max-w-[280px] flex-col items-center">
+                  <button
+                    type="button"
+                    aria-expanded={isMobileAcademiesOpen}
+                    aria-controls="mobile-academies-menu"
+                    onClick={() => setIsMobileAcademiesOpen((open) => !open)}
+                    className="flex items-center gap-1.5 text-xl font-medium text-gray-800 hover:text-orange-600 transition-colors"
+                  >
+                    {link.name}
+                    <ChevronDown
+                      size={20}
+                      className={`transition-transform duration-300 ${isMobileAcademiesOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isMobileAcademiesOpen && (
+                      <motion.div
+                        id="mobile-academies-menu"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="w-full overflow-hidden"
+                      >
+                        <div className="flex flex-col items-center gap-2 pt-3">
+                          {ACADEMY_MENU.map((item) => (
+                            <Link
+                              key={item.name}
+                              href={item.href}
+                              className="text-base font-medium text-gray-500 hover:text-orange-600 transition-colors"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="text-xl font-medium text-gray-800 hover:text-purple-600 transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              )
+            )}
             <div className="h-px w-full bg-gray-100 my-2" />
             <Link 
               href="https://supersheldon.wise.live/login?loginRedirected=true" 
@@ -136,7 +229,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
             >
               Login
             </Link>
-             <Link href="/au/demo" onClick={() => setIsMobileMenuOpen(false)} className="w-full max-w-[280px]">
+             <Link href="/au/demo" data-floating-cta-avoid onClick={() => setIsMobileMenuOpen(false)} className="w-full max-w-[280px]">
                 <Button className="w-full bg-gray-900 text-white rounded-full px-6 py-4 text-lg">
                     Try a free Class
                 </Button>

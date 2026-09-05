@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 import { RollingLink } from "./RollingLink";
+import { academyMenu } from "@/lib/academies";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -17,17 +18,15 @@ const navLinks = [
   { name: "Become a Teacher", href: "/become-a-teacher" },
 ];
 
-// Hover menu under "Academies". Each entry deep-links to the matching
-// AcademyDetail section on /academies (ids = tuition / exam / skill).
-const academyMenu = [
-  { name: "Tuition Academy", subtitle: "School Readiness", letter: "T", accent: "#0b2545", href: "/academies#tuition" },
-  { name: "Exam Academy", subtitle: "Exam Readiness", letter: "E", accent: "#FC8741", href: "/academies#exam" },
-  { name: "Skill Academy", subtitle: "Skill Development", letter: "S", accent: "#0b2545", href: "/academies#skill" },
-];
+// Hover menu under "Academies". Each entry opens that academy's own page under
+// /academies/<slug>; the entries come from the same data the pages render, so
+// a rename can't drift between the nav and the page.
+const ACADEMY_MENU = academyMenu("global");
 
 export function Header({ stacked = false }: { stacked?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileAcademiesOpen, setIsMobileAcademiesOpen] = useState(false);
   const { scrollY } = useScroll();
 
   // The logo will start 2.2x larger, and scale up to 2.5x when scrolled
@@ -102,7 +101,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
                       group while it travels from the link down to the menu. */}
                   <div className="absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 invisible opacity-0 translate-y-1 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0">
                     <div className="w-64 rounded-2xl bg-white border border-gray-100 shadow-xl p-2">
-                      {academyMenu.map((item) => (
+                      {ACADEMY_MENU.map((item) => (
                         <Link
                           key={item.name}
                           href={item.href}
@@ -146,7 +145,10 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
           {/* Mobile Menu Button */}
           <button 
             className="md:hidden text-gray-700 p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            onClick={() => {
+              setIsMobileMenuOpen((open) => !open);
+              setIsMobileAcademiesOpen(false);
+            }}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -163,31 +165,59 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl pt-24 px-6 md:hidden flex flex-col gap-6 items-center"
           >
-            {navLinks.map((link) => (
-              <React.Fragment key={link.name}>
-                <Link 
+            {navLinks.map((link) =>
+              link.name === "Academies" ? (
+                <div key={link.name} className="flex w-full max-w-[280px] flex-col items-center">
+                  <button
+                    type="button"
+                    aria-expanded={isMobileAcademiesOpen}
+                    aria-controls="mobile-academies-menu"
+                    onClick={() => setIsMobileAcademiesOpen((open) => !open)}
+                    className="flex items-center gap-1.5 text-xl font-medium text-gray-800 hover:text-purple-600 transition-colors"
+                  >
+                    {link.name}
+                    <ChevronDown
+                      size={20}
+                      className={`transition-transform duration-300 ${isMobileAcademiesOpen ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {isMobileAcademiesOpen && (
+                      <motion.div
+                        id="mobile-academies-menu"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="w-full overflow-hidden"
+                      >
+                        <div className="flex flex-col items-center gap-2 pt-3">
+                          {ACADEMY_MENU.map((item) => (
+                            <Link
+                              key={item.name}
+                              href={item.href}
+                              className="text-base font-medium text-gray-500 hover:text-orange-500 transition-colors"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ) : (
+                <Link
+                  key={link.name}
                   href={link.href}
                   className="text-xl font-medium text-gray-800 hover:text-purple-600 transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}
                 </Link>
-                {link.name === "Academies" && (
-                  <div className="-mt-3 flex flex-col items-center gap-2">
-                    {academyMenu.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        className="text-base font-medium text-gray-500 hover:text-orange-500 transition-colors"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </React.Fragment>
-            ))}
+              )
+            )}
             <div className="h-px w-full bg-gray-100 my-2" />
             <Link 
               href="https://supersheldon.wise.live/login?loginRedirected=true" 

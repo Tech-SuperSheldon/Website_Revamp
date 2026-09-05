@@ -2,18 +2,17 @@
 
 // Floating "Try a Free Class" pill, docked bottom-center.
 //
-// Hides itself whenever another CTA that says essentially the same thing is
-// already on screen — the header's own "Try a free Class" button, the
-// deadline banner's "Apply for Demo", or one of the academy cards' "Book a
-// free trial" buttons — and reappears once none of them are visible. Those
-// elements are marked with `data-floating-cta-avoid` (see NSheader.tsx,
-// NSDeadlineBanner.tsx, NSAcademies.tsx); this component doesn't know about
-// them individually, it just watches for that attribute.
+// Hides itself only while a CTA it would duplicate is *pinned* on screen —
+// the header's own "Try a free Class" button and the mobile menu overlay's
+// copy of it, both marked with `data-floating-cta-avoid` (see NSheader.tsx).
+//
+// It deliberately does NOT hide for in-page section CTAs any more: those
+// scroll past constantly, so watching them made the pill blink in and out on
+// the way down the landing page. It now stays put for the whole scroll.
 //
 // On desktop the header's CTA is fixed at the top and effectively always in
 // view, so this naturally stays hidden there without any viewport-specific
-// class — it only actually surfaces once a competing CTA scrolls out of view,
-// which in practice is a mobile-only situation.
+// class — in practice it only ever surfaces on mobile.
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -21,29 +20,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { SPRING } from "@/lib/motion";
 
 const AVOID_SELECTOR = "[data-floating-cta-avoid]";
-const BOTTOM_THRESHOLD = 100; // Hide button when within 100px of page bottom
-
-function useNearBottomOfPage() {
-  const [isNearBottom, setIsNearBottom] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const distanceFromBottom = documentHeight - (scrollTop + windowHeight);
-      
-      setIsNearBottom(distanceFromBottom < BOTTOM_THRESHOLD);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return isNearBottom;
-}
 
 function useAnyAvoidTargetVisible() {
   const [anyVisible, setAnyVisible] = useState(false);
@@ -92,10 +68,17 @@ function useAnyAvoidTargetVisible() {
   return anyVisible;
 }
 
-export default function FloatingTryClassButton() {
+export default function FloatingTryClassButton({
+  /** Booking wizard for the site this renders on. */
+  href = "/demo",
+  /** Pill colours — /uk runs blue and /au orange (see academyTheme.ts). */
+  className = "bg-[#FFCC00] hover:bg-[#e6b800] text-black shadow-yellow-500/30",
+}: {
+  href?: string;
+  className?: string;
+} = {}) {
   const reduce = useReducedMotion() ?? false;
   const hideForOtherCTA = useAnyAvoidTargetVisible();
-  const isNearBottom = useNearBottomOfPage();
   const [settled, setSettled] = useState(false);
 
   // Small delay so it doesn't flash in before the page has laid itself out
@@ -105,7 +88,7 @@ export default function FloatingTryClassButton() {
     return () => clearTimeout(t);
   }, []);
 
-  const show = settled && !hideForOtherCTA && !isNearBottom;
+  const show = settled && !hideForOtherCTA;
 
   return (
     <motion.div
@@ -116,9 +99,9 @@ export default function FloatingTryClassButton() {
       aria-hidden={!show}
     >
       <Link
-        href="/demo"
+        href={href}
         tabIndex={show ? 0 : -1}
-        className="pointer-events-auto inline-flex items-center gap-2 bg-[#FFCC00] hover:bg-[#e6b800] text-black font-bold text-sm px-6 py-3.5 rounded-full shadow-lg shadow-yellow-500/30 transition-colors duration-200"
+        className={`pointer-events-auto inline-flex items-center gap-2 font-bold text-sm px-6 py-3.5 rounded-full shadow-lg transition-colors duration-200 ${className}`}
       >
         <Image
           src="/ss-logo-mascot.png"

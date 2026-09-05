@@ -14,14 +14,18 @@ export default function Highlight({
   reduce,
   /** Tailwind colour for the bar; a couple of sections sit on a warmer ground. */
   bar = "bg-[#ffede2]",
+  /** Tailwind colour for the word itself — the /uk and /au academy pages run
+   *  blue and orange rather than the global yellow. */
+  text = "text-[#FFCC00]",
 }: {
   children: React.ReactNode;
   reduce: boolean;
   bar?: string;
+  text?: string;
 }) {
   return (
     <span className="relative inline-block">
-      <span className="relative z-10 text-[#FFCC00]">{children}</span>
+      <span className={`relative z-10 ${text}`}>{children}</span>
       <motion.span
         aria-hidden
         className={`absolute bottom-1 left-0 w-full h-3 ${bar} -z-10 rounded-sm origin-left`}

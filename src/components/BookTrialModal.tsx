@@ -11,11 +11,14 @@ export default function BookTrialModal({
   onClose,
   subject,
   heading,
+  /** Which market's wizard to show. The /au academy pages need "au". */
+  country = "uk",
 }: {
   open: boolean;
   onClose: () => void;
   subject: string;
   heading?: string;
+  country?: "uk" | "au";
 }) {
   useEffect(() => {
     if (!open) return;
@@ -40,7 +43,7 @@ export default function BookTrialModal({
     >
       <div className="max-h-[95vh] w-full max-w-lg overflow-y-auto rounded-3xl">
         <LearnForm
-          country="uk"
+          country={country}
           subject={subject}
           variant="modal"
           heading={heading}

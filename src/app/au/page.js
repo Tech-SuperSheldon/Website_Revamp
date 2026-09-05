@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import { Header } from '@/components/AU/NSheader';
 import NSDeadlineBanner from '@/components/AU/NSDeadlineBanner';
 import Home2Hero from '@/components/AU/Home2Hero';
+import FloatingTryClassButton from '@/components/FloatingTryClassButton';
 import DeferredWidgets, { DeferredSection } from '@/components/AU/DeferredWidgets';
 
 // Below-fold components loaded lazily to reduce initial JS bundle
@@ -75,6 +76,10 @@ export default function Home() {
       </DeferredSection>
 
       <DeferredWidgets mobileHidden={true} side="right" mobileBar={true} />
+      <FloatingTryClassButton
+        href="/au/demo"
+        className="bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white shadow-orange-500/30"
+      />
     </main>
   );
 }

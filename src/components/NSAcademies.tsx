@@ -94,7 +94,7 @@ function AcademyCard({
       <p className="relative text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-2">
         {academy.prompt}
       </p>
-      <div className="relative mt-auto" data-floating-cta-avoid>
+      <div className="relative mt-auto">
         <select
           value=""
           onChange={(e) => {

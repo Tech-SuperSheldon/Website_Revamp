@@ -7,7 +7,7 @@
 // step 4 as you scroll through the section, and each step's badge lights up as
 // the line reaches it. That turns four boxes into one sequence you can watch
 // progress. Horizontal on desktop, vertical down the left edge on mobile.
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import {
   motion,
   useReducedMotion,
@@ -79,16 +79,36 @@ const steps = [
   },
 ];
 
+/** Colours the connector, badges and card borders. Defaults to the global
+ *  site's orange; /uk passes blue (see src/lib/academyTheme.ts). */
+export type Palette = {
+  accent: string;
+  trackIdle: string;
+  trackFill: string;
+  cardBorder: string;
+  numberIdleBorder: string;
+};
+
+const DEFAULT_PALETTE: Palette = {
+  accent: ORANGE,
+  trackIdle: ORANGE_50,
+  trackFill: "from-orange-300 to-orange-500",
+  cardBorder: "border-orange-100",
+  numberIdleBorder: ORANGE_200,
+};
+
 function Step({
   step,
   index,
   progress,
   reduce,
+  palette,
 }: {
-  step: (typeof steps)[number];
+  step: { title: string; desc: string; accent: string; icon: ReactNode };
   index: number;
   progress: MotionValue<number>;
   reduce: boolean;
+  palette: Palette;
 }) {
   // Where this step sits along the connector: step 0 at the start, step 3 at
   // the end. The badge lights over a short window as the line reaches it.
@@ -100,16 +120,16 @@ function Step({
 
   const badgeScale = useTransform(lit, [0, 1], [0.88, 1]);
   const badgeOpacity = useTransform(lit, [0, 1], [0.35, 1]);
-  const numberBg = useTransform(lit, [0, 1], ["#ffffff", ORANGE]);
+  const numberBg = useTransform(lit, [0, 1], ["#ffffff", palette.accent]);
   const numberColor = useTransform(lit, [0, 1], [GRAY_400, "#ffffff"]);
-  const numberBorder = useTransform(lit, [0, 1], [ORANGE_200, ORANGE]);
+  const numberBorder = useTransform(lit, [0, 1], [palette.numberIdleBorder, palette.accent]);
 
   return (
     <motion.div
       variants={rise(reduce, 28)}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="group relative overflow-hidden rounded-[2rem] bg-white border border-orange-100 p-7 shadow-sm hover:shadow-lg transition-[box-shadow,border-color] duration-300 flex lg:block gap-5"
+      className={`group relative overflow-hidden rounded-[2rem] bg-white border ${palette.cardBorder} p-7 shadow-sm hover:shadow-lg transition-[box-shadow,border-color] duration-300 flex lg:block gap-5`}
     >
       <SpotlightOverlay background={background} />
       {/* Badge with the step number tucked into its corner */}
@@ -128,7 +148,7 @@ function Step({
           className="absolute -top-2 -right-2 w-6 h-6 rounded-full border text-[11px] font-extrabold flex items-center justify-center shadow-sm"
           style={
             reduce
-              ? { background: ORANGE, color: "#fff", borderColor: ORANGE }
+              ? { background: palette.accent, color: "#fff", borderColor: palette.accent }
               : { backgroundColor: numberBg, color: numberColor, borderColor: numberBorder }
           }
         >
@@ -144,8 +164,30 @@ function Step({
   );
 }
 
-export default function NSProcess() {
+export default function NSProcess({
+  /** Per-academy wording for the same four steps, in the same order. Omit for
+   *  the generic copy used on /academies and anywhere else. */
+  stepsCopy,
+  subtitle = "The same four-step journey behind every academy, every subject, every child.",
+  palette = DEFAULT_PALETTE,
+  /** Colour of the highlighted word in the heading — matches the site. */
+  highlightText,
+  highlightBar,
+}: {
+  stepsCopy?: { title: string; desc: string }[];
+  subtitle?: string;
+  palette?: Palette;
+  highlightText?: string;
+  highlightBar?: string;
+} = {}) {
   const reduce = useReducedMotion() ?? false;
+  // Icons and accents stay with the position, only the words change.
+  const resolvedSteps = steps.map((step, i) => ({
+    ...step,
+    // Even steps stay navy; odd steps take the site's accent.
+    accent: i % 2 === 1 ? palette.accent : step.accent,
+    ...(stepsCopy?.[i] ?? {}),
+  }));
   const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -169,10 +211,14 @@ export default function NSProcess() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...riseOnce(reduce)} className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight">
-            How we <Highlight reduce={reduce}>tailor</Highlight> every lesson to your child
+            How we{" "}
+            <Highlight reduce={reduce} text={highlightText} bar={highlightBar}>
+              tailor
+            </Highlight>{" "}
+            every lesson to your child
           </h2>
           <p className="mt-3 text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            The same four-step journey behind every academy, every subject, every child.
+            {subtitle}
           </p>
         </motion.div>
 
@@ -181,15 +227,15 @@ export default function NSProcess() {
               Badge centre = p-7 (1.75rem) + half of the 3.5rem badge = 3.5rem
               from the card edge, which is `top-14` / `left-14`. The unfilled
               track sits underneath; the orange bar scales over it on scroll. */}
-          <div className="hidden lg:block absolute top-14 left-[12.5%] right-[12.5%] h-0.5 rounded-full" style={{ background: ORANGE_50 }}>
+          <div className="hidden lg:block absolute top-14 left-[12.5%] right-[12.5%] h-0.5 rounded-full" style={{ background: palette.trackIdle }}>
             <motion.div
-              className="h-full w-full rounded-full origin-left bg-gradient-to-r from-orange-300 to-orange-500"
+              className={`h-full w-full rounded-full origin-left bg-gradient-to-r ${palette.trackFill}`}
               style={{ scaleX: fill }}
             />
           </div>
-          <div className="lg:hidden absolute top-14 bottom-14 left-14 w-0.5 rounded-full" style={{ background: ORANGE_50 }}>
+          <div className="lg:hidden absolute top-14 bottom-14 left-14 w-0.5 rounded-full" style={{ background: palette.trackIdle }}>
             <motion.div
-              className="w-full h-full rounded-full origin-top bg-gradient-to-b from-orange-300 to-orange-500"
+              className={`w-full h-full rounded-full origin-top bg-gradient-to-b ${palette.trackFill}`}
               style={{ scaleY: fill }}
             />
           </div>
@@ -201,8 +247,8 @@ export default function NSProcess() {
             viewport={VIEWPORT}
             className="grid grid-cols-1 lg:grid-cols-4 gap-5 md:gap-6"
           >
-            {steps.map((step, i) => (
-              <Step key={step.title} step={step} index={i} progress={progress} reduce={reduce} />
+            {resolvedSteps.map((step, i) => (
+              <Step key={step.title} step={step} index={i} progress={progress} reduce={reduce} palette={palette} />
             ))}
           </motion.div>
         </div>
