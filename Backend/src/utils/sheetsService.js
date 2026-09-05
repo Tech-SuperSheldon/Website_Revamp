@@ -105,4 +105,60 @@ const sendLearnLeadToSheet = async (formData) => {
   }
 };
 
-module.exports = { sendToGoogleSheet, sendLearnLeadToSheet };
+/**
+ * Send a "Book a Demo" wizard submission (partial or complete) to the same
+ * Google Sheet webhook, routed by the Apps Script into the "Demo Leads" tab
+ * (formType: 'demo'). Replaces the old fullName/email/subject/country shape
+ * with the new grade/mobile/date/time/timezone wizard fields.
+ * @param {Object} formData - Lead data, including `stage`: 'partial' | 'complete'
+ * @returns {Promise<{ok: boolean, message?: string, error?: string}>}
+ */
+const sendDemoLeadToSheet = async (formData) => {
+  try {
+    if (!process.env.GOOGLE_SHEET_WEBHOOK_URL) {
+      console.log('Google Sheet webhook not configured, skipping Sheet notification');
+      return { ok: true, message: 'Google Sheet not configured' };
+    }
+
+    const {
+      stage, market, grade, mobile, date, time, timezone, createdAt,
+      utm_source, utm_medium, utm_campaign, utm_content, utm_term,
+    } = formData;
+
+    const response = await fetch(process.env.GOOGLE_SHEET_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        formType: 'demo',
+        stage: stage || 'partial',
+        market: market || '',
+        grade: grade || '',
+        mobile: mobile || '',
+        date: date || '',
+        time: time || '',
+        timezone: timezone || '',
+        createdAt: createdAt ? new Date(createdAt).toISOString() : new Date().toISOString(),
+        utm_source: utm_source || '',
+        utm_medium: utm_medium || '',
+        utm_campaign: utm_campaign || '',
+        utm_content: utm_content || '',
+        utm_term: utm_term || '',
+      }),
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if (response.ok && result.status !== 'error') {
+      console.log('Demo lead Google Sheet row upserted successfully');
+      return { ok: true, message: 'Google Sheet notification sent' };
+    } else {
+      console.error('Demo lead Google Sheet webhook error:', result.error || response.statusText);
+      return { ok: false, error: result.error || response.statusText };
+    }
+  } catch (error) {
+    console.error('Error sending demo lead to Google Sheet:', error);
+    return { ok: false, error: error.message };
+  }
+};
+
+module.exports = { sendToGoogleSheet, sendLearnLeadToSheet, sendDemoLeadToSheet };

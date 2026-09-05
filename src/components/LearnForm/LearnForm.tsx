@@ -38,7 +38,7 @@ function captureUtmParams(): Record<string, string> {
   }
 }
 
-const GRADES = Array.from({ length: 12 }, (_, i) => `Grade ${i + 1}`);
+const ALL_GRADES = Array.from({ length: 12 }, (_, i) => i + 1);
 
 const TIME_SLOTS = [
   "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM",
@@ -212,6 +212,7 @@ export default function LearnForm({
   heading,
   submitData = true,
   onClose,
+  grades,
 }: {
   country: MarketCountry;
   subject: Subject;
@@ -223,9 +224,12 @@ export default function LearnForm({
   submitData?: boolean;
   /** Shown as a close (×) button next to the title when variant is "modal". */
   onClose?: () => void;
+  /** Restricts the grade step to these grade numbers, e.g. NAPLAN's [3, 5, 7, 9]. Defaults to Grade 1–12. */
+  grades?: number[];
 }) {
   const [step, setStep] = useState(1);
   const [grade, setGrade] = useState("");
+  const GRADES = (grades && grades.length > 0 ? grades : ALL_GRADES).map((n) => `Grade ${n}`);
 
   const [dialCountry, setDialCountry] = useState(() => findByIso(DEFAULT_DIAL[country]));
   const dialCountryTouched = useRef(false);

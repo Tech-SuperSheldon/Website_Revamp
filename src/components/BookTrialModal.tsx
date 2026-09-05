@@ -13,12 +13,15 @@ export default function BookTrialModal({
   heading,
   /** Which market's wizard to show. The /au academy pages need "au". */
   country = "uk",
+  /** Restricts the grade step to these grade numbers, e.g. NAPLAN's [3, 5, 7, 9]. */
+  grades,
 }: {
   open: boolean;
   onClose: () => void;
   subject: string;
   heading?: string;
   country?: "uk" | "au";
+  grades?: number[];
 }) {
   useEffect(() => {
     if (!open) return;
@@ -49,6 +52,7 @@ export default function BookTrialModal({
           heading={heading}
           submitData={false}
           onClose={onClose}
+          grades={grades}
         />
       </div>
     </div>

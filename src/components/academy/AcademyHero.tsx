@@ -18,7 +18,7 @@ import { DUR, EASE } from "@/lib/motion";
 import BookTrialModal from "@/components/BookTrialModal";
 import { subjectIcon } from "@/components/academy/subjectIcons";
 import type { Academy, Locale } from "@/lib/academies";
-import { DEMO_PATH, MARKET, REGIONS } from "@/lib/academies";
+import { DEMO_PATH, gradesForSubject, MARKET, REGIONS } from "@/lib/academies";
 import { academyTheme } from "@/lib/academyTheme";
 
 export default function AcademyHero({
@@ -160,6 +160,7 @@ export default function AcademyHero({
         onClose={() => setActiveSubject(null)}
         subject={activeSubject ?? ""}
         country={MARKET[locale]}
+        grades={activeSubject ? gradesForSubject(activeSubject) ?? undefined : undefined}
       />
     </>
   );

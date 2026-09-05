@@ -109,6 +109,36 @@ const EXAM_ROWS: ExamRow[] = [
   },
   { region: "UK", exam: "KS2 SATs", status: "Statutory", who: "Year 6." },
   {
+    region: "UK",
+    exam: "SAT",
+    status: "Optional",
+    who: "UK students applying to US universities.",
+  },
+  {
+    region: "UK",
+    exam: "GCSE",
+    status: "Statutory",
+    who: "Year 10–11, UK national qualification.",
+  },
+  {
+    region: "UK",
+    exam: "IGCSE",
+    status: "Optional",
+    who: "Year 10–11, international equivalent of GCSE used by independent schools.",
+  },
+  {
+    region: "UK",
+    exam: "11+ Examination",
+    status: "Optional",
+    who: "Year 6, for grammar and independent school entry.",
+  },
+  {
+    region: "UK",
+    exam: "A Level / A+ Level",
+    status: "Optional",
+    who: "Year 12–13, post-16 qualification for university entry.",
+  },
+  {
     region: "Australia",
     exam: "NSW Selective School / OC Placement Test",
     status: "Optional",
@@ -121,12 +151,73 @@ const EXAM_ROWS: ExamRow[] = [
     who: "Year 8, for Year 9 entry.",
   },
   {
+    region: "Australia",
+    exam: "NAPLAN",
+    status: "Statutory",
+    who: "Years 3, 5, 7 and 9, national literacy and numeracy assessment.",
+  },
+  {
+    region: "Australia",
+    exam: "Selective Scholarship",
+    status: "Optional",
+    who: "Year 6–7 entry, for selective school and scholarship placement.",
+  },
+  {
+    region: "Australia",
+    exam: "ACER",
+    status: "Optional",
+    who: "Various years, scholarship and selective-entry testing administered by ACER.",
+  },
+  {
+    region: "Australia",
+    exam: "GATE",
+    status: "Optional",
+    who: "Primary years, Gifted and Talented Education program entry.",
+  },
+  {
+    region: "Australia",
+    exam: "ATAR",
+    status: "Statutory",
+    who: "Year 12, tertiary entrance ranking derived from final exams.",
+  },
+  {
+    region: "Australia",
+    exam: "UCAT",
+    status: "Optional",
+    who: "Year 12 / gap-year students applying to medicine, dentistry and health science degrees.",
+  },
+  {
     region: "Both",
     exam: "ICAS",
     status: "Optional",
     who: "Years 2 upward, both UK and Australian schools.",
   },
 ];
+
+/** Grade range each Exam Readiness exam applies to, keyed by the exact
+ *  subject string used in the picker/booking form. Exams not listed here
+ *  (School Readiness, Skill Academy subjects) leave the booking form's grade
+ *  step unrestricted (Grade 1–12). */
+export const EXAM_GRADES: Record<string, number[]> = {
+  NAPLAN: [3, 5, 7, 9],
+  "Selective Scholarship": [6, 7],
+  ICAS: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+  ACER: [5, 6, 7, 8, 9, 10],
+  GATE: [1, 2, 3, 4, 5, 6],
+  ATAR: [11, 12],
+  UCAT: [12],
+  SAT: [11, 12],
+  GCSE: [9, 10, 11],
+  IGCSE: [9, 10, 11],
+  "11+ Examination": [6],
+  "A Level / A+ Level": [12, 13],
+};
+
+/** Grades a subject/exam applies to, or null when unrestricted (School
+ *  Readiness and Skill Academy subjects show the full Grade 1–12 picker). */
+export function gradesForSubject(subject: string): number[] | null {
+  return EXAM_GRADES[subject] ?? null;
+}
 
 const examRowsFor = (locale: Locale): ExamRow[] =>
   locale === "global"
@@ -341,7 +432,17 @@ const overridesFor = (locale: Exclude<Locale, "global">): Record<string, Overrid
       }),
     },
     "exam-readiness": {
-      subjects: uk ? ["11+ Exam"] : ["NAPLAN"],
+      subjects: uk
+        ? ["SAT", "GCSE", "IGCSE", "11+ Examination", "A Level / A+ Level"]
+        : [
+            "NAPLAN",
+            "Selective Scholarship",
+            "ICAS",
+            "ACER",
+            "GATE",
+            "ATAR",
+            "UCAT",
+          ],
       examTable: {
         title: "Also preparing for other exams?",
         intro: uk
