@@ -174,12 +174,12 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
                     aria-expanded={isMobileAcademiesOpen}
                     aria-controls="mobile-academies-menu"
                     onClick={() => setIsMobileAcademiesOpen((open) => !open)}
-                    className="flex items-center gap-1.5 text-xl font-medium text-gray-800 hover:text-orange-600 transition-colors"
+                    className="relative flex items-center text-xl font-medium text-gray-800 hover:text-orange-600 transition-colors"
                   >
                     {link.name}
                     <ChevronDown
                       size={20}
-                      className={`transition-transform duration-300 ${isMobileAcademiesOpen ? "rotate-180" : ""}`}
+                      className={`absolute left-full ml-1.5 transition-transform duration-300 ${isMobileAcademiesOpen ? "rotate-180" : ""}`}
                     />
                   </button>
                   <AnimatePresence initial={false}>
