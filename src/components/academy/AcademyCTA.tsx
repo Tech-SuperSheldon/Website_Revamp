@@ -38,6 +38,8 @@ export default function AcademyCTA({
           <div className="mt-7 flex justify-center">
             <a
               href="#subject-picker"
+              // While this is on screen the floating pill stands down.
+              data-academy-cta
               onClick={(e) => {
                 e.preventDefault();
                 document

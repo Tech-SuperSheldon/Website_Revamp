@@ -148,6 +148,8 @@ export default function AcademyHero({
 
                 <Link
                   href={DEMO_PATH[locale]}
+                  // While this is on screen the floating pill stands down.
+                  data-academy-cta
                   className={`mt-4 flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-bold shadow-md transition-colors ${theme.cta}`}
                 >
                   Book a Free Trial Class

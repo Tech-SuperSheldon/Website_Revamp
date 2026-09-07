@@ -1,10 +1,9 @@
 // Per-site palette for the academy pages.
 //
-// The three sites already have their own identity elsewhere — the global site
-// is yellow/navy, /uk is blue (see UKHomeHeader's "from-blue-500 to-blue-700"
-// CTA and the blue section headings), /au is orange (#e87f1e). These are the
-// class strings the academy components need so one set of components can serve
-// all three without a fork.
+// All three sites now run the global yellow/navy academy look — /uk and /au
+// keep their own header, footer and booking links, but the academy body copy,
+// CTAs and FAQ match /academies exactly. The per-locale map stays so a site can
+// be forked back off later without touching the components.
 import type { Locale } from "@/lib/academies";
 
 export type AcademyTheme = {
@@ -64,24 +63,9 @@ const GLOBAL: AcademyTheme = {
 // Kept identical to GLOBAL so /uk/academies matches /academies exactly.
 const UK: AcademyTheme = { ...GLOBAL };
 
-const AU: AcademyTheme = {
-  heading: "text-[#7c3a00]",
-  highlightText: "text-[#e87f1e]",
-  highlightBar: "bg-[#ffedd5]",
-  icon: "text-[#e87f1e]",
-  cta: "bg-gradient-to-r from-orange-400 to-orange-600 text-white hover:from-orange-500 hover:to-orange-700",
-  selectFocus: "hover:border-orange-400 focus:ring-orange-500",
-  band: "bg-gradient-to-br from-orange-400 to-orange-600",
-  bandHeading: "text-white",
-  bandBody: "text-orange-50",
-  bandButton: "bg-white text-[#c2410c] hover:bg-orange-50",
-  tableHead: "bg-[#7c3a00]",
-  faqOpen: "bg-[#fff7ed] border-[#fdba74]",
-  faqIdle: "bg-white border-[#ffedd5] hover:border-[#fed7aa] hover:bg-[#fff7ed]/50",
-  faqDotOpen: "bg-[#e87f1e] text-white",
-  faqDotIdle: "bg-[#ffedd5] text-[#c2410c] group-hover:bg-[#e87f1e] group-hover:text-white",
-  faqQuestionOpen: "text-[#7c3a00]",
-};
+// Same for /au/academies — the academies run one shared yellow/navy look on
+// all three sites; only the surrounding header/footer stay per-site.
+const AU: AcademyTheme = { ...GLOBAL };
 
 export const ACADEMY_THEMES: Record<Locale, AcademyTheme> = {
   global: GLOBAL,

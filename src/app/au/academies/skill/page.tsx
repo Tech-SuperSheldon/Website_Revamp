@@ -1,10 +1,13 @@
 import { Header } from "@/components/AU/NSheader";
-import { Footer } from "@/components/AU/NSfooter";
+import { Footer } from "@/components/NSfooter";
 import AcademyHero from "@/components/academy/AcademyHero";
 import AcademyExamTable from "@/components/academy/AcademyExamTable";
 import AcademyFAQ from "@/components/academy/AcademyFAQ";
 import AcademyCTA from "@/components/academy/AcademyCTA";
 import NSProcess from "@/components/NSProcess";
+import FloatingTryClassButton, {
+  ACADEMY_CTA_SELECTOR,
+} from "@/components/FloatingTryClassButton";
 import { getAcademy } from "@/lib/academies";
 import { academyTheme } from "@/lib/academyTheme";
 
@@ -40,6 +43,7 @@ export default function AUSkillPage() {
       <AcademyFAQ items={academy.faqs} locale="au" />
       <AcademyCTA prompt={academy.prompt} subtitle={academy.ctaSubtitle} locale="au" />
       <Footer />
+      <FloatingTryClassButton href="/au/demo" avoidSelector={ACADEMY_CTA_SELECTOR} />
     </main>
   );
 }

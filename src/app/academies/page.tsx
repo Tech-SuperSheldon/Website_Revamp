@@ -2,6 +2,9 @@ import { Header } from "@/components/NSheader";
 import { Footer } from "@/components/NSfooter";
 import AcademyIndexHero from "@/components/academy/AcademyIndexHero";
 import NSProcess from "@/components/NSProcess";
+import FloatingTryClassButton, {
+  ACADEMY_CTA_SELECTOR,
+} from "@/components/FloatingTryClassButton";
 import { academyTheme } from "@/lib/academyTheme";
 
 const theme = academyTheme("global");
@@ -24,6 +27,7 @@ export default function AcademiesPage() {
         highlightBar={theme.highlightBar}
       />
       <Footer />
+      <FloatingTryClassButton avoidSelector={ACADEMY_CTA_SELECTOR} />
     </main>
   );
 }

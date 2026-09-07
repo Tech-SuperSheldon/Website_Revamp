@@ -13,7 +13,12 @@
 // On desktop the header's CTA is fixed at the top and effectively always in
 // view, so this naturally stays hidden there without any viewport-specific
 // class — in practice it only ever surfaces on mobile.
-import { useEffect, useRef, useState } from "react";
+//
+// The academy pages opt out of that via `avoidSelector`: the header there sits
+// at the edge of the observer's margin and toggles between its bar and pill
+// layouts on scroll, which made this blink the whole way down the page. They
+// watch their own two booking CTAs instead (ACADEMY_CTA_SELECTOR).
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
@@ -21,20 +26,31 @@ import { SPRING } from "@/lib/motion";
 
 const AVOID_SELECTOR = "[data-floating-cta-avoid]";
 
-function useAnyAvoidTargetVisible() {
+/**
+ * The academy pages' own booking CTAs — the hero picker's "Book a Free Trial
+ * Class" (AcademyHero) and the closing band's "Pick a subject to start"
+ * (AcademyCTA). Those are the only things that suppress the pill there, plus
+ * the mobile menu's CTA (`data-floating-cta-avoid="menu"`), which the pill
+ * would otherwise float on top of while the menu is open.
+ */
+export const ACADEMY_CTA_SELECTOR = '[data-academy-cta], [data-floating-cta-avoid="menu"]';
+
+function useAnyAvoidTargetVisible(selector: string) {
   const [anyVisible, setAnyVisible] = useState(false);
-  const visibleSet = useRef<Set<Element>>(new Set());
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof IntersectionObserver === "undefined") return;
 
+    // Scoped to this observer, so switching selectors starts from a clean slate.
+    const visible = new Set<Element>();
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) visibleSet.current.add(entry.target);
-          else visibleSet.current.delete(entry.target);
+          if (entry.isIntersecting) visible.add(entry.target);
+          else visible.delete(entry.target);
         });
-        setAnyVisible(visibleSet.current.size > 0);
+        setAnyVisible(visible.size > 0);
       },
       // Shrink the effective viewport a little on each edge so a CTA barely
       // clipped at the very top/bottom of the screen still counts as "in the
@@ -44,7 +60,7 @@ function useAnyAvoidTargetVisible() {
 
     const observed = new Set<Element>();
     const observeNew = () => {
-      document.querySelectorAll(AVOID_SELECTOR).forEach((el) => {
+      document.querySelectorAll(selector).forEach((el) => {
         if (!observed.has(el)) {
           observed.add(el);
           observer.observe(el);
@@ -62,8 +78,9 @@ function useAnyAvoidTargetVisible() {
     return () => {
       observer.disconnect();
       mutationObserver.disconnect();
+      setAnyVisible(false);
     };
-  }, []);
+  }, [selector]);
 
   return anyVisible;
 }
@@ -71,14 +88,17 @@ function useAnyAvoidTargetVisible() {
 export default function FloatingTryClassButton({
   /** Booking wizard for the site this renders on. */
   href = "/demo",
-  /** Pill colours — /uk runs blue and /au orange (see academyTheme.ts). */
+  /** Pill colours — override only where a page runs its own palette. */
   className = "bg-[#FFCC00] hover:bg-[#e6b800] text-black shadow-yellow-500/30",
+  /** Which on-screen CTAs suppress the pill. */
+  avoidSelector = AVOID_SELECTOR,
 }: {
   href?: string;
   className?: string;
+  avoidSelector?: string;
 } = {}) {
   const reduce = useReducedMotion() ?? false;
-  const hideForOtherCTA = useAnyAvoidTargetVisible();
+  const hideForOtherCTA = useAnyAvoidTargetVisible(avoidSelector);
   const [settled, setSettled] = useState(false);
 
   // Small delay so it doesn't flash in before the page has laid itself out

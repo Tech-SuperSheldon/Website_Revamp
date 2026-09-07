@@ -228,7 +228,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
             >
               Login
             </Link>
-             <Link href="/demo" data-floating-cta-avoid onClick={() => setIsMobileMenuOpen(false)} className="w-full max-w-[280px]">
+             <Link href="/demo" data-floating-cta-avoid="menu" onClick={() => setIsMobileMenuOpen(false)} className="w-full max-w-[280px]">
                 <Button className="w-full bg-[#FFCC00] hover:bg-[#e6b800] text-black rounded-full px-6 py-4 text-lg">
                     Try a free Class
                 </Button>

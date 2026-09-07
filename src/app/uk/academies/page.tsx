@@ -1,8 +1,11 @@
 import { Header } from "@/components/UKHome/UKHomeHeader";
-import { Footer } from "@/components/UKHome/UKHomeFooter";
+import { Footer } from "@/components/NSfooter";
 import ThemeEffect from "@/components/UKHome/UKHomeThemeEffect";
 import AcademyIndexHero from "@/components/academy/AcademyIndexHero";
 import NSProcess from "@/components/NSProcess";
+import FloatingTryClassButton, {
+  ACADEMY_CTA_SELECTOR,
+} from "@/components/FloatingTryClassButton";
 import { academyTheme } from "@/lib/academyTheme";
 
 const theme = academyTheme("uk");
@@ -26,6 +29,7 @@ export default function UKAcademiesPage() {
         highlightBar={theme.highlightBar}
       />
       <Footer />
+      <FloatingTryClassButton href="/demo" avoidSelector={ACADEMY_CTA_SELECTOR} />
     </main>
   );
 }

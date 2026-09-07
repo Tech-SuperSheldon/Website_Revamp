@@ -5,6 +5,9 @@ import AcademyExamTable from "@/components/academy/AcademyExamTable";
 import AcademyFAQ from "@/components/academy/AcademyFAQ";
 import AcademyCTA from "@/components/academy/AcademyCTA";
 import NSProcess from "@/components/NSProcess";
+import FloatingTryClassButton, {
+  ACADEMY_CTA_SELECTOR,
+} from "@/components/FloatingTryClassButton";
 import { getAcademy } from "@/lib/academies";
 import { academyTheme } from "@/lib/academyTheme";
 
@@ -40,6 +43,7 @@ export default function SkillPage() {
       <AcademyFAQ items={academy.faqs} locale="global" />
       <AcademyCTA prompt={academy.prompt} subtitle={academy.ctaSubtitle} locale="global" />
       <Footer />
+      <FloatingTryClassButton avoidSelector={ACADEMY_CTA_SELECTOR} />
     </main>
   );
 }
