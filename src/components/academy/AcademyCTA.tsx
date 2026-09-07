@@ -1,13 +1,10 @@
 "use client";
 
-// Closing band on each academy page. The action goes to the site's booking
-// wizard rather than reopening the in-page picker — by this point the reader
-// has scrolled past it.
-import Link from "next/link";
+// Closing band on each academy page. The action scrolls back up to the
+// in-page subject picker rather than jumping straight to the booking wizard.
 import { motion, useReducedMotion } from "framer-motion";
 import { riseOnce } from "@/lib/motion";
 import type { Locale } from "@/lib/academies";
-import { DEMO_PATH } from "@/lib/academies";
 import { academyTheme } from "@/lib/academyTheme";
 
 export default function AcademyCTA({
@@ -39,12 +36,18 @@ export default function AcademyCTA({
           </p>
 
           <div className="mt-7 flex justify-center">
-            <Link
-              href={DEMO_PATH[locale]}
+            <a
+              href="#subject-picker"
+              onClick={(e) => {
+                e.preventDefault();
+                document
+                  .getElementById("subject-picker")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
               className={`w-full sm:w-auto rounded-full px-8 py-3.5 text-sm sm:text-base font-bold shadow-md transition-colors ${theme.bandButton}`}
             >
               {prompt}
-            </Link>
+            </a>
           </div>
         </motion.div>
       </div>

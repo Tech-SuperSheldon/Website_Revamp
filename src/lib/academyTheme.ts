@@ -61,31 +61,8 @@ const GLOBAL: AcademyTheme = {
   faqQuestionOpen: "text-[#7e4420]",
 };
 
-const UK: AcademyTheme = {
-  heading: "text-[#1e3a8a]",
-  highlightText: "text-[#2563eb]",
-  highlightBar: "bg-[#dbeafe]",
-  icon: "text-[#2563eb]",
-  cta: "bg-gradient-to-r from-blue-500 to-blue-700 text-white hover:from-blue-600 hover:to-blue-800",
-  selectFocus: "hover:border-blue-400 focus:ring-blue-500",
-  band: "bg-gradient-to-br from-blue-500 to-blue-700",
-  bandHeading: "text-white",
-  bandBody: "text-blue-50",
-  bandButton: "bg-white text-[#1d4ed8] hover:bg-blue-50",
-  tableHead: "bg-[#1e3a8a]",
-  faqOpen: "bg-[#eff6ff] border-[#93c5fd]",
-  faqIdle: "bg-white border-[#dbeafe] hover:border-[#bfdbfe] hover:bg-[#eff6ff]/50",
-  faqDotOpen: "bg-[#2563eb] text-white",
-  faqDotIdle: "bg-[#dbeafe] text-[#1d4ed8] group-hover:bg-[#2563eb] group-hover:text-white",
-  faqQuestionOpen: "text-[#1e3a8a]",
-  process: {
-    accent: "#2563eb",
-    trackIdle: "#eff6ff",
-    trackFill: "from-blue-300 to-blue-600",
-    cardBorder: "border-blue-100",
-    numberIdleBorder: "#bfdbfe",
-  },
-};
+// Kept identical to GLOBAL so /uk/academies matches /academies exactly.
+const UK: AcademyTheme = { ...GLOBAL };
 
 const AU: AcademyTheme = {
   heading: "text-[#7c3a00]",

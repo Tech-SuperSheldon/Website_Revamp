@@ -112,7 +112,10 @@ export default function AcademyHero({
               </div>
 
               {/* Subject picker — same flow as the old /academies card */}
-              <div className="rounded-2xl bg-gray-50/80 border border-gray-100 p-5 sm:p-6">
+              <div
+                id="subject-picker"
+                className="rounded-2xl bg-gray-50/80 border border-gray-100 p-5 sm:p-6 scroll-mt-24"
+              >
                 <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-3">
                   {academy.prompt}
                 </h2>
