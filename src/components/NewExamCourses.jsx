@@ -7,6 +7,7 @@ import Image from "next/image";
 import { BookOpen, Users } from "lucide-react";
 import GlossyButton from "@/components/GlossyButton";
 import { coursesData, years } from "@/components/ExamCourses";
+import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
 
 export default function NewExamCourses() {
   const [activeYear, setActiveYear] = useState("Year 5");
@@ -93,7 +94,7 @@ export default function NewExamCourses() {
               {/* Image */}
               <div className="m-3 sm:m-4 rounded-xl border border-gray-200 overflow-hidden">
                 <div className="relative w-full aspect-[6000/3375] bg-gray-200">
-                  <Link href={course.path || "#"}>
+                  <Link href={course.path || "#"} onClick={openDemoOnClick}>
                     <Image
                       src={course.img}
                       alt={course.title}
@@ -126,7 +127,7 @@ export default function NewExamCourses() {
                 </div>
 
                 <div className="flex space-x-2 mt-auto">
-                  <Link href={course.path}>
+                  <Link href={course.path} onClick={openDemoOnClick}>
                     <GlossyButton className="bg-orange-500 text-white py-2 px-3 rounded-full hover:bg-orange-600 transition">
                       Try a free Class
                     </GlossyButton>

@@ -15,6 +15,8 @@ import NSJoinUs from "./NSJoinUs";
 import NSPricing from "./NSPricing";
 import DownloadBrochureButton from "./DownloadBrochureButton";
 
+import { openAuDemoOnClick } from "@/components/BookDemo/demoModalStore";
+
 interface NSCourseDetailAUProps {
     courseId: string;
     uploadedBrochureUrl?: string | null;
@@ -64,7 +66,7 @@ export default function NSCourseDetailAU({ courseId, uploadedBrochureUrl }: NSCo
                 </h1>
                 <div className="flex flex-wrap items-center gap-3">
                     <DownloadBrochureButton course={course} variant="solid" uploadedBrochureUrl={uploadedBrochureUrl} />
-                    <Link href="/au/demo">
+                    <Link href="/au/demo" onClick={openAuDemoOnClick}>
                         <button className="bg-orange-600 text-white px-8 py-3 rounded-full font-bold hover:bg-orange-700 transition-all shadow-lg shadow-orange-500/30 whitespace-nowrap">
                             Enroll as a Champ
                         </button>

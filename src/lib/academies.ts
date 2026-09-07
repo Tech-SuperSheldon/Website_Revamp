@@ -21,8 +21,10 @@ export const BASE_PATH: Record<Locale, string> = {
   au: "/au",
 };
 
-/** Booking wizard for a locale. There is no /uk/demo — the UK site's own
- *  header already sends "Try a free Class" to the shared /demo. */
+/** Booking wizard route for a locale. Since the wizard moved into a site-wide
+ *  popup (see DemoModalHost) these are only the CTAs' href fallback — the
+ *  standalone pages still exist but nothing navigates to them by default.
+ *  There is no /uk/demo: UK shares the global /demo. */
 export const DEMO_PATH: Record<Locale, string> = {
   global: "/demo",
   uk: "/demo",

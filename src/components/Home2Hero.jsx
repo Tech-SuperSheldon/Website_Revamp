@@ -14,7 +14,8 @@
 // cheap since the payload is cached (Cache-Control: max-age=2592000). See
 // public/home2-hero/.
 import { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+
+import { openDemoModal } from "@/components/BookDemo/demoModalStore";
 
 export default function Home2Hero() {
   const [mounted, setMounted] = useState(true);
@@ -22,21 +23,20 @@ export default function Home2Hero() {
   // banner + sticky header). See the measuring effect below.
   const [topOffset, setTopOffset] = useState(0);
   const sectionRef = useRef(null);
-  const router = useRouter();
 
   // The hero's phone CTA is injected inside the same-origin iframe (see
   // public/home2-hero/index.html). On a valid submit it postMessages us so we can
-  // do a client-side navigation to /demo — matching useOpenDemoBooking on /new-home.
+  // open the booking popup — matching useOpenDemoBooking on /new-home.
   useEffect(() => {
     const onMessage = (event) => {
       if (event.origin !== window.location.origin) return;
       if (event.data?.type === 'ss-open-demo') {
-        router.push('/demo');
+        openDemoModal();
       }
     };
     window.addEventListener('message', onMessage);
     return () => window.removeEventListener('message', onMessage);
-  }, [router]);
+  }, []);
 
   useEffect(() => {
     const el = sectionRef.current;

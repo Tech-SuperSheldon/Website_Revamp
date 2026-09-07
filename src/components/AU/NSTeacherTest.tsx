@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { assetUrl } from "@/lib/assetUrl";
 
+import { openAuDemoOnClick } from "@/components/BookDemo/demoModalStore";
+
 export default function NSTeacherTest() {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
@@ -103,7 +105,7 @@ export default function NSTeacherTest() {
           </p>
           
           <div className="flex items-center justify-center gap-3 md:gap-4">
-            <Link href="/au/demo">
+            <Link href="/au/demo" onClick={openAuDemoOnClick}>
               <button className="px-6 md:px-8 py-2 md:py-3 bg-[#e87f1e] text-white rounded-full font-semibold shadow-lg hover:shadow-orange-500/30 hover:bg-[#d67015] transition-all transform hover:-translate-y-1 text-sm md:text-base">
                 Try a free class
               </button>
@@ -201,7 +203,7 @@ export default function NSTeacherTest() {
             <h4 className="text-xs font-bold text-gray-900 leading-tight mb-2">
                 Mastering Fractions &amp; Decimals
             </h4>
-            <Link href="/au/demo">
+            <Link href="/au/demo" onClick={openAuDemoOnClick}>
               <button className="w-full py-1.5 bg-[#e87f1e] text-white text-xs font-semibold rounded-lg hover:bg-[#d67015] transition-colors shadow-sm">
                   Try a free class
               </button>
@@ -251,7 +253,7 @@ export default function NSTeacherTest() {
             <h4 className="text-xs font-bold text-gray-900 leading-tight mb-2">
                 Physics Fundamentals: Motion
             </h4>
-            <Link href="/au/demo">
+            <Link href="/au/demo" onClick={openAuDemoOnClick}>
               <button className="w-full py-1.5 bg-[#e87f1e] text-white text-xs font-semibold rounded-lg hover:bg-[#d67015] transition-colors shadow-sm">
                   Try a free class
               </button>

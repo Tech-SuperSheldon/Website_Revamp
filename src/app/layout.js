@@ -4,6 +4,9 @@ import Script from "next/script";
 
 
 import FestiveOverlay from "@/components/sharedcomps/Festiveoverlay";
+// Site-wide "Book a Demo" popup. Mounted here (the one layout that wraps every
+// route) so any CTA anywhere can open the booking wizard without navigating.
+import DemoModalHost from "@/components/BookDemo/DemoModalHost";
 
 // Headings site-wide use Baloo 2 (see globals.css h1-h6 rule); body text uses
 // Manrope via the Tailwind `sans` family below.
@@ -166,6 +169,8 @@ export default function RootLayout({ children }) {
           {/* <CursorTrail /> */}
           {/* <FestiveOverlay /> */}
           {children}</main>
+
+        <DemoModalHost />
       </body>
     </html>
   );

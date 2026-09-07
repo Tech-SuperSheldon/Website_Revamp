@@ -7,8 +7,8 @@
 // subject chips and the subject picker that opens BookTrialModal. The banner
 // text is deliberately not an <h1> here — the academy name is.
 //
-// `locale` drives the palette, the /demo link and which market's booking
-// wizard the modal shows, so /, /uk and /au all share this one component.
+// `locale` drives the palette and which market's wizard the booking popup and
+// BookTrialModal show, so /, /uk and /au all share this one component.
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -19,6 +19,7 @@ import BookTrialModal from "@/components/BookTrialModal";
 import { subjectIcon } from "@/components/academy/subjectIcons";
 import type { Academy, Locale } from "@/lib/academies";
 import { DEMO_PATH, gradesForSubject, MARKET, REGIONS } from "@/lib/academies";
+import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
 import { academyTheme } from "@/lib/academyTheme";
 
 export default function AcademyHero({
@@ -148,6 +149,7 @@ export default function AcademyHero({
 
                 <Link
                   href={DEMO_PATH[locale]}
+                  onClick={(e) => openDemoOnClick(e, MARKET[locale])}
                   // While this is on screen the floating pill stands down.
                   data-academy-cta
                   className={`mt-4 flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-bold shadow-md transition-colors ${theme.cta}`}

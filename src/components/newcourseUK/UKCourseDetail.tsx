@@ -13,6 +13,8 @@ import UKPricing from "./UKPricing";
 import UKDownloadBrochureButton from "./UKDownloadBrochureButton";
 import UKCourseSidebar from "./UKCourseSidebar";
 
+import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
+
 interface UKCourseDetailProps {
     courseId: string;
 }
@@ -61,7 +63,7 @@ export default function UKCourseDetail({ courseId }: UKCourseDetailProps) {
                 </h1>
                 <div className="flex flex-wrap items-center gap-3">
                     <UKDownloadBrochureButton course={course} variant="solid" />
-                    <Link href="/demo">
+                    <Link href="/demo" onClick={openDemoOnClick}>
                         <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/30 whitespace-nowrap">
                             Enroll as a Champ
                         </button>

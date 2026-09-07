@@ -2,14 +2,15 @@
 
 // 1:1 replica of hero-web/new-supersheldon-website src/components/hero.tsx
 // (Tailwind v4 `bg-linear-to-r` translated to v3 `bg-gradient-to-r`; assets copied to /public;
-//  CTA link points to the valid /demo route.)
+//  CTA opens the shared booking popup.)
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+import { openDemoModal } from "@/components/BookDemo/demoModalStore";
 
 const students = [
   "/student-1-trim.png",
@@ -21,14 +22,13 @@ export function HeroCoding() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter();
 
-  // Mirrors the live hero form: validate the phone client-side, then route to /demo.
+  // Mirrors the live hero form: validate the phone client-side, then open the booking popup.
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (/^\d{10}$/.test(phone)) {
       setError("");
-      router.push("/demo");
+      openDemoModal();
     } else {
       setError("Please enter a valid phone number");
     }

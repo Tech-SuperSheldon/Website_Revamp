@@ -1,6 +1,13 @@
 "use client";
 
-// The shared "Book a Demo" wizard for both /demo (global + UK) and /au/demo.
+// The shared "Book a Demo" wizard.
+//
+// Two layouts, one implementation: `variant="page"` is the standalone /demo and
+// /au/demo routes, `variant="modal"` is the popup every "Try a free Class" /
+// "Book a Demo" CTA on the site now opens (see DemoModalHost). The steps,
+// validation, lead capture and submit calls are identical in both — only the
+// outer chrome and the final "you're all set" action differ.
+//
 // Mirrors LearnForm's step flow (Grade -> Phone -> Date & Time -> Timezone)
 // and its partial-lead-capture pattern: the moment grade + phone are known we
 // fire a background save to the sheet, so the lead isn't lost even if the
@@ -300,7 +307,18 @@ function useClickOutside(ref: React.RefObject<HTMLElement | null>, active: boole
   }, [active]);
 }
 
-export default function BookDemoForm({ market }: { market: Market }) {
+export default function BookDemoForm({
+  market,
+  variant = "page",
+  onClose,
+}: {
+  market: Market;
+  /** "page" = the standalone /demo route, "modal" = the site-wide popup. */
+  variant?: "page" | "modal";
+  /** Dismisses the popup; only used by the modal variant. */
+  onClose?: () => void;
+}) {
+  const isModal = variant === "modal";
   const [step, setStep] = useState(1);
   const [grade, setGrade] = useState("");
 
@@ -369,12 +387,40 @@ export default function BookDemoForm({ market }: { market: Market }) {
     ? TIMEZONE_OPTIONS.filter((o) => o.label.toLowerCase().includes(tzQuery.toLowerCase()) || o.id.toLowerCase().includes(tzQuery.toLowerCase()))
     : TIMEZONE_OPTIONS;
 
+  // ── Auto-advance (popup only) ──
+  // Picking an option is enough to move on; Back/Next stay for the steps that
+  // can't auto-advance (typing a number, confirming the booking) and for anyone
+  // who'd rather drive it by hand. The short pause lets the chip's "selected"
+  // highlight register before the step flips, so the click doesn't feel lost.
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelAutoAdvance = () => {
+    if (advanceTimer.current) {
+      clearTimeout(advanceTimer.current);
+      advanceTimer.current = null;
+    }
+  };
+
+  useEffect(() => cancelAutoAdvance, []);
+
+  const autoAdvance = (run: () => void) => {
+    if (!isModal) return;
+    cancelAutoAdvance();
+    advanceTimer.current = setTimeout(() => {
+      advanceTimer.current = null;
+      run();
+    }, 220);
+  };
+
   const goBack = () => {
+    // A pending auto-advance would otherwise fire straight after and undo this.
+    cancelAutoAdvance();
     if (step > 1) setStep((s) => s - 1);
   };
 
   const handleGradeSelect = (g: string) => {
     setGrade(g);
+    autoAdvance(() => setStep(2));
   };
 
   const handlePhoneContinue = () => {
@@ -446,16 +492,28 @@ export default function BookDemoForm({ market }: { market: Market }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fff7f2] via-white to-blue-50 px-4 py-8">
+    <div
+      className={`bg-gradient-to-br from-[#fff7f2] via-white to-blue-50 ${
+        isModal ? "px-4 py-6 sm:px-6" : "min-h-screen px-4 py-8"
+      }`}
+    >
       <div className="mx-auto flex max-w-4xl flex-col items-center">
-        <img
-          src="/demoheaderv2.jpeg"
-          alt="1:1 Tutoring Session — Boost Bright Futures! Personalized learning for your child's success"
-          className="max-h-[240px] w-full rounded-2xl object-cover object-top shadow-lg"
-        />
+        {/* Banner is page-only: in the popup it just pushes the actual
+            question below the fold. */}
+        {!isModal && (
+          <img
+            src="/demoheaderv2.jpeg"
+            alt="1:1 Tutoring Session — Boost Bright Futures! Personalized learning for your child's success"
+            className="max-h-[240px] w-full rounded-2xl object-cover object-top shadow-lg"
+          />
+        )}
 
         {step === 5 ? (
-          <div className="mt-6 w-full max-w-lg rounded-2xl bg-white p-8 text-center shadow-xl ring-1 ring-black/5">
+          <div
+            className={`w-full max-w-lg rounded-2xl bg-white p-8 text-center shadow-xl ring-1 ring-black/5 ${
+              isModal ? "" : "mt-6"
+            }`}
+          >
             <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
               <svg className="h-11 w-11 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
@@ -467,16 +525,34 @@ export default function BookDemoForm({ market }: { market: Market }) {
               {selectedTzOption ? ` (${selectedTzOption.label})` : ""}.
             </p>
             <p className="mt-1 text-gray-600">Our team will reach out to confirm the details.</p>
-            <a
-              href={market === "au" ? "/au" : "/"}
-              className="mt-6 inline-block w-full rounded-xl bg-gradient-to-r from-[#fc8741] to-amber-500 px-4 py-3 font-semibold text-white shadow-md transition-transform hover:scale-[1.02]"
-            >
-              Back to Home
-            </a>
+            {isModal ? (
+              // The popup opened over the page the visitor was already reading,
+              // so "Back to Home" would be a step backwards — just dismiss it.
+              <button
+                type="button"
+                onClick={onClose}
+                className="mt-6 inline-block w-full rounded-xl bg-gradient-to-r from-[#fc8741] to-amber-500 px-4 py-3 font-semibold text-white shadow-md transition-transform hover:scale-[1.02]"
+              >
+                Done
+              </button>
+            ) : (
+              <a
+                href={market === "au" ? "/au" : "/"}
+                className="mt-6 inline-block w-full rounded-xl bg-gradient-to-r from-[#fc8741] to-amber-500 px-4 py-3 font-semibold text-white shadow-md transition-transform hover:scale-[1.02]"
+              >
+                Back to Home
+              </a>
+            )}
           </div>
         ) : (
           <>
-            <div className="mt-5 flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 text-sm font-medium text-orange-700">
+            {/* In the popup this is the top row, so keep it clear of the
+                floating close button in the corner. */}
+            <div
+              className={`flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 text-sm font-medium text-orange-700 ${
+                isModal ? "max-w-[calc(100%-3rem)]" : "mt-5"
+              }`}
+            >
               <span>📌</span>
               Limited slots today — book your free 1:1 demo class
             </div>
@@ -582,7 +658,19 @@ export default function BookDemoForm({ market }: { market: Market }) {
 
                   {/* Step 2: Mobile */}
                   {step === 2 && (
-                    <div className="mt-6 max-w-md">
+                    // This step can't auto-advance (we don't know when a number
+                    // is finished), so Enter stands in for the Next click.
+                    // Scoped to the number input: the country dropdown's own
+                    // search box bubbles Enter through here too.
+                    <div
+                      className="mt-6 max-w-md"
+                      onKeyDown={(e) => {
+                        if (e.key !== "Enter") return;
+                        if ((e.target as HTMLElement).getAttribute?.("type") !== "tel") return;
+                        e.preventDefault();
+                        handlePhoneContinue();
+                      }}
+                    >
                       <PhoneField
                         country={dialCountry}
                         onCountryChange={(c: any) => {
@@ -638,7 +726,12 @@ export default function BookDemoForm({ market }: { market: Market }) {
                               <button
                                 key={t}
                                 type="button"
-                                onClick={() => setSelectedTime(t)}
+                                onClick={() => {
+                                  setSelectedTime(t);
+                                  // Date is already set — the slots only render
+                                  // once it is — so this completes the step.
+                                  autoAdvance(() => setStep(4));
+                                }}
                                 className={`rounded-xl border-2 px-2 py-3 text-center text-sm font-semibold transition-all hover:border-[#FC8741] hover:bg-[#fff7f2] ${
                                   selectedTime === t
                                     ? "border-[#FC8741] bg-[#fff7f2] text-[#FC8741]"

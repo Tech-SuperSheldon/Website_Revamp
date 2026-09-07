@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, Calendar, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
+
 function getDeadlineInfo() {
   const now = new Date();
   const currentDay = now.getDate();
@@ -141,6 +143,7 @@ export default function NSDeadlineBanner() {
             <div className="flex items-center gap-2 shrink-0">
               <Link
                 href="/demo"
+                onClick={openDemoOnClick}
                 className="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-[#8a6800] to-[#c99700] text-white text-xs font-bold px-3 py-1.5 rounded-full border border-black/10 hover:from-[#775900] hover:to-[#b38a00] transition-colors shadow-sm shadow-black/20"
               >
                 Apply for Demo

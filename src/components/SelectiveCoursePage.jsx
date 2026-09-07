@@ -156,12 +156,12 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { coursesData } from "@/components/ExamCourses";
 import GlossyButton from "./GlossyButton";
 
+import { openDemoModal } from "@/components/BookDemo/demoModalStore";
+
 export default function SelectiveCoursePage({ year, courseIndex }) {
-  const router = useRouter();
   const currentCourse = coursesData[year]?.[courseIndex] || null;
 
   const allReviews = [
@@ -320,7 +320,7 @@ export default function SelectiveCoursePage({ year, courseIndex }) {
             <GlossyButton
               type="button"
               className="bg-orange-500 text-white px-4 sm:px-6 py-2 sm:py-3 font-medium hover:bg-orange-600 transition-all rounded-full shadow-sm text-sm sm:text-base"
-              onClick={() => router.push("/demo")}
+              onClick={() => openDemoModal()}
             >
               Try a Free Class
             </GlossyButton>

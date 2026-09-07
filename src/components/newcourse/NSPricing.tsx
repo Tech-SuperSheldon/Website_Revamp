@@ -1,7 +1,11 @@
+"use client";
+
 import React from "react";
 import { Course } from "@/lib/course-data-au";
 import { Check } from "lucide-react";
 import Link from "next/link";
+
+import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
 
 interface NSPricingProps {
   course: Course;
@@ -135,7 +139,7 @@ export default function NSPricing({ course }: NSPricingProps) {
 
                 {/* Button */}
                 <div className="mt-auto">
-                    <Link href="/demo">
+                    <Link href="/demo" onClick={openDemoOnClick}>
                         <button className={`w-full py-5 rounded-2xl font-bold text-lg transition-all transform hover:-translate-y-1 active:translate-y-0 ${
                             isPromo 
                             ? "bg-white text-orange-600 hover:bg-gray-50 shadow-lg" 

@@ -209,11 +209,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import countries from "world-countries";
 import GlossyButton from "../GlossyButton";
 import { useOpenDemoBooking } from "../utils/navigation";
+
+import { openDemoModal } from "@/components/BookDemo/demoModalStore";
 
 // Pre-process countries (flag + name + dialCode)
 const countryOptions = countries.map((c) => ({
@@ -272,7 +273,6 @@ export default function Hero() {
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const [userCountryCode, setUserCountryCode] = useState("+1");
-  const router = useRouter();
   const openBokingDemo = useOpenDemoBooking() ;
 
   useEffect(() => {
@@ -297,7 +297,7 @@ export default function Hero() {
       return;
     }
     setError("");
-    return () => router.push("/au/demo") ;
+    openDemoModal("au");
   };
 
   const highlightOptions = [

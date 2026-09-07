@@ -3,13 +3,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import countries from "world-countries";
 import GlossyButton from "../GlossyButton";
 import { useOpenDemoBooking } from "../utils/navigation";
 
 import UKGlossyButton from "../UKComp/UKGlossybutton";
+
+import { openDemoModal } from "@/components/BookDemo/demoModalStore";
 
 // Pre-process countries (flag + name + dialCode)
 const countryOptions = countries.map((c) => ({
@@ -68,7 +69,6 @@ export default function E11Hero() {
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
   const [userCountryCode, setUserCountryCode] = useState("+1");
-  const router = useRouter();
   const openBokingDemo = useOpenDemoBooking() ;
 
   useEffect(() => {
@@ -93,7 +93,7 @@ export default function E11Hero() {
       return;
     }
     setError("");
-    return () => router.push("/demo") ;
+    openDemoModal();
   };
 
   const highlightOptions = [

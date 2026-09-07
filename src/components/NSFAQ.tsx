@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { faqSections } from "./faqData";
 
+import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
+
 export default function FAQ() {
   const [activeSection, setActiveSection] = useState(0);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -49,7 +51,7 @@ export default function FAQ() {
             <Link href="https://wa.me/917974695618" target="_blank" rel="noopener noreferrer" className="flex-1 sm:flex-none text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-md transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
                 Contact us
             </Link>
-            <Link href="/demo" className="flex-1 sm:flex-none text-center bg-orange-100 hover:bg-orange-200 text-orange-800 font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-sm border border-orange-200 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
+            <Link href="/demo" onClick={openDemoOnClick} className="flex-1 sm:flex-none text-center bg-orange-100 hover:bg-orange-200 text-orange-800 font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-sm border border-orange-200 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
                 Try a Free Class
             </Link>
         </div>

@@ -23,6 +23,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { SPRING } from "@/lib/motion";
+import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
 
 const AVOID_SELECTOR = "[data-floating-cta-avoid]";
 
@@ -86,7 +87,8 @@ function useAnyAvoidTargetVisible(selector: string) {
 }
 
 export default function FloatingTryClassButton({
-  /** Booking wizard for the site this renders on. */
+  /** Booking wizard for the site this renders on. Kept as the anchor's href so
+   *  the pill stays a real link, but the click opens the popup instead. */
   href = "/demo",
   /** Pill colours — override only where a page runs its own palette. */
   className = "bg-[#FFCC00] hover:bg-[#e6b800] text-black shadow-yellow-500/30",
@@ -120,6 +122,7 @@ export default function FloatingTryClassButton({
     >
       <Link
         href={href}
+        onClick={(e) => openDemoOnClick(e, href.startsWith("/au") ? "au" : "uk")}
         tabIndex={show ? 0 : -1}
         className={`pointer-events-auto inline-flex items-center gap-2 font-bold text-sm px-6 py-3.5 rounded-full shadow-lg transition-colors duration-200 ${className}`}
       >
