@@ -4,13 +4,16 @@
 //
 // Keeps the same banner the /academies index leads with, then carries the copy
 // that used to sit in this academy's card on the /academies index: description,
-// subject chips and the subject picker that opens BookTrialModal. The banner
-// text is deliberately not an <h1> here — the academy name is.
+// subject chips and the subject picker. The banner text is deliberately not an
+// <h1> here — the academy name is.
 //
-// `locale` drives the palette and which market's wizard the booking popup and
-// BookTrialModal show, so /, /uk and /au all share this one component.
+// The picker is two steps: choose a subject, then press the button, which opens
+// that subject's trial wizard. Picking one used to open the wizard on the spot,
+// which left the button with nothing to do.
+//
+// `locale` drives the palette and which market's wizard shows, so /, /uk and
+// /au all share this one component.
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -18,8 +21,7 @@ import { DUR, EASE } from "@/lib/motion";
 import BookTrialModal from "@/components/BookTrialModal";
 import { subjectIcon } from "@/components/academy/subjectIcons";
 import type { Academy, Locale } from "@/lib/academies";
-import { DEMO_PATH, gradesForSubject, MARKET, REGIONS } from "@/lib/academies";
-import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
+import { gradesForSubject, MARKET, REGIONS } from "@/lib/academies";
 import { academyTheme } from "@/lib/academyTheme";
 
 export default function AcademyHero({
@@ -30,7 +32,12 @@ export default function AcademyHero({
   locale: Locale;
 }) {
   const reduce = useReducedMotion() ?? false;
-  const [activeSubject, setActiveSubject] = useState<string | null>(null);
+  // The picker is a two-step action now: choose a subject, then press the
+  // button. Picking one used to open the booking wizard on the spot, which
+  // left no room for the button to mean anything.
+  const [subject, setSubject] = useState("");
+  const [subjectMissing, setSubjectMissing] = useState(false);
+  const [trialOpen, setTrialOpen] = useState(false);
   const theme = academyTheme(locale);
 
   return (
@@ -112,7 +119,8 @@ export default function AcademyHero({
                 </ul>
               </div>
 
-              {/* Subject picker — same flow as the old /academies card */}
+              {/* Subject picker. AcademyCTA's closing band scrolls here, so the
+                  id and scroll-mt need to stay. */}
               <div
                 id="subject-picker"
                 className="rounded-2xl bg-gray-50/80 border border-gray-100 p-5 sm:p-6 scroll-mt-24"
@@ -123,11 +131,16 @@ export default function AcademyHero({
                 <div className="relative">
                   <select
                     aria-label={academy.placeholder}
-                    value=""
+                    aria-invalid={subjectMissing}
+                    aria-describedby="subject-picker-hint"
+                    value={subject}
                     onChange={(e) => {
-                      if (e.target.value) setActiveSubject(e.target.value);
+                      setSubject(e.target.value);
+                      setSubjectMissing(false);
                     }}
-                    className={`w-full appearance-none rounded-xl bg-white border border-gray-200 text-gray-700 text-sm font-semibold py-3 pl-3.5 pr-9 cursor-pointer focus:outline-none focus:ring-2 transition-colors duration-200 ${theme.selectFocus}`}
+                    className={`w-full appearance-none rounded-xl bg-white border text-gray-700 text-sm font-semibold py-3 pl-3.5 pr-9 cursor-pointer focus:outline-none focus:ring-2 transition-colors duration-200 ${
+                      subjectMissing ? "border-red-400 ring-2 ring-red-100" : "border-gray-200"
+                    } ${theme.selectFocus}`}
                   >
                     <option value="" disabled>
                       {academy.placeholder}
@@ -143,31 +156,52 @@ export default function AcademyHero({
                     className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
                   />
                 </div>
-                <p className="mt-2.5 text-xs text-gray-400">
-                  We&apos;ll ask for your child&apos;s grade next to tailor the free trial.
-                </p>
+                {/* Swaps in place of the hint so nothing shifts on error. */}
+                {subjectMissing ? (
+                  <p
+                    id="subject-picker-hint"
+                    role="alert"
+                    className="mt-2.5 text-xs font-semibold text-red-600"
+                  >
+                    Please select a subject first, then tap Book a Free Trial Class.
+                  </p>
+                ) : (
+                  <p id="subject-picker-hint" className="mt-2.5 text-xs text-gray-400">
+                    We&apos;ll ask for your child&apos;s grade next to tailor the free trial.
+                  </p>
+                )}
 
-                <Link
-                  href={DEMO_PATH[locale]}
-                  onClick={(e) => openDemoOnClick(e, MARKET[locale])}
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!subject) {
+                      setSubjectMissing(true);
+                      return;
+                    }
+                    setTrialOpen(true);
+                  }}
                   // While this is on screen the floating pill stands down.
                   data-academy-cta
                   className={`mt-4 flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-bold shadow-md transition-colors ${theme.cta}`}
                 >
                   Book a Free Trial Class
-                </Link>
+                </button>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
+      {/* The subject the visitor picked drives the wizard's copy and grade
+          list. submitData is on: unlike NSAcademies' preview cards, a booking
+          made here is a real lead and must reach /learn-lead and the sheet. */}
       <BookTrialModal
-        open={activeSubject !== null}
-        onClose={() => setActiveSubject(null)}
-        subject={activeSubject ?? ""}
+        open={trialOpen}
+        onClose={() => setTrialOpen(false)}
+        subject={subject}
         country={MARKET[locale]}
-        grades={activeSubject ? gradesForSubject(activeSubject) ?? undefined : undefined}
+        grades={gradesForSubject(subject) ?? undefined}
+        submitData
       />
     </>
   );
