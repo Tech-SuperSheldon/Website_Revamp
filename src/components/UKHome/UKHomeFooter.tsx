@@ -129,10 +129,14 @@ export function Footer() {
             >
               <h4 className="font-bold text-base sm:text-lg text-white mb-3 sm:mb-4 font-rowdies">Learn</h4>
               <ul className="space-y-2 font-medium text-white text-[13px] sm:text-[14px]">
-                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">NAPLAN Exam</RollingLink></li>
-                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">ICAS</RollingLink></li>
-                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">HSC</RollingLink></li>
-                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">Selective School</RollingLink></li>
+                {/* UK exams only — this column was copied from the AU footer and
+                    still listed NAPLAN/ICAS/HSC/Selective School. Matches the UK
+                    exam list in src/lib/academies.ts (UK_EXAMS). */}
+                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">SAT</RollingLink></li>
+                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">GCSE</RollingLink></li>
+                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">IGCSE</RollingLink></li>
+                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">11+ Examination</RollingLink></li>
+                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">A Level / A+ Level</RollingLink></li>
               </ul>
             </motion.div>
 

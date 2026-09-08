@@ -33,16 +33,14 @@ const SUBJECT_ICONS: Record<string, LucideIcon> = {
   Science: FlaskConical,
   English: BookOpen,
   Reasoning: Puzzle,
-  // Exam Academy — global
-  "11+ Exam": ClipboardList,
-  NAPLAN: ClipboardCheck,
-  // Exam Academy — UK
+  // Exam Academy — UK (the global site offers both markets' exams)
   SAT: GraduationCap,
   GCSE: ScrollText,
   IGCSE: Globe2,
   "11+ Examination": ClipboardList,
   "A Level / A+ Level": Award,
   // Exam Academy — Australia
+  NAPLAN: ClipboardCheck,
   "Selective Scholarship": Trophy,
   ICAS: Medal,
   ACER: Target,

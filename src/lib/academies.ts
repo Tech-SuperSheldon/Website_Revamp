@@ -196,6 +196,30 @@ const EXAM_ROWS: ExamRow[] = [
   },
 ];
 
+/** Exams the Exam Readiness academy offers, per market. The exams a family
+ *  recognises differ by country, so /uk and /au each get their own list; the
+ *  global site serves both audiences and lists every exam from both. Used for
+ *  the academy page's subject picker and for the landing page's Exam Readiness
+ *  card (src/components/NSAcademies.tsx). Every name here needs an EXAM_GRADES
+ *  entry below and an icon in src/components/academy/subjectIcons.ts. */
+export const UK_EXAMS = ["SAT", "GCSE", "IGCSE", "11+ Examination", "A Level / A+ Level"];
+
+export const AU_EXAMS = [
+  "NAPLAN",
+  "Selective Scholarship",
+  "ICAS",
+  "ACER",
+  "GATE",
+  "ATAR",
+  "UCAT",
+];
+
+export const EXAM_SUBJECTS: Record<Locale, string[]> = {
+  global: [...UK_EXAMS, ...AU_EXAMS],
+  uk: UK_EXAMS,
+  au: AU_EXAMS,
+};
+
 /** Grade range each Exam Readiness exam applies to, keyed by the exact
  *  subject string used in the picker/booking form. Exams not listed here
  *  (School Readiness, Skill Academy subjects) leave the booking form's grade
@@ -295,7 +319,7 @@ const BASE: Academy[] = [
     heading: "Exam Readiness",
     description:
       "Focused, timeline-driven preparation for major entrance and standardised exams — built around past papers, timed practice and diagnostic tracking.",
-    subjects: ["11+ Exam", "NAPLAN"],
+    subjects: EXAM_SUBJECTS.global,
     placeholder: "Select an exam",
     prompt: "Pick an exam to start",
     stepsSubtitle: "The same four-step journey, tailored to your exam's timeline.",
@@ -434,17 +458,7 @@ const overridesFor = (locale: Exclude<Locale, "global">): Record<string, Overrid
       }),
     },
     "exam-readiness": {
-      subjects: uk
-        ? ["SAT", "GCSE", "IGCSE", "11+ Examination", "A Level / A+ Level"]
-        : [
-            "NAPLAN",
-            "Selective Scholarship",
-            "ICAS",
-            "ACER",
-            "GATE",
-            "ATAR",
-            "UCAT",
-          ],
+      subjects: EXAM_SUBJECTS[locale],
       examTable: {
         title: "Also preparing for other exams?",
         intro: uk

@@ -11,28 +11,10 @@ import { CSS_TRANSITION, hoverLift, rise, riseOnce, stagger, VIEWPORT } from "@/
 import Highlight from "@/components/motion/Highlight";
 import { SpotlightOverlay, useSpotlight } from "@/components/motion/Spotlight";
 import BookTrialModal from "@/components/BookTrialModal";
-import { gradesForSubject, MARKET, type Locale } from "@/lib/academies";
+import { EXAM_SUBJECTS, gradesForSubject, MARKET, type Locale } from "@/lib/academies";
 
 const NAVY = "#0b2545";
 const ORANGE = "#FC8741";
-
-/** Exam Readiness dropdown, per market. The exams a family recognises differ
- *  by country, so /uk and /au each get their own list; the global page keeps
- *  the short mixed one. Names match src/lib/academies.ts exactly so the
- *  booking wizard's grade step picks up the right grades (EXAM_GRADES). */
-const EXAM_SUBJECTS: Record<Locale, string[]> = {
-  global: ["11+ Exam", "NAPLAN"],
-  uk: ["SAT", "GCSE", "IGCSE", "11+ Examination", "A Level / A+ Level"],
-  au: [
-    "NAPLAN",
-    "Selective Scholarship",
-    "ICAS",
-    "ACER",
-    "GATE",
-    "ATAR",
-    "UCAT",
-  ],
-};
 
 type Academy = {
   key: string;
@@ -59,6 +41,9 @@ const academiesFor = (locale: Locale): Academy[] => [
     letter: "E",
     title: "Exam Readiness",
     accent: ORANGE,
+    // Lists live in src/lib/academies.ts so this card and the exam-readiness
+    // academy page offer the same exams: /uk and /au get their own market's,
+    // the global page gets every exam from both.
     subjects: EXAM_SUBJECTS[locale],
     placeholder: "Select an exam",
     prompt: "Pick an exam to start",
