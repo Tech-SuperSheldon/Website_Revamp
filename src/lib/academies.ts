@@ -94,6 +94,20 @@ export const REGIONS: { label: string; flag: string }[] = [
   { label: "New Zealand", flag: "/flags/NZ.svg" },
 ];
 
+/** Country label each market's site speaks to, used to pick its REGIONS row. */
+const REGION_LABEL: Record<Exclude<Locale, "global">, string> = {
+  uk: "UK",
+  au: "Australia",
+};
+
+/** Flags shown on an academy page. The global site lists every market we
+ *  teach; /uk and /au show only their own country, so a local visitor isn't
+ *  shown four flags that aren't theirs. */
+export function regionsFor(locale: Locale) {
+  if (locale === "global") return REGIONS;
+  return REGIONS.filter((r) => r.label === REGION_LABEL[locale]);
+}
+
 /** Every exam the curriculum team covers beyond the headline ones. Each
  *  locale's table is a filter of this list, so a new exam is added once. */
 const EXAM_ROWS: ExamRow[] = [

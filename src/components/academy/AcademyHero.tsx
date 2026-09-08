@@ -21,7 +21,7 @@ import { DUR, EASE } from "@/lib/motion";
 import BookTrialModal from "@/components/BookTrialModal";
 import { subjectIcon } from "@/components/academy/subjectIcons";
 import type { Academy, Locale } from "@/lib/academies";
-import { gradesForSubject, MARKET, REGIONS } from "@/lib/academies";
+import { gradesForSubject, MARKET, regionsFor } from "@/lib/academies";
 import { academyTheme } from "@/lib/academyTheme";
 
 export default function AcademyHero({
@@ -100,7 +100,7 @@ export default function AcademyHero({
                 </ul>
 
                 <ul className="mt-6 flex flex-wrap gap-2 text-xs text-gray-500">
-                  {REGIONS.map((region) => (
+                  {regionsFor(locale).map((region) => (
                     <li
                       key={region.label}
                       className="inline-flex items-center gap-1.5 bg-white border border-gray-100 rounded-full px-3 py-1.5"
