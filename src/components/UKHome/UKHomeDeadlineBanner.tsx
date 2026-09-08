@@ -2,10 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Calendar, Clock, ArrowRight } from "lucide-react";
-import Link from "next/link";
-
-import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
+import { X, Calendar, Clock } from "lucide-react";
 
 function getDeadlineInfo() {
   const now = new Date();
@@ -139,16 +136,8 @@ export default function UKHomeDeadlineBanner() {
               </div>
             </div>
 
-            {/* Right: CTA + Close */}
+            {/* Right: Close */}
             <div className="flex items-center gap-2 shrink-0">
-              <Link
-                href="/demo"
-                onClick={openDemoOnClick}
-                className="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-[#8a6800] to-[#c99700] text-white text-xs font-bold px-3 py-1.5 rounded-full border border-black/10 hover:from-[#775900] hover:to-[#b38a00] transition-colors shadow-sm shadow-black/20"
-              >
-                Apply for Demo
-                <ArrowRight size={12} />
-              </Link>
               <button
                 onClick={() => setDismissed(true)}
                 className="text-black/60 hover:text-black transition-colors p-0.5 sm:p-1 rounded-full hover:bg-black/10"
