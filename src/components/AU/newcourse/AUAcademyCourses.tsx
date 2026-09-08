@@ -7,10 +7,11 @@ import { coursesData } from "@/lib/course-data-au";
 import AcademyCourseGrid from "@/components/academy/AcademyCourseGrid";
 import DownloadBrochureButton from "./DownloadBrochureButton";
 
-export default function AUAcademyCourses() {
+export default function AUAcademyCourses({ academySlug }: { academySlug: string }) {
   return (
     <AcademyCourseGrid
       groups={coursesData}
+      academySlug={academySlug}
       hrefBase="/au/new-courses"
       renderBrochure={(course) => (
         <DownloadBrochureButton course={course} variant="compact" />

@@ -293,6 +293,7 @@ export default function BookDemoForm({
   onClose,
   prefillPhone,
   prefillDialCode,
+  prefillAcademySlug,
 }: {
   market: Market;
   /** Which academies list to show. The three academies share their headings
@@ -309,12 +310,22 @@ export default function BookDemoForm({
   prefillPhone?: string;
   /** Dial code that went with prefillPhone ("+61" or "61"). */
   prefillDialCode?: string;
+  /** Academy the CTA already implies ("exam-readiness", …). The wizard then
+   *  opens on step 2 — that academy's subject/exam list — instead of asking
+   *  which academy first. Back still returns to step 1 to change it. */
+  prefillAcademySlug?: string;
 }) {
   const isModal = variant === "modal";
   const academies = useMemo(() => getAcademies(locale ?? market), [locale, market]);
 
-  const [step, setStep] = useState(1);
-  const [academySlug, setAcademySlug] = useState("");
+  // Ignore a slug this locale doesn't offer, so a stale link can't open the
+  // wizard on an empty subject step.
+  const presetAcademy = academies.some((a) => a.slug === prefillAcademySlug)
+    ? prefillAcademySlug!
+    : "";
+
+  const [step, setStep] = useState(presetAcademy ? 2 : 1);
+  const [academySlug, setAcademySlug] = useState(presetAcademy);
   const [subject, setSubject] = useState("");
   const [grade, setGrade] = useState("");
 

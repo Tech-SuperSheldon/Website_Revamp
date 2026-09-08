@@ -22,6 +22,10 @@ export type DemoPrefill = {
   phone?: string;
   /** Dial code, with or without the leading "+". */
   dialCode?: string;
+  /** Academy slug ("exam-readiness", …) when the CTA already implies a track —
+   *  the academy pages' course cards do. The wizard opens on that academy's
+   *  subject/exam step instead of asking which academy first. */
+  academySlug?: string;
 };
 
 export type DemoModalState = {
@@ -57,8 +61,9 @@ function normalizePrefill(prefill?: DemoPrefill): DemoPrefill | undefined {
 
   const phone = String(prefill.phone ?? "").replace(/\D/g, "");
   const dialCode = String(prefill.dialCode ?? "").replace(/\D/g, "");
-  if (!phone && !dialCode) return undefined;
-  return { phone, dialCode };
+  const academySlug = typeof prefill.academySlug === "string" ? prefill.academySlug : "";
+  if (!phone && !dialCode && !academySlug) return undefined;
+  return { phone, dialCode, academySlug };
 }
 
 /** Open the booking wizard. There is one wizard for the whole site — see

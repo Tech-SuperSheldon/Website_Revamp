@@ -7,10 +7,11 @@ import { coursesData } from "@/lib/course-data-uk";
 import AcademyCourseGrid from "@/components/academy/AcademyCourseGrid";
 import UKDownloadBrochureButton from "./UKDownloadBrochureButton";
 
-export default function UKAcademyCourses() {
+export default function UKAcademyCourses({ academySlug }: { academySlug: string }) {
   return (
     <AcademyCourseGrid
       groups={coursesData}
+      academySlug={academySlug}
       hrefBase="/uk/new-courses"
       renderBrochure={(course) => (
         <UKDownloadBrochureButton course={course} variant="compact" />

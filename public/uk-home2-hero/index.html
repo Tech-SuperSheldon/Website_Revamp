@@ -104,6 +104,26 @@
 
       }
     </style>
+    <!-- SuperSheldon: the job-title banner ("Interactive Learning Platform") keeps
+         its tilt — `.hero-banner { transform: rotate(-4deg); transform-origin: left
+         center }` — but that swings its right end up by width * sin(4°) (20px at
+         288px wide, 33px at 468px), eating the 12–18px gap the flex column leaves
+         under the "SuperSheldon" h1, so the ribbon clips the title. Push it down by
+         the lift plus ~4px of daylight; the two steps match the breakpoints where
+         the banner changes size (banner-size-md padding at 1024px, title-sm copy at
+         1280px). Selector repeated to out-specify the bundle's scoped [data-v-*]
+         rule without !important, same trick as the block above.
+         Keep in sync with the other home2-hero index.html. -->
+    <style>
+      .hero-banner.hero-banner.hero-banner {
+        margin-top: 12px;
+      }
+      @media (min-width: 1280px) {
+        .hero-banner.hero-banner.hero-banner {
+          margin-top: 19px;
+        }
+      }
+    </style>
   </head>
   <body class="is-loading">
     <svg style="display: none" viewBox="0 0 56 61" xmlns="http://www.w3.org/2000/svg">

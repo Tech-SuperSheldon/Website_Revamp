@@ -36,7 +36,7 @@ export default function AUExamReadinessPage() {
       )}
       {/* Regional course catalogue — every grade on screen by default,
           filterable by grade, sitting directly above the four-step journey. */}
-      <AcademyCourses />
+      <AcademyCourses academySlug="exam-readiness" />
       <NSProcess
         stepsCopy={academy.steps}
         subtitle={academy.stepsSubtitle}

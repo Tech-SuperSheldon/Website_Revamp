@@ -36,7 +36,7 @@ export default function UKSkillPage() {
       )}
       {/* Regional course catalogue — every grade on screen by default,
           filterable by grade, sitting directly above the four-step journey. */}
-      <AcademyCourses />
+      <AcademyCourses academySlug="skill" />
       <NSProcess
         stepsCopy={academy.steps}
         subtitle={academy.stepsSubtitle}

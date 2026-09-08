@@ -17,6 +17,7 @@ import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { openDemoModal } from "@/components/BookDemo/demoModalStore";
 
 /** Minimum a course needs to render a card. Both the AU and UK datasets are
  *  supersets of this, so each site passes its own richer type through. */
@@ -38,11 +39,15 @@ export default function AcademyCourseGrid<T extends AcademyCourseBase>({
   groups,
   /** Course detail route for this site, e.g. "/au/new-courses". */
   hrefBase,
+  /** Academy this grid sits on. "Explore Course" opens the booking popup on
+   *  this academy's subject/exam step instead of navigating away. */
+  academySlug,
   /** Site-specific brochure button; typed against that site's Course. */
   renderBrochure,
 }: {
   groups: Record<string, T[]>;
   hrefBase: string;
+  academySlug?: string;
   renderBrochure?: (course: T) => React.ReactNode;
 }) {
   const [activeGroup, setActiveGroup] = useState(ALL);
@@ -171,7 +176,19 @@ export default function AcademyCourseGrid<T extends AcademyCourseBase>({
                       </p>
 
                       <div className="mt-auto">
-                        <button className="group/btn mb-3 flex w-full items-center justify-center gap-2 rounded-xl bg-gray-50 py-3 font-bold text-gray-900 transition-all duration-300 hover:bg-orange-500 hover:text-white">
+                        {/* Books rather than navigates: the visitor is already
+                            on the academy page this course belongs to, so the
+                            popup opens on that academy's subject/exam step. The
+                            card is still a link, so stop the click reaching it. */}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            openDemoModal({ academySlug });
+                          }}
+                          className="group/btn mb-3 flex w-full items-center justify-center gap-2 rounded-xl bg-gray-50 py-3 font-bold text-gray-900 transition-all duration-300 hover:bg-orange-500 hover:text-white"
+                        >
                           Explore Course
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

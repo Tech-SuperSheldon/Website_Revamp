@@ -97,6 +97,9 @@ export default function DemoModalHost() {
             // the wizard's phone step opens filled in instead of asking again.
             prefillPhone={state.prefill?.phone}
             prefillDialCode={state.prefill?.dialCode}
+            // A CTA on an academy page knows the track already, so the wizard
+            // opens on that academy's subject/exam step.
+            prefillAcademySlug={state.prefill?.academySlug}
           />
         </div>
       </div>
