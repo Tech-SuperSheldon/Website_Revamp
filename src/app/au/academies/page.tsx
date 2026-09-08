@@ -27,7 +27,7 @@ export default function AUAcademiesPage() {
         highlightBar={theme.highlightBar}
       />
       <Footer />
-      <FloatingTryClassButton href="/au/demo" avoidSelector={ACADEMY_CTA_SELECTOR} />
+      <FloatingTryClassButton href="/demo" avoidSelector={ACADEMY_CTA_SELECTOR} />
     </main>
   );
 }

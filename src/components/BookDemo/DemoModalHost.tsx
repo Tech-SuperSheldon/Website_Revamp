@@ -55,21 +55,10 @@ export default function DemoModalHost() {
 
   if (!mounted || !state.open) return null;
 
-  // Which academies list the first two steps show. The three academies are the
-  // same everywhere but their sub-categories are not — Exam Readiness lists
-  // different exams on /uk, /au and the global site — so follow the page the
-  // CTA was clicked on, exactly like the /academies pages themselves do.
-  const locale: Locale = state.market
-    ? state.market
-    : pathname?.startsWith("/au")
-    ? "au"
-    : pathname?.startsWith("/uk")
-    ? "uk"
-    : "global";
-
-  // AU visitors get the AU wizard (AU dial code, AU "Back to Home" target);
-  // everything else — global and UK — shares the "uk" one, matching what
-  // /demo vs /au/demo did before.
+  // One wizard for the whole site. /au and /uk deliberately open the same
+  // popup as "/" — same academies, same exam list, same dial code — so this no
+  // longer infers a locale from the path or from the CTA that opened it.
+  const locale: Locale = "global";
   const market: DemoMarket = MARKET[locale];
 
   return createPortal(

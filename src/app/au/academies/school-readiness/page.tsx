@@ -47,7 +47,7 @@ export default function AUSchoolReadinessPage() {
       <AcademyFAQ items={academy.faqs} locale="au" />
       <AcademyCTA prompt={academy.prompt} subtitle={academy.ctaSubtitle} locale="au" />
       <Footer />
-      <FloatingTryClassButton href="/au/demo" avoidSelector={ACADEMY_CTA_SELECTOR} />
+      <FloatingTryClassButton href="/demo" avoidSelector={ACADEMY_CTA_SELECTOR} />
     </main>
   );
 }

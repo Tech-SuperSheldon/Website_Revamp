@@ -31,7 +31,7 @@ export default function Home2Hero() {
     const onMessage = (event) => {
       if (event.origin !== window.location.origin) return;
       if (event.data?.type === 'ss-open-demo') {
-        openDemoModal("au");
+        openDemoModal();
       }
     };
     window.addEventListener('message', onMessage);

@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Search, Plus, MessageCircle, GraduationCap } from "lucide-react";
 import { faqSections, type FaqItem } from "./faqPageData";
 
-import { openAuDemoOnClick } from "@/components/BookDemo/demoModalStore";
+import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
 
 export default function NSFaqMain() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -247,8 +247,8 @@ export default function NSFaqMain() {
               Contact Us
             </Link>
             <Link
-              href="/au/demo"
-              onClick={openAuDemoOnClick}
+              href="/demo"
+              onClick={openDemoOnClick}
               className="inline-flex items-center justify-center gap-2 bg-white hover:bg-orange-100 text-orange-800 font-bold py-3 px-8 rounded-full transition-all duration-300 shadow-sm border border-orange-200 transform hover:scale-105"
             >
               <GraduationCap size={18} />

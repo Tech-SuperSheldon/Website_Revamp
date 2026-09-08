@@ -35,7 +35,7 @@ import {
 } from "lucide-react";
 import { teachers as TEACHERS } from "@/data/teachers";
 
-import { openAuDemoOnClick } from "@/components/BookDemo/demoModalStore";
+import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
 
 /* ───────────────────────── Rating stars ───────────────────────── */
 function Stars({ value = 0 }) {
@@ -287,8 +287,8 @@ function TeacherModal({ teacher, onClose }) {
 
           {/* CTA */}
           <Link
-            href="/au/demo"
-            onClick={openAuDemoOnClick}
+            href="/demo"
+            onClick={openDemoOnClick}
             className="mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-orange-500/25 transition-transform hover:scale-[1.02]"
           >
             Book a Free Demo

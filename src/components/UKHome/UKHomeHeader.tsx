@@ -20,8 +20,8 @@ const ACADEMY_MENU = academyMenu("uk");
 const navLinks = [
   { name: "Home", href: "/uk" },
   { name: "Academies", href: "/uk/academies" },
-  { name: "Testimonial", href: "/new-testimonial" },
-  { name: "Blogs", href: "/new-blogs" },
+  { name: "Testimonial", href: "/uk/testimonial" },
+  { name: "Blogs", href: "/uk/blogs" },
   { name: "Become a Teacher", href: "/become-a-teacher" },
 ];
 

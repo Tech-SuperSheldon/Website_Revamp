@@ -1,14 +1,21 @@
-// Landing page (/) — the new SuperSheldon experience.
-// This is the same design that previously lived at /home2: the 3D WebGL hero
-// (Vue + Three.js, served from /public/home2-hero via iframe) followed by the
-// new-design sections. /home2 now redirects here so there is a single canonical
-// homepage.
+// /au landing page — the global landing page's design and section order
+// (src/app/page.js), wired to the Australian site.
+//
+// Sections that carry no links (TrustedByBar, NSParentsSaying, NSAcademies,
+// NSWhySheldon, NSHomeFAQ, ScrollProgressBar) are shared with "/" directly.
+// Everything that navigates — header, footer, deadline banner, hero, teacher
+// carousel — uses the AU copy so a visitor on /au stays on /au. The booking
+// popup is deliberately the shared global wizard (see DemoModalHost).
+//
+// Keep the section list in sync with src/app/page.js.
 import dynamic from 'next/dynamic';
 import { Header } from '@/components/AU/NSheader';
 import NSDeadlineBanner from '@/components/AU/NSDeadlineBanner';
 import Home2Hero from '@/components/AU/Home2Hero';
-import FloatingTryClassButton from '@/components/FloatingTryClassButton';
+import TrustedByBar from '@/components/TrustedByBar';
 import DeferredWidgets, { DeferredSection } from '@/components/AU/DeferredWidgets';
+import ScrollProgressBar from '@/components/ScrollProgressBar';
+import FloatingTryClassButton from '@/components/FloatingTryClassButton';
 
 // Below-fold components loaded lazily to reduce initial JS bundle
 const TestimonialSection   = dynamic(() => import('@/components/AU/NSstudent-testimonial').then(m => ({ default: m.TestimonialSection })));
@@ -23,17 +30,25 @@ const NSTeacherTest        = dynamic(() => import('@/components/AU/NSTeacherTest
 const TeacherCarousel      = dynamic(() => import('@/components/AU/NSTeacherCarousel'));
 const FeatureSlider        = dynamic(() => import('@/components/AU/NSFeatures'));
 const NSLevelUp            = dynamic(() => import('@/components/AU/NSApp'));
-const FAQ                  = dynamic(() => import('@/components/AU/NSFAQ'));
-const PathwayFinderBanner  = dynamic(() => import('@/components/AU/PathwayFinderBanner'));
+// Redesign sections, sitting between the stats strip and the footer. None of
+// these link anywhere, so /au shares them with the global page.
+const NSWhySheldon         = dynamic(() => import('@/components/NSWhySheldon'));
+const NSParentsSaying      = dynamic(() => import('@/components/NSParentsSaying'));
+const NSAcademies          = dynamic(() => import('@/components/NSAcademies'));
+
+// Short landing-page FAQ. The long categorised one (AU/NSFAQ) is still used by /au/faq.
+const FAQ                  = dynamic(() => import('@/components/NSHomeFAQ'));
 const Footer               = dynamic(() => import('@/components/AU/NSfooter').then(m => ({ default: m.Footer })));
 
 export const metadata = {
-  title: 'SuperSheldon | Interactive Online Learning for Kids & Students',
+  title: 'SuperSheldon Australia | Interactive Online Learning for Kids & Students',
+  alternates: { canonical: '/au' },
 };
 
-export default function Home() {
+export default function AUHome() {
   return (
     <main className="new-home-bg">
+      <ScrollProgressBar />
       <NSDeadlineBanner />
       <Header stacked />
 
@@ -42,8 +57,13 @@ export default function Home() {
           sections below come into view. Mounts immediately on page load — see
           Home2Hero. */}
       <Home2Hero />
+      <TrustedByBar />
 
       <TestimonialSection />
+      {/* Temporarily removed for landing page redesign preview — from
+          Focused Exam Mastery Courses (USCourseTree) through Try our app,
+          LevelUp (NSLevelUp / NSApp). Restore by uncommenting. */}
+      {/*
       <USCourseTree />
       <NSClassVideoSection />
       <NSChoose />
@@ -57,26 +77,30 @@ export default function Home() {
         <NSTeacherTest />
       </DeferredSection>
       <DeferredSection>
-        <TeacherCarousel />
-      </DeferredSection>
-      <DeferredSection>
         <FeatureSlider />
       </DeferredSection>
       <DeferredSection>
         <NSLevelUp />
       </DeferredSection>
+      */}
+
+      <NSParentsSaying />
+      <NSAcademies />
+      <NSWhySheldon />
+
+      <DeferredSection>
+        <TeacherCarousel />
+      </DeferredSection>
+
       <DeferredSection>
         <FAQ />
-      </DeferredSection>
-      <DeferredSection>
-        <PathwayFinderBanner />
       </DeferredSection>
       <DeferredSection>
         <Footer />
       </DeferredSection>
 
       <DeferredWidgets mobileHidden={true} side="right" mobileBar={true} />
-      <FloatingTryClassButton href="/au/demo" />
+      <FloatingTryClassButton href="/demo" />
     </main>
   );
 }

@@ -113,8 +113,8 @@ export function Footer() {
               <ul className="space-y-2 font-medium text-white text-[13px] sm:text-[14px]">
                 <li><RollingLink href="/uk" hoverColor="text-black" baseColor="text-white">Home</RollingLink></li>
                 <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">Courses</RollingLink></li>
-                <li><RollingLink href="/new-testimonial" hoverColor="text-black" baseColor="text-white">Reviews</RollingLink></li>
-                <li><RollingLink href="/new-blogs" hoverColor="text-black" baseColor="text-white">Blogs</RollingLink></li>
+                <li><RollingLink href="/uk/testimonial" hoverColor="text-black" baseColor="text-white">Reviews</RollingLink></li>
+                <li><RollingLink href="/uk/blogs" hoverColor="text-black" baseColor="text-white">Blogs</RollingLink></li>
                 <li><RollingLink href="/become-a-teacher" hoverColor="text-black" baseColor="text-white">Become a Teacher</RollingLink></li>
               </ul>
             </motion.div>
@@ -129,10 +129,10 @@ export function Footer() {
             >
               <h4 className="font-bold text-base sm:text-lg text-white mb-3 sm:mb-4 font-rowdies">Learn</h4>
               <ul className="space-y-2 font-medium text-white text-[13px] sm:text-[14px]">
-                <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">NAPLAN Exam</RollingLink></li>
-                <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">ICAS</RollingLink></li>
-                <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">HSC</RollingLink></li>
-                <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">Selective School</RollingLink></li>
+                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">NAPLAN Exam</RollingLink></li>
+                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">ICAS</RollingLink></li>
+                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">HSC</RollingLink></li>
+                <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">Selective School</RollingLink></li>
               </ul>
             </motion.div>
 
@@ -147,8 +147,8 @@ export function Footer() {
               <h4 className="font-bold text-base sm:text-lg text-white mb-3 sm:mb-4 font-rowdies">Information</h4>
               <ul className="space-y-2 font-medium text-white text-[13px] sm:text-[14px]">
                 <li><RollingLink href="/faq" hoverColor="text-black" baseColor="text-white">FAQ</RollingLink></li>
-                <li><RollingLink href="/privacy" hoverColor="text-black" baseColor="text-white">Privacy Policy</RollingLink></li>
-                <li><RollingLink href="/terms" hoverColor="text-black" baseColor="text-white">Terms & Conditions</RollingLink></li>
+                <li><RollingLink href="/uk/legal/privacy" hoverColor="text-black" baseColor="text-white">Privacy Policy</RollingLink></li>
+                <li><RollingLink href="/uk/legal/terms" hoverColor="text-black" baseColor="text-white">Terms & Conditions</RollingLink></li>
               </ul>
             </motion.div>
 

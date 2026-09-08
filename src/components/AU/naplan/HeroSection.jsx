@@ -297,7 +297,7 @@ export default function Hero() {
       return;
     }
     setError("");
-    openDemoModal("au");
+    openDemoModal();
   };
 
   const highlightOptions = [

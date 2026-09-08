@@ -70,7 +70,3 @@ export function openDemoOnClick(
   openDemoModal(market);
 }
 
-/** Same as above, pre-bound to the AU market. */
-export function openAuDemoOnClick(event: React.MouseEvent<HTMLElement>) {
-  openDemoOnClick(event, "au");
-}

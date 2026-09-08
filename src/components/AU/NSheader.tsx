@@ -11,7 +11,7 @@ import { RollingLink } from "./RollingLink";
 
 import { academyMenu } from "@/lib/academies";
 
-import { openAuDemoOnClick } from "@/components/BookDemo/demoModalStore";
+import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
 
 // Hover menu under "Academies" — same data the /academies pages render, so a
 // rename can't drift between the nav and the page.
@@ -131,7 +131,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-3">
-            <Link href="/au/demo" data-floating-cta-avoid onClick={(e) => { setIsMobileMenuOpen(false); openAuDemoOnClick(e); }}>
+            <Link href="/demo" data-floating-cta-avoid onClick={(e) => { setIsMobileMenuOpen(false); openDemoOnClick(e); }}>
                 <Button variant="gradient" className="rounded-full px-6 py-5 text-base shadow-md transition-all hover:shadow-lg hover:shadow-yellow-500/30 whitespace-nowrap bg-none bg-[#FFCC00] from-transparent to-transparent text-black hover:bg-[#e6b800] hover:opacity-100">
                     Try a free Class
                 </Button>
@@ -215,7 +215,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
               )
             )}
             <div className="h-px w-full bg-gray-100 my-2" />
-             <Link href="/au/demo" data-floating-cta-avoid="menu" onClick={(e) => { setIsMobileMenuOpen(false); openAuDemoOnClick(e); }} className="w-full max-w-[280px]">
+             <Link href="/demo" data-floating-cta-avoid="menu" onClick={(e) => { setIsMobileMenuOpen(false); openDemoOnClick(e); }} className="w-full max-w-[280px]">
                 <Button className="w-full bg-[#FFCC00] hover:bg-[#e6b800] text-black rounded-full px-6 py-4 text-lg">
                     Try a free Class
                 </Button>

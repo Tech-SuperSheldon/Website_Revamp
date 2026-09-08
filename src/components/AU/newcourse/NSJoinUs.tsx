@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 
-import { openAuDemoOnClick } from "@/components/BookDemo/demoModalStore";
+import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
 
 export default function NSJoinUs() {
   return (
@@ -25,7 +25,7 @@ export default function NSJoinUs() {
        </div>
 
       <div className="shrink-0">
-        <Link href="/au/demo" onClick={openAuDemoOnClick}>
+        <Link href="/demo" onClick={openDemoOnClick}>
           <button className="bg-orange-600 text-white px-8 py-4 rounded-full font-bold hover:bg-orange-700 transition-all shadow-lg shadow-orange-500/30 whitespace-nowrap text-lg">
             Enroll Today
           </button>

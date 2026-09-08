@@ -122,7 +122,7 @@ export default function FloatingTryClassButton({
     >
       <Link
         href={href}
-        onClick={(e) => openDemoOnClick(e, href.startsWith("/au") ? "au" : "uk")}
+        onClick={openDemoOnClick}
         tabIndex={show ? 0 : -1}
         className={`pointer-events-auto inline-flex items-center gap-2 font-bold text-sm px-6 py-3.5 rounded-full shadow-lg transition-colors duration-200 ${className}`}
       >
