@@ -1,5 +1,5 @@
 import { Header } from "@/components/AU/NSheader";
-import { Footer } from "@/components/NSfooter";
+import { Footer } from "@/components/AU/NSfooter";
 import AcademyHero from "@/components/academy/AcademyHero";
 import AcademyExamTable from "@/components/academy/AcademyExamTable";
 import AcademyFAQ from "@/components/academy/AcademyFAQ";

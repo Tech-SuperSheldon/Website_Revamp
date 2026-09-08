@@ -17,11 +17,9 @@ export type DemoMarket = "uk" | "au";
 
 export type DemoModalState = {
   open: boolean;
-  /** Explicit market override; when undefined the host infers it from the URL. */
-  market?: DemoMarket;
 };
 
-const CLOSED: DemoModalState = { open: false, market: undefined };
+const CLOSED: DemoModalState = { open: false };
 
 let state: DemoModalState = CLOSED;
 const listeners = new Set<(s: DemoModalState) => void>();
@@ -41,9 +39,10 @@ export function getDemoModalState(): DemoModalState {
   return state;
 }
 
-/** Open the booking wizard. Pass a market to override URL-based detection. */
-export function openDemoModal(market?: DemoMarket) {
-  state = { open: true, market };
+/** Open the booking wizard. There is one wizard for the whole site — see
+ *  DemoModalHost — so there is nothing per-market to pass in. */
+export function openDemoModal() {
+  state = { open: true };
   emit();
 }
 
@@ -59,14 +58,11 @@ export function closeDemoModal() {
  * navigation and opens the popup instead, but lets modifier-clicks through so
  * "open in new tab" keeps working for anyone who deliberately asks for it.
  */
-export function openDemoOnClick(
-  event: React.MouseEvent<HTMLElement>,
-  market?: DemoMarket
-) {
+export function openDemoOnClick(event: React.MouseEvent<HTMLElement>) {
   if (event.defaultPrevented) return;
   if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
   if (typeof event.button === "number" && event.button !== 0) return;
   event.preventDefault();
-  openDemoModal(market);
+  openDemoModal();
 }
 

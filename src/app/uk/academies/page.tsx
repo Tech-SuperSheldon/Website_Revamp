@@ -1,5 +1,5 @@
 import { Header } from "@/components/UKHome/UKHomeHeader";
-import { Footer } from "@/components/NSfooter";
+import { Footer } from "@/components/UKHome/UKHomeFooter";
 import AcademyIndexHero from "@/components/academy/AcademyIndexHero";
 import NSProcess from "@/components/NSProcess";
 import FloatingTryClassButton, {

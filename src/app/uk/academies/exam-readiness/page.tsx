@@ -1,5 +1,5 @@
 import { Header } from "@/components/UKHome/UKHomeHeader";
-import { Footer } from "@/components/NSfooter";
+import { Footer } from "@/components/UKHome/UKHomeFooter";
 import AcademyHero from "@/components/academy/AcademyHero";
 import AcademyExamTable from "@/components/academy/AcademyExamTable";
 import AcademyFAQ from "@/components/academy/AcademyFAQ";
