@@ -226,7 +226,9 @@ export function Hero() {
               e.preventDefault();
               if (/^\d{6,15}$/.test(phone)) {
                 setPhoneError("");
-                openDemoBooking();
+                // Hand the number to the booking wizard so its phone step
+                // opens pre-filled rather than asking for it again.
+                openDemoBooking({ phone, dialCode });
               } else {
                 setPhoneError("Please enter a valid phone number");
               }

@@ -297,7 +297,8 @@ export default function Hero() {
       return;
     }
     setError("");
-    openDemoModal();
+    // Carry the number into the booking wizard so it doesn't ask again.
+    openDemoModal({ phone, dialCode: userCountryCode });
   };
 
   const highlightOptions = [
@@ -337,7 +338,8 @@ export default function Hero() {
     e.preventDefault(); // prevent auto-submit
     if (/^\d{10}$/.test(phone)) {  // simple 10 digit validation
       setError(""); 
-      openBokingDemo();
+      // Carry the number into the booking wizard so it doesn't ask again.
+      openBokingDemo({ phone, dialCode: userCountryCode });
     } else {
       setError("Please enter a valid phone number");
     }

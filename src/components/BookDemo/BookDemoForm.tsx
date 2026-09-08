@@ -23,7 +23,7 @@ import axiosClient from "@/components/utils/axios";
 // @ts-ignore - JS component, no type declarations
 import PhoneField from "@/components/demo/PhoneField";
 // @ts-ignore - JS module, no type declarations
-import { findByIso } from "@/components/demo/countries";
+import { findByIso, findByDial } from "@/components/demo/countries";
 import { getAcademies, type Academy, type Locale } from "@/lib/academies";
 
 type Market = "uk" | "au";
@@ -291,6 +291,8 @@ export default function BookDemoForm({
   locale,
   variant = "page",
   onClose,
+  prefillPhone,
+  prefillDialCode,
 }: {
   market: Market;
   /** Which academies list to show. The three academies share their headings
@@ -302,6 +304,11 @@ export default function BookDemoForm({
   variant?: "page" | "modal";
   /** Dismisses the popup; only used by the modal variant. */
   onClose?: () => void;
+  /** Phone number (digits only, no dial code) a hero form already collected,
+   *  so the phone step opens filled in instead of asking for it twice. */
+  prefillPhone?: string;
+  /** Dial code that went with prefillPhone ("+61" or "61"). */
+  prefillDialCode?: string;
 }) {
   const isModal = variant === "modal";
   const academies = useMemo(() => getAcademies(locale ?? market), [locale, market]);
@@ -316,9 +323,15 @@ export default function BookDemoForm({
     [academies, academySlug]
   );
 
-  const [dialCountry, setDialCountry] = useState(() => findByIso(DEFAULT_DIAL[market]));
-  const dialCountryTouched = useRef(false);
-  const [nationalNumber, setNationalNumber] = useState("");
+  const [dialCountry, setDialCountry] = useState(
+    () => findByDial(prefillDialCode) ?? findByIso(DEFAULT_DIAL[market])
+  );
+  // A dial code that came in with the prefill counts as already chosen, so the
+  // geo lookup below doesn't overwrite what the visitor picked in the hero.
+  const dialCountryTouched = useRef(Boolean(findByDial(prefillDialCode)));
+  const [nationalNumber, setNationalNumber] = useState(() =>
+    String(prefillPhone ?? "").replace(/\D/g, "")
+  );
   const [phoneError, setPhoneError] = useState("");
 
   const [selectedDate, setSelectedDate] = useState("");

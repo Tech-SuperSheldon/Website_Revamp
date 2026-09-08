@@ -146,17 +146,94 @@
         -webkit-backdrop-filter: blur(8px);
         overflow: hidden;
       }
+      /* Country-code picker. The visitor's country is geo-detected on load
+         (see detectCountry below) but stays changeable — the menu is a sibling
+         of .ss-pill, which clips its own overflow for the rounded ends. */
+      #ss-phone-form .ss-pill-wrap { position: relative; }
       #ss-phone-form .ss-dial {
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 4px;
         height: 36px;
-        width: 48px;
         flex-shrink: 0;
+        padding: 0 8px;
+        border: 0;
         border-right: 1px solid #e5e7eb;
+        background: transparent;
+        font-family: inherit;
         font-size: 12px;
         font-weight: 600;
         color: #374151;
+        cursor: pointer;
+      }
+      #ss-phone-form .ss-dial:hover { background: rgba(0, 0, 0, 0.04); }
+      #ss-phone-form .ss-dial-flag { font-size: 15px; line-height: 1; }
+      #ss-phone-form .ss-dial-caret {
+        width: 12px;
+        height: 12px;
+        color: #9ca3af;
+        transition: transform 0.15s ease;
+      }
+      #ss-phone-form .ss-dial[aria-expanded="true"] .ss-dial-caret { transform: rotate(180deg); }
+      #ss-phone-form .ss-country-menu {
+        position: absolute;
+        z-index: 60;
+        top: calc(100% + 6px);
+        left: 0;
+        width: min(20rem, 100%);
+        max-height: 240px;
+        overflow-y: auto;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.25);
+        text-align: left;
+      }
+      #ss-phone-form .ss-country-menu[hidden] { display: none; }
+      #ss-phone-form .ss-country-search-wrap {
+        position: sticky;
+        top: 0;
+        padding: 8px;
+        background: #fff;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      #ss-phone-form .ss-country-search {
+        width: 100%;
+        height: 32px;
+        padding: 0 10px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        outline: none;
+        font-family: inherit;
+        font-size: 13px;
+        color: #111827;
+      }
+      #ss-phone-form .ss-country-search:focus { border-color: #03215F; }
+      #ss-phone-form .ss-country-list { margin: 0; padding: 4px 0; list-style: none; }
+      #ss-phone-form .ss-country-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        padding: 8px 12px;
+        border: 0;
+        background: transparent;
+        font-family: inherit;
+        font-size: 13px;
+        color: #1f2937;
+        text-align: left;
+        cursor: pointer;
+      }
+      #ss-phone-form .ss-country-item:hover,
+      #ss-phone-form .ss-country-item[aria-selected="true"] { background: #f3f4f6; }
+      #ss-phone-form .ss-country-item .ss-country-name { flex: 1; }
+      #ss-phone-form .ss-country-item .ss-country-dial { color: #6b7280; }
+      #ss-phone-form .ss-country-empty {
+        padding: 12px;
+        font-size: 13px;
+        color: #9ca3af;
+        text-align: center;
       }
       #ss-phone-form .ss-input {
         height: 36px;
@@ -281,13 +358,72 @@
         var FORM_ID = "ss-phone-form";
         var TRUST_ID = "ss-trust";
 
+        // Curated country list for the dial-code picker — kept in step with
+        // src/components/demo/countries.js, which the booking wizard uses, so
+        // a code chosen here always resolves to the same country there.
+        var COUNTRIES = [
+          { iso: "AU", name: "Australia", dial: "61", flag: "\uD83C\uDDE6\uD83C\uDDFA" },
+          { iso: "IN", name: "India", dial: "91", flag: "\uD83C\uDDEE\uD83C\uDDF3" },
+          { iso: "US", name: "United States", dial: "1", flag: "\uD83C\uDDFA\uD83C\uDDF8" },
+          { iso: "GB", name: "United Kingdom", dial: "44", flag: "\uD83C\uDDEC\uD83C\uDDE7" },
+          { iso: "NZ", name: "New Zealand", dial: "64", flag: "\uD83C\uDDF3\uD83C\uDDFF" },
+          { iso: "CA", name: "Canada", dial: "1", flag: "\uD83C\uDDE8\uD83C\uDDE6" },
+          { iso: "AE", name: "United Arab Emirates", dial: "971", flag: "\uD83C\uDDE6\uD83C\uDDEA" },
+          { iso: "SG", name: "Singapore", dial: "65", flag: "\uD83C\uDDF8\uD83C\uDDEC" },
+          { iso: "SA", name: "Saudi Arabia", dial: "966", flag: "\uD83C\uDDF8\uD83C\uDDE6" },
+          { iso: "QA", name: "Qatar", dial: "974", flag: "\uD83C\uDDF6\uD83C\uDDE6" },
+          { iso: "KW", name: "Kuwait", dial: "965", flag: "\uD83C\uDDF0\uD83C\uDDFC" },
+          { iso: "OM", name: "Oman", dial: "968", flag: "\uD83C\uDDF4\uD83C\uDDF2" },
+          { iso: "BH", name: "Bahrain", dial: "973", flag: "\uD83C\uDDE7\uD83C\uDDED" },
+          { iso: "MY", name: "Malaysia", dial: "60", flag: "\uD83C\uDDF2\uD83C\uDDFE" },
+          { iso: "ID", name: "Indonesia", dial: "62", flag: "\uD83C\uDDEE\uD83C\uDDE9" },
+          { iso: "PH", name: "Philippines", dial: "63", flag: "\uD83C\uDDF5\uD83C\uDDED" },
+          { iso: "PK", name: "Pakistan", dial: "92", flag: "\uD83C\uDDF5\uD83C\uDDF0" },
+          { iso: "BD", name: "Bangladesh", dial: "880", flag: "\uD83C\uDDE7\uD83C\uDDE9" },
+          { iso: "LK", name: "Sri Lanka", dial: "94", flag: "\uD83C\uDDF1\uD83C\uDDF0" },
+          { iso: "NP", name: "Nepal", dial: "977", flag: "\uD83C\uDDF3\uD83C\uDDF5" },
+          { iso: "ZA", name: "South Africa", dial: "27", flag: "\uD83C\uDDFF\uD83C\uDDE6" },
+          { iso: "NG", name: "Nigeria", dial: "234", flag: "\uD83C\uDDF3\uD83C\uDDEC" },
+          { iso: "KE", name: "Kenya", dial: "254", flag: "\uD83C\uDDF0\uD83C\uDDEA" },
+          { iso: "IE", name: "Ireland", dial: "353", flag: "\uD83C\uDDEE\uD83C\uDDEA" },
+          { iso: "DE", name: "Germany", dial: "49", flag: "\uD83C\uDDE9\uD83C\uDDEA" },
+          { iso: "FR", name: "France", dial: "33", flag: "\uD83C\uDDEB\uD83C\uDDF7" },
+          { iso: "NL", name: "Netherlands", dial: "31", flag: "\uD83C\uDDF3\uD83C\uDDF1" },
+          { iso: "ES", name: "Spain", dial: "34", flag: "\uD83C\uDDEA\uD83C\uDDF8" },
+          { iso: "IT", name: "Italy", dial: "39", flag: "\uD83C\uDDEE\uD83C\uDDF9" },
+          { iso: "SE", name: "Sweden", dial: "46", flag: "\uD83C\uDDF8\uD83C\uDDEA" },
+          { iso: "CH", name: "Switzerland", dial: "41", flag: "\uD83C\uDDE8\uD83C\uDDED" },
+          { iso: "HK", name: "Hong Kong", dial: "852", flag: "\uD83C\uDDED\uD83C\uDDF0" },
+          { iso: "JP", name: "Japan", dial: "81", flag: "\uD83C\uDDEF\uD83C\uDDF5" },
+          { iso: "CN", name: "China", dial: "86", flag: "\uD83C\uDDE8\uD83C\uDDF3" }
+        ];
+        var FALLBACK_ISO = "GB";
+
+        function findByIso(iso) {
+          if (!iso) return null;
+          var target = String(iso).toUpperCase();
+          for (var i = 0; i < COUNTRIES.length; i++) {
+            if (COUNTRIES[i].iso === target) return COUNTRIES[i];
+          }
+          return null;
+        }
+
         function buildForm() {
           var form = document.createElement("form");
           form.id = FORM_ID;
           form.setAttribute("novalidate", "");
           form.innerHTML =
+            '<div class="ss-pill-wrap">' +
             '<div class="ss-pill">' +
-            '<span class="ss-dial">+44</span>' +
+            '<button class="ss-dial" type="button" aria-haspopup="listbox" ' +
+            'aria-expanded="false" aria-label="Select country code">' +
+            '<span class="ss-dial-flag"></span>' +
+            '<span class="ss-dial-code"></span>' +
+            '<svg class="ss-dial-caret" viewBox="0 0 20 20" fill="currentColor" ' +
+            'aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 ' +
+            '011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 ' +
+            '01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>' +
+            "</button>" +
             '<input class="ss-input" type="tel" inputmode="numeric" ' +
             'placeholder="Phone number" aria-label="Phone number" />' +
             '<button class="ss-submit ss-submit-inline" type="submit">Try a Free Class' +
@@ -296,20 +432,155 @@
             'aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>' +
             "</svg></button>" +
             "</div>" +
+            '<div class="ss-country-menu" role="listbox" hidden>' +
+            '<div class="ss-country-search-wrap">' +
+            '<input class="ss-country-search" type="text" autocomplete="off" ' +
+            'placeholder="Search country or code" aria-label="Search country" />' +
+            "</div>" +
+            '<ul class="ss-country-list"></ul>' +
+            "</div>" +
+            "</div>" +
             '<button class="ss-submit ss-submit-block" type="submit">Try a Free Class</button>' +
             '<p class="ss-error" role="alert"></p>';
 
           var input = form.querySelector(".ss-input");
           var error = form.querySelector(".ss-error");
+          var dialButton = form.querySelector(".ss-dial");
+          var dialFlag = form.querySelector(".ss-dial-flag");
+          var dialCode = form.querySelector(".ss-dial-code");
+          var menu = form.querySelector(".ss-country-menu");
+          var search = form.querySelector(".ss-country-search");
+          var list = form.querySelector(".ss-country-list");
+
+          var country = findByIso(FALLBACK_ISO) || COUNTRIES[0];
+          // Once the visitor picks a country themselves, the geo lookup below
+          // must not overwrite it.
+          var countryPicked = false;
+
+          function paintDial() {
+            dialFlag.textContent = country.flag;
+            dialCode.textContent = "+" + country.dial;
+          }
+
+          function renderList() {
+            var query = (search.value || "").trim().toLowerCase();
+            var digits = query.replace(/\D/g, "");
+            var matches = COUNTRIES.filter(function (c) {
+              if (!query) return true;
+              return (
+                c.name.toLowerCase().indexOf(query) !== -1 ||
+                c.iso.toLowerCase().indexOf(query) !== -1 ||
+                (digits && c.dial.indexOf(digits) === 0)
+              );
+            });
+
+            list.innerHTML = "";
+            if (!matches.length) {
+              var empty = document.createElement("li");
+              empty.className = "ss-country-empty";
+              empty.textContent = "No matches";
+              list.appendChild(empty);
+              return;
+            }
+
+            matches.forEach(function (c) {
+              var li = document.createElement("li");
+              var button = document.createElement("button");
+              button.type = "button";
+              button.className = "ss-country-item";
+              button.setAttribute("role", "option");
+              button.setAttribute("aria-selected", c.iso === country.iso ? "true" : "false");
+              button.innerHTML =
+                '<span class="ss-dial-flag"></span>' +
+                '<span class="ss-country-name"></span>' +
+                '<span class="ss-country-dial"></span>';
+              button.querySelector(".ss-dial-flag").textContent = c.flag;
+              button.querySelector(".ss-country-name").textContent = c.name;
+              button.querySelector(".ss-country-dial").textContent = "+" + c.dial;
+              button.addEventListener("click", function () {
+                country = c;
+                countryPicked = true;
+                paintDial();
+                closeMenu();
+                input.focus();
+              });
+              li.appendChild(button);
+              list.appendChild(li);
+            });
+          }
+
+          function openMenu() {
+            menu.hidden = false;
+            dialButton.setAttribute("aria-expanded", "true");
+            search.value = "";
+            renderList();
+            search.focus();
+          }
+
+          function closeMenu() {
+            menu.hidden = true;
+            dialButton.setAttribute("aria-expanded", "false");
+          }
+
+          dialButton.addEventListener("click", function () {
+            if (menu.hidden) openMenu();
+            else closeMenu();
+          });
+          search.addEventListener("input", renderList);
+          document.addEventListener("mousedown", function (e) {
+            if (menu.hidden) return;
+            // Anything outside the menu itself dismisses it, including the
+            // phone input right next to it. The dial button has its own
+            // toggle handler, so leave that click alone.
+            if (!menu.contains(e.target) && !dialButton.contains(e.target)) closeMenu();
+          });
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && !menu.hidden) closeMenu();
+          });
+
+          // Geo-detect the visitor's country for the default dial code, with a
+          // hard 3s budget — the hero must never wait on this.
+          (function detectCountry() {
+            var done = false;
+            var timer = setTimeout(function () {
+              done = true;
+            }, 3000);
+            try {
+              fetch("https://ipapi.co/json/")
+                .then(function (res) {
+                  return res.json();
+                })
+                .then(function (data) {
+                  clearTimeout(timer);
+                  if (done || countryPicked) return;
+                  var detected = findByIso(data && data.country_code);
+                  if (detected) {
+                    country = detected;
+                    paintDial();
+                    if (!menu.hidden) renderList();
+                  }
+                })
+                .catch(function () {
+                  clearTimeout(timer);
+                });
+            } catch (err) {
+              clearTimeout(timer);
+            }
+          })();
+
+          paintDial();
 
           form.addEventListener("submit", function (e) {
             e.preventDefault();
             var value = (input.value || "").trim();
             if (/^\d{6,15}$/.test(value)) {
               error.textContent = "";
+              closeMenu();
               try {
+                // Hand the number over so the booking wizard's phone step opens
+                // pre-filled instead of asking for it again (see Home2Hero.jsx).
                 window.parent.postMessage(
-                  { type: "ss-open-demo" },
+                  { type: "ss-open-demo", phone: value, dialCode: country.dial },
                   window.location.origin
                 );
               } catch (err) {

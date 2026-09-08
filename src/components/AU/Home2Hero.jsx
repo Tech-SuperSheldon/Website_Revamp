@@ -31,7 +31,12 @@ export default function Home2Hero() {
     const onMessage = (event) => {
       if (event.origin !== window.location.origin) return;
       if (event.data?.type === 'ss-open-demo') {
-        openDemoModal();
+        // The hero form already took a phone number — hand it to the wizard so
+        // its phone step opens pre-filled instead of asking a second time.
+        openDemoModal({
+          phone: event.data.phone,
+          dialCode: event.data.dialCode,
+        });
       }
     };
     window.addEventListener('message', onMessage);

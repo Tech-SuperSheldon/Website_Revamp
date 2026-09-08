@@ -2,6 +2,7 @@
 // string in src/lib/academies.ts — add an entry here when a subject is added
 // there, otherwise the chip falls back to the generic sparkle.
 import {
+  Award,
   BookOpen,
   Calculator,
   ClipboardCheck,
@@ -10,10 +11,19 @@ import {
   Cpu,
   Crown,
   FlaskConical,
+  Globe2,
+  GraduationCap,
+  Lightbulb,
+  Medal,
   Mic,
   Puzzle,
+  ScrollText,
   Sigma,
   Sparkles,
+  Stethoscope,
+  Target,
+  Trophy,
+  TrendingUp,
   type LucideIcon,
 } from "lucide-react";
 
@@ -23,9 +33,22 @@ const SUBJECT_ICONS: Record<string, LucideIcon> = {
   Science: FlaskConical,
   English: BookOpen,
   Reasoning: Puzzle,
-  // Exam Academy
+  // Exam Academy — global
   "11+ Exam": ClipboardList,
   NAPLAN: ClipboardCheck,
+  // Exam Academy — UK
+  SAT: GraduationCap,
+  GCSE: ScrollText,
+  IGCSE: Globe2,
+  "11+ Examination": ClipboardList,
+  "A Level / A+ Level": Award,
+  // Exam Academy — Australia
+  "Selective Scholarship": Trophy,
+  ICAS: Medal,
+  ACER: Target,
+  GATE: Lightbulb,
+  ATAR: TrendingUp,
+  UCAT: Stethoscope,
   // Skill Academy
   "Vedic Maths": Sigma,
   Chess: Crown,

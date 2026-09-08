@@ -3,6 +3,8 @@
 //
 // Sections that carry no links (TrustedByBar, NSParentsSaying, NSAcademies,
 // NSWhySheldon, NSHomeFAQ, ScrollProgressBar) are shared with "/" directly.
+// NSAcademies takes a locale so its Exam Readiness dropdown lists this
+// market's exams (and books against this market's wizard).
 // Everything that navigates or carries UK copy — header, footer, deadline
 // banner, the UK 3D hero (+44 dial code, "United Kingdom" caption), the UK
 // student testimonial, teacher carousel, floating CTA — uses the UK copy so a
@@ -32,7 +34,8 @@ const TeacherCarousel      = dynamic(() => import('@/components/UKHome/UKHomeTea
 const FeatureSlider        = dynamic(() => import('@/components/UKHome/UKHomeFeatures'));
 const UKHomeLevelUp        = dynamic(() => import('@/components/UKHome/UKHomeApp'));
 // Redesign sections, sitting between the stats strip and the footer. None of
-// these link anywhere, so /uk shares them with the global page.
+// these link anywhere, so /uk shares them with the global page — NSAcademies
+// only takes a locale for its exam list.
 const NSWhySheldon         = dynamic(() => import('@/components/NSWhySheldon'));
 const NSParentsSaying      = dynamic(() => import('@/components/NSParentsSaying'));
 const NSAcademies          = dynamic(() => import('@/components/NSAcademies'));
@@ -86,7 +89,7 @@ export default function UKHome() {
       */}
 
       <NSParentsSaying />
-      <NSAcademies />
+      <NSAcademies locale="uk" />
       <NSWhySheldon />
 
       <DeferredSection>

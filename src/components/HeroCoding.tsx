@@ -28,7 +28,8 @@ export function HeroCoding() {
     e.preventDefault();
     if (/^\d{10}$/.test(phone)) {
       setError("");
-      openDemoModal();
+      // Pre-fill the wizard's phone step with what we just collected.
+      openDemoModal({ phone });
     } else {
       setError("Please enter a valid phone number");
     }

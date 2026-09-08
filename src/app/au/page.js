@@ -3,6 +3,8 @@
 //
 // Sections that carry no links (TrustedByBar, NSParentsSaying, NSAcademies,
 // NSWhySheldon, NSHomeFAQ, ScrollProgressBar) are shared with "/" directly.
+// NSAcademies takes a locale so its Exam Readiness dropdown lists this
+// market's exams (and books against this market's wizard).
 // Everything that navigates — header, footer, deadline banner, hero, teacher
 // carousel — uses the AU copy so a visitor on /au stays on /au. The booking
 // popup is deliberately the shared global wizard (see DemoModalHost).
@@ -31,7 +33,8 @@ const TeacherCarousel      = dynamic(() => import('@/components/AU/NSTeacherCaro
 const FeatureSlider        = dynamic(() => import('@/components/AU/NSFeatures'));
 const NSLevelUp            = dynamic(() => import('@/components/AU/NSApp'));
 // Redesign sections, sitting between the stats strip and the footer. None of
-// these link anywhere, so /au shares them with the global page.
+// these link anywhere, so /au shares them with the global page — NSAcademies
+// only takes a locale for its exam list.
 const NSWhySheldon         = dynamic(() => import('@/components/NSWhySheldon'));
 const NSParentsSaying      = dynamic(() => import('@/components/NSParentsSaying'));
 const NSAcademies          = dynamic(() => import('@/components/NSAcademies'));
@@ -85,7 +88,7 @@ export default function AUHome() {
       */}
 
       <NSParentsSaying />
-      <NSAcademies />
+      <NSAcademies locale="au" />
       <NSWhySheldon />
 
       <DeferredSection>

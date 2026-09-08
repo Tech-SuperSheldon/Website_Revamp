@@ -11,9 +11,28 @@ import { CSS_TRANSITION, hoverLift, rise, riseOnce, stagger, VIEWPORT } from "@/
 import Highlight from "@/components/motion/Highlight";
 import { SpotlightOverlay, useSpotlight } from "@/components/motion/Spotlight";
 import BookTrialModal from "@/components/BookTrialModal";
+import { gradesForSubject, MARKET, type Locale } from "@/lib/academies";
 
 const NAVY = "#0b2545";
 const ORANGE = "#FC8741";
+
+/** Exam Readiness dropdown, per market. The exams a family recognises differ
+ *  by country, so /uk and /au each get their own list; the global page keeps
+ *  the short mixed one. Names match src/lib/academies.ts exactly so the
+ *  booking wizard's grade step picks up the right grades (EXAM_GRADES). */
+const EXAM_SUBJECTS: Record<Locale, string[]> = {
+  global: ["11+ Exam", "NAPLAN"],
+  uk: ["SAT", "GCSE", "IGCSE", "11+ Examination", "A Level / A+ Level"],
+  au: [
+    "NAPLAN",
+    "Selective Scholarship",
+    "ICAS",
+    "ACER",
+    "GATE",
+    "ATAR",
+    "UCAT",
+  ],
+};
 
 type Academy = {
   key: string;
@@ -25,7 +44,7 @@ type Academy = {
   prompt: string;
 };
 
-const ACADEMIES: Academy[] = [
+const academiesFor = (locale: Locale): Academy[] => [
   {
     key: "tuition",
     letter: "S",
@@ -40,7 +59,7 @@ const ACADEMIES: Academy[] = [
     letter: "E",
     title: "Exam Readiness",
     accent: ORANGE,
-    subjects: ["11+ Exam", "NAPLAN"],
+    subjects: EXAM_SUBJECTS[locale],
     placeholder: "Select an exam",
     prompt: "Pick an exam to start",
   },
@@ -120,9 +139,10 @@ function AcademyCard({
   );
 }
 
-export default function NSAcademies() {
+export default function NSAcademies({ locale = "global" }: { locale?: Locale } = {}) {
   const reduce = useReducedMotion() ?? false;
   const [activeSubject, setActiveSubject] = useState<string | null>(null);
+  const academies = academiesFor(locale);
 
   return (
     <section id="academies" className="relative py-6 md:py-10">
@@ -143,7 +163,7 @@ export default function NSAcademies() {
           viewport={VIEWPORT}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 items-stretch"
         >
-          {ACADEMIES.map((a) => (
+          {academies.map((a) => (
             <AcademyCard key={a.key} academy={a} reduce={reduce} onSelectSubject={setActiveSubject} />
           ))}
         </motion.div>
@@ -153,6 +173,8 @@ export default function NSAcademies() {
         open={activeSubject !== null}
         onClose={() => setActiveSubject(null)}
         subject={activeSubject ?? ""}
+        country={MARKET[locale]}
+        grades={activeSubject ? gradesForSubject(activeSubject) ?? undefined : undefined}
       />
     </section>
   );

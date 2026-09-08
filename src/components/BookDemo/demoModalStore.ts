@@ -15,8 +15,18 @@
 
 export type DemoMarket = "uk" | "au";
 
+/** Values a CTA already collected, handed to the wizard so it doesn't ask
+ *  again. The hero forms take a phone number before opening the popup. */
+export type DemoPrefill = {
+  /** Digits only, no dial code. */
+  phone?: string;
+  /** Dial code, with or without the leading "+". */
+  dialCode?: string;
+};
+
 export type DemoModalState = {
   open: boolean;
+  prefill?: DemoPrefill;
 };
 
 const CLOSED: DemoModalState = { open: false };
@@ -39,10 +49,23 @@ export function getDemoModalState(): DemoModalState {
   return state;
 }
 
+/** Most CTAs are bare buttons wired up as `onClick={openDemoBooking}`, which
+ *  would hand us a click event. Only accept a real prefill object. */
+function normalizePrefill(prefill?: DemoPrefill): DemoPrefill | undefined {
+  if (!prefill || typeof prefill !== "object") return undefined;
+  if ("nativeEvent" in prefill || "preventDefault" in prefill) return undefined;
+
+  const phone = String(prefill.phone ?? "").replace(/\D/g, "");
+  const dialCode = String(prefill.dialCode ?? "").replace(/\D/g, "");
+  if (!phone && !dialCode) return undefined;
+  return { phone, dialCode };
+}
+
 /** Open the booking wizard. There is one wizard for the whole site — see
- *  DemoModalHost — so there is nothing per-market to pass in. */
-export function openDemoModal() {
-  state = { open: true };
+ *  DemoModalHost — so there is nothing per-market to pass in. Pass a prefill
+ *  when the CTA already asked for something the wizard would ask again. */
+export function openDemoModal(prefill?: DemoPrefill) {
+  state = { open: true, prefill: normalizePrefill(prefill) };
   emit();
 }
 

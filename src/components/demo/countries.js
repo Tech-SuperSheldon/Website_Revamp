@@ -43,3 +43,12 @@ export function findByIso(iso) {
   if (!iso) return null;
   return COUNTRIES.find((c) => c.iso === String(iso).toUpperCase()) || null;
 }
+
+// Resolve a dial code ("+61", "61") to a country. Several countries share a
+// dial code (US/CA on +1), so this returns the first match — the list is
+// ordered by relevance, which is the right tie-break for the phone field.
+export function findByDial(dial) {
+  const digits = String(dial ?? "").replace(/\D/g, "");
+  if (!digits) return null;
+  return COUNTRIES.find((c) => c.dial === digits) || null;
+}

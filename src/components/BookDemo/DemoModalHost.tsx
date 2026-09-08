@@ -88,7 +88,16 @@ export default function DemoModalHost() {
         </button>
 
         <div className="overflow-hidden rounded-2xl shadow-2xl">
-          <BookDemoForm market={market} locale={locale} variant="modal" onClose={closeDemoModal} />
+          <BookDemoForm
+            market={market}
+            locale={locale}
+            variant="modal"
+            onClose={closeDemoModal}
+            // A hero form that already took a phone number hands it over, so
+            // the wizard's phone step opens filled in instead of asking again.
+            prefillPhone={state.prefill?.phone}
+            prefillDialCode={state.prefill?.dialCode}
+          />
         </div>
       </div>
     </div>,
