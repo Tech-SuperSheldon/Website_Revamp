@@ -113,8 +113,8 @@ export function Footer() {
               <ul className="space-y-2 font-medium text-white text-[13px] sm:text-[14px]">
                 <li><RollingLink href="/uk" hoverColor="text-black" baseColor="text-white">Home</RollingLink></li>
                 <li><RollingLink href="/uk/new-courses" hoverColor="text-black" baseColor="text-white">Courses</RollingLink></li>
-                <li><RollingLink href="/uk/testimonial" hoverColor="text-black" baseColor="text-white">Reviews</RollingLink></li>
-                <li><RollingLink href="/uk/blogs" hoverColor="text-black" baseColor="text-white">Blogs</RollingLink></li>
+                <li><RollingLink href="/new-testimonial" hoverColor="text-black" baseColor="text-white">Reviews</RollingLink></li>
+                <li><RollingLink href="/new-blogs" hoverColor="text-black" baseColor="text-white">Blogs</RollingLink></li>
                 <li><RollingLink href="/become-a-teacher" hoverColor="text-black" baseColor="text-white">Become a Teacher</RollingLink></li>
               </ul>
             </motion.div>
