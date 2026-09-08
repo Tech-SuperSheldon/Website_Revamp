@@ -70,9 +70,9 @@ export default function UKSelectiveCourse({ id }) {
   );
 
   return (
-    <section className="bg-[#D3F5FF]">
+    <section>
       {/* Banner */}
-      <div className="w-[92%] bg-[#D3F5FF] mx-auto pt-24 pb-14">
+      <div className="w-[92%] mx-auto pt-24 pb-14">
         <div className="relative aspect-[3/1] rounded-[2rem] overflow-hidden">
           <Image
             src="/UK/coursebannerv1.jpg"

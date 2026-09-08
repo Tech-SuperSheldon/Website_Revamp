@@ -59,7 +59,7 @@ const pricingPlans = [
 export default function CardsNaplan() {
   const [flipped, setFlipped] = useState({});
 
-  const { openDemoBooking } = useOpenDemoBooking();
+  const openDemoBooking = useOpenDemoBooking();
 
   const toggleFlip = (id) => {
     setFlipped((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -131,7 +131,7 @@ export default function CardsNaplan() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <GlossyButton onClick={useOpenDemoBooking()} className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
+                <GlossyButton onClick={openDemoBooking} className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">
                   Try a free Class
                 </GlossyButton>
                 {/* <GlossyButton className="bg-orange-500 text-white font-semibold py-3 px-6 rounded-full hover:bg-orange-600 transition shadow-lg">

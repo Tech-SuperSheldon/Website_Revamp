@@ -74,7 +74,7 @@ export default function UKExamCourses() {
   return (
     <div
       // id="course"
-      className="px-4 sm:px-6 py-10 bg-[#4976F4] rounded-2xl mx-auto w-[95%] max-w-[1600px] min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] border border-gray-300"
+      className="px-4 sm:px-6 py-10 bg-[#FFEFE0] rounded-2xl mx-auto w-[95%] max-w-[1600px] min-h-[500px] sm:min-h-[600px] lg:min-h-[700px] border border-gray-300"
     >
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-6 text-quicksand">
         Focused Exam Mastery Courses
@@ -95,7 +95,7 @@ export default function UKExamCourses() {
           </select>
         </div>
 
-        <div className="hidden sm:flex justify-center gap-3 sm:gap-4 mb-8 sm:mb-10 p-3 sm:p-4 bg-[#E1E9FE] rounded-xl overflow-x-auto">
+        <div className="hidden sm:flex justify-center gap-3 sm:gap-4 mb-8 sm:mb-10 p-3 sm:p-4 bg-orange-100 rounded-xl overflow-x-auto">
           {years.map((year) => (
             <button
               key={year}
@@ -106,7 +106,7 @@ export default function UKExamCourses() {
               {activeYear === year && (
                 <motion.div
                   layoutId="underline"
-                  className="absolute left-0 right-0 -bottom-1 h-[3px] bg-blue-700 rounded-full"
+                  className="absolute left-0 right-0 -bottom-1 h-[3px] bg-orange-500 rounded-full"
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 />
               )}

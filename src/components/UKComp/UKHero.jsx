@@ -127,7 +127,7 @@ export default function UKHero() {
 
           {/* Phone Form */}
     <form
-  className="bg-[#8CD9FF] p-6 rounded-xl shadow-md max-w-xl flex flex-col gap-3"
+  className="bg-[#EDE8E1] p-6 rounded-xl shadow-md max-w-xl flex flex-col gap-3"
   onSubmit={(e) => {
     e.preventDefault(); // prevent auto-submit
     if (/^\d{10}$/.test(phone)) {  // simple 10 digit validation
@@ -143,7 +143,7 @@ export default function UKHero() {
     htmlFor="phone"
   >
     Experience Smarter Learning –{" "}
-    <span className="text-md text-[#2076F4]">First Class is Free!</span>
+    <span className="text-md text-[#FF8C00]">First Class is Free!</span>
   </label>
 
   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">

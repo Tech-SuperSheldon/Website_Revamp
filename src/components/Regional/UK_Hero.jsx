@@ -65,7 +65,7 @@ export default function UK_Hero() {
 
       <UKStudentVideo/>
 
-      <VideoChoose themeColor="blue"/>
+      <VideoChoose/>
 
 
             <UKTestimonialVideoBoost/>

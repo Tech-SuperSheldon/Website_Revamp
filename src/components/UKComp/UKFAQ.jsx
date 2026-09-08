@@ -129,7 +129,7 @@ export default function UKFAQ() {
           </h1>
 
           {/* Section Tabs */}
-          <div className="relative flex justify-center mb-8 md:mb-10 bg-blue-100 border-blue-200 rounded-full p-1 gap-1 sm:gap-0">
+          <div className="relative flex justify-center mb-8 md:mb-10 bg-orange-100 rounded-full p-1 gap-1 sm:gap-0">
   {faqSections.map((section, idx) => (
     <button
       key={idx}
@@ -141,7 +141,7 @@ export default function UKFAQ() {
     >
       <span
         className={`relative z-10 whitespace-nowrap truncate text-[clamp(10px,2.5vw,14px)] sm:text-sm md:text-base ${
-          activeSection === idx ? "text-white" : "text-blue-600"
+          activeSection === idx ? "text-white" : "text-orange-600"
         }`}
       >
         {section.title}
@@ -150,7 +150,7 @@ export default function UKFAQ() {
       {activeSection === idx && (
         <motion.div
           layoutId="tabIndicator"
-          className="absolute inset-0 bg-[#5243C2] rounded-full shadow-md z-0"
+          className="absolute inset-0 bg-orange-500 rounded-full shadow-md z-0"
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         />
       )}
@@ -176,8 +176,8 @@ export default function UKFAQ() {
                     key={index}
                     layout
                     initial={{ borderRadius: 10 }}
-                    className={`border border-blue-300 rounded-lg overflow-hidden transition-all duration-300 ${
-                      isActive ? "bg-blue-50" : "bg-white"
+                    className={`border border-orange-300 rounded-lg overflow-hidden transition-all duration-300 ${
+                      isActive ? "bg-orange-50" : "bg-white"
                     }`}
                   >
                     <button
@@ -186,12 +186,12 @@ export default function UKFAQ() {
                     >
                       <span
                         className={`font-anybody text-base sm:text-lg ${
-                          isActive ? "text-blue-600" : "text-blue-700"
+                          isActive ? "text-orange-600" : "text-orange-700"
                         }`}
                       >
                         {item.question}
                       </span>
-                      <span className="text-blue-500 text-xl sm:text-2xl font-bold">
+                      <span className="text-orange-500 text-xl sm:text-2xl font-bold">
                         {isActive ? "−" : "+"}
                       </span>
                     </button>
@@ -202,7 +202,7 @@ export default function UKFAQ() {
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
-                          className="px-4 sm:px-6 pb-3 sm:pb-4 text-blue-800 font-manrope text-sm sm:text-base"
+                          className="px-4 sm:px-6 pb-3 sm:pb-4 text-orange-800 font-manrope text-sm sm:text-base"
                         >
                           {item.answer}
                         </motion.div>

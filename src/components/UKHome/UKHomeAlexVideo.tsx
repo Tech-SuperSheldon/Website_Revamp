@@ -26,7 +26,7 @@ export default function UKHomeAlexVideo() {
   // 1. Handle Viewport Autoplay (Must be muted to work)
   useEffect(() => {
     const v = videoRef.current;
-
+    
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -82,7 +82,7 @@ export default function UKHomeAlexVideo() {
       className="relative w-full overflow-hidden -mt-[28vh] pt-2 pb-6 md:mt-0 md:py-12 flex justify-center"
     >
       <div className="relative w-full max-w-6xl rounded-3xl p-6 md:p-12 mx-4 md:mx-8 flex flex-col items-center justify-center">
-
+        
         {/* Background Image */}
         <div className="absolute inset-0 rounded-3xl overflow-hidden z-0">
           <Image
@@ -95,14 +95,14 @@ export default function UKHomeAlexVideo() {
         </div>
 
         {/* Content Layout */}
-        <motion.div
+        <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="relative z-10 flex flex-col md:flex-row items-start justify-between w-full"
         >
-
+          
           {/* LEFT TEXT */}
           <div className="md:w-1/2 space-y-6 text-center md:text-left px-2 md:px-4 mb-8 md:mb-0 md:pt-4 flex flex-col justify-center">
             <div>
@@ -125,7 +125,7 @@ export default function UKHomeAlexVideo() {
                 Ace Your Exams with SuperSheldon: A Student&apos;s Story
               </motion.h2>
             </div>
-
+            
             {/* Static Image Placeholder */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}

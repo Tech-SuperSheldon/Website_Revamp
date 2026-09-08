@@ -7,7 +7,7 @@
 //       {/* Heading */}
 //       <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-12">
 //         A new type of education, <br />
-//         <span className="text-[#00B4D8]">that actually works.</span>
+//         <span className="text-orange-500">that actually works.</span>
 //       </h1>
 
 //       {/* Image Grid */}
@@ -76,7 +76,7 @@ export default function UK3() {
       {/* Heading */}
       <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-12">
         A new type of education, <br />
-        <span className="text-[#00B4D8]">that actually works.</span>
+        <span className="text-orange-500">that actually works.</span>
       </h1>
 
       {/* Image Grid */}
@@ -92,7 +92,7 @@ export default function UK3() {
               priority
             />
           </div>
-          <p className="mt-4 text-lg font-medium px-6 py-2 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-full">
+          <p className="mt-4 text-lg font-medium px-6 py-2 bg-gradient-to-r from-orange-400 to-orange-600 text-white rounded-full">
             Expert teachers
           </p>
         </div>
@@ -108,7 +108,7 @@ export default function UK3() {
               priority
             />
           </div>
-          <p className="mt-4 text-lg font-medium px-6 py-2 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-full">
+          <p className="mt-4 text-lg font-medium px-6 py-2 bg-gradient-to-r from-orange-400 to-orange-600 text-white rounded-full">
             Live group lessons
           </p>
         </div>
@@ -124,7 +124,7 @@ export default function UK3() {
               priority
             />
           </div>
-          <p className="mt-4 text-lg font-medium text-center px-6 py-2 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-full">
+          <p className="mt-4 text-lg font-medium text-center px-6 py-2 bg-gradient-to-r from-orange-400 to-orange-600 text-white rounded-full">
             Award-winning learning platform <br /> Learning beyond the lesson
           </p>
         </div>

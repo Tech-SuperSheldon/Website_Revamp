@@ -1,6 +1,5 @@
 import { Header } from "@/components/UKHome/UKHomeHeader";
 import { Footer } from "@/components/NSfooter";
-import ThemeEffect from "@/components/UKHome/UKHomeThemeEffect";
 import AcademyIndexHero from "@/components/academy/AcademyIndexHero";
 import NSProcess from "@/components/NSProcess";
 import FloatingTryClassButton, {
@@ -20,7 +19,6 @@ export const metadata = {
 export default function UKAcademiesPage() {
   return (
     <main className="flex min-h-screen flex-col bg-white">
-      <ThemeEffect />
       <Header />
       <AcademyIndexHero locale="uk" />
       <NSProcess

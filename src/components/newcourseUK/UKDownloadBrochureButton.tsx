@@ -81,9 +81,9 @@ export default function UKDownloadBrochureButton({
 
   const variants = {
     solid:
-      "bg-white text-blue-600 border-2 border-blue-600 px-8 py-3 rounded-full hover:bg-blue-50 shadow-lg shadow-blue-500/10 whitespace-nowrap",
+      "bg-white text-orange-600 border-2 border-orange-600 px-8 py-3 rounded-full hover:bg-orange-50 shadow-lg shadow-orange-500/10 whitespace-nowrap",
     compact:
-      "w-full py-3 rounded-xl border border-blue-200 text-blue-600 hover:bg-blue-50 text-sm",
+      "w-full py-3 rounded-xl border border-orange-200 text-orange-600 hover:bg-orange-50 text-sm",
   } as const;
 
   return (

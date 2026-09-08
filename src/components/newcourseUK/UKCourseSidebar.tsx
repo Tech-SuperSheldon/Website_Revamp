@@ -27,7 +27,7 @@ export default function UKCourseSidebar({ course }: UKCourseSidebarProps) {
             <div>
                 <div className="flex justify-between items-start mb-4">
                     <h3 className="text-xl font-bold text-gray-900">Overview:</h3>
-                    <div className="bg-blue-500 rounded-full p-1.5 shadow-sm shadow-blue-200">
+                    <div className="bg-orange-500 rounded-full p-1.5 shadow-sm shadow-orange-200">
                         <Award size={16} className="text-white" />
                     </div>
                 </div>
@@ -75,10 +75,10 @@ export default function UKCourseSidebar({ course }: UKCourseSidebarProps) {
             <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">Topics:</h3>
                 <div className="flex flex-wrap gap-2">
-                    <span className="bg-blue-100 text-blue-600 px-4 py-1.5 rounded-full text-xs font-bold">
+                    <span className="bg-orange-100 text-orange-600 px-4 py-1.5 rounded-full text-xs font-bold">
                         {course.type}
                     </span>
-                     <span className="bg-blue-100 text-blue-600 px-4 py-1.5 rounded-full text-xs font-bold">
+                     <span className="bg-orange-100 text-orange-600 px-4 py-1.5 rounded-full text-xs font-bold">
                         {course.categ}
                     </span>
                 </div>

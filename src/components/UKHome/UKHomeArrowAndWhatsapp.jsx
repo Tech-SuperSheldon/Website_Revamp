@@ -49,7 +49,7 @@ export default function UKHomeArrowAndWhatsapp({ side = "right", mobileBar = fal
           {/* Arrow toggle — always attached to right edge */}
           <button
             onClick={() => setCollapsed((c) => !c)}
-            className="w-7 h-10 bg-blue-500 text-white flex items-center justify-center rounded-l-full shadow-md hover:bg-blue-600 transition-colors"
+            className="w-7 h-10 bg-orange-500 text-white flex items-center justify-center rounded-l-full shadow-md hover:bg-orange-600 transition-colors"
             aria-label={collapsed ? "Show floating buttons" : "Hide floating buttons"}
           >
             {collapsed ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
@@ -75,7 +75,7 @@ export default function UKHomeArrowAndWhatsapp({ side = "right", mobileBar = fal
             {/* Nova */}
             <button
               onClick={handleNovaClick}
-              className="relative w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-400 shadow-lg overflow-hidden border-2 border-white/40 hover:scale-105 transition-transform"
+              className="relative w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-orange-400 shadow-lg overflow-hidden border-2 border-white/40 hover:scale-105 transition-transform"
               title="Chat with Nova"
             >
               <Image src="/nova-icon.webp" alt="Nova" fill className="object-cover" />

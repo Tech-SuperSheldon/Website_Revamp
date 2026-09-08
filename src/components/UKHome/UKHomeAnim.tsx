@@ -64,7 +64,7 @@ function MobileCard({
         />
       </div>
       <div className="text-center px-2">
-        <h3 className="text-blue-500 text-base font-bold mb-1 tracking-tight">
+        <h3 className="text-orange-500 text-base font-bold mb-1 tracking-tight">
           {data.title}
         </h3>
         <p className="text-gray-900 text-xs font-medium leading-snug">
@@ -98,7 +98,7 @@ export default function UKHomeAnim() {
           {/* Header — sits at the top with the cards right below it */}
           <div className="text-center px-4 shrink-0 z-20">
             <h2 className="text-3xl font-bold text-gray-900 mb-1 tracking-tight">
-              The <span className="text-blue-500">SuperSheldon</span> Experience
+              The <span className="text-orange-500">SuperSheldon</span> Experience
             </h2>
             <p className="text-gray-600 text-sm">
               Witness the qualities that make us the preferred choice for thousands.
@@ -134,7 +134,7 @@ export default function UKHomeAnim() {
               viewport={{ once: true, amount: 0.2 }}
               className="text-5xl font-bold text-gray-900 mb-4 tracking-tight"
             >
-              The <span className="text-blue-500">SuperSheldon</span> Experience
+              The <span className="text-orange-500">SuperSheldon</span> Experience
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -164,7 +164,7 @@ export default function UKHomeAnim() {
                   />
                 </div>
                 <div className="mt-6 text-center">
-                  <h3 className="text-blue-500 text-2xl font-bold mb-2 tracking-tight">
+                  <h3 className="text-orange-500 text-2xl font-bold mb-2 tracking-tight">
                     {video.title}
                   </h3>
                   <p className="text-gray-900 text-base font-medium leading-relaxed">

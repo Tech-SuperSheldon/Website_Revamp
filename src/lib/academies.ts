@@ -60,7 +60,7 @@ export type Academy = {
   key: "tuition" | "exam" | "skill";
   letter: string;
   accent: string;
-  /** Product name as it appears in the nav — e.g. "Tuition Academy". */
+  /** Product name as it appears in the nav — e.g. "Exam Academy". */
   name: string;
   /** Page <h1> — the outcome the academy is named for. */
   heading: string;
@@ -234,9 +234,9 @@ const BASE: Academy[] = [
   {
     slug: "school-readiness",
     key: "tuition",
-    letter: "T",
+    letter: "S",
     accent: NAVY,
-    name: "Tuition Academy",
+    name: "School Readiness",
     heading: "School Readiness",
     description:
       "Everyday subject support that keeps pace with — or gets ahead of — your child's school curriculum. Built for steady, confident progress across the core subjects.",
@@ -486,7 +486,6 @@ export function getAcademy(locale: Locale, slug: string): Academy {
 export function academyMenu(locale: Locale) {
   return getAcademies(locale).map((a) => ({
     name: a.name,
-    subtitle: a.heading,
     letter: a.letter,
     accent: a.accent,
     href: `${BASE_PATH[locale]}/academies/${a.slug}`,

@@ -20,7 +20,6 @@ const ACADEMY_MENU = academyMenu("uk");
 const navLinks = [
   { name: "Home", href: "/uk" },
   { name: "Academies", href: "/uk/academies" },
-  { name: "Courses", href: "/uk/new-courses" },
   { name: "Testimonial", href: "/new-testimonial" },
   { name: "Blogs", href: "/new-blogs" },
   { name: "Become a Teacher", href: "/become-a-teacher" },
@@ -90,7 +89,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
             {navLinks.map((link) =>
               link.name === "Academies" ? (
                 <div key={link.name} className="relative group">
-                  <RollingLink href={link.href} hoverColor="text-blue-500">
+                  <RollingLink href={link.href}>
                     <span className="inline-flex items-center gap-1">
                       {link.name}
                       <ChevronDown
@@ -108,7 +107,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
                         <Link
                           key={item.name}
                           href={item.href}
-                          className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-blue-500/15 transition-colors"
+                          className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-[#FFCC00]/15 transition-colors"
                         >
                           <span
                             className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold shrink-0"
@@ -116,17 +115,14 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
                           >
                             {item.letter}
                           </span>
-                          <span className="flex flex-col leading-tight">
-                            <span className="text-sm font-semibold text-gray-900">{item.name}</span>
-                            <span className="text-[11px] text-gray-500">{item.subtitle}</span>
-                          </span>
+                          <span className="text-sm font-semibold text-gray-900">{item.name}</span>
                         </Link>
                       ))}
                     </div>
                   </div>
                 </div>
               ) : (
-                <RollingLink key={link.name} href={link.href} hoverColor="text-blue-500">
+                <RollingLink key={link.name} href={link.href}>
                   {link.name}
                 </RollingLink>
               )
@@ -135,11 +131,8 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-3">
-            <Link href="https://supersheldon.wise.live/login?loginRedirected=true" target="_blank" rel="noopener noreferrer" className="text-base font-medium text-gray-700 hover:text-gray-900 transition-colors">
-              Login
-            </Link>
             <Link href="/demo" data-floating-cta-avoid onClick={(e) => { setIsMobileMenuOpen(false); openDemoOnClick(e); }}>
-                <Button variant="gradient" className="rounded-full px-6 py-5 text-base shadow-md transition-all hover:shadow-lg hover:shadow-blue-500/20 whitespace-nowrap from-blue-500 to-blue-700">
+                <Button variant="gradient" className="rounded-full px-6 py-5 text-base shadow-md transition-all hover:shadow-lg hover:shadow-yellow-500/30 whitespace-nowrap bg-none bg-[#FFCC00] from-transparent to-transparent text-black hover:bg-[#e6b800] hover:opacity-100">
                     Try a free Class
                 </Button>
             </Link>
@@ -176,7 +169,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
                     aria-expanded={isMobileAcademiesOpen}
                     aria-controls="mobile-academies-menu"
                     onClick={() => setIsMobileAcademiesOpen((open) => !open)}
-                    className="relative flex items-center text-xl font-medium text-gray-800 hover:text-blue-600 transition-colors"
+                    className="relative flex items-center text-xl font-medium text-gray-800 hover:text-purple-600 transition-colors"
                   >
                     {link.name}
                     <ChevronDown
@@ -199,7 +192,7 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
                             <Link
                               key={item.name}
                               href={item.href}
-                              className="text-base font-medium text-gray-500 hover:text-blue-600 transition-colors"
+                              className="text-base font-medium text-gray-500 hover:text-orange-500 transition-colors"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               {item.name}
@@ -222,17 +215,8 @@ export function Header({ stacked = false }: { stacked?: boolean }) {
               )
             )}
             <div className="h-px w-full bg-gray-100 my-2" />
-            <Link
-              href="https://supersheldon.wise.live/login?loginRedirected=true"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-lg font-medium text-gray-600"
-            >
-              Login
-            </Link>
              <Link href="/demo" data-floating-cta-avoid="menu" onClick={(e) => { setIsMobileMenuOpen(false); openDemoOnClick(e); }} className="w-full max-w-[280px]">
-                <Button className="w-full bg-gray-900 text-white rounded-full px-6 py-4 text-lg">
+                <Button className="w-full bg-[#FFCC00] hover:bg-[#e6b800] text-black rounded-full px-6 py-4 text-lg">
                     Try a free Class
                 </Button>
             </Link>

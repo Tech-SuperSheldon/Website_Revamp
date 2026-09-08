@@ -19,11 +19,22 @@ const LEARN_HEADERS = [
 // row still has the old fullName/email/country/subject columns — mixing the
 // new grade/mobile/date/time/timezone shape into it would misalign columns.
 const DEMO_SHEET_NAME = "Demo Bookings";
+// "Academy" + "Subject" were added after this tab already had rows — run
+// addAcademyColumns() once (see the bottom of this file) to slot them in
+// without shifting the existing data out of alignment.
 const DEMO_HEADERS = [
-  "Created At", "Updated At", "Status", "Market", "Grade", "Mobile",
+  "Created At", "Updated At", "Status", "Market", "Academy", "Subject", "Grade", "Mobile",
   "Date", "Time", "Timezone",
   "UTM Source", "UTM Medium", "UTM Campaign", "UTM Content", "UTM Term",
 ];
+
+// Column positions are derived from DEMO_HEADERS rather than hardcoded, so
+// reordering that array above is enough to move a column.
+const DEMO_COL = {
+  status: DEMO_HEADERS.indexOf("Status"),
+  subject: DEMO_HEADERS.indexOf("Subject"),
+  mobile: DEMO_HEADERS.indexOf("Mobile"),
+};
 
 function doPost(e) {
   try {
@@ -157,8 +168,8 @@ function handleLearnLead(data) {
 }
 
 // Handles "Book a Demo" wizard submissions (formType: "demo") into the
-// "Demo Bookings" tab. Upserts by Mobile so the partial row created when the
-// visitor enters their phone number gets updated in place (instead of
+// "Demo Bookings" tab. Upserts by Mobile+Subject so the partial row created
+// when the visitor enters their phone number gets updated in place (instead of
 // duplicated) once they finish picking a date/time/timezone.
 function handleDemoLead(data) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -170,19 +181,23 @@ function handleDemoLead(data) {
 
   const now = new Date();
   const mobile = data.mobile || "";
+  const subject = data.subject || "";
   const status = data.stage === "complete" ? "Complete" : "Partial";
 
-  // Look for an existing, not-yet-complete row for this Mobile to update in
-  // place rather than appending a duplicate.
+  // Look for an existing, not-yet-complete row for this Mobile+Subject to
+  // update in place rather than appending a duplicate. Subject is part of the
+  // key so one parent booking two different subjects gets two rows instead of
+  // the second overwriting the first.
   const lastRow = sheet.getLastRow();
   let targetRow = -1;
   if (lastRow > 1) {
     const values = sheet.getRange(2, 1, lastRow - 1, DEMO_HEADERS.length).getValues();
     for (let i = values.length - 1; i >= 0; i--) {
       const row = values[i];
-      const rowMobile = row[5];
-      const rowStatus = row[2];
-      if (rowMobile === mobile && rowStatus !== "Complete") {
+      const rowMobile = row[DEMO_COL.mobile];
+      const rowSubject = row[DEMO_COL.subject];
+      const rowStatus = row[DEMO_COL.status];
+      if (rowMobile === mobile && rowSubject === subject && rowStatus !== "Complete") {
         targetRow = i + 2; // account for header row + 0-index
         break;
       }
@@ -194,6 +209,8 @@ function handleDemoLead(data) {
     now, // Updated At
     status,
     data.market || "",
+    data.academy || "",
+    subject,
     data.grade || "",
     mobile,
     data.date || "",
@@ -219,6 +236,42 @@ function handleDemoLead(data) {
   return ContentService
     .createTextOutput(JSON.stringify({ status: "ok" }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// --- one-off helper: run this once from the Apps Script editor (select
+// "addAcademyColumns" in the function dropdown, then click Run) to add the
+// "Academy" and "Subject" columns to an EXISTING "Demo Bookings" sheet that
+// predates them.
+//
+// It INSERTS two blank columns after "Market" rather than appending at the
+// end, so every existing row's data shifts right with it and stays under the
+// right header. Safe to run more than once — it does nothing if the columns
+// are already there.
+function addAcademyColumns() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName(DEMO_SHEET_NAME);
+  if (!sheet) {
+    Logger.log('Sheet "' + DEMO_SHEET_NAME + '" not found — nothing to migrate.');
+    return;
+  }
+
+  const lastCol = sheet.getLastColumn();
+  const headers = lastCol > 0 ? sheet.getRange(1, 1, 1, lastCol).getValues()[0] : [];
+
+  if (headers.indexOf("Academy") !== -1 && headers.indexOf("Subject") !== -1) {
+    Logger.log("Academy and Subject columns already present, nothing to do.");
+    return;
+  }
+
+  const marketCol = headers.indexOf("Market") + 1; // 1-indexed
+  if (marketCol === 0) {
+    Logger.log('No "Market" column found — migrate this sheet by hand.');
+    return;
+  }
+
+  sheet.insertColumnsAfter(marketCol, 2);
+  sheet.getRange(1, marketCol + 1, 1, 2).setValues([["Academy", "Subject"]]);
+  Logger.log("Inserted Academy + Subject after column " + marketCol + ".");
 }
 
 // --- one-off helper: run this once from the Apps Script editor (select
@@ -287,6 +340,8 @@ function testDoPostDemo() {
         formType: "demo",
         stage: "partial",
         market: "uk",
+        academy: "Exam Academy",
+        subject: "11+ Examination",
         grade: "Grade 5",
         mobile: "+447123456789",
         utm_source: "google",
@@ -303,6 +358,8 @@ function testDoPostDemo() {
         formType: "demo",
         stage: "complete",
         market: "uk",
+        academy: "Exam Academy",
+        subject: "11+ Examination",
         grade: "Grade 5",
         mobile: "+447123456789",
         date: "2026-09-10",

@@ -16,7 +16,7 @@ const slides = [
     video: assetUrl("/videos/vid2.mp4"),
     heading: "1:1 Online Sessions",
     desc: "Students get live one-on-one online sessions with qualified teachers, supported by AI-generated feedback summaries for clear progress tracking.",
-    color: "#2563eb", // Blue-600
+    color: "#f97316", // Orange-500
   },
   {
     video: assetUrl("/videos/vid3.mp4"),
@@ -52,7 +52,7 @@ export default function UKHomeChoose() {
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
 
         {/* Section Header */}
-        <motion.div
+        <motion.div 
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -60,7 +60,7 @@ export default function UKHomeChoose() {
             className="absolute top-8 md:top-12 z-50 text-center w-full px-4"
         >
           <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-2 tracking-tight">
-             Why Choose <span className="text-blue-500">SuperSheldon</span>
+             Why Choose <span className="text-orange-500">SuperSheldon</span>
           </h2>
           <p className="text-gray-600 text-sm md:text-lg max-w-xl mx-auto">
              Scroll to explore the future of personalized education.
@@ -105,7 +105,7 @@ function Card({
   const [start, end] = range;
 
   // Opacity: Always 1 (No transparency)
-  const opacity = 1;
+  const opacity = 1; 
 
   // Scale: Small pop effect
   const scale = useTransform(progress, [start, end], [0.95, 1]);

@@ -121,7 +121,7 @@ const sendDemoLeadToSheet = async (formData) => {
     }
 
     const {
-      stage, market, grade, mobile, date, time, timezone, createdAt,
+      stage, market, academy, subject, grade, mobile, date, time, timezone, createdAt,
       utm_source, utm_medium, utm_campaign, utm_content, utm_term,
     } = formData;
 
@@ -132,6 +132,8 @@ const sendDemoLeadToSheet = async (formData) => {
         formType: 'demo',
         stage: stage || 'partial',
         market: market || '',
+        academy: academy || '',
+        subject: subject || '',
         grade: grade || '',
         mobile: mobile || '',
         date: date || '',

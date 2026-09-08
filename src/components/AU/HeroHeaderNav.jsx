@@ -11,11 +11,9 @@ import GlossyButton from "./GlossyButton";
 import { Menu, X } from "lucide-react";
 import { useOpenDemoBooking } from "./utils/navigation";
 
-import ChristmasButton from "./sharedcomps/ChristmasButton";
 
 const navLinks = [
   { href: "/au", label: "Home", type: "link" },
-  { href: "/au/courses", label: "Courses", type: "link" },
   { href: "/au/testimonial", label: "Testimonial", type: "anchor" },
   { href: "/au/blogs", label: "Blogs", type: "anchor" },
   { href: "/au/become-a-teacher", label: "Become a Teacher", type: "link" },
@@ -117,10 +115,6 @@ export default function Header() {
 
         {/* Desktop Right side buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <Link href="https://supersheldon.wise.live/login?loginRedirected=true"
-          onClick={() => alert('Redirecting to wise.live')}>
-            <GlossyButton>Login</GlossyButton>
-          </Link>
           {/* <Link
             href="https://forms.gle/csc94GLG3tEDit6N6"
             target="_blank"
@@ -175,11 +169,6 @@ export default function Header() {
               </a>
             )
           )}
-          <Link href="https://web.wise.live/signup?loginRedirected=true" onClick={() => alert('Redirecting to wise.live')}>
-            {/* <GlossyButton>Login</GlossyButton> */}
-            <ChristmasButton>Login</ChristmasButton>
-            
-          </Link>
           {pathname === "/au/become-a-teacher" ? (
             <a
               href="https://hiring.supersheldon.com/register"

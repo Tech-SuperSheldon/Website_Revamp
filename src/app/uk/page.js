@@ -11,7 +11,6 @@ import { Header } from '@/components/UKHome/UKHomeHeader';
 import UKHomeDeadlineBanner from '@/components/UKHome/UKHomeDeadlineBanner';
 import UKHome2Hero from '@/components/UKHome/UKHome2Hero';
 import FloatingTryClassButton from '@/components/FloatingTryClassButton';
-import UKHomeThemeEffect from '@/components/UKHome/UKHomeThemeEffect';
 import DeferredWidgets, { DeferredSection } from '@/components/UKHome/UKHomeDeferredWidgets';
 
 // Below-fold components loaded lazily to reduce initial JS bundle
@@ -38,7 +37,6 @@ export const metadata = {
 export default function UKHomePage() {
   return (
     <main className="new-home-bg">
-      <UKHomeThemeEffect />
       <UKHomeDeadlineBanner />
       <Header stacked />
 
@@ -81,10 +79,7 @@ export default function UKHomePage() {
       </DeferredSection>
 
       <DeferredWidgets mobileHidden={true} side="right" mobileBar={true} />
-      <FloatingTryClassButton
-        href="/demo"
-        className="bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white shadow-blue-500/30"
-      />
+      <FloatingTryClassButton href="/demo" />
     </main>
   );
 }

@@ -16,8 +16,8 @@ import { namedTeachers } from "@/lib/teachers-data";
 const C = {
   blue:     "#2563eb",
   blueDk:   "#1d4ed8",
-  cream:    "#EFF6FF",
-  creamBdr: "#DBEAFE",
+  cream:    "#FFF9F3",
+  creamBdr: "#FCE8D6",
   ink:      "#111827",
   gray:     "#6B7280",
   lgray:    "#E5E7EB",
@@ -31,8 +31,8 @@ const C = {
 };
 
 const CAT: Record<string, { bg: string; fg: string }> = {
-  "EXAM STRATEGY": { bg: "#EFF6FF", fg: C.blue },
-  "LANGUAGE":      { bg: "#FFF7ED", fg: C.orange },
+  "EXAM STRATEGY": { bg: "#FFF7ED", fg: C.orange },
+  "LANGUAGE":      { bg: "#EFF6FF", fg: C.blue },
   "SPELLING":      { bg: "#F5F3FF", fg: C.purple },
   "NUMERACY":      { bg: "#FFFBEB", fg: C.amber },
   "READING":       { bg: "#F0FDFA", fg: C.teal },
@@ -184,7 +184,7 @@ const S = StyleSheet.create({
   relevancyBox: {
     borderLeftWidth: 2, borderLeftColor: C.blue,
     paddingLeft: 6, paddingVertical: 3,
-    backgroundColor: "#EFF6FF", borderRadius: 2,
+    backgroundColor: "#FFF7ED", borderRadius: 2,
   },
   relevancyLabel: {
     fontSize: 6, fontFamily: "Helvetica-Bold",

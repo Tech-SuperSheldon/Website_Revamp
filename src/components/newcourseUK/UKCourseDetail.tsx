@@ -32,7 +32,7 @@ export default function UKCourseDetail({ courseId }: UKCourseDetailProps) {
           <p className="text-gray-500">The course you&apos;re looking for doesn&apos;t exist.</p>
           <button
             onClick={() => window.history.back()}
-            className="mt-4 text-blue-600 font-semibold hover:text-blue-700"
+            className="mt-4 text-orange-600 font-semibold hover:text-orange-700"
           >
             Go Back
           </button>
@@ -48,13 +48,13 @@ export default function UKCourseDetail({ courseId }: UKCourseDetailProps) {
       {/* Breadcrumbs & Title Area */}
       <div className="container mx-auto px-4 max-w-7xl mb-12">
            <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-                <Link href="/uk" className="hover:text-blue-600 transition-colors">Home</Link>
+                <Link href="/uk" className="hover:text-orange-600 transition-colors">Home</Link>
                 <span>/</span>
-                <Link href="/uk/new-courses" className="hover:text-blue-600 transition-colors">Courses</Link>
+                <Link href="/uk/new-courses" className="hover:text-orange-600 transition-colors">Courses</Link>
                 <span>/</span>
                 <span className="text-gray-900 font-medium truncate">{course.categ}</span>
                 <span>/</span>
-                <span className="text-blue-600 font-medium truncate">{course.title}</span>
+                <span className="text-orange-600 font-medium truncate">{course.title}</span>
            </div>
 
            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -64,7 +64,7 @@ export default function UKCourseDetail({ courseId }: UKCourseDetailProps) {
                 <div className="flex flex-wrap items-center gap-3">
                     <UKDownloadBrochureButton course={course} variant="solid" />
                     <Link href="/demo" onClick={openDemoOnClick}>
-                        <button className="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/30 whitespace-nowrap">
+                        <button className="bg-orange-600 text-white px-8 py-3 rounded-full font-bold hover:bg-orange-700 transition-all shadow-lg shadow-orange-500/30 whitespace-nowrap">
                             Enroll as a Champ
                         </button>
                     </Link>
@@ -95,7 +95,7 @@ export default function UKCourseDetail({ courseId }: UKCourseDetailProps) {
                           className="object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-blue-50 text-blue-200 text-2xl font-bold">
+                      <div className="w-full h-full flex items-center justify-center bg-orange-50 text-orange-200 text-2xl font-bold">
                         {course.title}
                       </div>
                     )}

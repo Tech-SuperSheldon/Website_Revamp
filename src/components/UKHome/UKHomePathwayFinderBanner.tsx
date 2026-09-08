@@ -34,7 +34,7 @@ export default function UKHomePathwayFinderBanner() {
           </p>
           <Link
             href="/pathway-finder"
-            className="group relative inline-flex items-center gap-2 overflow-hidden bg-[#2563eb] hover:bg-[#1d4ed8] hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-8px_rgba(37,99,235,0.7)] active:scale-95 transition-all duration-300 ease-out text-white font-bold text-base px-8 py-4 rounded-full shadow-lg w-fit"
+            className="group relative inline-flex items-center gap-2 overflow-hidden bg-[#f97316] hover:bg-[#ea6c10] hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-8px_rgba(249,115,22,0.7)] active:scale-95 transition-all duration-300 ease-out text-white font-bold text-base px-8 py-4 rounded-full shadow-lg w-fit"
           >
             {/* Shine sweep on hover */}
             <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />

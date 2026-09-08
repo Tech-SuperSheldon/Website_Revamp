@@ -79,14 +79,14 @@ const UKHomeLevelUp = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.55, ease: "easeOut" }}
-            className="rounded-2xl bg-white/90 px-5 py-3 text-center text-2xl font-bold leading-tight text-[#1d4ed8] shadow-sm backdrop-blur-sm sm:px-7 sm:py-3.5 sm:text-3xl md:px-8 md:py-4 md:text-5xl"
+            className="rounded-2xl bg-white/90 px-5 py-3 text-center text-2xl font-bold leading-tight text-[#e87f1e] shadow-sm backdrop-blur-sm sm:px-7 sm:py-3.5 sm:text-3xl md:px-8 md:py-4 md:text-5xl"
           >
             Try our app, LevelUp
           </motion.h2>
         </div>
 
         <div className="container mx-auto flex min-h-0 w-full shrink-0 flex-col items-center justify-start gap-3 px-4 py-2 max-md:pt-1 md:flex-row md:justify-center md:gap-2 md:py-4 lg:gap-3 mt-0 md:mt-1">
-
+          
           {/* Left Text Box */}
           <div className="w-[200px] shrink-0 text-center md:text-right space-y-4 hidden md:block">
             <AnimatePresence mode='wait'>
@@ -115,9 +115,9 @@ const UKHomeLevelUp = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    className="bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-blue-100 shadow-sm"
+                    className="bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-orange-100 shadow-sm"
                 >
-                     <p className="text-[#1d4ed8] text-xs font-bold uppercase tracking-wider mb-1">
+                     <p className="text-[#e87f1e] text-xs font-bold uppercase tracking-wider mb-1">
                         {FEATURES[activeIndex].titleLeft.split('\n')[0]}
                      </p>
                      <h3 className="text-xl font-bold text-gray-900 leading-tight mb-1">
@@ -146,11 +146,11 @@ const UKHomeLevelUp = () => {
                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M15.67 4H14V2h-4v2H8.33C7.6 4 7 4.6 7 5.33v15.33C7 21.4 7.6 22 8.33 22h7.33c.74 0 1.34-.6 1.34-1.33V5.33C17 4.6 16.4 4 15.67 4z"/></svg>
                    </div>
                  </div>
-
+                
                 {/* Screen Content - Driven by State */}
                 <div className="w-full h-full bg-white relative">
                     <AnimatePresence mode='popLayout'>
-                      <motion.div
+                      <motion.div 
                           key={activeIndex}
                           className="absolute inset-0 w-full h-full"
                           initial={{ y: "100%" }}
@@ -167,7 +167,7 @@ const UKHomeLevelUp = () => {
                                       {FEATURES[activeIndex].titleLeft.split('\n')[0]}
                                   </span>
                               </div>
-
+                              
                               {/* Actual Image */}
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
@@ -185,7 +185,7 @@ const UKHomeLevelUp = () => {
                 </div>
               </div>
                {/* Glow */}
-               <div className="absolute -inset-4 max-md:-inset-2 bg-blue-500/10 blur-3xl -z-10 rounded-full"></div>
+               <div className="absolute -inset-4 max-md:-inset-2 bg-orange-500/10 blur-3xl -z-10 rounded-full"></div>
             </div>
 
             {/* App Store / Play Store Buttons */}

@@ -28,7 +28,7 @@ type Academy = {
 const ACADEMIES: Academy[] = [
   {
     key: "tuition",
-    letter: "T",
+    letter: "S",
     title: "School Readiness",
     accent: NAVY,
     subjects: ["Maths", "Science", "English", "Reasoning"],

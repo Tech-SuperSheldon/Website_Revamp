@@ -26,7 +26,7 @@ export default function UKJoinUs() {
 
       <div className="shrink-0">
         <Link href="/demo" onClick={openDemoOnClick}>
-          <button className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/30 whitespace-nowrap text-lg">
+          <button className="bg-orange-600 text-white px-8 py-4 rounded-full font-bold hover:bg-orange-700 transition-all shadow-lg shadow-orange-500/30 whitespace-nowrap text-lg">
             Enroll Today
           </button>
         </Link>

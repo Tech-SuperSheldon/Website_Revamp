@@ -19,7 +19,7 @@ type Testimonial = {
   quote?: string;
   videoThumbnail?: string;
   videoUrl?: string; // placeholder for future video
-  theme?: 'white' | 'blue';
+  theme?: 'white' | 'orange';
 };
 
 const TESTIMONIALS: Testimonial[] = [
@@ -125,7 +125,7 @@ export function ParentsTestimonialSection() {
         <NSGlobe size={600} opacity="opacity-100" />
       </div>
 
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -134,11 +134,11 @@ export function ParentsTestimonialSection() {
       >
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
           Hear it from <br />
-          <span className="text-[#1d4ed8]">our Community!</span>
+          <span className="text-[#e87f1e]">our Community!</span>
         </h2>
-
-        <div className="bg-[#eef4ff] px-4 py-3 sm:px-10 sm:py-5 rounded-2xl sm:rounded-[2rem] flex flex-col sm:flex-row items-center gap-4 sm:gap-6 shadow-md w-full max-w-2xl border border-blue-200">
-            <div className="bg-[#1d4ed8] text-white px-4 py-2 sm:px-6 sm:py-4 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center min-w-[100px] sm:min-w-[140px] shrink-0 shadow-lg">
+        
+        <div className="bg-[#fff6ef] px-4 py-3 sm:px-10 sm:py-5 rounded-2xl sm:rounded-[2rem] flex flex-col sm:flex-row items-center gap-4 sm:gap-6 shadow-md w-full max-w-2xl border border-orange-200">
+            <div className="bg-[#e87f1e] text-white px-4 py-2 sm:px-6 sm:py-4 rounded-xl sm:rounded-2xl flex flex-col items-center justify-center min-w-[100px] sm:min-w-[140px] shrink-0 shadow-lg">
                 <span className="text-3xl sm:text-4xl md:text-5xl font-bold">750+</span>
                 <span className="text-[10px] sm:text-xs md:text-sm opacity-90 mt-0.5 text-center font-medium tracking-wide">Five Star Reviews</span>
             </div>
@@ -207,7 +207,7 @@ function Marquee({ children, velocity = -0.05 }: { children: React.ReactNode, ve
         if (!contentRef.current) return;
         const contentWidth = contentRef.current.offsetWidth / 2;
         if (contentWidth <= 0) return;
-
+        
         const moveBy = velocity * (delta / 16) * 10;
         let newX = x.get() + moveBy;
 
@@ -246,13 +246,13 @@ function TestimonialCard({ item, isMobile }: { item: Testimonial, isMobile?: boo
                             />
                         </div>
                         <div className="flex flex-col">
-                            <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
+                            <h3 className="font-bold text-lg text-gray-900 group-hover:text-orange-600 transition-colors">
                                 {item.name}
                             </h3>
                             <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                                 <span>{item.date}</span>
                                 <span className="w-1 h-1 rounded-full bg-gray-300" />
-                                <span className="text-blue-600">{item.stars} Stars</span>
+                                <span className="text-orange-600">{item.stars} Stars</span>
                             </div>
                         </div>
                     </div>
@@ -266,7 +266,7 @@ function TestimonialCard({ item, isMobile }: { item: Testimonial, isMobile?: boo
 
                     {/* Footer: Title as a Category Tag */}
                     <div className="mt-auto pt-4 border-t border-gray-50">
-                        <span className="text-blue-600 font-bold uppercase tracking-widest text-[10px]">
+                        <span className="text-orange-600 font-bold uppercase tracking-widest text-[10px]">
                             {item.title}
                         </span>
                     </div>
@@ -278,11 +278,11 @@ function TestimonialCard({ item, isMobile }: { item: Testimonial, isMobile?: boo
     return (
         <div className="relative w-full h-full">
             {/* --- TESTIMONIAL CARD (Desktop) --- */}
-            <div className="w-full h-full rounded-[32px] bg-gradient-to-br from-[#eef4ff] to-[#dbe8ff] shadow-md border border-blue-300 p-6 flex flex-col justify-between overflow-hidden">
+            <div className="w-full h-full rounded-[32px] bg-gradient-to-br from-[#fff6ef] to-[#ffe6d4] shadow-md border border-orange-300 p-6 flex flex-col justify-between overflow-hidden">
 
                 {/* Header: Avatar & Date */}
                 <div className="flex items-start justify-between mb-4">
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-blue-400 shadow-md">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-orange-400 shadow-md">
                         <Image
                             src={item.avatar}
                             alt={item.name}
@@ -290,7 +290,7 @@ function TestimonialCard({ item, isMobile }: { item: Testimonial, isMobile?: boo
                             className="object-cover"
                         />
                     </div>
-                    <span className="text-xs font-semibold tracking-wider text-[#1d4ed8] bg-blue-100/80 px-3 py-1 rounded-full border border-blue-200">
+                    <span className="text-xs font-semibold tracking-wider text-[#e87f1e] bg-orange-100/80 px-3 py-1 rounded-full border border-orange-200">
                         {item.date}
                     </span>
                 </div>
@@ -303,14 +303,14 @@ function TestimonialCard({ item, isMobile }: { item: Testimonial, isMobile?: boo
                 </div>
 
                 {/* Footer: Stars & Name */}
-                <div className="relative z-10 pt-3 border-t border-blue-300/50">
-                    <div className="flex gap-1 mb-2 text-[#1d4ed8]">
+                <div className="relative z-10 pt-3 border-t border-orange-300/50">
+                    <div className="flex gap-1 mb-2 text-[#e87f1e]">
                         {[...Array(item.stars)].map((_, i) => (
                             <Star key={i} fill="currentColor" className="w-4 h-4 drop-shadow-sm" />
                         ))}
                     </div>
                     <h3 className="font-bold text-base text-gray-900">{item.name}</h3>
-                    <p className="text-xs text-[#1e40af] font-semibold tracking-wide">
+                    <p className="text-xs text-[#d67015] font-semibold tracking-wide">
                         {item.title}
                     </p>
                 </div>

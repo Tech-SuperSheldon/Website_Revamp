@@ -12,7 +12,7 @@ const features = [
     desc: "Connect with expert tutors from around the globe for personalized learning.",
     video: assetUrl("/newsite/5points/5.mp4"),
     layout: "horizontal", // 960x720 (4:3) - Fits OK in wide card side-by-side or vertical
-    className: "md:col-span-2 bg-[#2563eb] text-white", // Blue card
+    className: "md:col-span-2 bg-[#4d66e5] text-white", // Blue card
   },
   {
     title: "Ask Nova AI",
@@ -73,9 +73,9 @@ export default function UKHomeFeatureSlider() {
         transition={{ duration: 0.7, ease: "easeOut" }}
         className="text-4xl md:text-6xl font-semibold text-center mb-6 md:mb-12 leading-tight"
       >
-        The <span className="text-[#1d4ed8]">Smart Choice</span>
+        The <span className="text-[#e87f1e]">Smart Choice</span>
         <br />
-        for Bright <span className="text-[#1d4ed8]">Futures</span>
+        for Bright <span className="text-[#e87f1e]">Futures</span>
       </motion.h2>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:grid-rows-[360px_auto]">

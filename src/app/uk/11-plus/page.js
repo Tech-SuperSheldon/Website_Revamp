@@ -31,7 +31,7 @@ import E11Experience from "@/components/ElevenPlus/E11Experience";
 
 export default function Home() {
     return (
-        <div className="bg-[#D3F5FF]">
+        <div>
             <UKHeader />
 
             <E11Hero/>

@@ -19,7 +19,7 @@ import UKCourseSection from "@/components/UKComp/course/UKCourseSection";
 
 export default function Courses() {
     return (
-        <div className="bg-[#D3F5FF]">
+        <div>
 
             <UKHeader />
             <UKCourse/>

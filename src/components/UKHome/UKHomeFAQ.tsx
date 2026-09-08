@@ -19,13 +19,13 @@ export default function UKHomeFAQ() {
     <section className="relative -mt-[6vh] pt-8 pb-0 md:mt-0 md:pt-24 md:pb-0 lg:mt-16 lg:mb-0 xl:pt-8" id="faq">
          {/* Background Decoration commented out for cleaner look as requested
       // <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-      //   <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-100 rounded-full blur-[100px] opacity-40" />
+      //   <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-100 rounded-full blur-[100px] opacity-40" />
       //   <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-50 rounded-full blur-[100px] opacity-40" />
       // </div>
       */}
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-
+        
         {/* Title */}
         {/* Title */}
         <motion.div
@@ -37,8 +37,8 @@ export default function UKHomeFAQ() {
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-quicksand font-bold text-gray-900 mb-3 px-4">
             Frequently Asked <span className="relative inline-block">
-              <span className="relative z-10 text-blue-600">Questions</span>
-              <span className="absolute bottom-1 left-0 w-full h-3 bg-blue-100 -z-10 rounded-sm" />
+              <span className="relative z-10 text-orange-600">Questions</span>
+              <span className="absolute bottom-1 left-0 w-full h-3 bg-orange-100 -z-10 rounded-sm" />
             </span>
           </h2>
           <p className="text-gray-600 font-manrope text-base sm:text-xl max-w-2xl mx-auto px-4">
@@ -48,10 +48,10 @@ export default function UKHomeFAQ() {
 
         {/* CTA Buttons */}
         <div className="flex justify-center gap-3 px-4 mb-2">
-            <Link href="https://wa.me/917974695618" target="_blank" rel="noopener noreferrer" className="flex-1 sm:flex-none text-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-md transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
+            <Link href="https://wa.me/917974695618" target="_blank" rel="noopener noreferrer" className="flex-1 sm:flex-none text-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-md transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
                 Contact us
             </Link>
-            <Link href="/demo" onClick={openDemoOnClick} className="flex-1 sm:flex-none text-center bg-blue-100 hover:bg-blue-200 text-blue-800 font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-sm border border-blue-200 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
+            <Link href="/demo" onClick={openDemoOnClick} className="flex-1 sm:flex-none text-center bg-orange-100 hover:bg-orange-200 text-orange-800 font-semibold py-2.5 px-4 sm:px-8 rounded-full transition-colors duration-300 shadow-sm border border-orange-200 transform hover:scale-105 text-sm sm:text-base whitespace-nowrap">
                 Try a Free Class
             </Link>
         </div>
@@ -68,7 +68,7 @@ export default function UKHomeFAQ() {
                 className={`relative px-6 py-2 rounded-full font-semibold transition-all duration-300 text-sm sm:text-base ${
                     activeSection === idx
                     ? "bg-black text-white shadow-lg"
-                    : "bg-blue-50 text-blue-700 hover:bg-blue-100"
+                    : "bg-orange-50 text-orange-700 hover:bg-orange-100"
                 }`}
                 >
                 {section.title}
@@ -98,15 +98,15 @@ export default function UKHomeFAQ() {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     className={`group rounded-[2.5rem] transition-all duration-300 border ${
                         isActive
-                        ? "bg-blue-50 border-blue-300 shadow-md"
-                        : "bg-white border-blue-100 hover:border-blue-200 hover:bg-blue-50/50"
+                        ? "bg-orange-50 border-orange-300 shadow-md"
+                        : "bg-white border-orange-100 hover:border-orange-200 hover:bg-orange-50/50"
                     }`}
                   >
                     <button
                       onClick={() => toggleFAQ(index)}
                       className="w-full text-left px-6 sm:px-8 py-5 flex items-center gap-4 focus:outline-none"
                     >
-                         <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ${isActive ? "bg-blue-500 text-white" : "bg-blue-100 text-blue-600 group-hover:bg-blue-500 group-hover:text-white"}`}>
+                         <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ${isActive ? "bg-orange-500 text-white" : "bg-orange-100 text-orange-600 group-hover:bg-orange-500 group-hover:text-white"}`}>
                              <motion.span
                                 animate={{ rotate: isActive ? 45 : 0 }}
                                 transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -115,7 +115,7 @@ export default function UKHomeFAQ() {
                                  +
                              </motion.span>
                          </div>
-                      <span className={`font-anybody text-base sm:text-lg font-semibold flex-1 ${isActive ? "text-blue-900" : "text-gray-800"}`}>
+                      <span className={`font-anybody text-base sm:text-lg font-semibold flex-1 ${isActive ? "text-orange-900" : "text-gray-800"}`}>
                         {item.question}
                       </span>
                     </button>
@@ -142,7 +142,7 @@ export default function UKHomeFAQ() {
             </AnimatePresence>
         </div>
       </div>
-
+          
       {/* Old floating icons commented out
       // <div className="absolute bottom-12 sm:bottom-32 left-4 sm:left-16 animate-float1 z-10 rotate-[45]">
       //   <img src="/icons/crayons.png" alt="globe" className="w-10 sm:w-[60px]" />

@@ -32,10 +32,10 @@ export default function UKHomeCookieConsent() {
           transition={{ duration: 0.5, ease: "easeOut", delay: 1 }}
           className="fixed bottom-0 left-0 right-0 z-[99999] px-4 py-4 md:px-6 md:py-5"
         >
-          <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl border border-blue-100 px-5 py-4 md:px-6 md:py-5 flex flex-col sm:flex-row items-center gap-4">
+          <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl border border-orange-100 px-5 py-4 md:px-6 md:py-5 flex flex-col sm:flex-row items-center gap-4">
             {/* Icon */}
-            <div className="shrink-0 w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center">
-              <Cookie className="w-6 h-6 text-blue-500" />
+            <div className="shrink-0 w-12 h-12 rounded-full bg-orange-50 flex items-center justify-center">
+              <Cookie className="w-6 h-6 text-orange-500" />
             </div>
 
             {/* Text */}
@@ -55,7 +55,7 @@ export default function UKHomeCookieConsent() {
               </button>
               <button
                 onClick={handleAccept}
-                className="bg-blue-500 hover:bg-blue-600 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors duration-200 shadow-md"
+                className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors duration-200 shadow-md"
               >
                 Accept
               </button>

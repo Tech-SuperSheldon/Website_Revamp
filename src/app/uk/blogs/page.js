@@ -10,7 +10,7 @@ import UKBlogrecent from "@/components/UKComp/UKBlogrecent";
 
 export default function Home() {
     return (
-        <div className="bg-[#D3F5FF]">
+        <div>
             <UKHeader/>
 
             <UKBlogrecent/>

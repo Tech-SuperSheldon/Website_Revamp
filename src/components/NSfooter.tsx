@@ -96,7 +96,7 @@ export function Footer() {
                 </div>
                 <div className="flex items-start gap-2">
                   <MapPin className="w-4 h-4 shrink-0 mt-0.5" strokeWidth={2} />
-                  <p><span className="font-bold">Address:</span> Om Chambers 648/A 4th Flr, Binnamangala 1st Stage, Bangalore- 560038, Karnataka, India</p>
+                  <p><span className="font-bold">Address:</span> Om Chambers, Binnamangala 1st Stage, Bangalore- 560038, Karnataka, India</p>
                 </div>
               </div>
             </motion.div>

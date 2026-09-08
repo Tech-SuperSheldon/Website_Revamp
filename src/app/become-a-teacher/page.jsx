@@ -601,7 +601,7 @@ function HeroSection({ onApply }) {
             <span className="mt-2 block">of Learning</span>
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-gray-600 text-lg sm:text-xl max-w-lg mb-10 leading-relaxed font-medium mx-auto sm:mx-0">
-            <span className="hidden sm:inline">Join 100+ expert educators reaching 5K+ students across Australia.<br />
+            <span className="hidden sm:inline">Join 100+ expert educators teaching 5K+ students across the US, UK and European countries.<br />
             Flexible hours, competitive pay, world-class tools.</span>
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex flex-wrap items-center justify-center sm:justify-start gap-4 mb-10">

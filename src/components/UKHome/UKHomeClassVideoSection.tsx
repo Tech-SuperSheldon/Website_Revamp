@@ -60,7 +60,7 @@ export default function UKHomeClassVideoSection() {
       setIsPlaying(true);
     }
   };
-
+  
   const toggleMute = (e: React.MouseEvent) => {
       e.stopPropagation();
       if (!videoRef.current) return;
@@ -114,10 +114,10 @@ export default function UKHomeClassVideoSection() {
   return (
     <section ref={containerRef} className="relative w-full pt-4 md:pt-8 pb-8 md:pb-20 overflow-hidden">
       {/* Background Decor Removed */}
-
+      
       {/* --- BACKGROUND ANIMATED TEXT --- */}
       {/* "OUR" - Top Left relative to content area */}
-      <motion.div
+      <motion.div 
         style={{ x: leftTextX, opacity: textOpacity }}
         className="absolute top-[20%] md:top-[25%] left-0 md:left-[10%] pointer-events-none select-none z-0 overflow-hidden hidden md:block"
       >
@@ -127,7 +127,7 @@ export default function UKHomeClassVideoSection() {
       </motion.div>
 
       {/* "CLASS" - Bottom Right relative to content area */}
-      <motion.div
+      <motion.div 
         style={{ x: rightTextX, opacity: textOpacity }}
         className="absolute bottom-[20%] md:bottom-[32%] right-0 md:right-[10%] pointer-events-none select-none z-0 overflow-hidden hidden md:block"
       >
@@ -137,18 +137,18 @@ export default function UKHomeClassVideoSection() {
       </motion.div>
 
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center gap-8 md:gap-12">
-
+        
         {/* --- HEADER TITLE --- */}
         <div className="text-center max-w-2xl mt-8">
-          <motion.h2
+          <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             className="text-4xl md:text-5xl font-bold text-slate-900 mb-4"
           >
-            Experience the <span className="text-blue-500">Classroom</span>
+            Experience the <span className="text-orange-500">Classroom</span>
           </motion.h2>
-          <motion.p
+          <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -158,12 +158,12 @@ export default function UKHomeClassVideoSection() {
             See how our interactive platform makes learning engaging.
           </motion.p>
         </div>
-
+        
         {/* --- TABLET CONTAINER --- */}
         <div className="relative w-full max-w-[1000px] aspect-[16/10] md:aspect-[16/9] flex items-center justify-center mt-4 mb-4 md:mb-12">
-
+            
             {/* THE DEVICE (TABLET) */}
-            <motion.div
+            <motion.div 
                 initial={{ scale: 0.9, opacity: 0, y: 30 }}
                 whileInView={{ scale: 1, opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.1 }}
@@ -189,14 +189,14 @@ export default function UKHomeClassVideoSection() {
                         playsInline
                         preload="none"
                     />
-
+                    
                     {/* Overlay Controls */}
-                    <div
-                        className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors flex items-center justify-center group cursor-pointer"
+                    <div 
+                        className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors flex items-center justify-center group cursor-pointer" 
                         onClick={togglePlay}
                     >
                         {/* Play Button (Only visible when paused or hovering) */}
-                        <motion.div
+                        <motion.div 
                              initial={false}
                              animate={{ scale: isPlaying ? 0 : 1, opacity: isPlaying ? 0 : 1 }}
                              whileHover={{ scale: 1.1, opacity: 1 }}
@@ -210,7 +210,7 @@ export default function UKHomeClassVideoSection() {
                         </motion.div>
 
                         {/* Mute Button (Bottom Right) */}
-                        <button
+                        <button 
                             onClick={toggleMute}
                             className="absolute bottom-6 right-6 p-3 bg-black/40 backdrop-blur-md rounded-full text-white/90 hover:bg-black/60 transition-colors z-30"
                         >
@@ -236,7 +236,7 @@ export default function UKHomeClassVideoSection() {
                 transition={{ delay: 0.1 }}
                 className="flex flex-col items-center text-center group"
             >
-                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-blue-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
+                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-orange-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
                      <Image src={infoCards[0].icon} alt="1:1 Sessions" width={320} height={320} className="object-contain w-full h-full" />
                 </div>
             </motion.div>
@@ -252,7 +252,7 @@ export default function UKHomeClassVideoSection() {
                 transition={{ delay: 0.2 }}
                 className="flex flex-col items-center text-center group"
             >
-                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-blue-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
+                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-orange-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
                     <Image src={infoCards[1].icon} alt="Live Recorded Classes" width={320} height={320} className="object-contain w-full h-full" />
                 </div>
             </motion.div>
@@ -268,7 +268,7 @@ export default function UKHomeClassVideoSection() {
                 transition={{ delay: 0.3 }}
                 className="flex flex-col items-center text-center group"
             >
-                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-blue-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
+                <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-3xl bg-white flex items-center justify-center shadow-xl shadow-orange-100/40 transition-transform group-hover:scale-105 duration-300 overflow-hidden">
                     <Image src={infoCards[2].icon} alt="Homework & Tests" width={320} height={320} className="object-contain w-full h-full" />
                 </div>
             </motion.div>

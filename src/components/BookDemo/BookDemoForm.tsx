@@ -8,16 +8,23 @@
 // validation, lead capture and submit calls are identical in both — only the
 // outer chrome and the final "you're all set" action differ.
 //
-// Mirrors LearnForm's step flow (Grade -> Phone -> Date & Time -> Timezone)
-// and its partial-lead-capture pattern: the moment grade + phone are known we
-// fire a background save to the sheet, so the lead isn't lost even if the
-// visitor never finishes picking a date/time/timezone.
+// Step flow: Academy -> Subject -> Grade -> Phone -> Date & Time -> Timezone.
+// The first two steps ask which of the three academies the child is joining and
+// then that academy's own sub-category (subject / exam / skill), so this popup
+// captures the same "what do they want to learn" signal the academy pages'
+// LearnForm already did. Everything from Grade onwards is unchanged.
+//
+// Also mirrors LearnForm's partial-lead-capture pattern: the moment academy +
+// subject + grade + phone are known we fire a background save to the sheet, so
+// the lead isn't lost even if the visitor never finishes picking a
+// date/time/timezone.
 import { useEffect, useMemo, useRef, useState } from "react";
 import axiosClient from "@/components/utils/axios";
 // @ts-ignore - JS component, no type declarations
 import PhoneField from "@/components/demo/PhoneField";
 // @ts-ignore - JS module, no type declarations
 import { findByIso } from "@/components/demo/countries";
+import { getAcademies, type Academy, type Locale } from "@/lib/academies";
 
 type Market = "uk" | "au";
 
@@ -51,61 +58,31 @@ const TIME_SLOTS = [
 
 const DEFAULT_DIAL: Record<Market, string> = { uk: "GB", au: "AU" };
 
-function UserIcon() {
-  return (
-    <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM5 21v-1a7 7 0 0114 0v1" />
-    </svg>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h2.3a1 1 0 01.95.68l1 3a1 1 0 01-.24 1L7.6 9.6a13 13 0 006.8 6.8l1.92-1.4a1 1 0 011-.25l3 1a1 1 0 01.68.95V19a2 2 0 01-2 2A16 16 0 013 5z" />
-    </svg>
-  );
-}
-
-function ClockIcon() {
-  return (
-    <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="9" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
-    </svg>
-  );
-}
-
-function GlobeIcon() {
-  return (
-    <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="9" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h18M12 3a15 15 0 010 18a15 15 0 010-18z" />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-    </svg>
-  );
-}
-
-const STEPS = [
-  { n: 1, label: "Child's Grade", Icon: UserIcon },
-  { n: 2, label: "Mobile Number", Icon: PhoneIcon },
-  { n: 3, label: "Preferred Time", Icon: ClockIcon },
-  { n: 4, label: "Timezone", Icon: GlobeIcon },
-];
+const TOTAL_STEPS = 6;
+/** The "you're all set" screen, shown after the last question is submitted. */
+const DONE_STEP = TOTAL_STEPS + 1;
 
 const STEP_COPY: Record<number, { title: string; subtitle: string }> = {
-  1: { title: "What grade is your child in?", subtitle: "This helps us match them with the right tutor." },
-  2: { title: "What's your mobile number?", subtitle: "We'll use this to confirm your demo slot." },
-  3: { title: "Pick a date and time", subtitle: "Choose the slot that suits you best." },
-  4: { title: "Confirm your timezone", subtitle: "So we schedule the class in your local time." },
+  1: { title: "Which academy is your child joining?", subtitle: "Pick the track that matches what you're after." },
+  // Step 2's copy comes from the chosen academy (see stepCopy) — "Pick a
+  // subject/exam/skill to start", depending on the track.
+  3: { title: "What grade is your child in?", subtitle: "This helps us match them with the right tutor." },
+  4: { title: "What's your mobile number?", subtitle: "We'll use this to confirm your demo slot." },
+  5: { title: "Pick a date and time", subtitle: "Choose the slot that suits you best." },
+  6: { title: "Confirm your timezone", subtitle: "So we schedule the class in your local time." },
 };
+
+function stepCopy(step: number, academy: Academy | null) {
+  if (step === 2) {
+    return {
+      title: academy ? academy.prompt : "Pick a subject to start",
+      subtitle: academy
+        ? `Choose what your child wants to work on in ${academy.name}.`
+        : "Choose what your child wants to work on.",
+    };
+  }
+  return STEP_COPY[step];
+}
 
 type SubmitError = { title: string; detail: string };
 
@@ -146,9 +123,11 @@ function describeSubmitError(error: unknown): SubmitError {
 }
 
 const STEP_HINTS: Record<number, string> = {
-  1: "Not sure? Our experts can help place your child in the right level.",
-  2: "We'll only call about your demo — no spam, ever.",
-  3: "Slots fill up fast — pick the earliest time that works for you.",
+  1: "Every academy starts the same way — a free 1:1 trial with a matched tutor.",
+  2: "You can add more subjects later — most families start with one.",
+  3: "Not sure? Our experts can help place your child in the right level.",
+  4: "We'll only call about your demo — no spam, ever.",
+  5: "Slots fill up fast — pick the earliest time that works for you.",
 };
 
 // ── Date helpers (local-time based, no UTC shifting) ──
@@ -309,18 +288,33 @@ function useClickOutside(ref: React.RefObject<HTMLElement | null>, active: boole
 
 export default function BookDemoForm({
   market,
+  locale,
   variant = "page",
   onClose,
 }: {
   market: Market;
+  /** Which academies list to show. The three academies share their headings
+   *  across regions but not their sub-categories — Exam Readiness lists
+   *  different exams on /uk, /au and the global site (see src/lib/academies).
+   *  Defaults to the market so the standalone /demo pages keep working. */
+  locale?: Locale;
   /** "page" = the standalone /demo route, "modal" = the site-wide popup. */
   variant?: "page" | "modal";
   /** Dismisses the popup; only used by the modal variant. */
   onClose?: () => void;
 }) {
   const isModal = variant === "modal";
+  const academies = useMemo(() => getAcademies(locale ?? market), [locale, market]);
+
   const [step, setStep] = useState(1);
+  const [academySlug, setAcademySlug] = useState("");
+  const [subject, setSubject] = useState("");
   const [grade, setGrade] = useState("");
+
+  const academy = useMemo(
+    () => academies.find((a) => a.slug === academySlug) ?? null,
+    [academies, academySlug]
+  );
 
   const [dialCountry, setDialCountry] = useState(() => findByIso(DEFAULT_DIAL[market]));
   const dialCountryTouched = useRef(false);
@@ -418,9 +412,22 @@ export default function BookDemoForm({
     if (step > 1) setStep((s) => s - 1);
   };
 
+  const handleAcademySelect = (slug: string) => {
+    // Switching academy invalidates whatever sub-category was picked under the
+    // previous one — the lists don't overlap.
+    if (slug !== academySlug) setSubject("");
+    setAcademySlug(slug);
+    autoAdvance(() => setStep(2));
+  };
+
+  const handleSubjectSelect = (s: string) => {
+    setSubject(s);
+    autoAdvance(() => setStep(3));
+  };
+
   const handleGradeSelect = (g: string) => {
     setGrade(g);
-    autoAdvance(() => setStep(2));
+    autoAdvance(() => setStep(4));
   };
 
   const handlePhoneContinue = () => {
@@ -439,17 +446,19 @@ export default function BookDemoForm({
     axiosClient
       .post("/user/bookDemo/start", {
         market,
+        academy: academy?.name || "",
+        subject,
         grade,
         mobile,
         ...utmParams,
       })
       .catch((err: unknown) => console.error("Failed to save partial demo lead:", err));
 
-    setStep(3);
+    setStep(5);
   };
 
   const handleDateTimeContinue = () => {
-    if (selectedDate && selectedTime) setStep(4);
+    if (selectedDate && selectedTime) setStep(6);
   };
 
   const handleConfirm = async () => {
@@ -461,6 +470,8 @@ export default function BookDemoForm({
     try {
       await axiosClient.post("/user/bookDemo/complete", {
         market,
+        academy: academy?.name || "",
+        subject,
         grade,
         mobile,
         date: selectedDate,
@@ -468,7 +479,7 @@ export default function BookDemoForm({
         timezone,
         ...utmParams,
       });
-      setStep(5);
+      setStep(DONE_STEP);
     } catch (error) {
       console.error("Failed to confirm demo booking:", error);
       setSubmitError(describeSubmitError(error));
@@ -477,18 +488,28 @@ export default function BookDemoForm({
     }
   };
 
+  const NEXT_HANDLERS: Record<number, () => void> = {
+    1: () => setStep(2),
+    2: () => setStep(3),
+    3: () => setStep(4),
+    4: handlePhoneContinue,
+    5: handleDateTimeContinue,
+    6: handleConfirm,
+  };
+
+  const NEXT_DISABLED: Record<number, boolean> = {
+    1: !academySlug,
+    2: !subject,
+    3: !grade,
+    4: false,
+    5: !selectedDate || !selectedTime,
+    6: isSubmitting || !timezone,
+  };
+
   const nextAction = {
-    label: step === 4 ? (isSubmitting ? "Confirming…" : "Confirm Booking") : "Next Step",
-    onClick:
-      step === 1 ? () => setStep(2) : step === 2 ? handlePhoneContinue : step === 3 ? handleDateTimeContinue : handleConfirm,
-    disabled:
-      step === 1
-        ? !grade
-        : step === 3
-        ? !selectedDate || !selectedTime
-        : step === 4
-        ? isSubmitting || !timezone
-        : false,
+    label: step === TOTAL_STEPS ? (isSubmitting ? "Confirming…" : "Confirm Booking") : "Next Step",
+    onClick: NEXT_HANDLERS[step],
+    disabled: NEXT_DISABLED[step],
   };
 
   return (
@@ -497,7 +518,7 @@ export default function BookDemoForm({
         isModal ? "px-4 py-6 sm:px-6" : "min-h-screen px-4 py-8"
       }`}
     >
-      <div className="mx-auto flex max-w-4xl flex-col items-center">
+      <div className="mx-auto flex max-w-xl flex-col items-center">
         {/* Banner is page-only: in the popup it just pushes the actual
             question below the fold. */}
         {!isModal && (
@@ -508,7 +529,7 @@ export default function BookDemoForm({
           />
         )}
 
-        {step === 5 ? (
+        {step === DONE_STEP ? (
           <div
             className={`w-full max-w-lg rounded-2xl bg-white p-8 text-center shadow-xl ring-1 ring-black/5 ${
               isModal ? "" : "mt-6"
@@ -558,63 +579,11 @@ export default function BookDemoForm({
             </div>
 
             <div className="mt-5 w-full overflow-hidden rounded-2xl bg-white shadow-xl ring-1 ring-black/5">
-              <div className="flex flex-col md:flex-row">
-                {/* Step rail */}
-                <aside className="hidden shrink-0 flex-col justify-between border-r border-gray-100 bg-[#FFF8F3] p-6 md:flex md:w-64">
-                  <ol>
-                    {STEPS.map((s, i) => {
-                      const isActive = step === s.n;
-                      const isDone = step > s.n;
-                      const isLast = i === STEPS.length - 1;
-                      return (
-                        <li key={s.n} className={`relative flex gap-3 ${isLast ? "" : "pb-7"}`}>
-                          {!isLast && (
-                            <span className="absolute bottom-1 left-4 top-9 w-px -translate-x-1/2 bg-gray-200" />
-                          )}
-                          {isActive && (
-                            <span className="absolute -left-6 top-0 h-8 w-0.5 rounded-r bg-[#FC8741]" />
-                          )}
-                          <span
-                            className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors ${
-                              isDone
-                                ? "bg-green-50 text-green-600"
-                                : isActive
-                                ? "bg-[#FC8741]/15 text-[#FC8741]"
-                                : "bg-white text-gray-400 ring-1 ring-gray-200"
-                            }`}
-                          >
-                            {isDone ? <CheckIcon /> : <s.Icon />}
-                          </span>
-                          <div className="pt-0.5">
-                            <p className={`text-[11px] font-medium ${isActive ? "text-[#FC8741]" : "text-gray-400"}`}>
-                              Step {s.n}
-                            </p>
-                            <p
-                              className={`text-sm font-semibold ${
-                                isActive || isDone ? "text-gray-900" : "text-gray-400"
-                              }`}
-                            >
-                              {s.label}
-                            </p>
-                          </div>
-                        </li>
-                      );
-                    })}
-                  </ol>
-
-                  <div className="mt-10 flex items-start gap-2.5">
-                    <svg className="h-5 w-5 shrink-0 text-green-500" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l7 3v5.5c0 4.2-2.9 8.1-7 9.5-4.1-1.4-7-5.3-7-9.5V6l7-3z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.5 12l1.8 1.8 3.4-3.6" />
-                    </svg>
-                    <p className="text-xs leading-snug text-gray-500">Your information is safe with us</p>
-                  </div>
-                </aside>
-
+              <div>
                 {/* Active step */}
-                <div className="flex-1 p-6 md:p-8">
-                  <h1 className="text-xl font-bold text-gray-900 md:text-2xl">{STEP_COPY[step].title}</h1>
-                  <p className="mt-1 text-sm text-gray-500">{STEP_COPY[step].subtitle}</p>
+                <div className="p-6 md:p-8">
+                  <h1 className="text-xl font-bold text-gray-900 md:text-2xl">{stepCopy(step, academy).title}</h1>
+                  <p className="mt-1 text-sm text-gray-500">{stepCopy(step, academy).subtitle}</p>
 
                   {submitError && (
                     <div
@@ -638,8 +607,62 @@ export default function BookDemoForm({
                     </div>
                   )}
 
-                  {/* Step 1: Grade */}
+                  {/* Step 1: Academy */}
                   {step === 1 && (
+                    <div className="mt-6 flex flex-col gap-3">
+                      {academies.map((a) => {
+                        const isSelected = academySlug === a.slug;
+                        return (
+                          <button
+                            key={a.slug}
+                            type="button"
+                            onClick={() => handleAcademySelect(a.slug)}
+                            className={`flex items-center gap-4 rounded-xl border-2 px-4 py-4 text-left transition-all hover:border-[#FC8741] hover:bg-[#fff7f2] ${
+                              isSelected ? "border-[#FC8741] bg-[#fff7f2]" : "border-gray-200"
+                            }`}
+                          >
+                            <span
+                              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-lg font-extrabold text-white"
+                              style={{ backgroundColor: a.accent }}
+                            >
+                              {a.letter}
+                            </span>
+                            <span className="min-w-0">
+                              <span
+                                className={`block font-bold ${isSelected ? "text-[#FC8741]" : "text-gray-900"}`}
+                              >
+                                {a.heading}
+                              </span>
+                              <span className="block text-sm text-gray-500">{a.prompt}</span>
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Step 2: Subject / exam / skill, from the chosen academy */}
+                  {step === 2 && academy && (
+                    <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      {academy.subjects.map((s) => (
+                        <button
+                          key={s}
+                          type="button"
+                          onClick={() => handleSubjectSelect(s)}
+                          className={`rounded-xl border-2 px-4 py-4 text-center text-sm font-semibold transition-all hover:border-[#FC8741] hover:bg-[#fff7f2] ${
+                            subject === s
+                              ? "border-[#FC8741] bg-[#fff7f2] text-[#FC8741]"
+                              : "border-gray-200 text-gray-700"
+                          }`}
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Step 3: Grade */}
+                  {step === 3 && (
                     <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-4">
                       {ALL_GRADES.map((g) => (
                         <button
@@ -656,8 +679,8 @@ export default function BookDemoForm({
                     </div>
                   )}
 
-                  {/* Step 2: Mobile */}
-                  {step === 2 && (
+                  {/* Step 4: Mobile */}
+                  {step === 4 && (
                     // This step can't auto-advance (we don't know when a number
                     // is finished), so Enter stands in for the Next click.
                     // Scoped to the number input: the country dropdown's own
@@ -689,8 +712,8 @@ export default function BookDemoForm({
                     </div>
                   )}
 
-                  {/* Step 3: Date & Time */}
-                  {step === 3 && (
+                  {/* Step 5: Date & Time */}
+                  {step === 5 && (
                     <div className="mt-6">
                       <div className="relative max-w-md" ref={calendarRef}>
                         <button
@@ -730,7 +753,7 @@ export default function BookDemoForm({
                                   setSelectedTime(t);
                                   // Date is already set — the slots only render
                                   // once it is — so this completes the step.
-                                  autoAdvance(() => setStep(4));
+                                  autoAdvance(() => setStep(6));
                                 }}
                                 className={`rounded-xl border-2 px-2 py-3 text-center text-sm font-semibold transition-all hover:border-[#FC8741] hover:bg-[#fff7f2] ${
                                   selectedTime === t
@@ -747,8 +770,8 @@ export default function BookDemoForm({
                     </div>
                   )}
 
-                  {/* Step 4: Timezone */}
-                  {step === 4 && (
+                  {/* Step 6: Timezone */}
+                  {step === 6 && (
                     <div className="mt-6">
                       <div className="relative max-w-md" ref={tzRef}>
                         <button
@@ -820,10 +843,10 @@ export default function BookDemoForm({
                       <div className="h-1.5 w-16 overflow-hidden rounded-full bg-gray-200">
                         <div
                           className="h-full rounded-full bg-[#FC8741] transition-all"
-                          style={{ width: `${(step / 4) * 100}%` }}
+                          style={{ width: `${(step / TOTAL_STEPS) * 100}%` }}
                         />
                       </div>
-                      <span className="text-sm text-gray-500">Step {step} of 4</span>
+                      <span className="text-sm text-gray-500">Step {step} of {TOTAL_STEPS}</span>
                     </div>
 
                     <div className="flex items-center gap-4">

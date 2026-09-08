@@ -9,7 +9,6 @@ import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "Courses", href: "/courses" },
   { name: "Testimonial", href: "/testimonials" },
   { name: "Blogs", href: "/blogs" },
 ];
@@ -79,9 +78,6 @@ export function Header() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
-            <Link href="/login" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">
-              Login
-            </Link>
             <Link href="/try-class">
                 <Button variant="gradient" className="rounded-full px-6 shadow-md transition-all hover:shadow-lg hover:shadow-orange-500/20">
                     Try a Free Class
@@ -119,9 +115,6 @@ export function Header() {
               </Link>
             ))}
             <div className="h-px w-full bg-gray-100 my-2" />
-            <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="text-lg font-medium text-gray-600">
-              Login
-            </Link>
              <Link href="/try-class" onClick={() => setIsMobileMenuOpen(false)}>
                 <Button className="w-full bg-gray-900 text-white rounded-full px-8 py-6 text-lg">
                     Try a Free Class

@@ -296,7 +296,7 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
     return text
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
       .replace(/\*(.*?)\*/g, "<em>$1</em>")
-      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-blue-500 underline">$1</a>')
+      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-orange-500 underline">$1</a>')
       .replace(/•/g, "•")
       .split("\n")
       .map((line, i) => `<span key="${i}">${line}</span>`)
@@ -312,17 +312,17 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed bottom-24 right-4 z-[9999] w-[370px] max-w-[calc(100vw-2rem)] flex flex-col rounded-2xl shadow-2xl overflow-hidden border border-blue-100"
+            className="fixed bottom-24 right-4 z-[9999] w-[370px] max-w-[calc(100vw-2rem)] flex flex-col rounded-2xl shadow-2xl overflow-hidden border border-orange-100"
             style={{ height: "520px" }}
           >
-            <div className="bg-gradient-to-r from-blue-500 to-blue-400 px-4 py-3 flex items-center justify-between flex-shrink-0">
+            <div className="bg-gradient-to-r from-orange-500 to-orange-400 px-4 py-3 flex items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-2.5">
                 <div className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center">
                   <Bot size={20} className="text-white" />
                 </div>
                 <div>
                   <p className="text-white font-bold text-sm leading-tight">Nova</p>
-                  <p className="text-blue-100 text-xs leading-tight">SuperSheldon Assistant</p>
+                  <p className="text-orange-100 text-xs leading-tight">SuperSheldon Assistant</p>
                 </div>
               </div>
               <button
@@ -340,14 +340,14 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
                   className={`flex gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   {msg.role === "assistant" && (
-                    <div className="w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <div className="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <Bot size={14} className="text-white" />
                     </div>
                   )}
                   <div
                     className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm leading-relaxed ${
                       msg.role === "user"
-                        ? "bg-blue-500 text-white rounded-tr-sm"
+                        ? "bg-orange-500 text-white rounded-tr-sm"
                         : "bg-white text-gray-800 shadow-sm border border-gray-100 rounded-tl-sm"
                     }`}
                     dangerouslySetInnerHTML={{
@@ -363,13 +363,13 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
               ))}
               {loading && (
                 <div className="flex gap-2 justify-start">
-                  <div className="w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-7 h-7 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Bot size={14} className="text-white" />
                   </div>
                   <div className="bg-white shadow-sm border border-gray-100 rounded-2xl rounded-tl-sm px-4 py-3 flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-blue-400 animate-bounce [animation-delay:0ms]" />
-                    <span className="w-2 h-2 rounded-full bg-blue-400 animate-bounce [animation-delay:150ms]" />
-                    <span className="w-2 h-2 rounded-full bg-blue-400 animate-bounce [animation-delay:300ms]" />
+                    <span className="w-2 h-2 rounded-full bg-orange-400 animate-bounce [animation-delay:0ms]" />
+                    <span className="w-2 h-2 rounded-full bg-orange-400 animate-bounce [animation-delay:150ms]" />
+                    <span className="w-2 h-2 rounded-full bg-orange-400 animate-bounce [animation-delay:300ms]" />
                   </div>
                 </div>
               )}
@@ -388,13 +388,13 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
                     ? "Ask about courses or book a demo..."
                     : "Type your answer..."
                 }
-                className="flex-1 text-sm bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition-colors placeholder:text-gray-400"
+                className="flex-1 text-sm bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 transition-colors placeholder:text-gray-400"
                 disabled={loading}
               />
               <button
                 onClick={sendMessage}
                 disabled={loading || !input.trim()}
-                className="w-9 h-9 rounded-xl bg-blue-500 hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center flex-shrink-0"
+                className="w-9 h-9 rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center flex-shrink-0"
               >
                 {loading ? (
                   <Loader2 size={16} className="text-white animate-spin" />
@@ -411,12 +411,12 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
         onClick={() => setOpen((o) => !o)}
         whileHover={{ scale: 1.05, y: -2 }}
         whileTap={{ scale: 0.95 }}
-        className={`fixed bottom-5 right-4 z-[9999] pl-2 sm:pr-4 pr-2 py-2 rounded-full bg-gradient-to-br from-blue-500 to-blue-400 shadow-lg shadow-blue-300/50 items-center gap-2.5 text-white group ${mobileHidden ? "hidden md:flex" : "flex"}`}
+        className={`fixed bottom-5 right-4 z-[9999] pl-2 sm:pr-4 pr-2 py-2 rounded-full bg-gradient-to-br from-orange-500 to-orange-400 shadow-lg shadow-orange-300/50 items-center gap-2.5 text-white group ${mobileHidden ? "hidden md:flex" : "flex"}`}
         aria-label="Open Nova chatbot"
       >
         {/* Animated glow ring behind icon */}
         {!open && (
-          <span className="absolute left-[7px] top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-blue-300/40 animate-ping" />
+          <span className="absolute left-[7px] top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-orange-300/40 animate-ping" />
         )}
 
         <AnimatePresence mode="wait">

@@ -15,12 +15,15 @@ const startLead = async (req, res) => {
     try {
         validateStart(req.body);
 
-        const { market, grade, mobile, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = req.body;
+        const { market, academy, subject, grade, mobile, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = req.body;
 
+        // Keyed on subject as well as mobile (like the learn flow): the wizard
+        // now asks which academy + subject first, so one parent booking two
+        // different subjects is two leads, not one overwriting the other.
         const lead = await DemoLead.findOneAndUpdate(
-            { mobile, market, status: "partial" },
+            { mobile, market, subject: subject || "", status: "partial" },
             {
-                market, grade, mobile,
+                market, academy, subject, grade, mobile,
                 utm_source, utm_medium, utm_campaign, utm_content, utm_term,
                 status: "partial",
             },
@@ -43,12 +46,12 @@ const completeLead = async (req, res) => {
     try {
         validateStart(req.body);
 
-        const { market, grade, mobile, date, time, timezone, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = req.body;
+        const { market, academy, subject, grade, mobile, date, time, timezone, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = req.body;
 
         const lead = await DemoLead.findOneAndUpdate(
-            { mobile, market },
+            { mobile, market, subject: subject || "" },
             {
-                market, grade, mobile, date, time, timezone,
+                market, academy, subject, grade, mobile, date, time, timezone,
                 utm_source, utm_medium, utm_campaign, utm_content, utm_term,
                 status: "complete",
             },

@@ -22,13 +22,13 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
       onMouseLeave={() => setGlow(null)}
       style={{
         background: glow
-          ? `radial-gradient(circle at ${glow.x}px ${glow.y}px, rgba(37,99,235,0.1) 0%, #ffffff 55%)`
+          ? `radial-gradient(circle at ${glow.x}px ${glow.y}px, rgba(249,115,22,0.1) 0%, #ffffff 55%)`
           : "#ffffff",
       }}
-      className="group relative rounded-2xl overflow-hidden border border-blue-200 hover:border-blue-400 transition-colors duration-300 shadow-sm hover:shadow-[0_8px_32px_rgba(37,99,235,0.15)] flex flex-col cursor-pointer"
+      className="group relative rounded-2xl overflow-hidden border border-orange-200 hover:border-orange-400 transition-colors duration-300 shadow-sm hover:shadow-[0_8px_32px_rgba(249,115,22,0.15)] flex flex-col cursor-pointer"
     >
       {/* Image — flush to card edges, no padding, aspect matches banner images */}
-      <div className="relative w-full aspect-video bg-blue-50/30 overflow-hidden rounded-t-2xl">
+      <div className="relative w-full aspect-video bg-orange-50/30 overflow-hidden rounded-t-2xl">
         <Image
           src={course.img}
           alt={course.title}
@@ -40,10 +40,10 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
 
       {/* Content */}
       <div className="px-4 pt-2.5 pb-4 flex flex-col flex-grow">
-        <span className="inline-block bg-blue-50 text-blue-600 text-xs font-bold px-2.5 py-0.5 rounded-full mb-2 self-start border border-blue-100">
+        <span className="inline-block bg-orange-50 text-orange-600 text-xs font-bold px-2.5 py-0.5 rounded-full mb-2 self-start border border-orange-100">
           {course.type}
         </span>
-        <h3 className="text-base font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors duration-200">
+        <h3 className="text-base font-bold text-gray-900 leading-snug group-hover:text-orange-600 transition-colors duration-200">
           {course.title}
         </h3>
         <p className="text-gray-500 text-xs line-clamp-2 mt-1.5 mb-3 flex-grow">
@@ -53,19 +53,19 @@ function CourseCard({ course, index }: { course: Course; index: number }) {
         {/* Meta row */}
         <div className="flex items-center gap-2 text-xs font-medium text-gray-400 mb-3">
           <div className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md">
-            <BookOpen size={11} className="text-blue-400" />
+            <BookOpen size={11} className="text-orange-400" />
             <span>{course.topics} Topics</span>
           </div>
           <div className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-md">
-            <Users size={11} className="text-blue-400" />
+            <Users size={11} className="text-orange-400" />
             <span>{course.sales} Enrolled</span>
           </div>
         </div>
 
         {/* CTA */}
-        <div className="border-t border-blue-100 pt-3 mt-auto flex flex-col gap-2">
+        <div className="border-t border-orange-100 pt-3 mt-auto flex flex-col gap-2">
           <Link href={`/uk/new-courses/${course.id}`}>
-            <button className="w-full bg-blue-500 text-white rounded-lg py-2.5 text-sm font-semibold hover:bg-blue-600 transition-colors flex items-center justify-center gap-1.5 group/btn">
+            <button className="w-full bg-orange-500 text-white rounded-lg py-2.5 text-sm font-semibold hover:bg-orange-600 transition-colors flex items-center justify-center gap-1.5 group/btn">
               Explore Course
               <ArrowRight
                 size={14}
@@ -106,8 +106,8 @@ export default function UKHomeCourseTree() {
   return (
     <section className="pt-10 md:pt-14 pb-2 md:pb-4 overflow-hidden relative bg-white">
       {/* Decorative blobs */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-400 rounded-full blur-[140px] opacity-[0.06] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-300 rounded-full blur-[120px] opacity-[0.05] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-400 rounded-full blur-[140px] opacity-[0.06] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-orange-300 rounded-full blur-[120px] opacity-[0.05] pointer-events-none" />
 
       <div className="container mx-auto px-4 max-w-7xl relative">
         {/* Heading */}
@@ -119,7 +119,7 @@ export default function UKHomeCourseTree() {
           className="text-center mb-8 md:mb-10"
         >
           <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
-            Focused Exam <span className="text-blue-500">Mastery</span> Courses
+            Focused Exam <span className="text-orange-500">Mastery</span> Courses
           </h2>
           <p className="text-gray-500 text-lg md:text-xl max-w-2xl mx-auto">
             Prepare for 11+, GCSE, iGCSE, A-Level and Common Entrance exams with structured, expert-led courses.
@@ -143,7 +143,7 @@ export default function UKHomeCourseTree() {
               {activeYear === year && (
                 <motion.div
                   layoutId="yearPillUK"
-                  className="absolute inset-0 bg-blue-500 rounded-full z-0"
+                  className="absolute inset-0 bg-orange-500 rounded-full z-0"
                   transition={{ type: "spring", stiffness: 400, damping: 35 }}
                 />
               )}

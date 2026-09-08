@@ -7,6 +7,15 @@ const demoLeadSchema = new Schema({
         required: true,
         enum: ["uk", "au"],
     },
+    // Which of the three academies the visitor picked, by product name —
+    // "Tuition Academy" | "Exam Academy" | "Skill Academy".
+    academy: {
+        type: String,
+    },
+    // That academy's sub-category: a subject, an exam or a skill.
+    subject: {
+        type: String,
+    },
     grade: {
         type: String,
         required: true,

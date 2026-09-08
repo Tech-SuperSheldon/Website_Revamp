@@ -1,11 +1,11 @@
 import { Header } from "@/components/UKHome/UKHomeHeader";
 import { Footer } from "@/components/NSfooter";
-import ThemeEffect from "@/components/UKHome/UKHomeThemeEffect";
 import AcademyHero from "@/components/academy/AcademyHero";
 import AcademyExamTable from "@/components/academy/AcademyExamTable";
 import AcademyFAQ from "@/components/academy/AcademyFAQ";
 import AcademyCTA from "@/components/academy/AcademyCTA";
 import NSProcess from "@/components/NSProcess";
+import AcademyCourses from "@/components/newcourseUK/UKAcademyCourses";
 import FloatingTryClassButton, {
   ACADEMY_CTA_SELECTOR,
 } from "@/components/FloatingTryClassButton";
@@ -24,7 +24,6 @@ export const metadata = {
 export default function UKSchoolReadinessPage() {
   return (
     <main className="flex min-h-screen flex-col bg-white">
-      <ThemeEffect />
       <Header />
       <AcademyHero academy={academy} locale="uk" />
       {academy.examTable && (
@@ -35,6 +34,9 @@ export default function UKSchoolReadinessPage() {
           locale="uk"
         />
       )}
+      {/* Regional course catalogue — every grade on screen by default,
+          filterable by grade, sitting directly above the four-step journey. */}
+      <AcademyCourses />
       <NSProcess
         stepsCopy={academy.steps}
         subtitle={academy.stepsSubtitle}

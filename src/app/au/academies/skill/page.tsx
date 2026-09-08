@@ -5,6 +5,7 @@ import AcademyExamTable from "@/components/academy/AcademyExamTable";
 import AcademyFAQ from "@/components/academy/AcademyFAQ";
 import AcademyCTA from "@/components/academy/AcademyCTA";
 import NSProcess from "@/components/NSProcess";
+import AcademyCourses from "@/components/AU/newcourse/AUAcademyCourses";
 import FloatingTryClassButton, {
   ACADEMY_CTA_SELECTOR,
 } from "@/components/FloatingTryClassButton";
@@ -33,6 +34,9 @@ export default function AUSkillPage() {
           locale="au"
         />
       )}
+      {/* Regional course catalogue — every grade on screen by default,
+          filterable by grade, sitting directly above the four-step journey. */}
+      <AcademyCourses />
       <NSProcess
         stepsCopy={academy.steps}
         subtitle={academy.stepsSubtitle}

@@ -33,7 +33,7 @@ export default function Footer() {
             <p>📞 <span className="font-semibold">Phone:</span> +91 7974695618</p>
             <p>📞 <span className="font-semibold">Phone:</span> +61 485860132</p>
             <p>✉️ <span className="font-semibold">Email:</span> support@supersheldon.com</p>
-            <p>📍 <span className="font-semibold">Address:</span> Om Chambers 648/A 4th Flr, Binnamangala 1st Stage, Bangalore- 560038, Karnataka, India</p>
+            <p>📍 <span className="font-semibold">Address:</span> Om Chambers, Binnamangala 1st Stage, Bangalore- 560038, Karnataka, India</p>
           </div>
 
           <div className="flex gap-5 mt-3 text-2xl sm:text-3xl">

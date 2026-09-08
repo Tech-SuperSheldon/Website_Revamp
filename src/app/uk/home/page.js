@@ -5,7 +5,7 @@ import UK_Hero from "@/components/Regional/UK_Hero";
 
 export default function UKHomeSimplePage() {
     return (
-        <div className="bg-[#D3F5FF]">
+        <div>
                 <UK_Hero/>
         </div>
     );

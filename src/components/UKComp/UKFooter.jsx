@@ -32,7 +32,7 @@ export default function UKFooter() {
           <div className="space-y-1 text-gray-800 text-sm sm:text-base">
             <p>📞 <span className="font-semibold">Phone:</span> +44 7426790103</p>
             <p>✉️ <span className="font-semibold">Email:</span> support@supersheldon.com</p>
-            <p>📍 <span className="font-semibold">Address:</span> Om Chambers 648/A 4th Flr, Binnamangala 1st Stage, Bangalore- 560038, Karnataka, India</p>
+            <p>📍 <span className="font-semibold">Address:</span> Om Chambers, Binnamangala 1st Stage, Bangalore- 560038, Karnataka, India</p>
           </div>
 
           <div className="flex gap-5 mt-3 text-2xl sm:text-3xl">
@@ -61,7 +61,7 @@ export default function UKFooter() {
         <div className="lg:w-3/5 grid grid-cols-1 sm:grid-cols-3 gap-4">
 
           <div>
-            <h3 className="font-extrabold text-purple-400 mb-2 text-lg sm:text-xl uppercase tracking-wide">Company</h3>
+            <h3 className="font-extrabold text-red-400 mb-2 text-lg sm:text-xl uppercase tracking-wide">Company</h3>
             <ul className="space-y-2 text-gray-800 text-sm sm:text-base">
               <li><Link href="/uk/legal/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900">Privacy Policy</Link></li>
               <li><Link href="/uk/legal/refund" target="_blank" rel="noopener noreferrer" className="hover:text-gray-900">Refund Policy</Link></li>
@@ -71,7 +71,7 @@ export default function UKFooter() {
 
           <div>
             <Link href="/uk/courses">
-              <h3 className="font-extrabold text-blue-600 mb-2 text-lg sm:text-xl uppercase tracking-wide">Courses</h3>
+              <h3 className="font-extrabold text-orange-600 mb-2 text-lg sm:text-xl uppercase tracking-wide">Courses</h3>
             </Link>
             <ul className="space-y-2 text-gray-800 text-sm sm:text-base">
               <li><Link href="/uk/courses" className="hover:text-gray-900">GCSE's</Link></li>
@@ -81,7 +81,7 @@ export default function UKFooter() {
           </div>
 
           <div>
-            <h3 className="font-extrabold text-violet-600 mb-2 text-lg sm:text-xl uppercase tracking-wide">Support</h3>
+            <h3 className="font-extrabold text-red-600 mb-2 text-lg sm:text-xl uppercase tracking-wide">Support</h3>
             <ul className="space-y-2 text-gray-800 text-sm sm:text-base">
               <li><Link href="#" className="hover:text-gray-900">FAQ</Link></li>
               <li><Link href="https://api.whatsapp.com/send/?phone=917974695618&text&type=phone_number&app_absent=0" target="_blank" className="hover:text-gray-900">Support</Link></li>

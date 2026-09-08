@@ -10,7 +10,7 @@ import UKWhatsapp from "@/components/UKComp/UKWhatsapp";
 
 export default function Home() {
     return (
-        <div className="bg-[#D3F5FF]">
+        <div>
             <UKHeader/>
 
             <UKTestReviews/>

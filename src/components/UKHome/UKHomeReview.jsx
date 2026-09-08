@@ -18,8 +18,8 @@ const UKHomeReview = () => {
       >
         From Our <span className="text-red-400">Hearts</span> to
         <br /> Thousands of{" "}
-        <span className="text-blue-500">UK</span>
-        <span className="text-blue-500"> Homes</span>
+        <span className="text-orange-400">UK</span>
+        <span className="text-orange-400"> Homes</span>
       </h2>
 
       {/* Subtitle */}

@@ -18,6 +18,7 @@ import {
   type DemoMarket,
   type DemoModalState,
 } from "./demoModalStore";
+import { MARKET, type Locale } from "@/lib/academies";
 
 export default function DemoModalHost() {
   const [state, setState] = useState<DemoModalState>({ open: false });
@@ -54,11 +55,22 @@ export default function DemoModalHost() {
 
   if (!mounted || !state.open) return null;
 
+  // Which academies list the first two steps show. The three academies are the
+  // same everywhere but their sub-categories are not — Exam Readiness lists
+  // different exams on /uk, /au and the global site — so follow the page the
+  // CTA was clicked on, exactly like the /academies pages themselves do.
+  const locale: Locale = state.market
+    ? state.market
+    : pathname?.startsWith("/au")
+    ? "au"
+    : pathname?.startsWith("/uk")
+    ? "uk"
+    : "global";
+
   // AU visitors get the AU wizard (AU dial code, AU "Back to Home" target);
   // everything else — global and UK — shares the "uk" one, matching what
   // /demo vs /au/demo did before.
-  const market: DemoMarket =
-    state.market ?? (pathname?.startsWith("/au") ? "au" : "uk");
+  const market: DemoMarket = MARKET[locale];
 
   return createPortal(
     <div
@@ -74,7 +86,7 @@ export default function DemoModalHost() {
         if (e.target === e.currentTarget) closeDemoModal();
       }}
     >
-      <div className="relative my-auto w-full max-w-4xl">
+      <div className="relative my-auto w-full max-w-xl">
         <button
           type="button"
           onClick={closeDemoModal}
@@ -87,7 +99,7 @@ export default function DemoModalHost() {
         </button>
 
         <div className="overflow-hidden rounded-2xl shadow-2xl">
-          <BookDemoForm market={market} variant="modal" onClose={closeDemoModal} />
+          <BookDemoForm market={market} locale={locale} variant="modal" onClose={closeDemoModal} />
         </div>
       </div>
     </div>,

@@ -202,7 +202,7 @@ export default function UKTestReviews() {
       <p className="text-sm uppercase tracking-wide text-gray-500">
         Overall Rating
       </p>
-      <p className="text-6xl md:text-7xl text-blue-500 font-bold">
+      <p className="text-6xl md:text-7xl text-teal-500 font-bold">
         4.8<span className="text-2xl">/5</span>
       </p>
       <p className="text-gray-600 mt-2">2,431 reviews</p>
@@ -245,7 +245,7 @@ export default function UKTestReviews() {
               <p className="text-sm uppercase tracking-wide text-gray-500 mb-1">
                 Overall Rating
               </p>
-              <p className="text-5xl font-bold text-blue-500">
+              <p className="text-5xl font-bold text-teal-500">
                 4.8<span className="text-xl">/5</span>
               </p>
               <p className="text-gray-600 mt-2">Based on 2,431 reviews</p>
@@ -260,7 +260,7 @@ export default function UKTestReviews() {
                     <a
                       key={mention}
                       href="#"
-                      className="px-3 py-1 rounded-full bg-blue-200 text-blue-900 text-sm font-medium hover:bg-blue-300"
+                      className="px-3 py-1 rounded-full bg-teal-200 text-teal-900 text-sm font-medium hover:bg-teal-300"
                     >
                       {mention}
                     </a>
@@ -277,7 +277,7 @@ export default function UKTestReviews() {
                   <a
                     key={src}
                     href="#"
-                    className="px-3 py-1 rounded-full bg-blue-200 text-blue-900 text-sm font-medium hover:bg-blue-300"
+                    className="px-3 py-1 rounded-full bg-teal-200 text-teal-900 text-sm font-medium hover:bg-teal-300"
                   >
                     {src}
                   </a>
@@ -298,7 +298,7 @@ export default function UKTestReviews() {
         href={src.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="px-3 py-1 rounded-full bg-blue-200 text-blue-900 text-sm font-medium hover:bg-blue-300"
+        className="px-3 py-1 rounded-full bg-teal-200 text-teal-900 text-sm font-medium hover:bg-teal-300"
       >
         {src.label}
       </a>
@@ -333,7 +333,7 @@ export default function UKTestReviews() {
     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
     className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-md"
   >
-    <ShieldCheck className="w-6 h-6 text-blue-600" />
+    <ShieldCheck className="w-6 h-6 text-teal-600" />
     <p className="text-sm font-medium text-gray-700">
       Verified Parents & Learners
     </p>
@@ -344,7 +344,7 @@ export default function UKTestReviews() {
     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
     className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-md"
   >
-    <PlayCircle className="w-6 h-6 text-blue-600" />
+    <PlayCircle className="w-6 h-6 text-teal-600" />
     <p className="text-sm font-medium text-gray-700">Video Testimonials</p>
   </motion.div>
 
@@ -353,7 +353,7 @@ export default function UKTestReviews() {
     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
     className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-md"
   >
-    <Globe className="w-6 h-6 text-blue-600" />
+    <Globe className="w-6 h-6 text-teal-600" />
     <p className="text-sm font-medium text-gray-700">Global Community</p>
   </motion.div>
 
@@ -362,7 +362,7 @@ export default function UKTestReviews() {
     variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
     className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-md"
   >
-    <Medal className="w-6 h-6 text-blue-600" />
+    <Medal className="w-6 h-6 text-teal-600" />
     <p className="text-sm font-medium text-gray-700">Top Rated Curriculum</p>
   </motion.div>
 </motion.div>
@@ -494,7 +494,7 @@ export default function UKTestReviews() {
       {review.name}
     </a>
   </div>
-  <span className="px-3 py-1 text-xs font-medium rounded-full bg-blue-200 text-blue-900">
+  <span className="px-3 py-1 text-xs font-medium rounded-full bg-teal-200 text-teal-900">
     {review.source}
   </span>
 </div>
@@ -518,7 +518,7 @@ export default function UKTestReviews() {
                 </div>
 
                 {/* Role Tag */}
-                <span className="mb-2 px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800 w-fit">
+                <span className="mb-2 px-3 py-1 text-xs font-medium rounded-full bg-teal-100 text-teal-800 w-fit">
                   {review.role}
                 </span>
 

@@ -76,10 +76,7 @@ export default function Home() {
       </DeferredSection>
 
       <DeferredWidgets mobileHidden={true} side="right" mobileBar={true} />
-      <FloatingTryClassButton
-        href="/au/demo"
-        className="bg-gradient-to-r from-orange-400 to-orange-600 hover:from-orange-500 hover:to-orange-700 text-white shadow-orange-500/30"
-      />
+      <FloatingTryClassButton href="/au/demo" />
     </main>
   );
 }

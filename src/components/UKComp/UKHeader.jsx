@@ -291,7 +291,6 @@ import UKGlossyButton from "./UKGlossybutton";
 
 const navLinks = [
   { href: "/uk", label: "Home", type: "link" },
-  { href: "/uk/courses", label: "Courses", type: "link" },
   { href: "/uk/testimonial", label: "Testimonial", type: "anchor" },
   { href: "/uk/blogs", label: "Blogs", type: "anchor" },
 ];
@@ -420,9 +419,6 @@ export default function UKHeader() {
               </a>
             )
           )}
-          <Link href="https://supersheldon.wise.live/login?loginRedirected=true" onClick={() => alert('Redirecting to wise.live')}>
-            <UKGlossyButton>Login</UKGlossyButton>
-          </Link>
           <UKGlossyButton onClick={openDemoBooking}>Try a free Class</UKGlossyButton>
         </div>
       )}

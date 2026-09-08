@@ -48,7 +48,7 @@ function Stars({ value = 0 }) {
         return (
           <Star
             key={i}
-            className={`h-4 w-4 ${active ? "fill-blue-400 text-blue-400" : "fill-gray-200 text-gray-200"}`}
+            className={`h-4 w-4 ${active ? "fill-orange-400 text-orange-400" : "fill-gray-200 text-gray-200"}`}
           />
         );
       })}
@@ -134,7 +134,7 @@ function TeacherCard({ teacher, onOpen }) {
         </div>
 
         {/* Hover ring accent */}
-        <div className="pointer-events-none absolute inset-0 rounded-[1.75rem] ring-0 ring-blue-400/0 transition-all duration-300 group-hover:ring-2 group-hover:ring-blue-400/70" />
+        <div className="pointer-events-none absolute inset-0 rounded-[1.75rem] ring-0 ring-orange-400/0 transition-all duration-300 group-hover:ring-2 group-hover:ring-orange-400/70" />
       </motion.div>
     </motion.button>
   );
@@ -186,11 +186,11 @@ function TeacherModal({ teacher, onClose }) {
 
         {/* Left — circular avatar + rating (blue panel) */}
         <div className="relative flex shrink-0 flex-col items-center justify-center gap-3 overflow-hidden bg-gradient-to-br from-blue-600 to-indigo-700 p-6 text-center text-white md:w-[38%] md:gap-4 md:p-8">
-          {/* decorative blue glow */}
-          <div className="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full bg-blue-400/40 blur-2xl" />
+          {/* decorative orange glow */}
+          <div className="pointer-events-none absolute -right-10 -top-12 h-40 w-40 rounded-full bg-orange-400/40 blur-2xl" />
           <div className="pointer-events-none absolute -left-12 bottom-0 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
 
-          <div className="relative rounded-[1.6rem] bg-gradient-to-br from-blue-400 to-sky-400 p-1.5 shadow-2xl">
+          <div className="relative rounded-[1.6rem] bg-gradient-to-br from-orange-400 to-amber-400 p-1.5 shadow-2xl">
             <div className="w-32 overflow-hidden rounded-[1.25rem] bg-white sm:w-36 md:w-48">
               <div className="aspect-[4/5]">
                 <img
@@ -221,7 +221,7 @@ function TeacherModal({ teacher, onClose }) {
             <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700">
               <BookOpen className="h-4 w-4" /> {teacher.subject}
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-orange-50 px-3 py-1 text-sm font-semibold text-orange-700">
               <Clock className="h-4 w-4" /> {teacher.experience}
             </span>
           </div>
@@ -244,8 +244,8 @@ function TeacherModal({ teacher, onClose }) {
           </Section>
 
           {/* Philosophy */}
-          <div className="rounded-2xl bg-blue-50/70 p-4 ring-1 ring-blue-100">
-            <Quote className="mb-1.5 h-5 w-5 text-blue-400" />
+          <div className="rounded-2xl bg-orange-50/70 p-4 ring-1 ring-orange-100">
+            <Quote className="mb-1.5 h-5 w-5 text-orange-400" />
             <p className="text-[15px] italic leading-relaxed text-gray-700">{teacher.philosophy}</p>
           </div>
 
@@ -277,7 +277,7 @@ function TeacherModal({ teacher, onClose }) {
               <ul className="space-y-1.5">
                 {teacher.achievements.map((a) => (
                   <li key={a} className="flex items-start gap-2 text-[15px] text-gray-700">
-                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-blue-500 to-amber-500" />
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-orange-500 to-amber-500" />
                     {a}
                   </li>
                 ))}
@@ -289,7 +289,7 @@ function TeacherModal({ teacher, onClose }) {
           <Link
             href="/demo"
             onClick={openDemoOnClick}
-            className="mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-amber-500 px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-blue-500/25 transition-transform hover:scale-[1.02]"
+            className="mt-auto inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-orange-500/25 transition-transform hover:scale-[1.02]"
           >
             Book a Free Demo
             <ArrowRight className="h-4 w-4" />
@@ -334,15 +334,12 @@ export default function UKHomeTeacherCarousel({ data = TEACHERS }) {
   const close = useCallback(() => setSelected(null), []);
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-b from-white to-blue-50/40 py-16 md:py-24">
+    <section className="relative w-full overflow-hidden bg-gradient-to-b from-white to-blue-50/40 py-6 md:py-10">
       {/* Heading */}
       <div className="mx-auto mb-10 max-w-3xl px-4 text-center md:mb-14">
-        <span className="mb-3 inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-blue-600">
-          <Sparkles className="h-3.5 w-3.5" />
-          Our Mentors
-        </span>
-        <h2 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl">
-          Meet Our <span className="text-blue-500">Teachers</span>
+        
+        <h2 className="text-4xl font-extrabold tracking-tight text-[#03215F] md:text-5xl">
+          Meet Our <span className="text-[#FFCC00]">Super Tutors</span>
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-base text-gray-500">
           Expert mentors from around the world — tap any teacher to know them better.
