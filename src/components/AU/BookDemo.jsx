@@ -3,5 +3,5 @@
 import BookDemoForm from "@/components/BookDemo/BookDemoForm";
 
 export default function BookDemo() {
-  return <BookDemoForm market="au" />;
+  return <BookDemoForm market="au" locale="au" />;
 }

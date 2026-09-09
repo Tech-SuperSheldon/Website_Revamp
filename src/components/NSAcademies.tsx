@@ -1,74 +1,96 @@
 "use client";
 
 // "Three academies, one tutor your child trusts" — the three programme tracks.
-// Picking a subject from a card's dropdown opens the same booking wizard used
-// on /uk/learn-maths (grade → phone → date & time → timezone) as a modal,
-// scoped to that subject — there's no separate "Book a free trial" button.
-import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+// Each card is a tinted panel in its academy's colour (teal / red-orange /
+// purple) listing what that track covers, and links through to the academy's
+// own page under <base>/academies/<slug>. Subject lists come from
+// src/lib/academies.ts so this card and the academy page always agree.
+import Link from "next/link";
+import { ArrowRight, BookOpen, Lightbulb, Target } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CSS_TRANSITION, hoverLift, rise, riseOnce, stagger, VIEWPORT } from "@/lib/motion";
 import Highlight from "@/components/motion/Highlight";
 import { SpotlightOverlay, useSpotlight } from "@/components/motion/Spotlight";
-import BookTrialModal from "@/components/BookTrialModal";
-import { EXAM_SUBJECTS, gradesForSubject, MARKET, type Locale } from "@/lib/academies";
+import { BASE_PATH, getAcademies, type Locale } from "@/lib/academies";
 
-const NAVY = "#0b2545";
-const ORANGE = "#FC8741";
-
-type Academy = {
-  key: string;
-  letter: string;
-  title: string;
+type Palette = {
+  /** Card background tint. */
+  bg: string;
+  /** Border of the untinted card edge. */
+  border: string;
+  /** Icon badge + CTA fill. */
   accent: string;
-  subjects: string[];
-  placeholder: string;
-  prompt: string;
+  /** Darker text-safe shade of the accent, for the label and hook line. */
+  accentDark: string;
 };
 
-const academiesFor = (locale: Locale): Academy[] => [
-  {
-    key: "tuition",
-    letter: "S",
-    title: "School Readiness",
-    accent: NAVY,
-    subjects: ["Maths", "Science", "English", "Reasoning"],
-    placeholder: "Select a subject",
-    prompt: "Pick a subject to start",
+const PALETTE: Record<string, Palette> = {
+  "school-readiness": {
+    bg: "#E8F4F6",
+    border: "#D2E9ED",
+    accent: "#1E88A8",
+    accentDark: "#146378",
   },
-  {
-    key: "exam",
-    letter: "E",
-    title: "Exam Readiness",
-    accent: ORANGE,
-    // Lists live in src/lib/academies.ts so this card and the exam-readiness
-    // academy page offer the same exams: /uk and /au get their own market's,
-    // the global page gets every exam from both.
-    subjects: EXAM_SUBJECTS[locale],
-    placeholder: "Select an exam",
-    prompt: "Pick an exam to start",
+  "exam-readiness": {
+    bg: "#FCEAE3",
+    border: "#F7D6C9",
+    accent: "#E4572E",
+    accentDark: "#B8431F",
   },
-  {
-    key: "skill",
-    letter: "S",
-    title: "Skill Academy",
-    accent: NAVY,
-    subjects: ["Vedic Maths", "Chess", "Coding", "AI & Gen AI", "Public Speaking"],
-    placeholder: "Select a skill",
-    prompt: "Pick a skill to start",
+  skill: {
+    bg: "#F6ECF7",
+    border: "#EBDCEC",
+    accent: "#AD71AF",
+    accentDark: "#7A4E7C",
   },
-];
+};
+
+/** Card copy the academy pages don't carry: the outcome headline and its hook. */
+const COPY: Record<string, { label: string; title: string; hook: string; icon: typeof BookOpen }> = {
+  "school-readiness": {
+    label: "School Readiness",
+    title: "Stay ahead of class",
+    hook: "Built around your school's syllabus to help you stay ahead of your class.",
+    icon: BookOpen,
+  },
+  "exam-readiness": {
+    label: "Exam Readiness",
+    title: "Crack the exam",
+    hook: "Exam-specific prep to help you crack the examination.",
+    icon: Target,
+  },
+  skill: {
+    label: "Skill Academy",
+    title: "Get future-ready",
+    hook: "Skills school doesn't teach making you future-ready.",
+    icon: Lightbulb,
+  },
+};
+
+/** Tags shown on a card: the first few subjects, then a "+N more" chip so a
+ *  long exam list doesn't unbalance the row. */
+const MAX_TAGS = 4;
+
+function tagsFor(subjects: string[]) {
+  const shown = subjects.slice(0, MAX_TAGS);
+  const rest = subjects.length - shown.length;
+  return rest > 0 ? [...shown, `+${rest} more`] : shown;
+}
 
 function AcademyCard({
-  academy,
+  slug,
+  subjects,
+  href,
   reduce,
-  onSelectSubject,
 }: {
-  academy: Academy;
+  slug: string;
+  subjects: string[];
+  href: string;
   reduce: boolean;
-  onSelectSubject: (subject: string) => void;
 }) {
   const { onMouseMove, onMouseLeave, background } = useSpotlight();
+  const palette = PALETTE[slug];
+  const { label, title, hook, icon: Icon } = COPY[slug];
 
   return (
     <motion.article
@@ -76,63 +98,62 @@ function AcademyCard({
       whileHover={hoverLift(reduce, -8)}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className={`group relative h-full flex flex-col overflow-hidden rounded-[2rem] bg-white border border-[#ffede2] p-6 md:p-7 shadow-sm hover:shadow-xl hover:border-[#fedbc6] ${CSS_TRANSITION}`}
+      className={`group relative h-full flex flex-col overflow-hidden rounded-[2rem] border p-7 md:p-8 shadow-sm hover:shadow-xl ${CSS_TRANSITION}`}
+      style={{ background: palette.bg, borderColor: palette.border }}
     >
       <SpotlightOverlay background={background} />
-      {/* Accent hairline that fills in on hover */}
-      <span
-        className="absolute top-0 left-8 right-8 h-1 rounded-b-full scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-300"
-        style={{ background: academy.accent }}
-      />
 
-      <div className="relative flex items-center gap-3 mb-4">
+      <div className="relative flex items-center gap-3.5 mb-4">
         <span
-          className="w-12 h-12 rounded-2xl flex items-center justify-center text-white text-xl font-bold shadow-sm shrink-0"
-          style={{ background: academy.accent }}
+          className="w-[52px] h-[52px] rounded-2xl flex items-center justify-center text-white shadow-md shrink-0"
+          style={{ background: palette.accent }}
         >
-          {academy.letter}
+          <Icon size={26} strokeWidth={2} />
         </span>
-        <h3 className="text-xl font-bold text-gray-900">{academy.title}</h3>
+        <div>
+          <h3 className="text-xl font-bold text-gray-900 leading-snug">{label}</h3>
+          <p className="text-[13px] font-semibold mt-0.5" style={{ color: palette.accentDark }}>
+            {title}
+          </p>
+        </div>
       </div>
 
-      <p className="relative text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-2">
-        {academy.prompt}
-      </p>
-      <div className="relative mt-auto">
-        <select
-          value=""
-          onChange={(e) => {
-            if (e.target.value) onSelectSubject(e.target.value);
-          }}
-          className="w-full appearance-none rounded-xl bg-gray-50 border border-gray-100 text-gray-700 text-sm font-semibold py-2.5 pl-3.5 pr-9 cursor-pointer hover:bg-[#FFCC00]/20 hover:border-[#e6b800] focus:outline-none focus:ring-2 focus:ring-[#FFCC00] transition-colors duration-200"
-        >
-          <option value="" disabled>
-            {academy.placeholder}
-          </option>
-          {academy.subjects.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
-        <ChevronDown
-          size={16}
-          className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
-        />
+      <p className="relative text-[15px] text-gray-600 mb-5">{hook}</p>
+
+      <div className="relative flex flex-wrap gap-2 mb-6">
+        {tagsFor(subjects).map((tag) => (
+          <span
+            key={tag}
+            className="text-xs font-semibold px-3 py-1.5 rounded-full bg-white/75 border border-black/[0.06] text-gray-700"
+          >
+            {tag}
+          </span>
+        ))}
       </div>
+
+      <Link
+        href={href}
+        className={`relative mt-auto w-fit inline-flex items-center gap-1.5 rounded-full px-[18px] py-3 text-sm font-bold text-white group-hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${CSS_TRANSITION}`}
+        style={{ background: palette.accent }}
+      >
+        Explore {label}
+        <ArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-0.5" />
+      </Link>
     </motion.article>
   );
 }
 
 export default function NSAcademies({ locale = "global" }: { locale?: Locale } = {}) {
   const reduce = useReducedMotion() ?? false;
-  const [activeSubject, setActiveSubject] = useState<string | null>(null);
-  const academies = academiesFor(locale);
+  const academies = getAcademies(locale);
 
   return (
     <section id="academies" className="relative py-6 md:py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...riseOnce(reduce)} className="text-center mb-10 md:mb-14">
+          <p className="text-[13px] font-bold uppercase tracking-[0.12em] text-[#E4572E] mb-2.5">
+            Explore SuperSheldon
+          </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#03215F] tracking-tight leading-tight">
             Three academies, one <Highlight reduce={reduce}>tutor</Highlight> your child trusts
           </h2>
@@ -146,21 +167,19 @@ export default function NSAcademies({ locale = "global" }: { locale?: Locale } =
           initial="hidden"
           whileInView="show"
           viewport={VIEWPORT}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 items-stretch"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch"
         >
           {academies.map((a) => (
-            <AcademyCard key={a.key} academy={a} reduce={reduce} onSelectSubject={setActiveSubject} />
+            <AcademyCard
+              key={a.slug}
+              slug={a.slug}
+              subjects={a.subjects}
+              href={`${BASE_PATH[locale]}/academies/${a.slug}`}
+              reduce={reduce}
+            />
           ))}
         </motion.div>
       </div>
-
-      <BookTrialModal
-        open={activeSubject !== null}
-        onClose={() => setActiveSubject(null)}
-        subject={activeSubject ?? ""}
-        country={MARKET[locale]}
-        grades={activeSubject ? gradesForSubject(activeSubject) ?? undefined : undefined}
-      />
     </section>
   );
 }

@@ -13,7 +13,10 @@
 // <DemoModalHost /> in the root layout means any component can just call
 // openDemoModal() with no wiring.
 
-export type DemoMarket = "uk" | "au";
+/** Which site the booking came from. "global" is its own market — those
+ *  leads belong in the "Demo Bookings" tab, not the UK one. Mirrors Locale
+ *  in src/lib/academies. */
+export type DemoMarket = "global" | "uk" | "au";
 
 /** Values a CTA already collected, handed to the wizard so it doesn't ask
  *  again. The hero forms take a phone number before opening the popup. */

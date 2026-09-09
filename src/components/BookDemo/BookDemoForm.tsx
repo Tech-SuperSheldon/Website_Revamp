@@ -26,7 +26,9 @@ import PhoneField from "@/components/demo/PhoneField";
 import { findByIso, findByDial } from "@/components/demo/countries";
 import { getAcademies, type Academy, type Locale } from "@/lib/academies";
 
-type Market = "uk" | "au";
+/** Mirrors Locale: the global site is its own market so its leads are filed
+ *  separately from the UK ones. */
+type Market = "global" | "uk" | "au";
 
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
 
@@ -56,7 +58,10 @@ const TIME_SLOTS = [
   "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM",
 ];
 
-const DEFAULT_DIAL: Record<Market, string> = { uk: "GB", au: "AU" };
+// Only the starting dial code — the IP lookup below overrides it, and the
+// visitor can change it. The global site has no home country, so it starts on
+// GB like the UK site did.
+const DEFAULT_DIAL: Record<Market, string> = { global: "GB", uk: "GB", au: "AU" };
 
 const TOTAL_STEPS = 6;
 /** The "you're all set" screen, shown after the last question is submitted. */
@@ -371,7 +376,7 @@ export default function BookDemoForm({
       const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (detected) setTimezone(detected);
     } catch {
-      setTimezone(market === "uk" ? "Europe/London" : "Australia/Sydney");
+      setTimezone(market === "au" ? "Australia/Sydney" : "Europe/London");
     }
   }, [market]);
 
@@ -582,7 +587,7 @@ export default function BookDemoForm({
               </button>
             ) : (
               <a
-                href={market === "au" ? "/au" : "/"}
+                href={market === "au" ? "/au" : market === "uk" ? "/uk" : "/"}
                 className="mt-6 inline-block w-full rounded-xl bg-gradient-to-r from-[#fc8741] to-amber-500 px-4 py-3 font-semibold text-white shadow-md transition-transform hover:scale-[1.02]"
               >
                 Back to Home

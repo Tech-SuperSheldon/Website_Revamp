@@ -3,33 +3,50 @@
 //   Execute as: Me
 //   Who has access: Anyone
 // Copy the deployment URL into Backend/.env as GOOGLE_SHEET_WEBHOOK_URL
+//
+// Tab routing, for both the "Learn [Subject]" form and the "Book a Demo"
+// wizard:
+//   market/country "uk"  -> "UK"
+//   market/country "au"  -> "Aus"
+//   market "global"      -> "Demo Bookings"   (demo wizard only)
+// The UK/Aus tabs therefore hold both form types side by side, which is why
+// they carry a "Form" column — see MARKET_HEADERS. Run
+// addDemoColumnsToMarketTabs() once on an existing sheet (see the bottom of
+// this file) before deploying this version.
 
-const SHEET_NAME = "Demo Leads"; // change if your tab is named differently
+const SHEET_NAME = "Demo Leads"; // legacy tab, kept for the old contact form
 
-// Tabs used by the "Learn [Subject]" multi-step lead form (formType: "learn").
-const LEARN_SHEET_NAMES = { uk: "UK", au: "Aus" };
-const LEARN_HEADERS = [
-  "Created At", "Updated At", "Status", "Subject", "Grade", "Mobile",
+// Per-market tabs, shared by the learn form and the demo wizard.
+const MARKET_SHEET_NAMES = { uk: "UK", au: "Aus" };
+
+// Because the two forms now share these tabs, "Form" says which wizard a row
+// came from, and it is part of the upsert key: a learn lead and a demo lead
+// from the same parent for the same subject are two different bookings and
+// must not overwrite each other. "Academy" is only filled by the demo wizard.
+const MARKET_HEADERS = [
+  "Created At", "Updated At", "Form", "Status", "Academy", "Subject", "Grade", "Mobile",
   "Date", "Time", "Timezone",
   "UTM Source", "UTM Medium", "UTM Campaign", "UTM Content", "UTM Term",
 ];
 
-// Tab used by the new "Book a Demo" wizard (formType: "demo"). Kept separate
-// from the legacy SHEET_NAME ("Demo Leads") below because that tab's header
-// row still has the old fullName/email/country/subject columns — mixing the
-// new grade/mobile/date/time/timezone shape into it would misalign columns.
-const DEMO_SHEET_NAME = "Demo Bookings";
-// "Academy" + "Subject" were added after this tab already had rows — run
-// addAcademyColumns() once (see the bottom of this file) to slot them in
-// without shifting the existing data out of alignment.
+const MARKET_COL = {
+  form: MARKET_HEADERS.indexOf("Form"),
+  status: MARKET_HEADERS.indexOf("Status"),
+  subject: MARKET_HEADERS.indexOf("Subject"),
+  mobile: MARKET_HEADERS.indexOf("Mobile"),
+};
+
+// Tab for demo bookings made on the global site — i.e. everything that is
+// neither /uk nor /au. Kept separate from the legacy SHEET_NAME ("Demo Leads")
+// because that tab's header row still has the old fullName/email/country
+// columns.
+const GLOBAL_DEMO_SHEET_NAME = "Demo Bookings";
 const DEMO_HEADERS = [
   "Created At", "Updated At", "Status", "Market", "Academy", "Subject", "Grade", "Mobile",
   "Date", "Time", "Timezone",
   "UTM Source", "UTM Medium", "UTM Campaign", "UTM Content", "UTM Term",
 ];
 
-// Column positions are derived from DEMO_HEADERS rather than hardcoded, so
-// reordering that array above is enough to move a column.
 const DEMO_COL = {
   status: DEMO_HEADERS.indexOf("Status"),
   subject: DEMO_HEADERS.indexOf("Subject"),
@@ -83,65 +100,100 @@ function doPost(e) {
       data.utm_term || "",
     ]);
 
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: "ok" }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return ok();
   } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: "error", error: err.message }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return fail(err.message);
+  }
+}
+
+function ok() {
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: "ok" }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function fail(message) {
+  return ContentService
+    .createTextOutput(JSON.stringify({ status: "error", error: message }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Phone numbers arrive as "+447123456789". A leading "+" makes Sheets store
+// the cell as the NUMBER 447123456789, so comparing the raw incoming string
+// against the cell never matched and every visitor got a duplicate Partial row
+// next to their Complete one. Both sides go through this, and it is also what
+// gets written, so the stored value stays digits-only and stable.
+function normalizeMobile(value) {
+  return String(value === null || value === undefined ? "" : value).replace(/\D/g, "");
+}
+
+function sheetWithHeaders(name, headers) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(name);
+  if (!sheet) {
+    sheet = ss.insertSheet(name);
+    sheet.appendRow(headers);
+  }
+  return sheet;
+}
+
+/**
+ * Update the visitor's existing not-yet-complete row in place, or append a new
+ * one. `matchIndexes` are the 0-based columns that identify the same booking
+ * (mobile + subject, plus the form type on the shared market tabs).
+ * rowValues[0] (Created At) is filled in here: kept on update, set on insert.
+ */
+function upsertLeadRow(sheet, headers, rowValues, matchIndexes, statusIndex, mobileIndex, createdAt) {
+  const lastRow = sheet.getLastRow();
+  let targetRow = -1;
+
+  if (lastRow > 1) {
+    const values = sheet.getRange(2, 1, lastRow - 1, headers.length).getValues();
+    for (let i = values.length - 1; i >= 0; i--) {
+      const row = values[i];
+      if (row[statusIndex] === "Complete") continue;
+      const matches = matchIndexes.every(function (idx) {
+        const a = idx === mobileIndex ? normalizeMobile(row[idx]) : String(row[idx] || "");
+        const b = idx === mobileIndex ? normalizeMobile(rowValues[idx]) : String(rowValues[idx] || "");
+        return a === b;
+      });
+      if (matches) {
+        targetRow = i + 2; // account for header row + 0-index
+        break;
+      }
+    }
+  }
+
+  if (targetRow > 0) {
+    // Keep the original Created At, update everything else.
+    rowValues[0] = sheet.getRange(targetRow, 1).getValue();
+    sheet.getRange(targetRow, 1, 1, headers.length).setValues([rowValues]);
+  } else {
+    rowValues[0] = createdAt;
+    sheet.appendRow(rowValues);
   }
 }
 
 // Handles "Learn [Subject]" lead submissions. Routes into the "UK"/"Aus" tab
-// based on data.country, and upserts by Mobile+Subject so that the partial
-// row created when the visitor enters their phone number gets updated in
-// place (instead of duplicated) once they finish the form.
+// based on data.country.
 function handleLearnLead(data) {
-  const tabName = LEARN_SHEET_NAMES[String(data.country || "").toLowerCase()];
+  const tabName = MARKET_SHEET_NAMES[String(data.country || "").toLowerCase()];
   if (!tabName) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: "error", error: "Unknown country: " + data.country }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return fail("Unknown country: " + data.country);
   }
 
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = ss.getSheetByName(tabName);
-  if (!sheet) {
-    sheet = ss.insertSheet(tabName);
-    sheet.appendRow(LEARN_HEADERS);
-  }
-
+  const sheet = sheetWithHeaders(tabName, MARKET_HEADERS);
   const now = new Date();
-  const mobile = data.mobile || "";
-  const subject = data.subject || "";
-  const status = data.stage === "complete" ? "Complete" : "Partial";
-
-  // Look for an existing, not-yet-complete row for this Mobile+Subject to
-  // update in place rather than appending a duplicate.
-  const lastRow = sheet.getLastRow();
-  let targetRow = -1;
-  if (lastRow > 1) {
-    const values = sheet.getRange(2, 1, lastRow - 1, LEARN_HEADERS.length).getValues();
-    for (let i = values.length - 1; i >= 0; i--) {
-      const row = values[i];
-      const rowMobile = row[5];
-      const rowSubject = row[3];
-      const rowStatus = row[2];
-      if (rowMobile === mobile && rowSubject === subject && rowStatus !== "Complete") {
-        targetRow = i + 2; // account for header row + 0-index
-        break;
-      }
-    }
-  }
 
   const rowValues = [
-    null, // Created At — filled below, either kept or set on insert
+    null, // Created At — filled by upsertLeadRow
     now, // Updated At
-    status,
-    subject,
+    "Learn",
+    data.stage === "complete" ? "Complete" : "Partial",
+    "", // Academy — demo wizard only
+    data.subject || "",
     data.grade || "",
-    mobile,
+    normalizeMobile(data.mobile),
     data.date || "",
     data.time || "",
     data.timezone || "",
@@ -152,67 +204,78 @@ function handleLearnLead(data) {
     data.utm_term || "",
   ];
 
-  if (targetRow > 0) {
-    // Keep the original Created At, update everything else.
-    const createdAt = sheet.getRange(targetRow, 1).getValue();
-    rowValues[0] = createdAt;
-    sheet.getRange(targetRow, 1, 1, LEARN_HEADERS.length).setValues([rowValues]);
-  } else {
-    rowValues[0] = data.createdAt ? new Date(data.createdAt) : now;
-    sheet.appendRow(rowValues);
-  }
+  upsertLeadRow(
+    sheet,
+    MARKET_HEADERS,
+    rowValues,
+    [MARKET_COL.form, MARKET_COL.mobile, MARKET_COL.subject],
+    MARKET_COL.status,
+    MARKET_COL.mobile,
+    data.createdAt ? new Date(data.createdAt) : now
+  );
 
-  return ContentService
-    .createTextOutput(JSON.stringify({ status: "ok" }))
-    .setMimeType(ContentService.MimeType.JSON);
+  return ok();
 }
 
-// Handles "Book a Demo" wizard submissions (formType: "demo") into the
-// "Demo Bookings" tab. Upserts by Mobile+Subject so the partial row created
-// when the visitor enters their phone number gets updated in place (instead of
-// duplicated) once they finish picking a date/time/timezone.
+// Handles "Book a Demo" wizard submissions (formType: "demo").
+//   market "uk" -> "UK" tab, "au" -> "Aus" tab (shared with the learn form),
+//   anything else (the global site) -> "Demo Bookings".
+// Upserts by mobile + subject so the partial row created when the visitor
+// enters their phone number is updated in place once they pick a date/time,
+// instead of being duplicated. Subject is part of the key so one parent
+// booking two different subjects gets two rows.
 function handleDemoLead(data) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = ss.getSheetByName(DEMO_SHEET_NAME);
-  if (!sheet) {
-    sheet = ss.insertSheet(DEMO_SHEET_NAME);
-    sheet.appendRow(DEMO_HEADERS);
-  }
-
+  const market = String(data.market || "").toLowerCase();
+  const tabName = MARKET_SHEET_NAMES[market];
   const now = new Date();
-  const mobile = data.mobile || "";
-  const subject = data.subject || "";
+  const createdAt = data.createdAt ? new Date(data.createdAt) : now;
   const status = data.stage === "complete" ? "Complete" : "Partial";
 
-  // Look for an existing, not-yet-complete row for this Mobile+Subject to
-  // update in place rather than appending a duplicate. Subject is part of the
-  // key so one parent booking two different subjects gets two rows instead of
-  // the second overwriting the first.
-  const lastRow = sheet.getLastRow();
-  let targetRow = -1;
-  if (lastRow > 1) {
-    const values = sheet.getRange(2, 1, lastRow - 1, DEMO_HEADERS.length).getValues();
-    for (let i = values.length - 1; i >= 0; i--) {
-      const row = values[i];
-      const rowMobile = row[DEMO_COL.mobile];
-      const rowSubject = row[DEMO_COL.subject];
-      const rowStatus = row[DEMO_COL.status];
-      if (rowMobile === mobile && rowSubject === subject && rowStatus !== "Complete") {
-        targetRow = i + 2; // account for header row + 0-index
-        break;
-      }
-    }
+  if (tabName) {
+    const sheet = sheetWithHeaders(tabName, MARKET_HEADERS);
+    // No Market column here — the tab is the market.
+    const rowValues = [
+      null, // Created At — filled by upsertLeadRow
+      now, // Updated At
+      "Demo",
+      status,
+      data.academy || "",
+      data.subject || "",
+      data.grade || "",
+      normalizeMobile(data.mobile),
+      data.date || "",
+      data.time || "",
+      data.timezone || "",
+      data.utm_source || "",
+      data.utm_medium || "",
+      data.utm_campaign || "",
+      data.utm_content || "",
+      data.utm_term || "",
+    ];
+
+    upsertLeadRow(
+      sheet,
+      MARKET_HEADERS,
+      rowValues,
+      [MARKET_COL.form, MARKET_COL.mobile, MARKET_COL.subject],
+      MARKET_COL.status,
+      MARKET_COL.mobile,
+      createdAt
+    );
+
+    return ok();
   }
 
+  const sheet = sheetWithHeaders(GLOBAL_DEMO_SHEET_NAME, DEMO_HEADERS);
   const rowValues = [
-    null, // Created At — filled below, either kept or set on insert
+    null, // Created At — filled by upsertLeadRow
     now, // Updated At
     status,
-    data.market || "",
+    market || "global",
     data.academy || "",
-    subject,
+    data.subject || "",
     data.grade || "",
-    mobile,
+    normalizeMobile(data.mobile),
     data.date || "",
     data.time || "",
     data.timezone || "",
@@ -223,35 +286,80 @@ function handleDemoLead(data) {
     data.utm_term || "",
   ];
 
-  if (targetRow > 0) {
-    // Keep the original Created At, update everything else.
-    const createdAt = sheet.getRange(targetRow, 1).getValue();
-    rowValues[0] = createdAt;
-    sheet.getRange(targetRow, 1, 1, DEMO_HEADERS.length).setValues([rowValues]);
-  } else {
-    rowValues[0] = data.createdAt ? new Date(data.createdAt) : now;
-    sheet.appendRow(rowValues);
-  }
+  upsertLeadRow(
+    sheet,
+    DEMO_HEADERS,
+    rowValues,
+    [DEMO_COL.mobile, DEMO_COL.subject],
+    DEMO_COL.status,
+    DEMO_COL.mobile,
+    createdAt
+  );
 
-  return ContentService
-    .createTextOutput(JSON.stringify({ status: "ok" }))
-    .setMimeType(ContentService.MimeType.JSON);
+  return ok();
 }
 
-// --- one-off helper: run this once from the Apps Script editor (select
-// "addAcademyColumns" in the function dropdown, then click Run) to add the
-// "Academy" and "Subject" columns to an EXISTING "Demo Bookings" sheet that
-// predates them.
+// --- one-off migration: run this ONCE from the Apps Script editor (select
+// "addDemoColumnsToMarketTabs" in the function dropdown, then click Run)
+// BEFORE deploying this version.
 //
-// It INSERTS two blank columns after "Market" rather than appending at the
-// end, so every existing row's data shifts right with it and stays under the
-// right header. Safe to run more than once — it does nothing if the columns
-// are already there.
+// The "UK" and "Aus" tabs were built for the learn form only, so they have no
+// "Form" or "Academy" column. This INSERTS them in place (rather than
+// appending at the end), so every existing row's data shifts right with it and
+// stays under the right header, then backfills "Form" = "Learn" for the rows
+// that are already there. Safe to run more than once.
+function addDemoColumnsToMarketTabs() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  Object.keys(MARKET_SHEET_NAMES).forEach(function (market) {
+    const name = MARKET_SHEET_NAMES[market];
+    const sheet = ss.getSheetByName(name);
+    if (!sheet) {
+      Logger.log('Sheet "' + name + '" not found — skipping.');
+      return;
+    }
+
+    let headers = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), 1)).getValues()[0];
+
+    if (headers.indexOf("Form") === -1) {
+      const updatedCol = headers.indexOf("Updated At") + 1; // 1-indexed
+      if (updatedCol === 0) {
+        Logger.log('"' + name + '": no "Updated At" column — migrate this tab by hand.');
+        return;
+      }
+      sheet.insertColumnsAfter(updatedCol, 1);
+      sheet.getRange(1, updatedCol + 1).setValue("Form");
+      // Everything already in these tabs came from the learn form.
+      const rows = sheet.getLastRow() - 1;
+      if (rows > 0) {
+        const backfill = [];
+        for (let i = 0; i < rows; i++) backfill.push(["Learn"]);
+        sheet.getRange(2, updatedCol + 1, rows, 1).setValues(backfill);
+      }
+      headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+      Logger.log('"' + name + '": inserted Form after column ' + updatedCol + '.');
+    }
+
+    if (headers.indexOf("Academy") === -1) {
+      const statusCol = headers.indexOf("Status") + 1; // 1-indexed
+      if (statusCol === 0) {
+        Logger.log('"' + name + '": no "Status" column — migrate this tab by hand.');
+        return;
+      }
+      sheet.insertColumnsAfter(statusCol, 1);
+      sheet.getRange(1, statusCol + 1).setValue("Academy");
+      Logger.log('"' + name + '": inserted Academy after column ' + statusCol + '.');
+    }
+  });
+}
+
+// --- one-off helper: adds the "Academy" and "Subject" columns to an EXISTING
+// "Demo Bookings" tab that predates them. Safe to run more than once.
 function addAcademyColumns() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = ss.getSheetByName(DEMO_SHEET_NAME);
+  const sheet = ss.getSheetByName(GLOBAL_DEMO_SHEET_NAME);
   if (!sheet) {
-    Logger.log('Sheet "' + DEMO_SHEET_NAME + '" not found — nothing to migrate.');
+    Logger.log('Sheet "' + GLOBAL_DEMO_SHEET_NAME + '" not found — nothing to migrate.');
     return;
   }
 
@@ -274,10 +382,8 @@ function addAcademyColumns() {
   Logger.log("Inserted Academy + Subject after column " + marketCol + ".");
 }
 
-// --- one-off helper: run this once from the Apps Script editor (select
-// "addUtmColumns" in the function dropdown, then click Run) to add the 5
-// UTM header columns to an EXISTING "Demo Leads" sheet that predates them.
-// Safe to run more than once — it skips any header that's already there.
+// --- one-off helper: adds the 5 UTM header columns to an EXISTING
+// "Demo Leads" tab that predates them. Safe to run more than once.
 function addUtmColumns() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName(SHEET_NAME);
@@ -298,7 +404,7 @@ function addUtmColumns() {
     "UTM Term",
   ];
 
-  const missing = utmHeaders.filter((h) => headers.indexOf(h) === -1);
+  const missing = utmHeaders.filter(function (h) { return headers.indexOf(h) === -1; });
   if (missing.length === 0) {
     Logger.log("All UTM columns already present, nothing to do.");
     return;
@@ -308,68 +414,39 @@ function addUtmColumns() {
   Logger.log("Added columns: " + missing.join(", "));
 }
 
-// --- temporary test helper, delete after debugging ---
-function testDoPost() {
-  var fakeEvent = {
-    postData: {
-      contents: JSON.stringify({
-        fullName: "Test User",
-        email: "test@example.com",
-        mobile: "911234567890",
-        country: "India",
-        grade: "5",
-        subject: "Math",
-        utm_source: "google",
-        utm_medium: "cpc",
-        utm_campaign: "summer_sale",
-        utm_content: "blue_button",
-        utm_term: "online tutoring",
-        createdAt: new Date().toISOString()
-      })
-    }
-  };
-  var result = doPost(fakeEvent);
-  Logger.log(result.getContent());
-}
-
-// --- temporary test helper for the new "Book a Demo" wizard, delete after debugging ---
+// --- temporary test helper: one AU booking (should land in "Aus"), one global
+// booking (should land in "Demo Bookings"), each as partial then complete —
+// two rows total, not four. Delete after debugging.
 function testDoPostDemo() {
-  var partialEvent = {
-    postData: {
-      contents: JSON.stringify({
-        formType: "demo",
-        stage: "partial",
-        market: "uk",
-        academy: "Exam Academy",
-        subject: "11+ Examination",
-        grade: "Grade 5",
-        mobile: "+447123456789",
-        utm_source: "google",
-        utm_medium: "cpc",
-        createdAt: new Date().toISOString()
-      })
-    }
-  };
-  Logger.log(doPost(partialEvent).getContent());
+  function post(payload) {
+    Logger.log(doPost({ postData: { contents: JSON.stringify(payload) } }).getContent());
+  }
 
-  var completeEvent = {
-    postData: {
-      contents: JSON.stringify({
-        formType: "demo",
-        stage: "complete",
-        market: "uk",
-        academy: "Exam Academy",
-        subject: "11+ Examination",
-        grade: "Grade 5",
-        mobile: "+447123456789",
-        date: "2026-09-10",
-        time: "3:00 PM",
-        timezone: "Europe/London",
-        utm_source: "google",
-        utm_medium: "cpc",
-        createdAt: new Date().toISOString()
-      })
-    }
+  const au = {
+    formType: "demo",
+    market: "au",
+    academy: "Exam Academy",
+    subject: "A Level / A+ Level",
+    grade: "Grade 9",
+    mobile: "+610416976576",
+    createdAt: new Date().toISOString(),
   };
-  Logger.log(doPost(completeEvent).getContent());
+  post(Object.assign({ stage: "partial" }, au));
+  post(Object.assign({ stage: "complete" }, au, {
+    date: "2026-09-09", time: "11:00 AM", timezone: "Australia/Adelaide",
+  }));
+
+  const global = {
+    formType: "demo",
+    market: "global",
+    academy: "Tuition Academy",
+    subject: "Maths",
+    grade: "Grade 5",
+    mobile: "+919999999999",
+    createdAt: new Date().toISOString(),
+  };
+  post(Object.assign({ stage: "partial" }, global));
+  post(Object.assign({ stage: "complete" }, global, {
+    date: "2026-09-18", time: "1:00 PM", timezone: "Asia/Kolkata",
+  }));
 }

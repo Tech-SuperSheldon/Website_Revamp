@@ -18,7 +18,15 @@ import {
   type DemoMarket,
   type DemoModalState,
 } from "./demoModalStore";
-import { MARKET, type Locale } from "@/lib/academies";
+import { type Locale } from "@/lib/academies";
+
+/** "/au", "/au/academies/…" → "au"; "/uk…" → "uk"; anything else → "global". */
+function localeFromPath(pathname: string | null): Locale {
+  const path = pathname || "/";
+  if (path === "/au" || path.startsWith("/au/")) return "au";
+  if (path === "/uk" || path.startsWith("/uk/")) return "uk";
+  return "global";
+}
 
 export default function DemoModalHost() {
   const [state, setState] = useState<DemoModalState>({ open: false });
@@ -55,11 +63,13 @@ export default function DemoModalHost() {
 
   if (!mounted || !state.open) return null;
 
-  // One wizard for the whole site. /au and /uk deliberately open the same
-  // popup as "/" — same academies, same exam list, same dial code — so this no
-  // longer infers a locale from the path or from the CTA that opened it.
-  const locale: Locale = "global";
-  const market: DemoMarket = MARKET[locale];
+  // One wizard for the whole site: /au and /uk deliberately show the same
+  // academies, exam list and dial code as "/". The *market* still has to
+  // follow the path, though — it decides which sheet tab the lead lands in
+  // (AU leads in "Aus", UK in "UK", everything else in "Demo Bookings"), and
+  // hardcoding it meant every lead on the site was filed as UK.
+  const locale: Locale = localeFromPath(pathname);
+  const market: DemoMarket = locale;
 
   return createPortal(
     <div

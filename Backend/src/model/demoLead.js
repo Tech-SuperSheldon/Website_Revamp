@@ -2,10 +2,13 @@ const mongoose = require("mongoose") ;
 const {Schema} = mongoose ;
 
 const demoLeadSchema = new Schema({
+    // Which site the booking came from. "global" is a real market, not a
+    // fallback: those leads go to the "Demo Bookings" tab, while uk/au go to
+    // the "UK"/"Aus" tabs.
     market: {
         type: String,
         required: true,
-        enum: ["uk", "au"],
+        enum: ["global", "uk", "au"],
     },
     // Which of the three academies the visitor picked, by product name —
     // "Tuition Academy" | "Exam Academy" | "Skill Academy".
