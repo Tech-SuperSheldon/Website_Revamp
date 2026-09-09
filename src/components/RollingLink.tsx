@@ -13,9 +13,13 @@ interface RollingLinkProps {
   rel?: string;
   baseColor?: string;
   hoverColor?: string;
+  /** When given, a plain left click runs this instead of navigating to `href`
+   *  (the footer's exam links open the booking popup this way). `href` is kept
+   *  so the link still works for middle-click / "open in new tab" and crawlers. */
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
-export function RollingLink({ href, children, className = "", target, rel, baseColor = "text-slate-600", hoverColor = "text-orange-500" }: RollingLinkProps) {
+export function RollingLink({ href, children, className = "", target, rel, baseColor = "text-slate-600", hoverColor = "text-orange-500", onClick }: RollingLinkProps) {
   return (
     <Link 
         href={href} 
@@ -23,6 +27,7 @@ export function RollingLink({ href, children, className = "", target, rel, baseC
         style={{ perspective: "1000px" }}
         target={target}
         rel={rel}
+        onClick={onClick}
     >
         <motion.div
           className="relative w-full h-full"

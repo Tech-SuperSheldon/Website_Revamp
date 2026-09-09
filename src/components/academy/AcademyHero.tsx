@@ -99,6 +99,8 @@ export default function AcademyHero({
                   })}
                 </ul>
 
+                {/* Empty on /uk and /au — see regionsFor. */}
+                {regionsFor(locale).length > 0 && (
                 <ul className="mt-6 flex flex-wrap gap-2 text-xs text-gray-500">
                   {regionsFor(locale).map((region) => (
                     <li
@@ -117,6 +119,7 @@ export default function AcademyHero({
                     </li>
                   ))}
                 </ul>
+                )}
               </div>
 
               {/* Subject picker. AcademyCTA's closing band scrolls here, so the

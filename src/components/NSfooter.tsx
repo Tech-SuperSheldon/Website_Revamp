@@ -8,8 +8,13 @@ import { motion } from "framer-motion";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { RollingLink } from "./RollingLink";
 import { NSGlobe } from "./NSGlobe";
+import { useOpenDemoBooking } from "@/components/utils/navigation";
 
 export function Footer() {
+  // Footer exam links open the booking wizard in a popup instead of
+  // navigating to the courses page (see demoModalStore).
+  const openDemoBooking = useOpenDemoBooking();
+
   return (
     <div className="bg-white pt-2 sm:pt-4">
       <motion.footer 
@@ -129,10 +134,10 @@ export function Footer() {
             >
               <h4 className="font-bold text-base sm:text-lg text-white mb-3 sm:mb-4 font-rowdies">Learn</h4>
               <ul className="space-y-2 font-medium text-white text-[13px] sm:text-[14px]">
-                <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">NAPLAN Exam</RollingLink></li>
-                <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">ICAS</RollingLink></li>
-                <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">HSC</RollingLink></li>
-                <li><RollingLink href="/new-courses" hoverColor="text-black" baseColor="text-white">Selective School</RollingLink></li>
+                <li><RollingLink href="/new-courses" onClick={(e) => { e.preventDefault(); openDemoBooking({ academySlug: "exam-readiness" }); }} hoverColor="text-black" baseColor="text-white">NAPLAN Exam</RollingLink></li>
+                <li><RollingLink href="/new-courses" onClick={(e) => { e.preventDefault(); openDemoBooking({ academySlug: "exam-readiness" }); }} hoverColor="text-black" baseColor="text-white">ICAS</RollingLink></li>
+                <li><RollingLink href="/new-courses" onClick={(e) => { e.preventDefault(); openDemoBooking({ academySlug: "exam-readiness" }); }} hoverColor="text-black" baseColor="text-white">HSC</RollingLink></li>
+                <li><RollingLink href="/new-courses" onClick={(e) => { e.preventDefault(); openDemoBooking({ academySlug: "exam-readiness" }); }} hoverColor="text-black" baseColor="text-white">Selective School</RollingLink></li>
               </ul>
             </motion.div>
 
