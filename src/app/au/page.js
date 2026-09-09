@@ -1,10 +1,10 @@
 // /au landing page — the global landing page's design and section order
 // (src/app/page.js), wired to the Australian site.
 //
-// Sections that carry no links (TrustedByBar, NSParentsSaying, NSAcademies,
-// NSWhySheldon, NSHomeFAQ, ScrollProgressBar) are shared with "/" directly.
-// NSAcademies takes a locale so its Exam Readiness dropdown lists this
-// market's exams (and books against this market's wizard).
+// Sections with no AU-specific copy (TrustedByBar, NSParentsSaying,
+// NSHomeFAQ, ScrollProgressBar) are shared with "/" directly. NSAcademies and
+// NSWhySheldon are shared too but take a locale: NSAcademies for this market's
+// exam list and its /au/academies links, NSWhySheldon for its CTA's href.
 // Everything that navigates — header, footer, deadline banner, hero, teacher
 // carousel — uses the AU copy so a visitor on /au stays on /au. The booking
 // popup is deliberately the shared global wizard (see DemoModalHost).
@@ -32,9 +32,8 @@ const NSTeacherTest        = dynamic(() => import('@/components/AU/NSTeacherTest
 const TeacherCarousel      = dynamic(() => import('@/components/AU/NSTeacherCarousel'));
 const FeatureSlider        = dynamic(() => import('@/components/AU/NSFeatures'));
 const NSLevelUp            = dynamic(() => import('@/components/AU/NSApp'));
-// Redesign sections, sitting between the stats strip and the footer. None of
-// these link anywhere, so /au shares them with the global page — NSAcademies
-// only takes a locale for its exam list.
+// Redesign sections, sitting between the stats strip and the footer. Shared
+// with the global page; the two that link take a locale (see the note above).
 const NSWhySheldon         = dynamic(() => import('@/components/NSWhySheldon'));
 const NSParentsSaying      = dynamic(() => import('@/components/NSParentsSaying'));
 const NSAcademies          = dynamic(() => import('@/components/NSAcademies'));
@@ -89,7 +88,7 @@ export default function AUHome() {
 
       <NSParentsSaying />
       <NSAcademies locale="au" />
-      <NSWhySheldon />
+      <NSWhySheldon locale="au" />
 
       <DeferredSection>
         <TeacherCarousel />

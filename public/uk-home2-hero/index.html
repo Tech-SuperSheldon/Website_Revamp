@@ -49,59 +49,35 @@
     </style>
     <script type="module" crossorigin src="/uk-home2-hero/chunks/index-eeBi9twy.js"></script>
     <link rel="stylesheet" crossorigin href="/uk-home2-hero/assets/CNUUonPj.css">
-    <!-- SuperSheldon phone-portrait overrides for the two hologram overlays:
-         .box-description (the name/location bar plus the copy
-         that types out during the scan) and .box-services (the "Features"
-         list). Both are absolutely positioned against the iframe's bottom
-         edge, so on a phone they are the first things to go when vertical
-         space is tight. Three adjustments:
-           1. Narrower, centred boxes — the parent page pins the enquiry arrow,
-              the WhatsApp button and the Nova chat bubble to the bottom-right
-              corner (~60px in from the right edge; see
-              src/components/ArrowAndWhatsapp.jsx). Insetting the box equally
-              on both sides keeps the copy clear of that rail while still
-              filling its box edge-to-edge — padding only the right side left
-              a ragged gap, and insetting only the right side looked pinned.
-           2. Compact caption — the bundle's portrait sizes (12/18px padding,
-              22px name) are tuned for a full-screen viewport and waste ~30px
-              of height inside an embedded hero.
-           (A third block once compacted the .box-services Features card; that
-              card is now replaced by the icon callouts further down.)
+    <!-- SuperSheldon portrait overrides for the hologram caption
+         (.box-description). On portrait the caption is repurposed: the
+         bundle's own content (.box-description-content — the name/location bar
+         plus the tagline that types out) is hidden and the "How We Get You
+         There" card (#ss-how, built further down) is appended in its place, so
+         it inherits the caption's bottom-pinned position and GSAP's
+         scroll-scrubbed fade of the .about-description wrapper.
+         On phones the box is also narrowed and centred — the parent page pins
+         the enquiry arrow, the WhatsApp button and the Nova chat bubble to the
+         bottom-right corner (~60px in from the right edge; see
+         src/components/ArrowAndWhatsapp.jsx). Insetting the box equally on
+         both sides keeps the card clear of that rail while still reading as
+         centred — padding only the right side left a ragged gap, and insetting
+         only the right side looked pinned.
          Selectors are repeated (.box-description.box-description…) purely to
          out-specify the bundle's scoped `[data-v-*]` rules without !important;
          the hash is regenerated on every rebuild of the Vue app, so we must
-         not name it here. Keep in sync with public/home2-hero/index.html. -->
+         not name it here. Keep in sync with the other */home2-hero/index.html
+         copy. -->
     <style>
+      @media (orientation: portrait) {
+        .box-description.box-description .box-description-content { display: none; }
+      }
       @media (orientation: portrait) and (max-width: 767.98px) {
-        /* 1. The bundle pins both boxes flush left and spans them full width.
-              Inset them equally instead, so they read as centred cards. The
-              40px on top of the usual 16px outer margin is what keeps the
-              copy clear of the parent page's floating rail (arrow + WhatsApp
-              + Nova: 48px icons sitting 12px in from the right edge, see
-              src/components/ArrowAndWhatsapp.jsx) — text now ends ~68px from
-              the right edge, the rail starts at 60px. */
         .box-description.box-description.box-description {
           --ss-box-inset: calc(var(--space-outer) + 40px);
           left: var(--ss-box-inset);
           width: calc(100% - var(--ss-box-inset) * 2);
         }
-
-        /* 2. Scan caption. */
-        .box-description.box-description .box-description-details {
-          padding: 8px 12px;
-        }
-        .box-description.box-description .box-description-details-name {
-          font-size: 18px;
-        }
-        .box-description.box-description .box-description-details-location-copy {
-          font-size: 14px;
-        }
-        .box-description.box-description .box-description-copy {
-          padding: 8px 12px;
-          font-size: 14px;
-          line-height: 1.35;
-        }
-
       }
     </style>
     <!-- SuperSheldon: the job-title banner ("Interactive Learning Platform") keeps
@@ -680,28 +656,50 @@
     <!-- SuperSheldon "Features" redesign. The bundle's BoxServices.vue renders a
          hologram card with a bulleted list (.box-services) once the scan
          completes. We hide that card and, inside the same .about-services
-         wrapper, mount five icon callouts arranged around the avatar with
-         dotted leader lines pointing at the body (top: Live Interactive
-         Classes; head level: Personalized Learning Paths / Expert Teachers;
-         hand level: AI-Powered Practice / Progress Tracking).
+         wrapper, mount icon callouts with dotted leader lines pointing at the
+         avatar. Two sets, only one of which is displayed (root gets
+         .ss-mode-p / -l / -s from layout()):
+           - portrait (phones and tablets held upright): the camera is trucked
+             right in the "about-1" waypoint so the avatar stands LEFT of
+             centre, and four body-part callouts — Shoes "Concepts That Click",
+             Legs "Growing Confidence", Chest "Better Grades", Head "Curiosity
+             That Lasts" — sit in one column on the RIGHT, icon beside label,
+             each with a HORIZONTAL leader from the body part to its icon. They
+             are revealed ONE BY ONE as the user scrolls (reveal() reads the
+             about spacer's scroll progress, bottom-up in scan order) and give
+             way to the "How We Get You There" card (#ss-how) — see the
+             portrait sections timeline note below.
+           - landscape: the original five (Live Interactive Classes /
+             Personalized Learning Paths / Expert Teachers / AI-Powered
+             Practice / Progress Tracking) fanned down the avatar's RIGHT
+             side, since the SuperSheldon + description cards occupy the
+             left; short landscape viewports (phones held sideways, < 480px
+             tall) get a compact icon-beside-label column instead.
          Why inside .about-services: GSAP scrubs that wrapper's opacity with
          scroll (animations/transitions/about.ts → setupSectionsAnimation), so
-         the new layout inherits the exact fade-in/out timing of the card it
-         replaces. A MutationObserver on the wrapper's inline style toggles
-         .ss-in, which staggers the callouts + lines in.
-         Positions are viewport percentages tuned against the camera's
-         portrait "about-2" waypoint, whose focus.y was raised 0.8 → 2 in
-         chunks/index-eeBi9twy.js (search `focus:{x:0,y:2,z:6}`) so the avatar
-         sits lower on phones and leaves room for the top callout. "about-1"
-         keeps the original 0.8 so the scan caption at the bottom does not
-         cover the platform; the same chunk's scenes timeline was retimed to
-         glide about-1 → about-2 over 40–65% of the scan (was the whole scan),
-         and the portrait sections timeline shows the callouts from 0.7 (was
-         0.6) so they appear only once the camera has settled. Landscape
-         keeps the SuperSheldon/description cards on the left, so the five
-         callouts fan down the avatar's right side instead of surrounding it;
-         short landscape viewports (phones held sideways, < 480px tall) get a
-         compact icon-beside-label column on the right instead (.ss-row).
+         the layout inherits the fade-in/out timing of the card it replaces. A
+         MutationObserver on the wrapper's inline style toggles .ss-in (the
+         landscape stagger); portrait additionally needs .ss-on per item.
+         Portrait scroll choreography lives in chunks/index-eeBi9twy.js
+         (patched in place, identical in both hero copies):
+           1. sections timeline, portrait branch (search `d.fromTo(r,{opacity:0}`):
+              .about-services (callouts) fades in over 0–.1 and out at .6
+              (opacity only — no y slide, so leaders stay glued to the body);
+              .about-description (the card) fades in at .76 — the reverse of
+              the bundle's caption-then-services order.
+           2. portrait waypoints (search `"about-1":{position:{x:1.2`):
+              "about-1" (callout phase) = position/focus x 1.2 (truck → avatar
+              left of centre), focus.y 2; "about-2" (card phase) = x 0, z 21.5,
+              focus.y 0 — pulled back and aimed lower so the avatar rises
+              clear of the bottom-pinned card even on a ~566px-tall embed.
+           3. scenes timeline (search `["about-2"],{in:1,duration:.17`): the
+              about-1 → about-2 camera blend runs .65–.82 (≈ .7–.85 of the
+              sections timeline, i.e. only once the callouts are gone —
+              leaders are fixed positions, so the camera must not move while
+              they show).
+         Landscape keeps both waypoints identical, so nothing above affects it.
+         Port to source if ever rebuilt: waypoints-data.ts (portrait
+         waypoints), about.ts (both timelines) + replace BoxServices.vue.
          Keep in sync with the other */home2-hero/index.html copy. -->
     <style>
       .about-services .box-services { display: none !important; }
@@ -717,6 +715,7 @@
         --ss-icon: 52px;
         --ss-label: 12.5px;
         --ss-label-w: 118px;
+        --ss-stagger: 90ms;
         --ss-cyan: rgb(52, 191, 255);
         --ss-glow: rgba(52, 191, 255, 0.55);
       }
@@ -731,6 +730,12 @@
       @media (orientation: landscape) and (min-height: 480px) and (min-width: 1280px) {
         #ss-features { --ss-icon: 66px; --ss-label: 15px; --ss-label-w: 140px; }
       }
+      /* Only the set for the current mode is rendered; each set is a
+         full-size positioning context so layout() px offsets stay valid. */
+      #ss-features .ss-set { display: none; position: absolute; inset: 0; }
+      #ss-features.ss-mode-p .ss-set-p,
+      #ss-features.ss-mode-l .ss-set-l,
+      #ss-features.ss-mode-s .ss-set-l { display: block; }
 
       .ss-callout {
         --ss-tx: -50%;
@@ -743,7 +748,7 @@
         width: var(--ss-label-w);
         opacity: 0;
         transition: opacity 0.35s ease, transform 0.35s ease;
-        transition-delay: calc(var(--i) * 90ms);
+        transition-delay: calc(var(--i) * var(--ss-stagger));
       }
       .ss-in .ss-callout { opacity: 1; transform: translate(var(--ss-tx), 0); }
       /* Short landscape: icon on the left, label to its right, in one column. */
@@ -813,7 +818,7 @@
         background-repeat: repeat-x;
         opacity: 0;
         transition: opacity 0.3s ease;
-        transition-delay: calc(var(--i) * 90ms + 120ms);
+        transition-delay: calc(var(--i) * var(--ss-stagger) + 120ms);
       }
       .ss-in .ss-line { opacity: 1; }
       .ss-dot {
@@ -826,25 +831,97 @@
         transform: translate(-50%, -50%);
         opacity: 0;
         transition: opacity 0.3s ease;
-        transition-delay: calc(var(--i) * 90ms + 180ms);
+        transition-delay: calc(var(--i) * var(--ss-stagger) + 180ms);
       }
       .ss-in .ss-dot { opacity: 1; }
+
+      /* Portrait: one column on the right, icon beside label. Every piece is
+         hidden until reveal() adds .ss-on (scroll-driven, one item at a
+         time); the id in the selector out-specifies the .ss-in rules above.
+         Per item: body dot + leader draw left→right, then the icon/label
+         slide in from the right. */
+      #ss-features.ss-mode-p { --ss-icon: 44px; --ss-label: 12.5px; --ss-label-w: 118px; }
+      #ss-features.ss-mode-p .ss-callout {
+        --ss-tx: 0;
+        flex-direction: row;
+        gap: 10px;
+        width: auto;
+        opacity: 0;
+        transform: translate(14px, 0);
+        transition-delay: 0ms;
+      }
+      #ss-features.ss-mode-p .ss-callout .ss-icon { flex-shrink: 0; }
+      #ss-features.ss-mode-p .ss-callout .ss-label { width: var(--ss-label-w); text-align: left; }
+      #ss-features.ss-mode-p .ss-icon::before { inset: -6px; }
+      #ss-features.ss-in.ss-mode-p .ss-callout.ss-on { opacity: 1; transform: none; transition-delay: 180ms; }
+      #ss-features.ss-mode-p .ss-line {
+        opacity: 0;
+        clip-path: inset(0 100% 0 0);
+        transition: opacity 0.25s ease, clip-path 0.4s ease;
+        transition-delay: 0ms;
+      }
+      #ss-features.ss-in.ss-mode-p .ss-line.ss-on { opacity: 1; clip-path: inset(0 0 0 0); transition-delay: 40ms; }
+      #ss-features.ss-mode-p .ss-dot { opacity: 0; transition-delay: 0ms; }
+      #ss-features.ss-in.ss-mode-p .ss-dot.ss-on { opacity: 1; }
+      #ss-features.ss-in.ss-mode-p .ss-dot-end.ss-on { transition-delay: 300ms; }
     </style>
     <script>
       (function () {
         var ID = "ss-features";
-        // x/y: callout centre (icon centre) as % of the hero; tx/ty: where the
-        // leader line ends on the avatar. Portrait avatar after the camera
-        // tweak: head 25–40%, shoulders ~42%, hands ~53%, feet ~68%.
-        // Landscape avatar: head 17–36%, shoulders ~40%, hands ~58%, feet ~78%.
-        // p = portrait, l = landscape, s = short landscape (< 480px tall).
-        // Leaders start at the icon circle's edge, except a = "box" (the top
-        // callout), whose leader hangs from the bottom of its label instead.
-        var ITEMS = [
+        // Portrait framing constants — MUST match the chunk's portrait
+        // "about-1" waypoint: camera trucked +1.2 on x (avatar sits left of
+        // centre) and ≈9.5 world units visible vertically at the avatar's
+        // depth (38° FOV, ~14 units away). Body points are given as world x
+        // (u, avatar centred on x = 0; the body's right edge) and y as % of
+        // the hero height (aspect-independent for a fixed vertical FOV).
+        // Listed bottom-up = scan order = reveal order.
+        var P_TRUCK = 1.2;
+        var P_VIS_H = 9.5;
+        // Sections-timeline progress at which each portrait item appears. The
+        // hero → about camera swing only settles at ≈ .14, so nothing shows
+        // before that; the wrapper fades out from .6, so the last one still
+        // gets ~.15 of scroll.
+        var P_REVEAL = [0.15, 0.25, 0.35, 0.45];
+        var ITEMS_PORTRAIT = [
+          {
+            label: "Concepts That Click",
+            p: { y: 70, u: 0.7 },
+            icon:
+              '<path d="M9.5 18.5h5M10.5 21h3"/>' +
+              '<path d="M12 3a5.6 5.6 0 0 0-3.4 10c.7.6 1.2 1.4 1.4 2.5h4c.2-1.1.7-1.9 1.4-2.5A5.6 5.6 0 0 0 12 3z"/>',
+          },
+          {
+            label: "Growing Confidence",
+            p: { y: 57, u: 0.52 },
+            icon:
+              '<path d="M3.5 17.5l5.5-5.5 4 4 7.5-7.5"/>' +
+              '<path d="M14.5 8.5h6v6"/>',
+          },
+          {
+            label: "Better Grades",
+            p: { y: 44, u: 0.6 },
+            icon:
+              '<circle cx="12" cy="8.5" r="5"/>' +
+              '<path d="M9.2 12.8L7.5 21l4.5-2.3L16.5 21l-1.7-8.2"/>' +
+              '<path d="M12 6.3l.7 1.5 1.6.2-1.2 1.1.3 1.6-1.4-.8-1.4.8.3-1.6-1.2-1.1 1.6-.2z"/>',
+          },
+          {
+            label: "Curiosity That Lasts",
+            p: { y: 32, u: 0.66 },
+            icon:
+              '<path d="M11 3l1.7 4.8L17.5 9.5l-4.8 1.7L11 16l-1.7-4.8L4.5 9.5l4.8-1.7z"/>' +
+              '<path d="M18.5 14.5l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>',
+          },
+        ];
+        // Landscape: x/y = callout (icon) centre as % of the hero; tx/ty =
+        // where the leader ends on the avatar (head 17–36%, shoulders ~40%,
+        // hands ~58%, feet ~78%). l = landscape, s = short landscape (< 480px
+        // tall). Leaders start at the icon circle's edge, except a = "box"
+        // (the top callout), whose leader hangs from the bottom of its label.
+        var ITEMS_LANDSCAPE = [
           {
             label: "Live Interactive Classes",
             a: "box",
-            p: { x: 50, y: 6.5, tx: 50, ty: 24 },
             l: { x: 62, y: 9, tx: 54, ty: 20 },
             s: { x: 72, y: 12, tx: 55, ty: 20 },
             icon:
@@ -855,7 +932,6 @@
           },
           {
             label: "Personalized Learning Paths",
-            p: { x: 17, y: 33, tx: 41.5, ty: 37.5 },
             l: { x: 75, y: 27, tx: 57, ty: 31 },
             s: { x: 72, y: 31, tx: 57, ty: 34 },
             icon:
@@ -866,7 +942,6 @@
           },
           {
             label: "Expert Teachers",
-            p: { x: 83, y: 33, tx: 58.5, ty: 37.5 },
             l: { x: 81, y: 47, tx: 58, ty: 43 },
             s: { x: 72, y: 50, tx: 57, ty: 50 },
             icon:
@@ -876,7 +951,6 @@
           },
           {
             label: "AI-Powered Practice",
-            p: { x: 17, y: 58, tx: 37.5, ty: 54 },
             l: { x: 78, y: 67, tx: 57, ty: 59 },
             s: { x: 72, y: 69, tx: 55, ty: 64 },
             icon:
@@ -886,7 +960,6 @@
           },
           {
             label: "Progress Tracking",
-            p: { x: 83, y: 58, tx: 62.5, ty: 54 },
             l: { x: 69, y: 84, tx: 55, ty: 77 },
             s: { x: 72, y: 88, tx: 54, ty: 78 },
             icon:
@@ -895,13 +968,14 @@
         ];
 
         var root = null;
-        var lines = [];
+        // Per set: [{ item, el, line, dotA, dotB }]. Short landscape shares
+        // the landscape set's elements (only the coordinates differ).
+        var sets = { p: [], l: [] };
 
-        function build() {
-          root = document.createElement("div");
-          root.id = ID;
-          root.setAttribute("aria-hidden", "true");
-          ITEMS.forEach(function (item, i) {
+        function buildSet(key, items) {
+          var set = document.createElement("div");
+          set.className = "ss-set ss-set-" + key;
+          items.forEach(function (item, i) {
             var c = document.createElement("div");
             c.className = "ss-callout";
             c.style.setProperty("--i", i);
@@ -918,12 +992,22 @@
             dotA.className = "ss-dot";
             dotA.style.setProperty("--i", i);
             var dotB = dotA.cloneNode();
-            root.appendChild(line);
-            root.appendChild(dotA);
-            root.appendChild(dotB);
-            root.appendChild(c);
-            lines.push({ item: item, el: c, line: line, dotA: dotA, dotB: dotB });
+            dotB.classList.add("ss-dot-end");
+            set.appendChild(line);
+            set.appendChild(dotA);
+            set.appendChild(dotB);
+            set.appendChild(c);
+            sets[key].push({ item: item, el: c, line: line, dotA: dotA, dotB: dotB });
           });
+          return set;
+        }
+
+        function build() {
+          root = document.createElement("div");
+          root.id = ID;
+          root.setAttribute("aria-hidden", "true");
+          root.appendChild(buildSet("p", ITEMS_PORTRAIT));
+          root.appendChild(buildSet("l", ITEMS_LANDSCAPE));
           return root;
         }
 
@@ -945,6 +1029,42 @@
           return { x: cx + dx * s, y: cy + dy * s };
         }
 
+        // Portrait: leaders run from the body (dotA) rightwards to the icon
+        // (dotB); the whole column shares one x so it reads as a list.
+        function layoutPortrait(W, H) {
+          var units = (P_VIS_H * W) / H; // world units across the viewport
+          var sx = function (u) {
+            return W * (0.5 + (u - P_TRUCK) / units);
+          };
+          var iconW = sets.p[0].el.firstElementChild.offsetWidth || 44;
+          var labelW = parseFloat(getComputedStyle(root).getPropertyValue("--ss-label-w")) || 118;
+          // Icon-centre x: as far right as the label allows on phones; on wide
+          // portrait viewports (tablets) stay within reach of the avatar.
+          var colX = Math.min(W - (labelW + 10 + iconW / 2 + 16), sx(0.75) + 0.18 * W + iconW / 2 + 12);
+          var gap = 6;
+          sets.p.forEach(function (o) {
+            var p = o.item.p;
+            var y = (p.y / 100) * H;
+            var tx = sx(p.u);
+            var icon = o.el.firstElementChild;
+            var iconH = icon.offsetHeight || 0;
+            o.el.style.left = colX - iconW / 2 + "px";
+            o.el.style.top = y - iconH / 2 + "px";
+            var end = colX - iconW / 2 - 6 - gap; // clear the reticle ring + gap
+            var start = tx + gap;
+            var len = Math.max(0, end - start - 5);
+            o.line.style.left = start + "px";
+            o.line.style.top = y - 2 + "px";
+            o.line.style.width = len + "px";
+            o.line.style.transform = "rotate(0deg)";
+            o.dotA.style.left = tx + "px";
+            o.dotA.style.top = y + "px";
+            o.dotB.style.left = end + "px";
+            o.dotB.style.top = y + "px";
+          });
+          reveal();
+        }
+
         function layout() {
           if (!root || !root.isConnected) return;
           var W = root.clientWidth;
@@ -952,8 +1072,11 @@
           if (!W || !H) return;
           var rootRect = root.getBoundingClientRect();
           var m = mode();
+          root.classList.remove("ss-mode-p", "ss-mode-l", "ss-mode-s");
+          root.classList.add("ss-mode-" + m);
           root.classList.toggle("ss-row", m === "s");
-          lines.forEach(function (o) {
+          if (m === "p") return layoutPortrait(W, H);
+          sets.l.forEach(function (o) {
             var p = o.item[m];
             var x = (p.x / 100) * W;
             var y = (p.y / 100) * H;
@@ -1004,6 +1127,32 @@
           });
         }
 
+        // Progress (0..1) of the bundle's portrait sections timeline, whose
+        // ScrollTrigger is start "top 25%" / end "bottom bottom" on the about
+        // spacer (#about, 250lvh). Derived from the spacer's own rect so it
+        // stays exact whatever the viewport height.
+        function progress() {
+          var spacer = document.getElementById("about") || document.querySelector(".about-spacer");
+          if (!spacer) return -1;
+          var H = window.innerHeight;
+          var r = spacer.getBoundingClientRect();
+          var range = r.height - 0.75 * H;
+          if (range <= 0) return -1;
+          return (0.25 * H - r.top) / range;
+        }
+
+        function reveal() {
+          if (!root || !root.isConnected || mode() !== "p") return;
+          var p = progress();
+          sets.p.forEach(function (o, i) {
+            var on = p >= P_REVEAL[i];
+            o.el.classList.toggle("ss-on", on);
+            o.line.classList.toggle("ss-on", on);
+            o.dotA.classList.toggle("ss-on", on);
+            o.dotB.classList.toggle("ss-on", on);
+          });
+        }
+
         function watchOpacity(wrapper) {
           var apply = function () {
             var o = parseFloat(wrapper.style.opacity);
@@ -1039,6 +1188,170 @@
           };
           window.addEventListener("resize", onResize);
           window.addEventListener("orientationchange", onResize);
+          window.addEventListener("scroll", reveal, { passive: true });
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", start);
+        } else {
+          start();
+        }
+      })();
+    </script>
+
+    <!-- SuperSheldon "How We Get You There" card (portrait only). Replaces the
+         bundle's scan caption content on phones/tablets held upright: mounted
+         INSIDE .box-description (whose own .box-description-content is hidden
+         by the portrait override in <head>), so it sits where the caption did —
+         pinned above the progress bar — and fades in with the
+         .about-description wrapper at .76 of the sections timeline, i.e. after
+         the four body-part callouts have gone. Layout mirrors the supplied
+         mock: centred title, three columns with a line icon, bold name and
+         soft-blue subline, hairline dividers between columns. Landscape keeps
+         the bundle's caption and never shows this card.
+         Keep in sync with the other */home2-hero/index.html copy. -->
+    <style>
+      #ss-how { display: none; }
+      @media (orientation: portrait) {
+        #ss-how {
+          display: block;
+          max-width: 520px;
+          margin: 0 auto;
+          padding: 14px 10px 13px;
+          border: 1px solid rgba(96, 148, 230, 0.6);
+          border-radius: 18px;
+          background: linear-gradient(180deg, rgba(14, 38, 92, 0.94) 0%, rgba(9, 24, 62, 0.96) 100%);
+          box-shadow:
+            0 14px 34px -14px rgba(0, 0, 0, 0.6),
+            inset 0 1px 0 rgba(150, 190, 255, 0.14);
+          font-family: Urbanist, sans-serif;
+          letter-spacing: 0;
+          color: #fff;
+          text-align: center;
+        }
+        #ss-how .ss-how-title {
+          margin: 0 0 11px;
+          font-size: 17px;
+          font-weight: 800;
+          line-height: 1.2;
+          color: #fff;
+        }
+        #ss-how .ss-how-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+        #ss-how .ss-how-col {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 3px;
+          padding: 0 5px;
+          min-width: 0;
+        }
+        #ss-how .ss-how-col + .ss-how-col {
+          border-left: 1px solid rgba(96, 148, 230, 0.45);
+        }
+        #ss-how .ss-how-icon {
+          width: 24px;
+          height: 24px;
+          margin-bottom: 3px;
+        }
+        #ss-how .ss-how-icon svg {
+          width: 100%;
+          height: 100%;
+          fill: none;
+          stroke: #8fc1ff;
+          stroke-width: 1.8;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+        #ss-how .ss-how-name {
+          margin: 0;
+          font-size: 13px;
+          font-weight: 800;
+          line-height: 1.2;
+          color: #fff;
+        }
+        #ss-how .ss-how-sub {
+          margin: 0;
+          font-size: 11.5px;
+          font-weight: 500;
+          line-height: 1.3;
+          color: #aacbff;
+        }
+      }
+      /* Roomier type once the box is wider than a phone (tablets upright). */
+      @media (orientation: portrait) and (min-width: 480px) {
+        #ss-how { padding: 18px 14px 16px; }
+        #ss-how .ss-how-title { margin-bottom: 14px; font-size: 21px; }
+        #ss-how .ss-how-col { gap: 4px; padding: 0 10px; }
+        #ss-how .ss-how-icon { width: 30px; height: 30px; }
+        #ss-how .ss-how-name { font-size: 16px; }
+        #ss-how .ss-how-sub { font-size: 14px; }
+      }
+    </style>
+    <script>
+      (function () {
+        var ID = "ss-how";
+        var COLUMNS = [
+          {
+            name: "1:1 + AI Support",
+            sub: "Tutor-led, AI-backed",
+            icon:
+              '<circle cx="8.5" cy="8" r="3.2"/>' +
+              '<path d="M2.5 19.5c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/>' +
+              '<circle cx="16.5" cy="9" r="2.6"/>' +
+              '<path d="M15 14.4c.5-.1 1-.2 1.5-.2 2.8 0 5 1.9 5 4.8"/>',
+          },
+          {
+            name: "Real Progress",
+            sub: "Diagnostics + PTMs",
+            icon: '<path d="M6 19.5v-6M12 19.5v-15M18 19.5v-10" style="stroke-width:2.4"/>',
+          },
+          {
+            name: "Fully Personalized",
+            sub: "Adapts to your child",
+            icon:
+              '<path d="M3.5 7h8.5M17.5 7h3M3.5 12h3M12.5 12h8M3.5 17h8.5M17.5 17h3"/>' +
+              '<circle cx="14.5" cy="7" r="2.2"/>' +
+              '<circle cx="9.5" cy="12" r="2.2"/>' +
+              '<circle cx="14.5" cy="17" r="2.2"/>',
+          },
+        ];
+
+        function build() {
+          var card = document.createElement("div");
+          card.id = ID;
+          card.innerHTML =
+            '<p class="ss-how-title">How We Get You There</p>' +
+            '<div class="ss-how-grid">' +
+            COLUMNS.map(function (c) {
+              return (
+                '<div class="ss-how-col">' +
+                '<div class="ss-how-icon"><svg viewBox="0 0 24 24" aria-hidden="true">' +
+                c.icon +
+                "</svg></div>" +
+                '<p class="ss-how-name">' + c.name + "</p>" +
+                '<p class="ss-how-sub">' + c.sub + "</p>" +
+                "</div>"
+              );
+            }).join("") +
+            "</div>";
+          return card;
+        }
+
+        function mount() {
+          var box = document.querySelector(".box-description");
+          if (!box) return false;
+          if (!box.querySelector("#" + ID)) box.appendChild(build());
+          return true;
+        }
+
+        function start() {
+          mount();
+          // The Vue app mounts async (and BoxDescription could be re-rendered),
+          // so keep watching and re-mount whenever the box is missing the card.
+          new MutationObserver(mount).observe(document.body, { childList: true, subtree: true });
         }
 
         if (document.readyState === "loading") {

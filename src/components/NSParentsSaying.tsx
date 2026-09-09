@@ -1,7 +1,7 @@
 "use client";
 
-// "What parents are saying" — a swipeable testimonial rail. Shows one card on
-// mobile and three on desktop; the visible count is read from a media query so
+// "Loved by Kids, Trusted by Parents" — a swipeable testimonial rail. Shows one
+// card on mobile and three on desktop; the visible count is read from a media query so
 // the same index maths drives the arrows, the dots and the drag.
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
@@ -65,23 +65,20 @@ const QUOTES: Quote[] = [
 function Arrow({
   dir,
   onClick,
-  disabled,
   reduce,
 }: {
   dir: "prev" | "next";
   onClick: () => void;
-  disabled: boolean;
   reduce: boolean;
 }) {
   return (
     <motion.button
       type="button"
       onClick={onClick}
-      disabled={disabled}
-      whileHover={reduce || disabled ? undefined : { scale: 1.08, transition: SPRING }}
-      whileTap={reduce || disabled ? undefined : { scale: 0.92 }}
+      whileHover={reduce ? undefined : { scale: 1.08, transition: SPRING }}
+      whileTap={reduce ? undefined : { scale: 0.92 }}
       aria-label={dir === "prev" ? "Previous testimonial" : "Next testimonial"}
-      className="w-11 h-11 rounded-full bg-white border border-[#fedbc6] shadow-sm flex items-center justify-center text-[#0b2545] transition-colors duration-300 hover:bg-[#fc8741] hover:border-[#fc8741] hover:text-white disabled:opacity-35 disabled:pointer-events-none"
+      className="w-11 h-11 rounded-full bg-white border border-[#fedbc6] shadow-sm flex items-center justify-center text-[#0b2545] transition-colors duration-300 hover:bg-[#fc8741] hover:border-[#fc8741] hover:text-white"
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
         <path
@@ -129,9 +126,13 @@ export default function NSParentsSaying() {
     setIndex((i) => Math.min(i, maxIndex));
   }, [maxIndex]);
 
+  // Arrows and dots wrap around: "next" from the last position returns to the
+  // first, "prev" from the first jumps to the last. The rail slides the whole
+  // way back rather than cutting, so the loop stays readable.
+  const slideCount = maxIndex + 1;
   const go = useCallback(
-    (next: number) => setIndex(Math.min(Math.max(next, 0), maxIndex)),
-    [maxIndex]
+    (next: number) => setIndex(((next % slideCount) + slideCount) % slideCount),
+    [slideCount]
   );
 
   const cardWidth = railWidth / perView;
@@ -154,7 +155,7 @@ export default function NSParentsSaying() {
     else if (travelled > threshold || flick > 500) target = index - 1;
     target = Math.min(Math.max(target, 0), maxIndex);
 
-    go(target);
+    setIndex(target);
     // Always animate explicitly: when the drag doesn't cross the threshold the
     // index is unchanged, so nothing declarative would bring the rail back.
     animate(x, -target * cardWidth, slide);
@@ -168,10 +169,12 @@ export default function NSParentsSaying() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div {...riseOnce(reduce)} className="text-center mb-10 md:mb-14">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#03215F] tracking-tight">
-            What <Highlight reduce={reduce} bar="bg-[#fedbc6]/70">parents</Highlight> are saying
+            Loved by Kids, Trusted by{" "}
+            <Highlight reduce={reduce} bar="bg-[#fedbc6]/70">Parents</Highlight>
           </h2>
-          <p className="mt-3 text-gray-600 text-base sm:text-lg max-w-xl mx-auto">
-            Real families, across the UK, Australia, the US and beyond.
+          <p className="mt-3 text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+            Real experiences from the SuperSheldon community, straight from students and their
+            families across the UK, Australia, the US and beyond.
           </p>
         </motion.div>
 
@@ -204,8 +207,8 @@ export default function NSParentsSaying() {
           </div>
 
           {/* Controls */}
-          <div className="mt-8 flex items-center justify-center gap-5">
-            <Arrow dir="prev" onClick={() => go(index - 1)} disabled={index === 0} reduce={reduce} />
+          <div className="mt-3 md:mt-4 flex items-center justify-center gap-5">
+            <Arrow dir="prev" onClick={() => go(index - 1)} reduce={reduce} />
             <div className="flex items-center gap-2">
               {Array.from({ length: maxIndex + 1 }).map((_, i) => (
                 <motion.button
@@ -220,7 +223,7 @@ export default function NSParentsSaying() {
                 />
               ))}
             </div>
-            <Arrow dir="next" onClick={() => go(index + 1)} disabled={index === maxIndex} reduce={reduce} />
+            <Arrow dir="next" onClick={() => go(index + 1)} reduce={reduce} />
           </div>
         </motion.div>
       </div>

@@ -1,10 +1,10 @@
 // /uk landing page — the global landing page's design and section order
 // (src/app/page.js), wired to the UK site.
 //
-// Sections that carry no links (TrustedByBar, NSParentsSaying, NSAcademies,
-// NSWhySheldon, NSHomeFAQ, ScrollProgressBar) are shared with "/" directly.
-// NSAcademies takes a locale so its Exam Readiness dropdown lists this
-// market's exams (and books against this market's wizard).
+// Sections with no UK-specific copy (TrustedByBar, NSParentsSaying,
+// NSHomeFAQ, ScrollProgressBar) are shared with "/" directly. NSAcademies and
+// NSWhySheldon are shared too but take a locale: NSAcademies for this market's
+// exam list and its /uk/academies links, NSWhySheldon for its CTA's href.
 // Everything that navigates or carries UK copy — header, footer, deadline
 // banner, the UK 3D hero (+44 dial code, "United Kingdom" caption), the UK
 // student testimonial, teacher carousel, floating CTA — uses the UK copy so a
@@ -33,9 +33,8 @@ const UKHomeTeacherTest    = dynamic(() => import('@/components/UKHome/UKHomeTea
 const TeacherCarousel      = dynamic(() => import('@/components/UKHome/UKHomeTeacherCarousel'));
 const FeatureSlider        = dynamic(() => import('@/components/UKHome/UKHomeFeatures'));
 const UKHomeLevelUp        = dynamic(() => import('@/components/UKHome/UKHomeApp'));
-// Redesign sections, sitting between the stats strip and the footer. None of
-// these link anywhere, so /uk shares them with the global page — NSAcademies
-// only takes a locale for its exam list.
+// Redesign sections, sitting between the stats strip and the footer. Shared
+// with the global page; the two that link take a locale (see the note above).
 const NSWhySheldon         = dynamic(() => import('@/components/NSWhySheldon'));
 const NSParentsSaying      = dynamic(() => import('@/components/NSParentsSaying'));
 const NSAcademies          = dynamic(() => import('@/components/NSAcademies'));
@@ -90,7 +89,7 @@ export default function UKHome() {
 
       <NSParentsSaying />
       <NSAcademies locale="uk" />
-      <NSWhySheldon />
+      <NSWhySheldon locale="uk" />
 
       <DeferredSection>
         <TeacherCarousel />
