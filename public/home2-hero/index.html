@@ -838,23 +838,34 @@
       }
       .ss-in .ss-dot { opacity: 1; }
 
-      /* Portrait: one column on the right, icon beside label. Every piece is
+      /* Portrait: one column on the right, label centred UNDER its icon (so
+         the callout only needs the label's width and the column can sit much
+         further right, away from the avatar). Every piece is
          hidden until reveal() adds .ss-on (scroll-driven, one item at a
          time); the id in the selector out-specifies the .ss-in rules above.
          Per item: body dot + leader draw left→right, then the icon/label
          slide in from the right. */
-      #ss-features.ss-mode-p { --ss-icon: 44px; --ss-label: 12.5px; --ss-label-w: 118px; }
+      /* Icon spacing here is fixed by the body parts (leaders are horizontal),
+         ~13% of the hero height apart, and the label now hangs BELOW its icon
+         — so keep the icon + type small enough that a label clears the next
+         icon down even on a short (~566px) embed. Tablets have the room. */
+      #ss-features.ss-mode-p { --ss-icon: 46px; --ss-label: 12.5px; --ss-label-w: 124px; }
+      @media (orientation: portrait) and (min-width: 600px) {
+        #ss-features.ss-mode-p { --ss-icon: 62px; --ss-label: 15px; --ss-label-w: 152px; }
+      }
       #ss-features.ss-mode-p .ss-callout {
         --ss-tx: 0;
-        flex-direction: row;
-        gap: 10px;
-        width: auto;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        width: var(--ss-label-w);
         opacity: 0;
         transform: translate(14px, 0);
         transition-delay: 0ms;
       }
       #ss-features.ss-mode-p .ss-callout .ss-icon { flex-shrink: 0; }
-      #ss-features.ss-mode-p .ss-callout .ss-label { width: var(--ss-label-w); text-align: left; }
+      /* one line only — a wrapped label would run into the icon below it */
+      #ss-features.ss-mode-p .ss-callout .ss-label { width: 100%; text-align: center; white-space: nowrap; }
       #ss-features.ss-mode-p .ss-icon::before { inset: -6px; }
       #ss-features.ss-in.ss-mode-p .ss-callout.ss-on { opacity: 1; transform: none; transition-delay: 180ms; }
       #ss-features.ss-mode-p .ss-line {
@@ -876,7 +887,11 @@
         // centre) and ≈9.5 world units visible vertically at the avatar's
         // depth (38° FOV, ~14 units away). Body points are given as world x
         // (u, avatar centred on x = 0; the body's right edge) and y as % of
-        // the hero height (aspect-independent for a fixed vertical FOV).
+        // the hero height (aspect-independent for a fixed vertical FOV); the
+        // icon sits on that same y so its leader stays horizontal. The four
+        // ys are spread over the avatar's WHOLE extent — above the head down
+        // to the platform rim — rather than head/chest/legs/shoes, so the
+        // icons get a real gap between them.
         // Listed bottom-up = scan order = reveal order.
         var P_TRUCK = 1.2;
         var P_VIS_H = 9.5;
@@ -888,21 +903,21 @@
         var ITEMS_PORTRAIT = [
           {
             label: "Concepts That Click",
-            p: { y: 70, u: 0.7 },
+            p: { y: 71, u: 0.92 },
             icon:
               '<path d="M9.5 18.5h5M10.5 21h3"/>' +
               '<path d="M12 3a5.6 5.6 0 0 0-3.4 10c.7.6 1.2 1.4 1.4 2.5h4c.2-1.1.7-1.9 1.4-2.5A5.6 5.6 0 0 0 12 3z"/>',
           },
           {
             label: "Growing Confidence",
-            p: { y: 57, u: 0.52 },
+            p: { y: 56, u: 0.55 },
             icon:
               '<path d="M3.5 17.5l5.5-5.5 4 4 7.5-7.5"/>' +
               '<path d="M14.5 8.5h6v6"/>',
           },
           {
             label: "Better Grades",
-            p: { y: 44, u: 0.6 },
+            p: { y: 40, u: 0.62 },
             icon:
               '<circle cx="12" cy="8.5" r="5"/>' +
               '<path d="M9.2 12.8L7.5 21l4.5-2.3L16.5 21l-1.7-8.2"/>' +
@@ -910,7 +925,7 @@
           },
           {
             label: "Curiosity That Lasts",
-            p: { y: 32, u: 0.66 },
+            p: { y: 24, u: 0.2 },
             icon:
               '<path d="M11 3l1.7 4.8L17.5 9.5l-4.8 1.7L11 16l-1.7-4.8L4.5 9.5l4.8-1.7z"/>' +
               '<path d="M18.5 14.5l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>',
@@ -1032,18 +1047,21 @@
           return { x: cx + dx * s, y: cy + dy * s };
         }
 
-        // Portrait: leaders run from the body (dotA) rightwards to the icon
-        // (dotB); the whole column shares one x so it reads as a list.
+        // Portrait: leaders run from the body (dotA) straight out to the icon
+        // (dotB) — HORIZONTAL, so every icon sits level with its own body
+        // part (p.y). The whole column shares one x so it reads as a list.
         function layoutPortrait(W, H) {
           var units = (P_VIS_H * W) / H; // world units across the viewport
           var sx = function (u) {
             return W * (0.5 + (u - P_TRUCK) / units);
           };
-          var iconW = sets.p[0].el.firstElementChild.offsetWidth || 44;
-          var labelW = parseFloat(getComputedStyle(root).getPropertyValue("--ss-label-w")) || 118;
-          // Icon-centre x: as far right as the label allows on phones; on wide
-          // portrait viewports (tablets) stay within reach of the avatar.
-          var colX = Math.min(W - (labelW + 10 + iconW / 2 + 16), sx(0.75) + 0.18 * W + iconW / 2 + 12);
+          var iconW = sets.p[0].el.firstElementChild.offsetWidth || 46;
+          var labelW = parseFloat(getComputedStyle(root).getPropertyValue("--ss-label-w")) || 124;
+          // Icon-centre x: the callout is the label's width, centred on the
+          // icon, so on phones it can go as far right as half a label + a
+          // margin; on wide portrait viewports (tablets) stay within reach of
+          // the avatar.
+          var colX = Math.min(W - (labelW / 2 + 12), sx(0.75) + 0.18 * W + iconW / 2 + 12);
           var gap = 6;
           sets.p.forEach(function (o) {
             var p = o.item.p;
@@ -1051,7 +1069,9 @@
             var tx = sx(p.u);
             var icon = o.el.firstElementChild;
             var iconH = icon.offsetHeight || 0;
-            o.el.style.left = colX - iconW / 2 + "px";
+            // The callout box is label-wide and centred on colX; its icon is
+            // the first row, so top = y - iconH / 2 keeps the icon on y.
+            o.el.style.left = colX - labelW / 2 + "px";
             o.el.style.top = y - iconH / 2 + "px";
             var end = colX - iconW / 2 - 6 - gap; // clear the reticle ring + gap
             var start = tx + gap;
