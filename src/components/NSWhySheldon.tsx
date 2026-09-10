@@ -5,11 +5,12 @@
 //
 // Each card is a tinted panel in one of the three academy colours (teal /
 // red-orange / purple — the same palette as NSAcademies, so the two sections
-// read as one family): a coloured icon badge beside a solid pill, then the
-// claim and a sentence of detail. A single "Try a Free Class" button closes the
-// section and opens the site-wide booking popup.
+// read as one family): a coloured icon badge beside the claim, then a sentence
+// of detail and a soft tag naming what else comes with it. A single
+// "Try a Free Class" button closes the section and opens the site-wide booking
+// popup.
 import Link from "next/link";
-import { ClipboardCheck, SlidersHorizontal, Users } from "lucide-react";
+import { Bot, GraduationCap, Infinity as InfinityIcon } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { CSS_TRANSITION, hoverLift, rise, riseOnce, stagger, VIEWPORT } from "@/lib/motion";
 import { SpotlightOverlay, useSpotlight } from "@/components/motion/Spotlight";
@@ -24,13 +25,13 @@ type Card = {
   bg: string;
   /** Border of the tinted card edge. */
   border: string;
-  /** Icon badge + pill fill. */
+  /** Icon badge fill, and the tag's text colour. */
   accent: string;
-  /** Small uppercase pill above the claim. */
-  pill: string;
   title: string;
   desc: string;
-  icon: typeof Users;
+  /** Soft tag under the copy, naming what else the card carries. */
+  tag: string;
+  icon: typeof Bot;
 };
 
 const CARDS: Card[] = [
@@ -38,28 +39,28 @@ const CARDS: Card[] = [
     bg: "#E8F4F6",
     border: "#D2E9ED",
     accent: "#1E88A8",
-    pill: "1:1 + AI Support",
-    title: "Tutors backed by AI",
-    desc: "Your tutor leads every class and gets to know how your child learns best. An AI teacher is on call between sessions to clear doubts instantly.",
-    icon: Users,
+    title: "1:1 Expert Tutors",
+    desc: "A dedicated expert tutor for every class, with regular diagnostics and parent-teacher meetings to track real progress.",
+    tag: "+ Diagnostics & PTMs",
+    icon: GraduationCap,
   },
   {
     bg: "#FCEAE3",
     border: "#F7D6C9",
     accent: "#E4572E",
-    pill: "Diagnostics + PTMs",
-    title: "Real progress, tracked",
-    desc: "Scheduled diagnostic tests track real progress over time, followed by parent-teacher meetings to walk through the results together.",
-    icon: ClipboardCheck,
+    title: "Infinite Question Bank",
+    desc: "Unlimited practice questions that adapt to your child's level, pace and goals, so there's always the right challenge.",
+    tag: "+ Personalized Practice",
+    icon: InfinityIcon,
   },
   {
     bg: "#F6ECF7",
     border: "#EBDCEC",
     accent: "#AD71AF",
-    pill: "Built around your child",
-    title: "Fully personalized",
-    desc: "There's no fixed curriculum. Every course adapts to your child's level, pace and goals as they grow.",
-    icon: SlidersHorizontal,
+    title: "AI Tutor",
+    desc: "Instant answers to your child's questions, any time of day, without waiting for the next class.",
+    tag: "+ Available 24/7",
+    icon: Bot,
   },
 ];
 
@@ -127,25 +128,28 @@ function WhyCard({ card, reduce }: { card: Card; reduce: boolean }) {
     >
       <SpotlightOverlay background={background} />
 
-      <div className="relative flex items-center gap-3.5 mb-3.5">
+      {/* Icon badge and claim sit on one row; the tag closes the card. */}
+      <div className="relative flex items-center gap-3.5 mb-2.5">
         <span
           className="w-[50px] h-[50px] rounded-[15px] flex items-center justify-center text-white shadow-md shrink-0 group-hover:scale-105 transition-transform duration-300"
           style={{ background: card.accent }}
         >
           <Icon size={25} strokeWidth={2} />
         </span>
-        <span
-          className="text-[11px] font-extrabold uppercase tracking-[0.06em] text-white px-3.5 py-1.5 rounded-full"
-          style={{ background: card.accent }}
-        >
-          {card.pill}
-        </span>
+        <h3 className="text-lg md:text-xl font-bold text-gray-900 leading-snug text-balance">
+          {card.title}
+        </h3>
       </div>
 
-      <h3 className="relative text-lg md:text-xl font-bold text-gray-900 leading-snug mb-2 text-balance">
-        {card.title}
-      </h3>
-      <p className="relative text-gray-600 leading-relaxed text-[14px]">{card.desc}</p>
+      <p className="relative text-gray-600 leading-relaxed text-[14px] mb-4">{card.desc}</p>
+
+      {/* mt-auto pins the tag to the bottom so all three line up. */}
+      <span
+        className="relative mt-auto self-start text-[11px] font-bold tracking-[0.03em] bg-white/70 px-3 py-1 rounded-full"
+        style={{ color: card.accent }}
+      >
+        {card.tag}
+      </span>
     </motion.article>
   );
 }
