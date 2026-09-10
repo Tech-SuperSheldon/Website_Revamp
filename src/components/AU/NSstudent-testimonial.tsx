@@ -13,7 +13,8 @@
 import { useState } from "react";
 import { motion, useReducedMotion, type PanInfo } from "framer-motion";
 import Image from "next/image";
-import { rise, stagger, SPRING, VIEWPORT } from "@/lib/motion";
+import { rise, riseOnce, stagger, SPRING, VIEWPORT } from "@/lib/motion";
+import Highlight from "@/components/motion/Highlight";
 
 // Data copied from StudentTestimonial.jsx
 const testimonials = [
@@ -168,6 +169,22 @@ export function TestimonialSection() {
 
   return (
     <section className="py-4 md:py-6 overflow-hidden relative">
+      {/* Section heading — moved here from NSParentsSaying so the card trio is
+          the first thing the "Loved by Kids" title introduces. */}
+      <motion.div
+        {...riseOnce(reduce)}
+        className="text-center px-4 sm:px-6 lg:px-8 mb-8 md:mb-12"
+      >
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#03215F] tracking-tight">
+          Loved by Kids, Trusted by{" "}
+          <Highlight reduce={reduce} bar="bg-[#fedbc6]/70">Parents</Highlight>
+        </h2>
+        <p className="mt-3 text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
+          Real experiences from the SuperSheldon community, straight from students and their
+          families across the UK, Australia, the US and beyond.
+        </p>
+      </motion.div>
+
       {/* Desktop / tablet — unchanged side-by-side layout */}
       <div className="hidden sm:block container mx-auto px-4 md:px-6">
         <motion.div

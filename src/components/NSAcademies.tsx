@@ -67,8 +67,9 @@ const COPY: Record<string, { label: string; title: string; hook: string; icon: t
   },
 };
 
-/** Tags shown on a card: the first few subjects, then a "+N more" chip so a
- *  long exam list doesn't unbalance the row. */
+/** Tags shown on a card from sm up: the first few subjects, then a "+N more" chip so a
+ *  long exam list doesn't unbalance the row. Mobile scrolls the full list
+ *  instead — see AcademyCard. */
 const MAX_TAGS = 4;
 
 function tagsFor(subjects: string[]) {
@@ -98,29 +99,37 @@ function AcademyCard({
       whileHover={hoverLift(reduce, -8)}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className={`group relative h-full flex flex-col overflow-hidden rounded-[2rem] border p-7 md:p-8 shadow-sm hover:shadow-xl ${CSS_TRANSITION}`}
+      className={`group relative h-full flex flex-col overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] border p-4 sm:p-7 md:p-8 shadow-sm hover:shadow-xl ${CSS_TRANSITION}`}
       style={{ background: palette.bg, borderColor: palette.border }}
     >
       <SpotlightOverlay background={background} />
 
-      <div className="relative flex items-center gap-3.5 mb-4">
+      <div className="relative flex items-center gap-3 sm:gap-3.5 mb-2 sm:mb-4">
         <span
-          className="w-[52px] h-[52px] rounded-2xl flex items-center justify-center text-white shadow-md shrink-0"
+          className="w-11 h-11 sm:w-[52px] sm:h-[52px] rounded-xl sm:rounded-2xl flex items-center justify-center text-white shadow-md shrink-0"
           style={{ background: palette.accent }}
         >
-          <Icon size={26} strokeWidth={2} />
+          <Icon size={26} strokeWidth={2} className="w-[22px] h-[22px] sm:w-[26px] sm:h-[26px]" />
         </span>
         <div>
-          <h3 className="text-xl font-bold text-gray-900 leading-snug">{label}</h3>
-          <p className="text-[13px] font-semibold mt-0.5" style={{ color: palette.accentDark }}>
+          <h3 className="text-[17px] sm:text-xl font-bold text-gray-900 leading-snug">{label}</h3>
+          <p
+            className="text-xs sm:text-[13px] font-semibold mt-0.5"
+            style={{ color: palette.accentDark }}
+          >
             {title}
           </p>
         </div>
       </div>
 
-      <p className="relative text-[15px] text-gray-600 mb-5">{hook}</p>
+      {/* Clamped on mobile: the hook restates the title, so a third line is the
+          first thing worth losing to keep all three cards on screen. */}
+      <p className="relative text-[13px] sm:text-[15px] leading-snug sm:leading-normal text-gray-600 line-clamp-2 sm:line-clamp-none mb-2.5 sm:mb-5">
+        {hook}
+      </p>
 
-      <div className="relative flex flex-wrap gap-2 mb-6">
+      {/* sm and up: the original wrapping chip row, capped with "+N more". */}
+      <div className="relative hidden sm:flex flex-wrap gap-2 mb-6">
         {tagsFor(subjects).map((tag) => (
           <span
             key={tag}
@@ -130,10 +139,23 @@ function AcademyCard({
           </span>
         ))}
       </div>
+      {/* Mobile keeps the chips on one swipeable row, so a card is the same
+          height whether a track has four subjects or twelve — and nothing has
+          to hide behind a "+N more". */}
+      <div className="no-scrollbar relative flex sm:hidden flex-nowrap gap-1.5 mb-3 overflow-x-auto">
+        {subjects.map((tag) => (
+          <span
+            key={tag}
+            className="shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-white/75 border border-black/[0.06] text-gray-700 whitespace-nowrap"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
 
       <Link
         href={href}
-        className={`relative mt-auto w-fit inline-flex items-center gap-1.5 rounded-full px-[18px] py-3 text-sm font-bold text-white group-hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${CSS_TRANSITION}`}
+        className={`relative mt-auto w-fit inline-flex items-center gap-1.5 rounded-full px-4 sm:px-[18px] py-2 sm:py-3 text-[13px] sm:text-sm font-bold text-white group-hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${CSS_TRANSITION}`}
         style={{ background: palette.accent }}
       >
         Explore {label}
@@ -167,7 +189,7 @@ export default function NSAcademies({ locale = "global" }: { locale?: Locale } =
           initial="hidden"
           whileInView="show"
           viewport={VIEWPORT}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 items-stretch"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 md:gap-7 items-stretch"
         >
           {academies.map((a) => (
             <AcademyCard

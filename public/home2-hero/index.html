@@ -80,23 +80,26 @@
         }
       }
     </style>
-    <!-- SuperSheldon: the job-title banner ("Interactive Learning Platform") keeps
-         its tilt — `.hero-banner { transform: rotate(-4deg); transform-origin: left
-         center }` — but that swings its right end up by width * sin(4°) (20px at
-         288px wide, 33px at 468px), eating the 12–18px gap the flex column leaves
-         under the "SuperSheldon" h1, so the ribbon clips the title. Push it down by
-         the lift plus ~4px of daylight; the two steps match the breakpoints where
-         the banner changes size (banner-size-md padding at 1024px, title-sm copy at
-         1280px). Selector repeated to out-specify the bundle's scoped [data-v-*]
-         rule without !important, same trick as the block above.
+    <!-- SuperSheldon: the job-title banner ("Interactive Learning Platform") ships
+         tilted — `.hero-banner { transform: rotate(-4deg); transform-origin: left
+         center }`. We keep it horizontal (transform: none), which also removes the
+         reason for the old downward nudge: the tilt used to swing the ribbon's right
+         end up by width * sin(4°) (20px at 288px wide, 33px at 468px) into the
+         "SuperSheldon" h1 above it, so it had to be pushed down to clear the title.
+         Flat, it needs the opposite: `.hero-content-inner` sets a column gap of 20px
+         below 1024px and 48px above, which reads as a wide float under the title, so
+         pull the banner back up with a negative margin (→ ~10px / ~26px of gap).
+         Selectors repeated to out-specify the bundle's scoped [data-v-*] rule without
+         !important, same trick as the block above.
          Keep in sync with the other home2-hero index.html. -->
     <style>
       .hero-banner.hero-banner.hero-banner {
-        margin-top: 12px;
+        transform: none;
+        margin-top: -10px;
       }
-      @media (min-width: 1280px) {
+      @media (min-width: 1024px) {
         .hero-banner.hero-banner.hero-banner {
-          margin-top: 19px;
+          margin-top: -22px;
         }
       }
     </style>

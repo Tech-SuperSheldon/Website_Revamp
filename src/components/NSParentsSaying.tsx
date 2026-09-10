@@ -1,13 +1,13 @@
 "use client";
 
-// "Loved by Kids, Trusted by Parents" — a swipeable testimonial rail. Shows one
+// A swipeable testimonial rail. Its "Loved by Kids, Trusted by Parents" heading
+// now lives above the card trio in NSstudent-testimonial. Shows one
 // card on mobile and three on desktop; the visible count is read from a media query so
 // the same index maths drives the arrows, the dots and the drag.
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { animate, motion, useMotionValue, useReducedMotion } from "framer-motion";
 import { CSS_TRANSITION, DUR, EASE, hoverLift, riseOnce, SPRING } from "@/lib/motion";
-import Highlight from "@/components/motion/Highlight";
 import { SpotlightOverlay, useSpotlight } from "@/components/motion/Spotlight";
 
 type Quote = {
@@ -167,17 +167,6 @@ export default function NSParentsSaying() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#fff7f2]/70 via-[#fff7f2]/30 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div {...riseOnce(reduce)} className="text-center mb-10 md:mb-14">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#03215F] tracking-tight">
-            Loved by Kids, Trusted by{" "}
-            <Highlight reduce={reduce} bar="bg-[#fedbc6]/70">Parents</Highlight>
-          </h2>
-          <p className="mt-3 text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">
-            Real experiences from the SuperSheldon community, straight from students and their
-            families across the UK, Australia, the US and beyond.
-          </p>
-        </motion.div>
-
         <motion.div {...riseOnce(reduce, 24)} className="relative">
           <div ref={viewportRef} className="overflow-hidden">
             <motion.div
