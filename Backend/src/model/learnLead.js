@@ -5,7 +5,9 @@ const learnLeadSchema = new Schema({
     country: {
         type: String,
         required: true,
-        enum: ["uk", "au"],
+        // "global" is the market-less landing pages (/learn-maths, /learn-english,
+        // /learn-science), which are run as ads worldwide rather than per region.
+        enum: ["uk", "au", "global"],
     },
     subject: {
         type: String,

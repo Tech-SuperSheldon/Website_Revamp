@@ -6,7 +6,7 @@ const REQUIRED_START_FIELDS = ["country", "subject", "grade", "mobile"];
 const validateStart = (data) => {
     const isAllowed = REQUIRED_START_FIELDS.every((key) => Object.keys(data).includes(key) && data[key]);
     if (!isAllowed) throw new Error("Some field is missing");
-    if (!["uk", "au"].includes(data.country)) throw new Error("Invalid country");
+    if (!["uk", "au", "global"].includes(data.country)) throw new Error("Invalid country");
 };
 
 // Step 1: grade + phone captured -> upsert a partial lead and notify the sheet

@@ -9,7 +9,7 @@ import PhoneField from "@/components/demo/PhoneField";
 // @ts-ignore - JS module, no type declarations
 import { findByIso } from "@/components/demo/countries";
 
-type MarketCountry = "uk" | "au";
+type MarketCountry = "uk" | "au" | "global";
 type Subject = string;
 
 // GlossyButton is a plain .jsx component whose href/target/rel/onClick are
@@ -45,7 +45,7 @@ const TIME_SLOTS = [
   "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM",
 ];
 
-const DEFAULT_DIAL: Record<MarketCountry, string> = { uk: "GB", au: "AU" };
+const DEFAULT_DIAL: Record<MarketCountry, string> = { uk: "GB", au: "AU", global: "GB" };
 
 const STEP_LABELS = ["Grade", "Phone", "Date & Time", "Timezone"];
 
@@ -213,20 +213,37 @@ export default function LearnForm({
   submitData = true,
   onClose,
   grades,
+  audience = "student",
+  onBooked,
 }: {
   country: MarketCountry;
   subject: Subject;
-  /** "page" renders its own full-height gradient backdrop; "modal" renders just the card, for use inside a modal overlay. */
-  variant?: "page" | "modal";
-  /** Overrides the default "Learn {subject} · {market}" title. */
-  heading?: string;
+  /** "page" renders its own full-height gradient backdrop; "modal" renders just the card, for
+   *  use inside a modal overlay; "embed" renders the card bare and full-width, for a page that
+   *  already supplies its own backdrop and framing (see LearnLanding). */
+  variant?: "page" | "modal" | "embed";
+  /** Overrides the default "Learn {subject} · {market}" title. Pass `null` to drop the
+   *  title row entirely — the landing pages print the headline beside the card instead. */
+  heading?: React.ReactNode;
   /** When false, skips both network calls entirely — nothing is sent anywhere, the wizard just walks through its steps. */
   submitData?: boolean;
   /** Shown as a close (×) button next to the title when variant is "modal". */
   onClose?: () => void;
   /** Restricts the grade step to these grade numbers, e.g. NAPLAN's [3, 5, 7, 9]. Defaults to Grade 1–12. */
   grades?: number[];
+  /** Who is filling the form in. "parent" swaps every question to third-person copy
+   *  ("your child") and adds a helper line under each — the campaign landing pages are
+   *  bought against parent search terms. The payload sent to /learn-lead is unchanged. */
+  audience?: "student" | "parent";
+  /** Fired once, when the wizard reaches its success step. The landing pages use it
+   *  to drop their "limited slots" urgency strip — it reads badly over a confirmation. */
+  onBooked?: () => void;
 }) {
+  const forParent = audience === "parent";
+  // The campaign landing pages stack the whole page into one phone screen, so the
+  // embedded card runs tighter below `sm`. /au, /uk and the academy modals, which
+  // own the whole viewport, keep the original roomier spacing.
+  const tight = variant === "embed";
   const [step, setStep] = useState(1);
   const [grade, setGrade] = useState("");
   const GRADES = (grades && grades.length > 0 ? grades : ALL_GRADES).map((n) => `Grade ${n}`);
@@ -262,7 +279,7 @@ export default function LearnForm({
       const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (detected) setTimezone(detected);
     } catch {
-      setTimezone(country === "uk" ? "Europe/London" : "Australia/Sydney");
+      setTimezone(country === "au" ? "Australia/Sydney" : "Europe/London");
     }
   }, [country]);
 
@@ -289,7 +306,7 @@ export default function LearnForm({
     };
   }, []);
 
-  const marketLabel = country === "uk" ? "UK" : "AU";
+  const marketLabel = country === "uk" ? "UK" : country === "au" ? "AU" : "";
 
   const selectedDateInfo = useMemo(() => (selectedDate ? formatIsoDate(selectedDate) : null), [selectedDate]);
   const selectedTzOption = useMemo(() => TIMEZONE_OPTIONS.find((o) => o.id === timezone), [timezone]);
@@ -349,6 +366,7 @@ export default function LearnForm({
       setTimeout(() => {
         setIsSubmitting(false);
         setStep(5);
+        onBooked?.();
       }, 400);
       return;
     }
@@ -365,6 +383,7 @@ export default function LearnForm({
         ...utmParams,
       });
       setStep(5);
+      onBooked?.();
     } catch (error: any) {
       setSubmitError(
         error?.response?.data?.message || error?.message || "Something went wrong. Please try again."
@@ -374,17 +393,35 @@ export default function LearnForm({
     }
   };
 
+  // On the campaign landing pages the headline already sits beside the card, so the
+  // card's own title would only repeat it — `heading={null}` drops the whole title row.
+  const titleNode =
+    heading !== undefined ? (
+      heading
+    ) : (
+      <>
+        Learn {subject}
+        {marketLabel && <span className="text-[#FC8741]"> · {marketLabel}</span>}
+      </>
+    );
+
   const card = (
-    <div className="w-full max-w-lg rounded-3xl bg-white shadow-2xl ring-1 ring-black/5">
-        <div className="p-6 md:p-8">
-          <div className="mb-6 flex items-center justify-between gap-3">
-            <h1 className="text-xl font-bold text-gray-900">
-              {heading ?? (
-                <>
-                  Learn {subject} <span className="text-[#FC8741]">· {marketLabel}</span>
-                </>
-              )}
-            </h1>
+    <div
+      className={`w-full bg-white ${
+        // "embed" is dropped into a frame the page already drew, so it brings no
+        // rounding, ring or shadow of its own — two stacked cards read as a mistake.
+        variant === "embed" ? "" : "max-w-lg rounded-3xl shadow-2xl ring-1 ring-black/5"
+      }`}
+    >
+        <div className={tight ? "p-5 sm:p-6 md:p-8" : "p-6 md:p-8"}>
+          <div
+            className={`flex items-center justify-between gap-3 ${
+              titleNode || (step > 1 && step < 5) ? "mb-6" : ""
+            }`}
+          >
+            {/* Dropped entirely when `heading` is null, so a title-less card's Back
+                button falls to the left edge rather than floating alone on the right. */}
+            {titleNode ? <h1 className="text-xl font-bold text-gray-900">{titleNode}</h1> : null}
             <div className="flex items-center gap-3 shrink-0">
               {step > 1 && step < 5 && (
                 <button
@@ -412,7 +449,7 @@ export default function LearnForm({
 
           {/* Progress indicator */}
           {step < 5 && (
-            <div className="mb-8 flex gap-2">
+            <div className={`flex gap-2 ${tight ? "mb-5 sm:mb-8" : "mb-8"}`}>
               {STEP_LABELS.map((label, i) => (
                 <div key={label} className="flex-1">
                   <div
@@ -434,14 +471,21 @@ export default function LearnForm({
           {/* Step 1: Grade */}
           {step === 1 && (
             <div>
-              <h2 className="mb-4 text-lg font-semibold text-gray-800">What grade are you in?</h2>
-              <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
+              <h2 className={`text-lg font-semibold text-gray-800 ${forParent ? "mb-1" : "mb-4"}`}>
+                {forParent ? "What grade is your child in?" : "What grade are you in?"}
+              </h2>
+              {forParent && (
+                <p className="mb-4 text-sm text-gray-500">This helps us match them with the right tutor.</p>
+              )}
+              <div className={`grid grid-cols-3 sm:grid-cols-4 ${tight ? "gap-2.5 sm:gap-3" : "gap-3"}`}>
                 {GRADES.map((g) => (
                   <button
                     key={g}
                     type="button"
                     onClick={() => handleGradeSelect(g)}
-                    className={`rounded-xl border-2 px-3 py-4 text-center font-semibold transition-all hover:border-[#FC8741] hover:bg-[#fff7f2] ${
+                    className={`rounded-xl border-2 px-3 text-center font-semibold transition-all hover:border-[#FC8741] hover:bg-[#fff7f2] ${
+                      tight ? "py-3 sm:py-4" : "py-4"
+                    } ${
                       grade === g ? "border-[#FC8741] bg-[#fff7f2] text-[#FC8741]" : "border-gray-200 text-gray-700"
                     }`}
                   >
@@ -455,7 +499,14 @@ export default function LearnForm({
           {/* Step 2: Phone */}
           {step === 2 && (
             <div>
-              <h2 className="mb-4 text-lg font-semibold text-gray-800">What&apos;s your mobile number?</h2>
+              <h2 className={`text-lg font-semibold text-gray-800 ${forParent ? "mb-1" : "mb-4"}`}>
+                What&apos;s your mobile number?
+              </h2>
+              {forParent && (
+                <p className="mb-4 text-sm text-gray-500">
+                  We&apos;ll send the class link and a reminder here — no spam, ever.
+                </p>
+              )}
               <PhoneField
                 country={dialCountry}
                 onCountryChange={(c: any) => {
@@ -484,7 +535,10 @@ export default function LearnForm({
           {/* Step 3: Date & Time */}
           {step === 3 && (
             <div>
-              <h2 className="mb-4 text-lg font-semibold text-gray-800">Pick a date</h2>
+              <h2 className={`text-lg font-semibold text-gray-800 ${forParent ? "mb-1" : "mb-4"}`}>Pick a date</h2>
+              {forParent && (
+                <p className="mb-4 text-sm text-gray-500">Choose a day that suits your child&apos;s routine.</p>
+              )}
               <div className="relative" ref={calendarRef}>
                 <button
                   type="button"
@@ -622,7 +676,8 @@ export default function LearnForm({
               </div>
               <h2 className="mb-2 text-2xl font-extrabold text-gray-900">You&apos;re all set! 🎉</h2>
               <p className="text-gray-600">
-                Your {subject} class is booked for {selectedDateInfo?.full} at {selectedTime}
+                {forParent ? "Your child's" : "Your"} {subject} class is booked for {selectedDateInfo?.full} at{" "}
+                {selectedTime}
                 {selectedTzOption ? ` (${selectedTzOption.label})` : ""}.
               </p>
               <p className="mt-1 text-gray-600">Our team will reach out to confirm the details.</p>
@@ -636,7 +691,7 @@ export default function LearnForm({
                 </button>
               ) : (
                 <a
-                  href={`/${country}`}
+                  href={country === "global" ? "/" : `/${country}`}
                   className="mt-6 inline-block w-full rounded-xl bg-gradient-to-r from-[#fc8741] to-amber-500 px-4 py-3 font-semibold text-white shadow-md transition-transform hover:scale-[1.02]"
                 >
                   Back to Home
@@ -648,7 +703,7 @@ export default function LearnForm({
     </div>
   );
 
-  if (variant === "modal") return card;
+  if (variant === "modal" || variant === "embed") return card;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#fff7f2] via-white to-blue-50 px-4 py-10">
