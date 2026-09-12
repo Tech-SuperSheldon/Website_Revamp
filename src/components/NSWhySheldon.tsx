@@ -64,7 +64,10 @@ const CARDS: Card[] = [
   },
 ];
 
-export default function NSWhySheldon({ locale = "global" }: { locale?: Locale } = {}) {
+export default function NSWhySheldon({
+  locale = "global",
+  showCta = true,
+}: { locale?: Locale; showCta?: boolean } = {}) {
   const reduce = useReducedMotion() ?? false;
 
   return (
@@ -98,16 +101,19 @@ export default function NSWhySheldon({ locale = "global" }: { locale?: Locale } 
         </motion.div>
 
         {/* Closing CTA — a link to the booking page that the popup intercepts,
-            so it still works for crawlers and middle-clicks. */}
-        <motion.div {...riseOnce(reduce, 20)} className="mt-9 md:mt-11 text-center">
-          <Link
-            href={DEMO_PATH[locale]}
-            onClick={openDemoOnClick}
-            className={`inline-flex items-center justify-center rounded-full bg-[#FFCC00] hover:bg-[#e6b800] text-black font-bold text-[15px] px-8 py-3.5 shadow-md shadow-yellow-500/30 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e6b800] focus-visible:ring-offset-2 ${CSS_TRANSITION}`}
-          >
-            Try a Free Class
-          </Link>
-        </motion.div>
+            so it still works for crawlers and middle-clicks. Skipped on pages
+            (like the /learn-* landers) where the form is already on screen. */}
+        {showCta && (
+          <motion.div {...riseOnce(reduce, 20)} className="mt-9 md:mt-11 text-center">
+            <Link
+              href={DEMO_PATH[locale]}
+              onClick={openDemoOnClick}
+              className={`inline-flex items-center justify-center rounded-full bg-[#FFCC00] hover:bg-[#e6b800] text-black font-bold text-[15px] px-8 py-3.5 shadow-md shadow-yellow-500/30 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e6b800] focus-visible:ring-offset-2 ${CSS_TRANSITION}`}
+            >
+              Try a Free Class
+            </Link>
+          </motion.div>
+        )}
       </div>
     </section>
   );
