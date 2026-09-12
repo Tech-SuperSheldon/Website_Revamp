@@ -3,8 +3,9 @@
 // The campaign landing page behind /learn-maths, /learn-english and /learn-science.
 //
 // These are bought traffic, so the page is deliberately a dead end: no header, no
-// footer, no outbound links. Everything on it either builds trust (logo, ratings,
-// stats) or fills the booking wizard, which is the only interactive element.
+// footer, no outbound links other than the logo, which goes back to the market
+// homepage. Everything else on it either builds trust (ratings, stats) or fills
+// the booking wizard, which is the only interactive element.
 //
 // Layout is one grid that reads as a single column on phones and splits at `lg`:
 // proof and headline on the left, the form card on the right. The mobile order is
@@ -12,6 +13,7 @@
 // headline on a phone (you scroll past them before the fold, so they have to land
 // first) and back below it on a desktop, where the left column is read top-down.
 import Image from "next/image";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
@@ -131,6 +133,7 @@ export default function LearnLanding({
   const [dismissedSlots, setDismissedSlots] = useState(false);
   const [booked, setBooked] = useState(false);
   const theme = THEME[subject];
+  const homeHref = country === "global" ? "/" : `/${country}`;
 
   // One entrance, staggered by depth — the page is above the fold in its entirety,
   // so nothing here is scroll-triggered.
@@ -157,14 +160,16 @@ export default function LearnLanding({
               {...enter(0)}
               className="order-1 flex w-full items-center justify-between gap-3 lg:hidden"
             >
-              <Image
-                src="/logo.webp"
-                alt="Super Sheldon"
-                width={1563}
-                height={703}
-                priority
-                className="h-auto w-[120px]"
-              />
+              <Link href={homeHref} aria-label="Super Sheldon home" className="shrink-0">
+                <Image
+                  src="/logo.webp"
+                  alt="Super Sheldon"
+                  width={1563}
+                  height={703}
+                  priority
+                  className="h-auto w-[120px]"
+                />
+              </Link>
               <p className="flex shrink-0 items-center gap-1.5 rounded-full border border-[#FFD9BC] bg-[#FFF4EA] py-1.5 pl-2 pr-3 text-left text-[11px] font-bold leading-tight text-[#B4560F] shadow-sm">
                 {/* Google's Noto animated 🔥 (animated WebP). `unoptimized` so
                     the image optimizer doesn't flatten it to a single frame. */}
@@ -186,14 +191,16 @@ export default function LearnLanding({
             </motion.div>
 
             <motion.div {...enter(0)} className="order-1 hidden lg:block">
-              <Image
-                src="/logo.webp"
-                alt="Super Sheldon"
-                width={1563}
-                height={703}
-                priority
-                className="h-auto w-[clamp(220px,26vh,340px)]"
-              />
+              <Link href={homeHref} aria-label="Super Sheldon home">
+                <Image
+                  src="/logo.webp"
+                  alt="Super Sheldon"
+                  width={1563}
+                  height={703}
+                  priority
+                  className="h-auto w-[clamp(220px,26vh,340px)]"
+                />
+              </Link>
             </motion.div>
 
             {/* The yellow platform ribbon. */}
