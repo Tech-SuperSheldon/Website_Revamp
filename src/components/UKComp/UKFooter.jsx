@@ -30,10 +30,10 @@ export default function UKFooter() {
           </p> */}
 
           <div className="space-y-1 text-gray-800 text-sm sm:text-base">
-            <p>📞 <span className="font-semibold">Phone:</span> +44 7426790103</p>
-            <p>✉️ <span className="font-semibold">Email:</span> support@supersheldon.com</p>
-            <p>📍 <span className="font-semibold">Address:</span> Om Chambers, Binnamangala 1st Stage, Bangalore- 560038, Karnataka, India</p>
-          </div>
+            <p>📞 <span className="font-semibold">Phone:</span></p>
+            <p>🇬🇧 +44 7360270223</p>
+            <p>🇮🇳 +91 7974695618</p>
+            <p>✉️ <span className="font-semibold">Email:</span> support@supersheldon.com</p>          </div>
 
           <div className="flex gap-5 mt-3 text-2xl sm:text-3xl">
             <Link href="https://www.instagram.com/supersheldon.education/" target="_blank" aria-label="Instagram">

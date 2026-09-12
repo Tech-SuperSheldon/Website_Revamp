@@ -176,7 +176,7 @@ export function TestimonialSection() {
         className="text-center px-4 sm:px-6 lg:px-8 mb-8 md:mb-12"
       >
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#03215F] tracking-tight">
-          Loved by Kids, Trusted by{" "}
+          Loved by <Highlight reduce={reduce} bar="bg-[#fedbc6]/70">Kids</Highlight>, Trusted by{" "}
           <Highlight reduce={reduce} bar="bg-[#fedbc6]/70">Parents</Highlight>
         </h2>
         <p className="mt-3 text-gray-600 text-base sm:text-lg max-w-2xl mx-auto">

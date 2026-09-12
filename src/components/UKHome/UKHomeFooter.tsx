@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail } from "lucide-react";
 import { RollingLink } from "../RollingLink";
 import { NSGlobe } from "../NSGlobe";
 import { useOpenDemoBooking } from "@/components/utils/navigation";
@@ -93,15 +93,15 @@ export function Footer() {
               <div className="flex flex-col gap-3 text-[12px] sm:text-[13px] md:text-[13px] text-white font-medium leading-relaxed">
                 <div className="flex items-start gap-2">
                   <Phone className="w-4 h-4 shrink-0 mt-0.5" strokeWidth={2} />
-                  <p><span className="font-bold">Phone:</span> +91 7974695618 / +44 7360270223</p>
+                  <div>
+                    <p className="font-bold">Phone:</p>
+                    <p>🇬🇧 +44 7360270223</p>
+                    <p>🇮🇳 +91 7974695618</p>
+                  </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <Mail className="w-4 h-4 shrink-0 mt-0.5" strokeWidth={2} />
                   <p><span className="font-bold">Email:</span> support@supersheldon.com</p>
-                </div>
-                <div className="flex items-start gap-2">
-                  <MapPin className="w-4 h-4 shrink-0 mt-0.5" strokeWidth={2} />
-                  <p><span className="font-bold">Address:</span> Om Chambers, Binnamangala 1st Stage, Bangalore- 560038, Karnataka, India</p>
                 </div>
               </div>
             </motion.div>

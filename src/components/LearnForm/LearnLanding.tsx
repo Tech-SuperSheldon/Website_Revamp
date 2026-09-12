@@ -377,7 +377,11 @@ export default function LearnLanding({
         transition={{ duration: reduce ? 0 : DUR.slow, ease: EASE }}
         className="px-4 pt-8 text-center text-3xl font-bold tracking-tight text-[#03215F] sm:px-6 sm:text-4xl md:pt-12 md:text-5xl"
       >
-        Loved by Kids, Trusted by{" "}
+        Loved by{" "}
+        <Highlight reduce={reduce} bar="bg-[#fedbc6]/70">
+          Kids
+        </Highlight>
+        , Trusted by{" "}
         <Highlight reduce={reduce} bar="bg-[#fedbc6]/70">
           Parents
         </Highlight>
