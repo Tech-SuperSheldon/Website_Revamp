@@ -116,7 +116,16 @@ function TrustCard({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function LearnLanding({ subject }: { subject: LearnSubject }) {
+export default function LearnLanding({
+  subject,
+  country = "global",
+}: {
+  subject: LearnSubject;
+  /** Which market this page is for — "global", "au" or "uk". Passed straight through
+   *  to the wizard, which uses it to preset the phone dial code/timezone, tag the
+   *  Google Sheet row, and route the post-booking "Back to Home" link. */
+  country?: "global" | "au" | "uk";
+}) {
   const reduce = useReducedMotion();
   const [dismissedSlots, setDismissedSlots] = useState(false);
   const [booked, setBooked] = useState(false);
@@ -331,7 +340,7 @@ export default function LearnLanding({ subject }: { subject: LearnSubject }) {
                   </div>
                 )}
                 <LearnForm
-                  country="global"
+                  country={country}
                   subject={subject}
                   variant="embed"
                   audience="parent"
