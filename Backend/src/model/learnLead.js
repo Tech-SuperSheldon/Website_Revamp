@@ -35,6 +35,17 @@ const learnLeadSchema = new Schema({
         enum: ["partial", "complete"],
         default: "partial",
     },
+    // Which page/flow this lead came from — the standalone "Learn {subject}"
+    // pages ("Subject Page") vs. an academy page's trial modal ("Academy Trial").
+    source: {
+        type: String,
+        default: "Subject Page",
+    },
+    // Only set when source is "Academy Trial" — e.g. "Exam Academy".
+    academy: {
+        type: String,
+        default: "",
+    },
     utm_source: { type: String },
     utm_medium: { type: String },
     utm_campaign: { type: String },

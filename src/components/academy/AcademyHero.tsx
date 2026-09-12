@@ -204,6 +204,7 @@ export default function AcademyHero({
         subject={subject}
         country={MARKET[locale]}
         grades={gradesForSubject(subject) ?? undefined}
+        academy={academy.name}
         submitData
       />
     </>

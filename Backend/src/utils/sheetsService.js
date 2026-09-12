@@ -65,6 +65,7 @@ const sendLearnLeadToSheet = async (formData) => {
 
     const {
       stage, country, subject, grade, mobile, date, time, timezone, createdAt,
+      source, academy,
       utm_source, utm_medium, utm_campaign, utm_content, utm_term,
     } = formData;
 
@@ -81,6 +82,8 @@ const sendLearnLeadToSheet = async (formData) => {
         date: date || '',
         time: time || '',
         timezone: timezone || '',
+        source: source || '',
+        academy: academy || '',
         createdAt: createdAt ? new Date(createdAt).toISOString() : new Date().toISOString(),
         utm_source: utm_source || '',
         utm_medium: utm_medium || '',

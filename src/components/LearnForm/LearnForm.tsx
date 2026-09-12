@@ -215,6 +215,8 @@ export default function LearnForm({
   grades,
   audience = "student",
   onBooked,
+  source = "Subject Page",
+  academy = "",
 }: {
   country: MarketCountry;
   subject: Subject;
@@ -238,6 +240,13 @@ export default function LearnForm({
   /** Fired once, when the wizard reaches its success step. The landing pages use it
    *  to drop their "limited slots" urgency strip — it reads badly over a confirmation. */
   onBooked?: () => void;
+  /** Which flow this submission came from — written to the sheet's "Source" column so a
+   *  standalone "Learn {subject}" page lead can be told apart from an academy trial
+   *  booking. Defaults to "Subject Page"; BookTrialModal overrides it to "Academy Trial". */
+  source?: string;
+  /** Academy display name, set only when opened from an academy page's trial modal
+   *  (e.g. "Exam Academy") — written to the sheet's "Academy" column. */
+  academy?: string;
 }) {
   const forParent = audience === "parent";
   // The campaign landing pages stack the whole page into one phone screen, so the
@@ -343,6 +352,8 @@ export default function LearnForm({
           subject,
           grade,
           mobile,
+          source,
+          academy,
           ...utmParams,
         })
         .catch((err: unknown) => console.error("Failed to save partial lead:", err));
@@ -380,6 +391,8 @@ export default function LearnForm({
         date: selectedDate,
         time: selectedTime,
         timezone,
+        source,
+        academy,
         ...utmParams,
       });
       setStep(5);

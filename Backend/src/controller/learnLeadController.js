@@ -15,12 +15,12 @@ const startLead = async (req, res) => {
     try {
         validateStart(req.body);
 
-        const { country, subject, grade, mobile, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = req.body;
+        const { country, subject, grade, mobile, source, academy, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = req.body;
 
         const lead = await LearnLead.findOneAndUpdate(
             { mobile, subject, country, status: "partial" },
             {
-                country, subject, grade, mobile,
+                country, subject, grade, mobile, source, academy,
                 utm_source, utm_medium, utm_campaign, utm_content, utm_term,
                 status: "partial",
             },
@@ -43,12 +43,12 @@ const completeLead = async (req, res) => {
     try {
         validateStart(req.body);
 
-        const { country, subject, grade, mobile, date, time, timezone, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = req.body;
+        const { country, subject, grade, mobile, date, time, timezone, source, academy, utm_source, utm_medium, utm_campaign, utm_content, utm_term } = req.body;
 
         const lead = await LearnLead.findOneAndUpdate(
             { mobile, subject, country },
             {
-                country, subject, grade, mobile, date, time, timezone,
+                country, subject, grade, mobile, date, time, timezone, source, academy,
                 utm_source, utm_medium, utm_campaign, utm_content, utm_term,
                 status: "complete",
             },

@@ -19,6 +19,9 @@ export default function BookTrialModal({
   grades,
   /** Set true to actually save the lead (POSTs /learn-lead/start + /complete). */
   submitData = false,
+  /** Academy this modal was opened from, e.g. "Exam Academy" — written to the sheet
+   *  alongside the "Academy Trial" source so a booking can be traced back to its page. */
+  academy,
 }: {
   open: boolean;
   onClose: () => void;
@@ -27,6 +30,7 @@ export default function BookTrialModal({
   country?: "uk" | "au";
   grades?: number[];
   submitData?: boolean;
+  academy?: string;
 }) {
   useEffect(() => {
     if (!open) return;
@@ -58,6 +62,8 @@ export default function BookTrialModal({
           submitData={submitData}
           onClose={onClose}
           grades={grades}
+          source="Academy Trial"
+          academy={academy}
         />
       </div>
     </div>
