@@ -48,6 +48,15 @@ html {
   background-attachment: scroll, scroll, scroll;
 }
 
+/* iOS/Safari drops the border-radius clip on layers that get their own
+   compositing context (filter: blur, transform animations), so blurred
+   fill-images bleed a dark fringe past the rounded corners. Forcing a
+   -webkit mask makes Safari honour the rounded clip again. No-op elsewhere. */
+.safari-round-clip {
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+}
+
 .perspective {
   perspective: 1200px;
 }

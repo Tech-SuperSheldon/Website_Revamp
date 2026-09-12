@@ -16,6 +16,7 @@ import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import LearnForm from "@/components/LearnForm/LearnForm";
+import Highlight from "@/components/motion/Highlight";
 import { DUR, EASE } from "@/lib/motion";
 
 // Same two homepage sections, loaded below the fold — no reason to ship them
@@ -149,9 +150,9 @@ export default function LearnLanding({
         <div className="relative mx-auto grid w-full max-w-7xl items-start gap-5 px-4 py-5 sm:gap-8 sm:px-6 sm:py-10 lg:h-full lg:grid-cols-[1fr_minmax(24rem,27rem)] lg:items-stretch lg:gap-12 lg:py-[clamp(0.75rem,3.2vh,3rem)] xl:gap-16">
           {/* ── Left: identity, proof, headline ── */}
           <div className="flex flex-col items-center lg:min-h-0 lg:items-start lg:justify-center">
-            {/* Mobile-only header: logo left, urgency copy right. Everything else in
-              this column (ribbon, ratings, stats, headline, bullets) is desktop-only
-              — on a phone the form should follow immediately. */}
+            {/* Mobile-only header: logo left, urgency copy right. The ribbon, ratings
+              and stats strip below are shown on mobile too (right above the form);
+              only the headline and bullets stay desktop-only. */}
             <motion.div
               {...enter(0)}
               className="order-1 flex w-full items-center justify-between gap-3 lg:hidden"
@@ -198,7 +199,7 @@ export default function LearnLanding({
             {/* The yellow platform ribbon. */}
             <motion.p
               {...enter(0.06)}
-              className="order-2 mt-3.5 hidden rounded-md bg-[#FFCC00] sm:mt-5 px-4 py-2 text-center font-heading text-[0.95rem] font-extrabold uppercase tracking-[0.06em] text-[#03215F] shadow-sm sm:text-lg lg:mt-[clamp(0.4rem,1.7vh,1.25rem)] lg:block lg:px-[clamp(0.6rem,1.6vh,1rem)] lg:py-[clamp(0.2rem,0.9vh,0.5rem)] lg:text-[clamp(0.85rem,1.9vh,1.125rem)]"
+              className="order-2 mt-2.5 block rounded-md bg-[#FFCC00] sm:mt-5 px-4 py-2 text-center font-heading text-[0.95rem] font-extrabold uppercase tracking-[0.06em] text-[#03215F] shadow-sm sm:text-lg lg:mt-[clamp(0.4rem,1.7vh,1.25rem)] lg:block lg:px-[clamp(0.6rem,1.6vh,1rem)] lg:py-[clamp(0.2rem,0.9vh,0.5rem)] lg:text-[clamp(0.85rem,1.9vh,1.125rem)]"
             >
               Interactive Learning Platform
             </motion.p>
@@ -206,7 +207,7 @@ export default function LearnLanding({
             {/* Ratings + accreditation. */}
             <motion.div
               {...enter(0.12)}
-              className="order-3 mt-4 hidden w-full max-w-lg grid-cols-3 gap-2.5 sm:mt-6 sm:gap-3 lg:order-5 lg:mt-[clamp(0.7rem,2.8vh,2.25rem)] lg:grid lg:max-w-xl"
+              className="order-3 mt-2.5 grid w-full max-w-lg grid-cols-3 gap-2.5 sm:mt-6 sm:gap-3 lg:order-5 lg:mt-[clamp(0.7rem,2.8vh,2.25rem)] lg:grid lg:max-w-xl"
             >
               <TrustCard>
                 <Image
@@ -251,7 +252,7 @@ export default function LearnLanding({
             {/* Stats strip. */}
             <motion.div
               {...enter(0.18)}
-              className="order-4 mt-2.5 hidden w-full max-w-lg grid-cols-3 divide-x divide-[#F0E3D6] rounded-2xl border border-black/5 bg-white/80 py-2.5 shadow-sm backdrop-blur-sm sm:mt-3 sm:py-3 lg:order-6 lg:mt-[clamp(0.4rem,1.2vh,0.75rem)] lg:grid lg:max-w-xl lg:py-[clamp(0.4rem,1.3vh,0.75rem)]"
+              className="order-4 mt-2.5 grid w-full max-w-lg grid-cols-3 divide-x divide-[#F0E3D6] rounded-2xl border border-black/5 bg-white/80 py-2.5 shadow-sm backdrop-blur-sm sm:mt-3 sm:py-3 lg:order-6 lg:mt-[clamp(0.4rem,1.2vh,0.75rem)] lg:grid lg:max-w-xl lg:py-[clamp(0.4rem,1.3vh,0.75rem)]"
             >
               {STATS.map((s) => (
                 <div key={s.label} className="px-1 text-center">
@@ -361,6 +362,18 @@ export default function LearnLanding({
 
       {/* Same two sections as the homepage, kept for trust-building beneath
           the fold — everything else on this page is the form itself. */}
+      <motion.h2
+        initial={{ opacity: 0, y: reduce ? 0 : 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.6 }}
+        transition={{ duration: reduce ? 0 : DUR.slow, ease: EASE }}
+        className="px-4 pt-8 text-center text-3xl font-bold tracking-tight text-[#03215F] sm:px-6 sm:text-4xl md:pt-12 md:text-5xl"
+      >
+        Loved by Kids, Trusted by{" "}
+        <Highlight reduce={reduce} bar="bg-[#fedbc6]/70">
+          Parents
+        </Highlight>
+      </motion.h2>
       <NSWhySheldon showCta={false} />
       <NSParentsSaying />
     </main>

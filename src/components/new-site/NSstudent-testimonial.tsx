@@ -104,13 +104,13 @@ export function TestimonialSection() {
           </div>
 
           {/* Right Card: Testimonial Slider (Modern Theme) */}
-          <div className="relative w-full lg:w-2/3 rounded-[2rem] shadow-2xl flex flex-col md:flex-row items-center bg-transparent group border border-gray-100 overflow-hidden">
+          <div className="relative w-full lg:w-2/3 rounded-[2rem] shadow-2xl flex flex-col md:flex-row items-center bg-white group border border-gray-100 overflow-hidden safari-round-clip">
               {/* Background Image - Cozy Study Room */}
               <Image
                 src="/cozy_study_bg.webp"
                 alt="Cozy Study Background"
                 fill
-                className="object-cover absolute inset-0 z-0 opacity-100 blur-[2px]"
+                className="object-cover absolute inset-0 z-0 opacity-100 blur-[2px] scale-110"
               />
               {/* White Overlay for readability */}
               <div className="absolute inset-0 bg-white/80 z-0" />

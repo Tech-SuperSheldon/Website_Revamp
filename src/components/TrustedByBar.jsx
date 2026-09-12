@@ -109,9 +109,8 @@ export default function TrustedByBar() {
           {[...MAIN_MARKETS, ...OTHER_MARKETS].map((c) => c.name).join(", ")}.
         </p>
 
-        {/* Stats, under a divider — same split as before, the flags half above
-            and the counters below. */}
-        <div className="mt-6 md:mt-8 pt-5 md:pt-6 border-t border-slate-200 flex items-center justify-between sm:justify-center gap-4 sm:gap-10 lg:gap-16">
+        {/* Stats — same split as before, the flags half above and the counters below. */}
+        <div className="mt-6 md:mt-8 pt-5 md:pt-6 flex items-center justify-between sm:justify-center gap-4 sm:gap-10 lg:gap-16">
           {STATS.map((s) => (
             <div key={s.label} className="text-center">
               <h3 className="text-2xl lg:text-3xl font-rowdies font-black tracking-tighter text-[#FC8741]">

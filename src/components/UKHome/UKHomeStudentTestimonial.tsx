@@ -49,12 +49,12 @@ function TestimonialCardContent({ t }: { t: Testimonial }) {
         src="/cozy_study_bg.webp"
         alt=""
         fill
-        className="object-cover absolute inset-0 z-0 blur-[2px]"
+        className="object-cover absolute inset-0 z-0 blur-[2px] scale-110"
       />
       <div className="absolute inset-0 bg-white/80 z-0" />
 
       <div className="relative z-10 h-full flex flex-col p-4 md:p-5">
-        <div className="relative w-full flex-1 min-h-0 rounded-xl overflow-hidden mb-3">
+        <div className="relative w-full flex-1 min-h-0 rounded-xl overflow-hidden safari-round-clip mb-3">
           <Image
             src={t.image}
             alt=""
@@ -83,7 +83,7 @@ function TestimonialCard({ t, reduce }: { t: Testimonial; reduce: boolean }) {
   return (
     <motion.div
       variants={rise(reduce, 24)}
-      className="group relative w-[300px] md:w-[330px] lg:w-[360px] aspect-[4/5] rounded-[2rem] overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300"
+      className="group relative w-[300px] md:w-[330px] lg:w-[360px] aspect-[4/5] rounded-[2rem] overflow-hidden bg-white safari-round-clip shadow-sm border border-gray-100 hover:shadow-lg transition-shadow duration-300"
     >
       <TestimonialCardContent t={t} />
     </motion.div>
@@ -122,7 +122,7 @@ function MobileTestimonialStack({ reduce }: { reduce: boolean }) {
         {testimonials.map((t) => (
           <div
             key={t.name}
-            className="relative w-[72vw] max-w-[280px] aspect-[4/5] rounded-[2rem] overflow-hidden shadow-sm border border-gray-100"
+            className="relative w-[72vw] max-w-[280px] aspect-[4/5] rounded-[2rem] overflow-hidden bg-white safari-round-clip shadow-sm border border-gray-100"
           >
             <TestimonialCardContent t={t} />
           </div>
@@ -146,7 +146,7 @@ function MobileTestimonialStack({ reduce }: { reduce: boolean }) {
         return (
           <motion.div
             key={t.name}
-            className="group absolute inset-0 rounded-[2rem] overflow-hidden shadow-md border border-gray-100"
+            className="group absolute inset-0 rounded-[2rem] overflow-hidden bg-white safari-round-clip shadow-md border border-gray-100"
             style={{ zIndex: style.zIndex }}
             animate={{ x: style.x, rotate: style.rotate, scale: style.scale, opacity: style.opacity }}
             transition={SPRING}
