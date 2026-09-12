@@ -35,6 +35,10 @@ const testimonials = [
   },
 ];
 
+// Cards hidden for now on /uk — the heading still shows. Set to true to bring
+// the cards back.
+const SHOW_TESTIMONIALS = false;
+
 type Testimonial = (typeof testimonials)[number];
 
 /** Shared visual content — the background, photo, quote and name. No sizing
@@ -168,12 +172,14 @@ export function TestimonialSection() {
   const reduce = useReducedMotion() ?? false;
 
   return (
-    <section className="py-4 md:py-6 overflow-hidden relative">
+    // With the cards hidden, drop the bottom padding (and the heading's bottom
+    // margin below) so the heading sits right above the next section's cards.
+    <section className={`pt-4 md:pt-6 overflow-hidden relative ${SHOW_TESTIMONIALS ? "pb-4 md:pb-6" : ""}`}>
       {/* Section heading — moved here from NSParentsSaying so the card trio is
           the first thing the "Loved by Kids" title introduces. */}
       <motion.div
         {...riseOnce(reduce)}
-        className="text-center px-4 sm:px-6 lg:px-8 mb-8 md:mb-12"
+        className={`text-center px-4 sm:px-6 lg:px-8 ${SHOW_TESTIMONIALS ? "mb-8 md:mb-12" : ""}`}
       >
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#03215F] tracking-tight">
           Loved by <Highlight reduce={reduce} bar="bg-[#fedbc6]/70">Kids</Highlight>, Trusted by{" "}
@@ -185,25 +191,29 @@ export function TestimonialSection() {
         </p>
       </motion.div>
 
-      {/* Desktop / tablet — unchanged side-by-side layout */}
-      <div className="hidden sm:block container mx-auto px-4 md:px-6">
-        <motion.div
-          variants={stagger()}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="flex flex-row flex-wrap items-center justify-center gap-6 md:gap-7 lg:gap-8 max-w-6xl mx-auto"
-        >
-          {testimonials.map((t) => (
-            <TestimonialCard key={t.name} t={t} reduce={reduce} />
-          ))}
-        </motion.div>
-      </div>
+      {SHOW_TESTIMONIALS && (
+        <>
+          {/* Desktop / tablet — unchanged side-by-side layout */}
+          <div className="hidden sm:block container mx-auto px-4 md:px-6">
+            <motion.div
+              variants={stagger()}
+              initial="hidden"
+              whileInView="show"
+              viewport={VIEWPORT}
+              className="flex flex-row flex-wrap items-center justify-center gap-6 md:gap-7 lg:gap-8 max-w-6xl mx-auto"
+            >
+              {testimonials.map((t) => (
+                <TestimonialCard key={t.name} t={t} reduce={reduce} />
+              ))}
+            </motion.div>
+          </div>
 
-      {/* Mobile — tilted overlapping card stack, swipeable */}
-      <div className="sm:hidden py-4">
-        <MobileTestimonialStack reduce={reduce} />
-      </div>
+          {/* Mobile — tilted overlapping card stack, swipeable */}
+          <div className="sm:hidden py-4">
+            <MobileTestimonialStack reduce={reduce} />
+          </div>
+        </>
+      )}
     </section>
   );
 }
