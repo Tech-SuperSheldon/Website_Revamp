@@ -4,6 +4,18 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, Bot, User, Loader2, MessageCircle } from "lucide-react";
 import Image from "next/image";
+import axiosClient from "@/components/utils/axios";
+import { captureUtmParams } from "@/lib/demoLead";
+import { DEMO_PATH, getAcademies, type Academy } from "@/lib/academies";
+
+// This chatbot only ever runs on the global site — see AU/NovaChatbot.tsx and
+// UKHome/UKHomeNovaChatbot.tsx for the region-specific copies. The booking
+// flow asks the same questions, in the same order, as the site-wide "Book a
+// Demo" wizard (BookDemoForm) and submits to the same backend, so a lead
+// booked through Nova lands exactly where every other lead does.
+const LOCALE = "uk" as const;
+const MARKET = "uk" as const;
+const ACADEMIES: Academy[] = getAcademies(LOCALE);
 
 interface Message {
   role: "user" | "assistant";
@@ -12,20 +24,23 @@ interface Message {
 
 type BookingStep =
   | "idle"
-  | "name"
-  | "email"
-  | "phone"
-  | "grade"
+  | "academy"
   | "subject"
+  | "grade"
+  | "phone"
+  | "date"
+  | "time"
   | "confirming"
   | "done";
 
 interface BookingData {
-  fullName?: string;
-  email?: string;
-  mobile?: string;
-  grade?: string;
+  academySlug?: string;
+  academyHeading?: string;
   subject?: string;
+  grade?: string;
+  mobile?: string;
+  date?: string;
+  time?: string;
 }
 
 const BOOKING_KEYWORDS = [
@@ -49,19 +64,89 @@ function detectBookingIntent(text: string): boolean {
   return BOOKING_KEYWORDS.some((kw) => lower.includes(kw));
 }
 
+/** Matches a numbered reply ("2") or a name/keyword contained in one of the
+ *  academy's own labels (so "exam", "exam readiness" etc. all work). */
+function matchAcademy(text: string): Academy | null {
+  const t = text.trim().toLowerCase();
+  const asNum = Number(t);
+  if (Number.isInteger(asNum) && asNum >= 1 && asNum <= ACADEMIES.length) {
+    return ACADEMIES[asNum - 1];
+  }
+  return (
+    ACADEMIES.find(
+      (a) => a.heading.toLowerCase().includes(t) || a.name.toLowerCase().includes(t) || t.includes(a.heading.toLowerCase())
+    ) ?? null
+  );
+}
+
+function matchFromList(text: string, list: string[]): string | null {
+  const t = text.trim().toLowerCase();
+  const asNum = Number(t);
+  if (Number.isInteger(asNum) && asNum >= 1 && asNum <= list.length) {
+    return list[asNum - 1];
+  }
+  return (
+    list.find((s) => s.toLowerCase() === t) ??
+    list.find((s) => s.toLowerCase().includes(t) || t.includes(s.toLowerCase())) ??
+    null
+  );
+}
+
+function academyMenuText(): string {
+  return ACADEMIES.map((a, i) => `${i + 1}. **${a.heading}** — ${a.description}`).join("\n");
+}
+
+function subjectMenuText(academy: Academy): string {
+  return academy.subjects.map((s, i) => `${i + 1}. ${s}`).join("\n");
+}
+
+/** Accepts anything Date can parse ("20 September", "2026-09-20", "tomorrow"
+ *  won't parse but a real date will) and rejects dates in the past, mirroring
+ *  the wizard's calendar which disables past days. */
+function parseToIsoDate(text: string): string | null {
+  const parsed = new Date(text);
+  if (Number.isNaN(parsed.getTime())) return null;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  parsed.setHours(0, 0, 0, 0);
+  if (parsed.getTime() < today.getTime()) return null;
+  const y = parsed.getFullYear();
+  const m = String(parsed.getMonth() + 1).padStart(2, "0");
+  const d = String(parsed.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+function formatIsoDate(iso: string): string {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString(undefined, {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+/** Full number incl. country code, digits only after a leading "+". */
+function normalizeMobile(text: string): string {
+  const trimmed = text.trim();
+  const digits = trimmed.replace(/\D/g, "");
+  return trimmed.startsWith("+") ? `+${digits}` : `+${digits}`;
+}
+
 export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidden?: boolean }) {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
       content:
-        "Hi! I'm **Nova**, your SuperSheldon assistant 👋\n\nI can help you with:\n• Information about our UK courses (11+, GCSE, iGCSE, A-Level, Maths, English)\n• Booking a free demo session\n\nWhat would you like to know?",
+        "Hi! I'm **Nova**, your SuperSheldon assistant 👋\n\nI can help you with:\n• Our three academies — School Readiness, Exam Readiness (11+, GCSE, IGCSE, A-Level, SAT) and Skill Academy\n• Booking a free demo session\n\nWhat would you like to know?",
     },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [bookingStep, setBookingStep] = useState<BookingStep>("idle");
   const [bookingData, setBookingData] = useState<BookingData>({});
+  const [timezone, setTimezone] = useState("");
   const [unread, setUnread] = useState(0);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -84,6 +169,17 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
     return () => window.removeEventListener("openNova", handler);
   }, []);
 
+  // Detected silently, same as the booking wizard — Nova only shows it in the
+  // final summary rather than spending a whole question on it.
+  useEffect(() => {
+    try {
+      const detected = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (detected) setTimezone(detected);
+    } catch {
+      setTimezone("Europe/London");
+    }
+  }, []);
+
   const addMessage = (msg: Message) => {
     setMessages((prev) => [...prev, msg]);
     if (!open) setUnread((u) => u + 1);
@@ -92,37 +188,57 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
   const handleBookingFlow = async (userText: string) => {
     const trimmed = userText.trim();
 
-    if (bookingStep === "name") {
-      if (trimmed.length < 2) {
+    if (bookingStep === "academy") {
+      const match = matchAcademy(trimmed);
+      if (!match) {
         addMessage({
           role: "assistant",
-          content: "Please enter your full name (at least 2 characters).",
+          content: `Sorry, I didn't catch that. Please reply with a number:\n\n${academyMenuText()}`,
         });
         return;
       }
-      setBookingData((d) => ({ ...d, fullName: trimmed }));
-      setBookingStep("email");
+      setBookingData({ academySlug: match.slug, academyHeading: match.heading });
+      setBookingStep("subject");
       addMessage({
         role: "assistant",
-        content: `Thanks ${trimmed}! What's your **email address**?`,
+        content: `Great choice! ${match.prompt}:\n\n${subjectMenuText(match)}`,
       });
       return;
     }
 
-    if (bookingStep === "email") {
-      if (!/^\S+@\S+\.\S+$/.test(trimmed)) {
+    if (bookingStep === "subject") {
+      const academy = ACADEMIES.find((a) => a.slug === bookingData.academySlug);
+      if (!academy) {
+        setBookingStep("idle");
+        return;
+      }
+      const match = matchFromList(trimmed, academy.subjects);
+      if (!match) {
         addMessage({
           role: "assistant",
-          content: "That doesn't look like a valid email. Please try again.",
+          content: `Please pick one from the list:\n\n${subjectMenuText(academy)}`,
         });
         return;
       }
-      setBookingData((d) => ({ ...d, email: trimmed }));
+      setBookingData((d) => ({ ...d, subject: match }));
+      setBookingStep("grade");
+      addMessage({
+        role: "assistant",
+        content: "What **year/grade** is your child in? (e.g. Year 6, Year 11)",
+      });
+      return;
+    }
+
+    if (bookingStep === "grade") {
+      if (trimmed.length < 1) {
+        addMessage({ role: "assistant", content: "Please enter the year/grade." });
+        return;
+      }
+      setBookingData((d) => ({ ...d, grade: trimmed }));
       setBookingStep("phone");
       addMessage({
         role: "assistant",
-        content:
-          "Got it! What's your **phone number**? (include country code, e.g. +447123456789)",
+        content: "What's your **mobile number**? (e.g. +447123456789)",
       });
       return;
     }
@@ -132,53 +248,61 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
       if (digits.length < 8) {
         addMessage({
           role: "assistant",
-          content:
-            "Please enter a valid phone number (at least 8 digits, include country code).",
+          content: "Please enter a valid mobile number (at least 8 digits, include country code).",
         });
         return;
       }
-      setBookingData((d) => ({ ...d, mobile: trimmed }));
-      setBookingStep("grade");
+      const mobile = normalizeMobile(trimmed);
+      const soFar = { ...bookingData, mobile };
+      setBookingData(soFar);
+
+      // Fire-and-forget partial lead, same as the wizard's phone step, so the
+      // lead isn't lost if the visitor drops off before confirming.
+      axiosClient
+        .post("/user/bookDemo/start", {
+          market: MARKET,
+          academy: soFar.academyHeading || "",
+          subject: soFar.subject || "",
+          grade: soFar.grade || "",
+          mobile,
+          ...captureUtmParams(),
+        })
+        .catch((err: unknown) => console.error("[Nova] Failed to save partial demo lead:", err));
+
+      setBookingStep("date");
       addMessage({
         role: "assistant",
-        content:
-          "What **year/grade** is your child in? (e.g. Year 5, Year 9, etc.)",
+        content: "What **date** works best for the demo? (e.g. 20 September or 2026-09-20)",
       });
       return;
     }
 
-    if (bookingStep === "grade") {
+    if (bookingStep === "date") {
+      const iso = parseToIsoDate(trimmed);
+      if (!iso) {
+        addMessage({
+          role: "assistant",
+          content: "I couldn't understand that date, or it's in the past. Please try again (e.g. 20 September or 2026-09-20).",
+        });
+        return;
+      }
+      setBookingData((d) => ({ ...d, date: iso }));
+      setBookingStep("time");
+      addMessage({ role: "assistant", content: "And what **time** works best? (e.g. 3:00 PM)" });
+      return;
+    }
+
+    if (bookingStep === "time") {
       if (trimmed.length < 1) {
-        addMessage({
-          role: "assistant",
-          content: "Please enter the year/grade.",
-        });
+        addMessage({ role: "assistant", content: "Please enter a preferred time." });
         return;
       }
-      setBookingData((d) => ({ ...d, grade: trimmed }));
-      setBookingStep("subject");
-      addMessage({
-        role: "assistant",
-        content:
-          "And which **subject** are you interested in? (e.g. Maths, English, 11+, GCSE)",
-      });
-      return;
-    }
-
-    if (bookingStep === "subject") {
-      if (trimmed.length < 2) {
-        addMessage({
-          role: "assistant",
-          content: "Please enter a subject.",
-        });
-        return;
-      }
-      const finalData = { ...bookingData, subject: trimmed };
+      const finalData = { ...bookingData, time: trimmed };
       setBookingData(finalData);
       setBookingStep("confirming");
       addMessage({
         role: "assistant",
-        content: `Here's a summary of your booking request:\n\n👤 **Name:** ${finalData.fullName}\n📧 **Email:** ${finalData.email}\n📞 **Phone:** ${finalData.mobile}\n📚 **Year/Grade:** ${finalData.grade}\n🎯 **Subject:** ${trimmed}\n\nShall I go ahead and send this? Reply **yes** to confirm or **no** to cancel.`,
+        content: `Here's a summary of your booking request:\n\n🎓 **Academy:** ${finalData.academyHeading}\n📚 **Subject/Exam:** ${finalData.subject}\n🏫 **Year/Grade:** ${finalData.grade}\n📞 **Mobile:** ${finalData.mobile}\n📅 **Date:** ${finalData.date ? formatIsoDate(finalData.date) : ""}\n⏰ **Time:** ${trimmed}${timezone ? ` (${timezone})` : ""}\n\nShall I go ahead and send this? Reply **yes** to confirm or **no** to cancel.`,
       });
       return;
     }
@@ -187,32 +311,46 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
       if (trimmed.toLowerCase().startsWith("y")) {
         setLoading(true);
         try {
-          const res = await fetch("/api/nova-book", {
+          await axiosClient.post("/user/bookDemo/complete", {
+            market: MARKET,
+            academy: bookingData.academyHeading || "",
+            subject: bookingData.subject || "",
+            grade: bookingData.grade || "",
+            mobile: bookingData.mobile || "",
+            date: bookingData.date || "",
+            time: bookingData.time || "",
+            timezone,
+            ...captureUtmParams(),
+          });
+
+          // Best-effort Slack ping alongside the real booking — its failure
+          // must never block confirming the booking to the user.
+          fetch("/api/nova-book", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(bookingData),
-          });
-          const data = await res.json();
-          if (data.ok) {
-            setBookingStep("done");
-            addMessage({
-              role: "assistant",
-              content:
-                "✅ **Booking request sent!** Our team will contact you shortly to confirm your free demo session.\n\nIs there anything else I can help you with?",
-            });
-          } else {
-            addMessage({
-              role: "assistant",
-              content:
-                "❌ Sorry, something went wrong sending your request. Please try again or visit our [demo page](/demo) to book directly.",
-            });
-            setBookingStep("idle");
-          }
-        } catch {
+            body: JSON.stringify({
+              market: MARKET,
+              academy: bookingData.academyHeading,
+              subject: bookingData.subject,
+              grade: bookingData.grade,
+              mobile: bookingData.mobile,
+              date: bookingData.date,
+              time: bookingData.time,
+              timezone,
+            }),
+          }).catch((err: unknown) => console.error("[Nova] Slack notify failed:", err));
+
+          setBookingStep("done");
           addMessage({
             role: "assistant",
             content:
-              "❌ Network error. Please try again or visit our [demo page](/demo) to book directly.",
+              "✅ **Booking request sent!** Our team will contact you shortly to confirm your free demo session.\n\nIs there anything else I can help you with?",
+          });
+        } catch (error) {
+          console.error("[Nova] Failed to confirm demo booking:", error);
+          addMessage({
+            role: "assistant",
+            content: `❌ Sorry, something went wrong sending your request. Please try again or visit our [demo page](${DEMO_PATH[LOCALE]}) to book directly.`,
           });
           setBookingStep("idle");
         } finally {
@@ -223,8 +361,7 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
         setBookingData({});
         addMessage({
           role: "assistant",
-          content:
-            "No problem! Booking cancelled. Is there anything else I can help you with?",
+          content: "No problem! Booking cancelled. Is there anything else I can help you with?",
         });
       }
       return;
@@ -245,11 +382,10 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
     }
 
     if (detectBookingIntent(text) && bookingStep === "idle") {
-      setBookingStep("name");
+      setBookingStep("academy");
       addMessage({
         role: "assistant",
-        content:
-          "I'd love to help you book a **free demo session**! 🎉\n\nLet me collect a few details. First, what's your **full name**?",
+        content: `I'd love to help you book a **free demo session**! 🎉\n\nWhich academy is your child interested in?\n\n${academyMenuText()}\n\nReply with a number or name.`,
       });
       return;
     }
@@ -263,7 +399,7 @@ export default function UKHomeNovaChatbot({ mobileHidden = false }: { mobileHidd
       const res = await fetch("/api/nova-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, history }),
+        body: JSON.stringify({ message: text, history, locale: LOCALE }),
       });
       const data = await res.json();
       if (data.reply) {

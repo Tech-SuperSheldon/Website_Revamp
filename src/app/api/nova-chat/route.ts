@@ -1,116 +1,78 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getAcademies, LOCALES, type Locale } from "@/lib/academies";
 
-const COURSE_KNOWLEDGE = `
-SuperSheldon offers the following Australian courses:
+const LOCALE_LABEL: Record<Locale, string> = {
+  global: "families around the world — including the UK, Australia, the US, the EU and New Zealand",
+  uk: "families in the UK",
+  au: "families in Australia",
+};
 
-=== TEST PREP COURSES ===
-1. Selective School Exam Prep
-   - Type: Exam Prep | Level: Intermediate to Advanced | Duration: 12 Weeks | Topics: 10
-   - Description: Comprehensive preparation for Selective High School and Scholarship entry exams, covering Reading, Writing, Mathematical Reasoning and Thinking Skills.
-   - Chapters: Introduction to Selective & Scholarship Exams, Reading Core Strategies, Writing & Language Conventions, Mathematical Reasoning Algebra, Problem Solving & Data Analysis, Thinking Skills & Logic, Geometry & Measurement, Time Management Techniques, Full Mock Test & Review, Final Test Day Strategies
-   - Pricing: Basic Pack A$360/24 classes, Standard Pack A$672/48 classes, Premium Pack A$1152/96 classes
+/** Built fresh per request from src/lib/academies.ts — the same data the
+ *  landing page's Academies section, academy pages and booking wizard read
+ *  from — so Nova never drifts from what the site actually says. */
+function buildKnowledgeBase(locale: Locale): string {
+  const academies = getAcademies(locale);
 
-2. NAPLAN Prep
-   - Type: Exam Prep | Level: Intermediate | Duration: 10 Weeks | Topics: 10
-   - Description: Full coverage of Reading, Writing, Language Conventions, and Numeracy for the NAPLAN assessment (Years 3, 5, 7 & 9).
-   - Chapters: NAPLAN Overview & Test Format, Language Conventions Grammar & Punctuation, Language Conventions Spelling, Numeracy Number & Algebra, Numeracy Measurement & Geometry, Numeracy Statistics & Probability, Reading Comprehension Strategies, Writing Narrative Texts, Writing Persuasive Texts, Full NAPLAN Practice Test
-   - Pricing: Basic Pack A$360/24 classes, Standard Pack A$672/48 classes, Premium Pack A$1152/96 classes
+  const academySections = academies
+    .map((a) => {
+      const steps = a.steps.map((s, i) => `   ${i + 1}. ${s.title} — ${s.desc}`).join("\n");
+      const faqs = a.faqs.map((f) => `   Q: ${f.q}\n   A: ${f.a}`).join("\n");
+      const examTable = a.examTable
+        ? `\n   Also covers: ${a.examTable.rows.map((r) => `${r.exam} (${r.status}, ${r.who})`).join("; ")}`
+        : "";
+      return `### ${a.heading}\n   ${a.description}\n   Subjects/exams: ${a.subjects.join(", ")}${examTable}\n   How it works:\n${steps}\n   FAQs:\n${faqs}`;
+    })
+    .join("\n\n");
 
-=== GENERAL ACADEMICS ===
-3. Master Math for School and Exam
-   - Type: Math | Level: Beginner to Intermediate | Duration: Ongoing | Topics: 10
-   - Description: From core fundamentals to advanced problem solving, tailored to your year level.
-   - Chapters: Number Sense & Operations, Algebraic Thinking Basics, Geometry Essentials, Measurement & Data Analysis, Ratio & Proportional Reasoning, The Number System Deep Dive, Expressions & Equations, Functions & Modeling, Statistics & Probability, Final Math Mastery Challenge
-   - Pricing: Basic Pack A$360/24 classes, Standard Pack A$672/48 classes, Premium Pack A$1152/96 classes
+  return `
+=== ABOUT SUPERSHELDON ===
+SuperSheldon is a 1:1 online tutoring platform for school students, serving ${LOCALE_LABEL[locale]}.
+- Every student is matched with a dedicated, vetted 1:1 tutor — every tutor goes through identity verification, background checks and a teaching demo before joining — plus a 24/7 AI tutor for instant help between lessons.
+- An unlimited, level-adaptive question bank gives each child exactly the right amount of practice for their pace and goals.
+- Regular diagnostics and parent-teacher meetings (PTMs) keep parents and tutors aligned on real progress.
+- Scheduling is flexible across time zones. If a child doesn't click with their first tutor, SuperSheldon rematches at no extra cost, as many times as it takes.
+- Plans are flexible with no long-term lock-in and can be cancelled any time.
 
-4. Master English for School and Exam
-   - Type: English | Level: All Levels | Duration: Ongoing | Topics: 10
-   - Description: Developing critical reading and analytical writing skills for academic success.
-   - Chapters: Reading Comprehension Foundations, Literary Analysis Techniques, Informational Text Mastery, Grammar & Punctuation Excellence, Sentence Structure & Variation, Essay Planning & Organization, Creative Writing Workshop, Research & Citation Standards, Critical Thinking & Argument, Final Portfolio Review
-   - Pricing: Basic Pack A$360/24 classes, Standard Pack A$672/48 classes, Premium Pack A$1152/96 classes
+=== THE THREE ACADEMIES ===
+Everything SuperSheldon offers sits under three academies. Every path starts the same way: a free diagnostic, then a matched 1:1 tutor.
 
-=== YEAR-BASED COURSES ===
-Year 2:
-5. ICAS Spark Course – Kickstart your exam journey. Ignite curiosity and build a strong foundation. Topics: 12, Duration: 22hr 30min
-   Chapters: Reading Short Stories, Finding Information from Pictures, Vocabulary Common Words, Grammar Nouns/Verbs/Adjectives, Grammar Sentence Building, Spelling Simple Patterns, Writing Short Narrative, Writing Opinions, Numeracy Numbers & Addition, Numeracy Shapes & Measurement
+${academySections}
 
-Year 3:
-6. NAPLAN Champion Course – Train like a champion, master key skills for exam success. Topics: 15, Duration: 22hr 30min
-7. ICAS Smart Prep Course – Get exam-ready with structured practice. Topics: 9, Duration: 22hr 30min
+=== PRICING ===
+There is no fixed public price list — pricing depends on the academy and plan chosen. Never invent or guess a number. If asked about cost, explain that it depends on the academy/plan and offer to book a free trial/demo so the team can share a personalised quote.
 
-Year 4:
-8. ICAS Challenger Course – Strengthen problem-solving and critical thinking. Topics: 16, Duration: 22hr 30min
-
-Year 5:
-9. NAPLAN Prodigy Course – Push high achievers toward exam excellence. Topics: 15, Duration: 22hr 30min
-10. ICAS Challenger Course (Year 5) – Higher-level test success. Topics: 20, Duration: 22hr 30min
-11. Opportunity and Scholarship Course – Sharpen analytical skills for scholarship exams. Topics: 12, Duration: 22hr 30min
-
-Year 6:
-12. ICAS Mastermind Course – Advanced concepts and critical reasoning. Topics: 16, Duration: 22hr 30min
-13. Scholarship Builder Course – Foundation for competitive exams. Topics: 24, Duration: 22hr 30min
-
-Year 7:
-14. ICAS Genius Track Course – Advanced problem-solving pathways. Topics: 12, Duration: 22hr 30min
-15. NAPLAN Prodigy Course (Year 7) – Nurture young minds into high achievers. Topics: 14, Duration: 22hr 30min
-
-Year 8:
-16. ICAS Genius Track Course (Year 8) – Take skills to the next level. Topics: 12, Duration: 22hr 30min
-
-Year 9:
-17. ICAS Olympian Prep Course – International-level competition preparation. Topics: 24, Duration: 22hr 30min
-18. Selective School Prep (Year 9) – Elite selective school and scholarship exam prep. Topics: 10, Duration: 22hr 30min
-
-Year 10:
-19. HSC Foundation Course – Build a strong base for senior years. Topics: 12, Duration: 22hr 30min
-
-Year 11 & 12:
-20. HSC Advanced Prep – Comprehensive HSC preparation for top ATAR results. Topics: 14, Duration: 22hr 30min
-
-=== WHAT SUPERSHELDON PROVIDES ===
-- Live 1-on-1 and group online tutoring sessions with expert Australian tutors
-- Personalised learning plans tailored to each student's needs
-- Interactive lessons with real-time feedback
-- Weekly quizzes and assessments to track progress
-- Detailed progress reports for parents
-- Exam-focused strategies and mock tests
-- Email and chat support from teachers
-- VIP community access (Premium plan)
-- Flexible scheduling to suit family timetables
-- Coverage of all major Australian exams: NAPLAN, ICAS, Selective, Scholarship, HSC
-
-=== PRICING STRUCTURE ===
-All courses follow the same pricing tiers:
-- Basic Pack: A$360 for 24 classes (~A$15/class)
-- Standard Pack (Most Popular): A$672 for 48 classes (~A$14/class) — Best Value
-- Premium Pack: A$1,152 for 96 classes (~A$12/class) — Elite, includes 1-on-1 review & VIP access
-
-=== HOW TO BOOK ===
-Users can book a free demo session by asking to book or schedule, and Nova will collect their details and send them to the SuperSheldon team.
+=== HOW TO BOOK A DEMO ===
+Users can book a free demo session any time by asking Nova to "book a demo" (or similar — "trial", "session", "schedule", etc.). Nova will then collect, in order: which academy, the subject/exam, the child's grade/year, a mobile number, and a preferred date & time, then confirm before submitting.
 `;
+}
 
-const SYSTEM_PROMPT = `You are Nova, the friendly and knowledgeable AI assistant for SuperSheldon — an Australian online tutoring platform for school students.
+function buildSystemPrompt(locale: Locale): string {
+  return `You are Nova, the friendly and knowledgeable AI assistant for SuperSheldon — a 1:1 online tutoring platform.
 
-Your personality: warm, encouraging, clear, and concise. You use emojis sparingly to keep responses friendly.
+Your personality: warm, encouraging, clear, and concise. Use emojis sparingly to keep responses friendly.
 
 Your role:
-1. Answer questions about SuperSheldon's Australian courses — provide detailed, accurate information based on the knowledge provided.
-2. If someone wants to book a demo or session, tell them you can help and to ask you to "book a demo" so you can collect their details.
-3. Keep responses concise and easy to read. Use bullet points and bold for key info.
-4. Never make up information not in the knowledge base. If unsure, say so and suggest contacting the SuperSheldon team.
-5. Always stay on topic (courses, tutoring, bookings, education in Australia).
+1. Answer questions about SuperSheldon's academies, subjects/exams, tutors and how the platform works — using only the knowledge provided below.
+2. Never quote a specific price. Pricing is personalised — if asked, explain that it depends on the academy/plan and offer to help book a free trial so the team can share a quote.
+3. If someone wants to book a demo or session, tell them you can help and to ask you to "book a demo" so you can collect their details.
+4. Keep responses concise and easy to read. Use bullet points and bold for key info.
+5. Never make up information not in the knowledge base. If unsure, say so and suggest contacting the SuperSheldon team.
+6. Always stay on topic (SuperSheldon's academies, tutoring, bookings, and education generally).
 
-${COURSE_KNOWLEDGE}
+${buildKnowledgeBase(locale)}
 
 Remember: You are Nova from SuperSheldon. Be helpful, accurate, and friendly.`;
+}
 
 export async function POST(req: NextRequest) {
   try {
-    const { message, history = [] } = await req.json();
+    const { message, history = [], locale: rawLocale } = await req.json();
 
     if (!message) {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });
     }
+
+    const locale: Locale = LOCALES.includes(rawLocale) ? rawLocale : "global";
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -129,7 +91,7 @@ export async function POST(req: NextRequest) {
 
     const payload = {
       system_instruction: {
-        parts: [{ text: SYSTEM_PROMPT }],
+        parts: [{ text: buildSystemPrompt(locale) }],
       },
       contents: [
         ...geminiHistory,

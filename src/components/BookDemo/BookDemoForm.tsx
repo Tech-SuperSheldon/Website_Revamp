@@ -25,31 +25,11 @@ import PhoneField from "@/components/demo/PhoneField";
 // @ts-ignore - JS module, no type declarations
 import { findByIso, findByDial } from "@/components/demo/countries";
 import { getAcademies, type Academy, type Locale } from "@/lib/academies";
+import { captureUtmParams } from "@/lib/demoLead";
 
 /** Mirrors Locale: the global site is its own market so its leads are filed
  *  separately from the UK ones. */
 type Market = "global" | "uk" | "au";
-
-const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
-
-function captureUtmParams(): Record<string, string> {
-  if (typeof window === "undefined") return {};
-  const params = new URLSearchParams(window.location.search);
-  const fromUrl: Record<string, string> = {};
-  UTM_KEYS.forEach((key) => {
-    const value = params.get(key);
-    if (value) fromUrl[key] = value;
-  });
-  if (Object.keys(fromUrl).length > 0) {
-    sessionStorage.setItem("utm_params", JSON.stringify(fromUrl));
-    return fromUrl;
-  }
-  try {
-    return JSON.parse(sessionStorage.getItem("utm_params") || "{}");
-  } catch {
-    return {};
-  }
-}
 
 const ALL_GRADES = Array.from({ length: 12 }, (_, i) => i + 1).map((n) => `Grade ${n}`);
 

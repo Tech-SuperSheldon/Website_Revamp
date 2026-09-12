@@ -1,23 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Best-effort Slack ping for a demo booked through the Nova chatbot. The lead
+// itself is already saved via the same /user/bookDemo/complete endpoint the
+// site-wide booking wizard uses (see NovaChatbot's confirm step) — this route
+// only exists so the team gets an instant notification for chatbot-sourced
+// leads specifically. Its failure must never block the booking itself.
 export async function POST(req: NextRequest) {
   try {
-    const { fullName, email, mobile, grade, subject } = await req.json();
+    const { market, academy, subject, grade, mobile, date, time, timezone } = await req.json();
 
-    if (!fullName || !email || !mobile || !grade || !subject) {
+    if (!academy || !subject || !grade || !mobile || !date || !time) {
       return NextResponse.json({ ok: false, message: "All fields are required." }, { status: 400 });
-    }
-
-    const emailRegex = /^\S+@\S+\.\S+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json({ ok: false, message: "Invalid email." }, { status: 400 });
     }
 
     const slackToken = process.env.SLACK_BOT_TOKEN;
     const slackChannel = process.env.SLACK_CHANNEL_ID;
 
     if (!slackToken || !slackChannel) {
-      console.warn("[nova-book] Slack not configured — logging booking:", { fullName, email, mobile, grade, subject });
+      console.warn("[nova-book] Slack not configured — logging booking:", {
+        market,
+        academy,
+        subject,
+        grade,
+        mobile,
+        date,
+        time,
+        timezone,
+      });
       return NextResponse.json({ ok: true, message: "Booking received (Slack not configured)." });
     }
 
@@ -37,11 +46,13 @@ export async function POST(req: NextRequest) {
         {
           type: "section",
           fields: [
-            { type: "mrkdwn", text: `:bust_in_silhouette: *Name:*\n${fullName}` },
-            { type: "mrkdwn", text: `:telephone_receiver: *Phone:*\n${mobile}` },
-            { type: "mrkdwn", text: `:e-mail: *Email:*\n${email}` },
-            { type: "mrkdwn", text: `:books: *Subject:*\n${subject}` },
-            { type: "mrkdwn", text: `:round_pushpin: *Year/Grade:*\n${grade}` },
+            { type: "mrkdwn", text: `:mortar_board: *Academy:*\n${academy}` },
+            { type: "mrkdwn", text: `:books: *Subject/Exam:*\n${subject}` },
+            { type: "mrkdwn", text: `:round_pushpin: *Grade/Year:*\n${grade}` },
+            { type: "mrkdwn", text: `:telephone_receiver: *Mobile:*\n${mobile}` },
+            { type: "mrkdwn", text: `:calendar: *Preferred date:*\n${date}` },
+            { type: "mrkdwn", text: `:clock3: *Preferred time:*\n${time}${timezone ? ` (${timezone})` : ""}` },
+            { type: "mrkdwn", text: `:globe_with_meridians: *Market:*\n${market || "global"}` },
             { type: "mrkdwn", text: `:date: *Submitted:*\n${now} (AEST)` },
           ],
         },
