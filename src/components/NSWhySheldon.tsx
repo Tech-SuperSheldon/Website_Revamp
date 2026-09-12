@@ -18,7 +18,7 @@ import { openDemoOnClick } from "@/components/BookDemo/demoModalStore";
 import { DEMO_PATH, type Locale } from "@/lib/academies";
 
 const NAVY = "#1B2A5B";
-const GOLD = "#F4B740";
+const GOLD = "#FFCC00";
 
 type Card = {
   /** Card background tint. */

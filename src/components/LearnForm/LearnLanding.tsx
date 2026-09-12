@@ -18,6 +18,7 @@ import dynamic from "next/dynamic";
 import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import LearnForm from "@/components/LearnForm/LearnForm";
+import LearnFooter from "@/components/LearnForm/LearnFooter";
 import Highlight from "@/components/motion/Highlight";
 import { DUR, EASE } from "@/lib/motion";
 
@@ -153,9 +154,9 @@ export default function LearnLanding({
         <div className="relative mx-auto grid w-full max-w-7xl items-start gap-5 px-4 py-5 sm:gap-8 sm:px-6 sm:py-10 lg:h-full lg:grid-cols-[1fr_minmax(24rem,27rem)] lg:items-stretch lg:gap-12 lg:py-[clamp(0.75rem,3.2vh,3rem)] xl:gap-16">
           {/* ── Left: identity, proof, headline ── */}
           <div className="flex flex-col items-center lg:min-h-0 lg:items-start lg:justify-center">
-            {/* Mobile-only header: logo left, urgency copy right. The ribbon, ratings
-              and stats strip below are shown on mobile too (right above the form);
-              only the headline and bullets stay desktop-only. */}
+            {/* Mobile-only header: logo left, urgency copy right. The ribbon, ratings,
+              stats strip and headline below are all shown on mobile too (right above
+              the form); only the supporting bullets stay desktop-only. */}
             <motion.div
               {...enter(0)}
               className="order-1 flex w-full items-center justify-between gap-3 lg:hidden"
@@ -276,7 +277,7 @@ export default function LearnLanding({
             {/* Headline. */}
             <motion.div
               {...enter(0.24)}
-              className="order-5 mt-5 hidden sm:mt-8 lg:order-3 lg:block lg:mt-[clamp(0.5rem,2.2vh,2rem)]"
+              className="order-5 mt-3 block sm:mt-8 lg:order-3 lg:block lg:mt-[clamp(0.5rem,2.2vh,2rem)]"
             >
               <p className="text-center text-sm font-bold uppercase tracking-[0.12em] text-[#FC8741] lg:text-left lg:text-[clamp(0.7rem,1.5vh,0.875rem)]">
                 {theme.eyebrow}
@@ -383,6 +384,7 @@ export default function LearnLanding({
       </motion.h2>
       <NSWhySheldon showCta={false} />
       <NSParentsSaying />
+      <LearnFooter country={country} />
     </main>
   );
 }
